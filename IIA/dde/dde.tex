@@ -1,0 +1,2504 @@
+% Dynamics of Differential Equations
+% Lent Term 1996-1997
+
+% Lectured by Prof. R.S. Mackay
+% LaTeXed (unoffically) by Paul Metcalfe
+
+\documentclass{notes}
+
+\theoremstyle{plain}
+\newtheorem*{theorem}{Theorem}
+\newtheorem*{definition}{Definition}
+\newtheorem*{corollary}{Corollary}
+\newtheorem*{example}{Example}
+\newtheorem*{lemma}{Lemma}
+\newtheorem*{notes}{Notes}
+\newtheorem*{proposition}{Proposition}
+\newtheorem*{note}{Note}
+
+\DeclareMathOperator{\dive}{div}
+\DeclareMathOperator{\inter}{int}
+\DeclareMathOperator{\tr}{tr}
+
+\begin{document}
+\frontmatter
+
+\title{Dynamics of Differential Equations}
+\lecturer{Prof.~R.S.~Mackay}
+\maintainer{Paul Metcalfe}
+\date{Lent 1997} \maketitle
+
+\thispagestyle{empty}
+
+\noindent\verb$Revision: 2.5 $\hfill\\
+\noindent\verb$Date: 1999/09/17 17:52:22 $\hfill\\
+
+\vspace{1.5in}
+
+The following people have maintained these notes.
+
+\begin{center}
+\begin{tabular}{ r  l}
+-- date & Paul Metcalfe
+\end{tabular}
+\end{center}
+
+\tableofcontents
+
+\chapter{Introduction}
+
+These notes are based on the course ``Dynamics of Differential Equations''
+given by Prof.~R.S.~Mackay in Cambridge in the Lent Term 1997.  These
+typeset notes are totally unconnected with Prof.~Mackay.
+Note that these notes are based on the first year of the course.  More
+material was lectured in 1998.
+
+\alsoavailable
+\archimcopyright
+
+\mainmatter
+
+\chapter{Differential Equations}
+
+\section{The Problem}
+
+In this course, \emph{differential equation} means a system of equations
+of the form
+\[
+\ddt{x_i} = v_i(\vect{x}(t)),
+\]
+
+with $\vect{x} \in \R^n$, $t \in \R$ and $v_i \colon \R^n \mapsto
+\R$.\footnote{Underlining of vectors will be sporadic in these
+  notes.}
+
+In this course, we only study ordinary differential equations, as
+opposed to partial differential equations.  More precisely, we study
+\emph{autonomous} ODE's, those with no explicit time dependence in
+$\vect{v}$.  (Or the equation is invariant under a shift of the origin
+in time.)
+
+A restriction to autonomous DE's is not that much of a restriction,
+since the non-autonomous system $\dot{x} = f(x,t)$ can be reduced to
+the autonomous system $\dot{x} = f(x,\tau)$, $\dot{\tau} = 1$.
+
+We also restrict to coupled first-order ODE's.  This again is little
+of a restriction -- many higher order systems can be reduced to the
+first-order case, since if $\ddot{x} = f(x,\dot{x})$, then introduce
+$y = \dot{x}$ to get the coupled system $\dot{y} = f(x,y)$, $\dot{x} =
+y$.
+
+We also only consider \emph{explicit} systems, but if we have the
+implicit system $g(x,\dot{x}) = 0$, and $x_0$, $y_0$ such that $g(x_0,
+v_0) = 0$, and the matrix $\left( \pd{g_i}{\dot{x}_j} \right)$ is
+invertible at $(x_0,v_0)$ then $\exists v \colon U \mapsto \R^n$ on a
+neighbourhood $U$ of $x_0$ such that for $(x,\dot{x})$ near
+$(x_0,v_0)$, $g(x,\dot{x})=0 \Leftrightarrow \dot{x} = v(x)$.
+
+\section{The Traditional Approach}
+
+Given $v$ in terms of ``elementary'' functions, look for a general
+solution of $\dot{x} = v(x)$ in terms of elementary functions.  This
+has some drawbacks, not least of which is that it is frequently hard
+to do (read impossible).  We also need some valid definition of
+elementary function.  And in any case the nicest definition of some
+elementary functions is as the solution of certain ODE's, for example
+
+\begin{enumerate}
+\item $\exp(t)$ is the solution of $\dot{x} = x$ with $x(0) = 1$.  The
+  property $\exp(s+t) = \exp(s) \exp(t)$ is easy to derive -- the ODE
+  is autonomous so $\exp(s+t)$ is the solution after time $t$ starting
+  at $\exp(s)$.  But the ODE is linear, so this is $\exp(s) \exp(t)$.
+  
+\item
+
+\[
+\left[ \begin{matrix} \sin t \\ \cos t \end{matrix} \right]
+\]
+is the solution of
+\[
+\left[ \begin{matrix} \dot{x} \\ \dot{y} \end{matrix} \right] = \left[
+  \begin{matrix} y \\ -x \end{matrix} \right]
+\]
+with the initial conditions $x(0) = 0$, $y(0) = 0$.  Periodicity is
+easy to derive - just note that $H = (x^2 + y^2) / 2$ is conserved.
+Thus solutions remain on the unit circle.  The direction of rotation
+is constant, at constant speed.  So $\left(x(t),y(t)\right)$ must
+return to its initial conditions at some $T > 0$ (choose the least
+such).  Then by autonomy, $\left(x(t+T),y(t+T)\right) =
+\left(x(t),y(t)\right)$.  Traditionally, set $T = 2 \pi$, as a
+definition of $\pi$.  So the traditional approach is (ahem) circular.
+\end{enumerate}
+
+Even if you allow solutions of (algebraic) equations in elementary
+functions and integrals of elementary functions, there are still some
+equations which cannot be solved (e.g. $\dot{y} = y^2 - t$).  Thus we
+try a different approach --- to see what happens to solutions.
+
+\section{The Geometric Approach}
+
+This is due to Poincar\'e.  It has two senses.
+
+\subsection*{pictorial}
+
+Let $\vect{v}$ define a vector field on a state space $X = \R^n$ (or
+more generally on some differentiable manifold, eg $S^1 \times R$,
+$S^2$, $\Pi^2 = S^1 \times S^1$).  Under suitable conditions, $\dot{x}
+= v(x)$ defines a flow $\phi \colon \R \times X \mapsto X$, $(t,x_0)
+\mapsto \phi_t(x_0)$, the solution at time $t$ with $x(0) = x_0$.  A
+picture showing how ``all'' the solutions move in $X$ is called a
+phase portrait.  These are hard to draw when $n > 3$, but we shall
+restrict to $n=2$ or $n=3$.%
+\footnote{I have problems when $n=3$, let alone anything higher.}
+
+\subsection*{Kleinian}
+
+For Klein, the geometrical approach to a set of objects is to identify
+a group of transformations of the objects which we regard as taking
+each object to an equivalent one and then studying the properties
+which are invariant under the group action.
+
+The objects we will look at are the vector fields $v$ on $X$ with
+their associated differential equation $\dot{x} = v(x)$.  The
+transformations we will use are change of variables and time
+rescaling.
+
+For change of variables, let $y = h(x)$, with $h$ a diffeomorphism.
+In this case, $\dot{y} = Dh_{h^{-1}(y)} v(h^{-1}(y))$, where $Dh$ is
+the matrix of partial derivatives $\pd{h_i}{x_j}$.
+
+For time rescaling, let $\ddt{s} = \alpha(x) > 0$, which implies that
+$\frac{\ud x}{\ud s} = v(x)/\alpha(x)$.
+
+We will study the features of $\dot{x} = v(x)$ which are preserved by
+the group generated by these kinds of transformations, for instance
+existance of a periodic orbit (but not its formula or period).
+
+The geometric approach does not try to obtain as much as the
+traditional approach, but can get useful results where the traditional
+approach gets stuck.
+
+\section{Basic Theorem of ODE's}
+
+We would like to justify the idea of a flow with some sort of
+existance and uniqueness results.
+
+\begin{definition}
+  A map $f \colon M_1 \mapsto M_2$ between metric spaces with metrics $d_1$
+  and $d_2$ is \emph{Lipschitz} if $\exists\ L \in \R$ such that
+  $\forall\ x, y \in M_1$, $d_2\left(f(x),f(y)\right) \le L
+  d_1\left(x,y\right)$.  $L$ is said to be a \emph{Lipschitz
+    constant}.
+\end{definition}
+
+\subsection*{Example}
+
+A map $f \colon U \mapsto \R^m$, $U$ open in $\R^n$ is $C^1$ (continuously
+differentiable) if
+
+\begin{enumerate}
+\item it is differentiable, that is $\exists\ $ a linear map $Df_x \colon
+  \R^n \mapsto \R^m$ such that
+\[
+\abs{f(x+h) - f(x) - Df_x h} = o(\abs{h}).
+\]
+\item $Df_x$ depends continuously on $x$ with respect to the operator
+  norm $\norm{Df_x} = \sup_{h \ne 0} \frac{\abs{Df_x h}}{\abs{h}}$.
+\end{enumerate}
+
+Then $f$ is Lipschitz on any convex compact set $K \subset U$, with
+Lipschitz constant $L = \norm{Df_x}$.
+
+\begin{proof}
+  Given $x,y \in K$, let $z(s) = x + s(y-x)$ for $0 \le s \le 1$.
+  Then
+\[
+\abs{f(y) - f(x)} = \abs{\int_0^1 \frac{\ud}{\ud s} f(x(s))\,\ud s} =
+\abs{\int_0^1 Df_{x(s)} (y-x)\,\ud s} \le K \abs{y-x}.
+\]
+\end{proof}
+
+\subsection{Existance, uniqueness and continuity wrt initial conditions}
+
+\begin{theorem}[Basic Theorem of ODE's]
+  If $v \colon U \mapsto \R^n$, $U$ open in $\R^n$, is locally Lipschitz,
+  then $\forall\ y \in U$, $\exists\ $ a neighbourhood $V$ of $y$ and
+  $\tau > 0$ such that $\forall\ x_0 \in V$, $\exists\ $ unique
+  differentiable function $x \colon \left[ -\tau, \tau \right] \mapsto U$
+  such that $x(0) = x_0$ and $\dot{x}(t) = v\left(x(t)\right) \forall\ 
+  t \in \left[ -\tau, \tau \right]$.  Furthermore, if the solution
+  $x(t)$ is denoted by $\phi_t(x_0)$, then $\phi \colon \left[ -\tau, \tau
+  \right] \times V \mapsto U$ is Lipschitz.
+\end{theorem}
+
+\begin{proof}\footnote{This should be familiar from Analysis IB.}
+  Given $y \in U$, choose a neighbourhood $N = \{ x : \abs{y-x} \le b
+  \}$ on which $v$ is Lipschitz.  Let $L$ be the Lipschitz constant
+  for $v$ and $K = \sup_{x \in N} \abs{v(x)}$.
+  
+  Now choose $\tau$, $b' > 0$ such that $\tau \le 1/L$ and $b' + K
+  \tau \le b$.  Let $V = \{ x : \abs{x-y} \le b'\}$.  Let
+\[
+B = \left\{ \text{Lipschitz functions $\Tilde{x} \colon [ -\tau, \tau ]
+    \mapsto \R^n$ of constant $K$ and } \Tilde{x}(0) \in V \right\}.
+\]
+
+Given functions $\Tilde{x}$, $\Tilde{y} \in B$, let $d(\Tilde{x},
+\Tilde{y}) = \sup_{t \in [ -\tau, \tau ]} \abs{\Tilde{x} -
+  \Tilde{y}}$.  Then $(B,d)$ is a complete metric space.  Now, for
+$x_0 \in V$, define a map $P_{x_0} \colon B \mapsto B$ by
+\[
+\left(P_{x_0} \Tilde{x}\right) (t) = x_0 + \int_0^t v(\Tilde{x}(s))
+\,\ud s.
+\]
+
+Fixed points of $P_{x_0}$ correspond to solutions of $\dot{x} = v(x)$
+with $x(0) = x_0$.  Now $P_{x_0}$ maps $B$ into itself and contracts
+$d$ (by at least $L \tau < 1$).  So by the contraction mapping
+principle, $P_{x_0}$ has a unique fixed point $\Tilde{x}$ that depends
+Lipschitz continuously on $x_0$.  It follows that $\phi \colon [ -\tau,
+\tau ] \times V \mapsto U$ is Lipschitz.
+\end{proof}
+
+\subsection*{Remarks}
+
+\begin{enumerate}
+\item If $v$ is $C^1$, we can prove that $\phi$ is $C^1$.  Similarly,
+  if $v$ is $C^{1 + \text{Lip}}$, $C^2$, \dots, $C^{\infty}$,
+  analytic, then so is $\phi$.
+\item $x(t)$ is always one derivative smoother that $v(x)$, since
+  $\dot{x} = v(x)$.
+\item If $v$ is not locally Lipschitz then $x$ may fail to be unique,
+  for instance $\dot{x} = \abs{x}^{1/2}$ has solutions
+\[
+x(t) = \begin{cases}
+  \frac{-(2-t)^2}{4} & 0 \le t \le 2 \\
+  0 & 2 \le t \le T \\
+  \frac{(t-T)^2}{4} & t \ge T
+\end{cases} \qquad \text{for any $T \ge 2$.}
+\]
+This is the ODE for a particle sliding down a viscous slope of height
+$h(x) = - \tfrac{2}{3} \abs{x}^{3/2} sgn(x)$.
+\item We cannot take $\tau = \infty$, and $\tau$ may depend on $x_0$.
+  For instance, take $\dot{x} = x^2$, $x(0) = x_0 > 0$.  Thus $x(t) =
+  \left(x_0^{-1} - t\right)^{-1} \rightarrow \infty$ as $t \nearrow
+  x_0^{-1}$.  This is called ``finite time blowup''.  It is not just a
+  pathology: it is suspected that for many solutions of the Euler
+  equations for a 3D fluid (and maybe even the Navier-Stokes
+  equations), $\sup_x \abs{\pd{u_i}{x_j}} \rightarrow \infty$ in
+  finite time.
+\end{enumerate}
+
+\section{Interval of definition of solutions}
+
+There are several circumstances under which the solution $x(t)$
+starting from $x_0$ is defined for all positive and negative time.
+
+\begin{theorem}[Extension Theorem]
+  Let $K \subset X$ be compact and $v$ a $C^1$ vector field on a
+  neighbourhood of $K$.  Then $\phi_t (x_0)$ is defined and $C^1$ for
+  all $x_0 \in K$ and all $t$ such that $\phi_s(x_0) \in K \forall\ 0
+  \le s \le t$, plus a little more.
+\end{theorem}
+
+\begin{proof}
+  For all $y \in K$ there exists a neighbourhood $V_y$ and $\tau_y >
+  0$ such that $\phi_t (x_0)$ is defined and $C^1$ for all $x_0 \in
+  V_y$, $\abs{t} \le \tau$.  The sets $\{ V_y : y \in K \}$ form an
+  open cover of $K$, so by compactness $\exists$ a finite subcover
+  $\{V_{y_i} : i = 1, \dots, N \}$.  Let $\tau = \min_i \tau_{y_i}$.
+  Then $\forall\ x_0 \in K$, $\phi_t(x_0)$ exists for at least
+  $\abs{t} \le \tau$.  If $\phi_\tau(x_0) \in K$ then repeat argument.
+  Thus $\phi_t(x_0)$ is defined and $C^1$ as long as it remains in
+  $K$, and for time $\tau$ more.
+\end{proof}
+
+\begin{corollary}
+  The only way that a solution of a $C^1$ ODE can cease to exist is to
+  leave every compact set in bounded time.
+\end{corollary}
+
+We can use these results to get a couple of examples.
+
+\begin{example}
+  If $\abs{v(x)} \le A \abs{x} + B$ for some $A > 0$, $B \ge 0$, then
+  $\phi_t(x)$ exists for all $t$ and $\abs{\phi_t(x)} \le (\abs{x} +
+  B/A) \exp(A \abs{t})$.
+\end{example}
+
+\begin{proof}
+  Compare with $\dot{r} = A r + B$ on $\R_+$.
+\end{proof}
+
+\begin{example}
+  If $\dot{x} = v(x,s)$, $\dot{s} = 1$ then no solution remains in any
+  compact set since $s$ is unbounded.  But for any compact $K \subset
+  X$, solutions can be extended as long as they remain in $K \times
+  \R$.
+\end{example}
+
+\begin{proof}
+  Otherwise, let $T_1$ be the infimum of positive times that solutions
+  starting in $K \times \{ 0 \}$ which do not cross $\partial K \times
+  \R$ but which cannot be continued to $t = T$.  By assumption $T_1 <
+  \infty$.  Then $K \times [ -T_1, T_1]$ is compact, so we can apply
+  the extension theorem and continue all solutions which do not cross
+  $\partial K \times [-T_1, T_1]$ to $t = T_1 + \tau_1$.  This is a
+  contradiction.
+\end{proof}
+
+We can often find a compact $K$ which all solutions enter and remain
+inside.  We could also in principle rescale time to prevent
+finite-time blowup.  Thus we shall henceforth assume that
+$\phi_t(x_0)$ is defined for all $t$.
+
+\chapter{Basic Examples and Ideas}
+
+We will introduce the theory of nonlinear systems by means of various
+examples.
+
+\section{The Ideal Pendulum}
+
+This has the ODE $\ddot{\theta} + \sin \theta = 0$.  (With appropriate
+rescaling of time and $\theta$ to remove constants.)  Writing as a
+linked first order system, we obtain
+\[
+\left[
+\begin{matrix}
+  \dot{\theta} \\ \dot{p}
+\end{matrix}
+\right] = \left[
+\begin{matrix}
+  p \\ - \sin \theta
+\end{matrix}
+\right].
+\]
+
+Write $x = (\theta,p) \in X$, where $X$ is an infinite cylinder.
+Notice the conservation of energy, that is, let $H = \tfrac{1}{2} p^2
+- \cos \theta$.  Then $\dot{H} = 0$.  Now, given $E \in \R$, define
+\[
+\Sigma_E = \left\{ x \in X : H(x) = E\right\}.
+\]
+
+Note that $x(0) \in \Sigma_E \Rightarrow x(t) \in \Sigma_E\ \forall
+t$.  We say that $\Sigma_E$ is invariant under the flow.
+
+Now, if $E < -1$ then $\Sigma_E = \emptyset$.  If $E = -1$ then
+$\Sigma_E = \left\{ \left( 0,0 \right) \right\}$ - it is an
+equilibrium point.
+
+If $-1 < E < 1$, then $\Sigma_E$ is a closed curve.  Now $v \neq 0$ on
+$\Sigma_E$.  $v$ is continuous and $\Sigma_E$ is compact.  Thus
+$\exists\ \delta_E > 0$ such that $\abs{v} \ge \delta_E$ on
+$\Sigma_E$.  Also, the length of $\Sigma_E$ is finite, so given $x \in
+\Sigma_E$, $\exists T > 0$ such that $\phi_T(x) = x$.  Thus $\Sigma_E$
+is a periodic orbit.  Physically, this corresponds to oscillations.
+
+If $E > 1$ then $\Sigma_E$ is two closed curves.  $v$ is non-zero, so
+we have two periodic orbits.  Physically, this is rotations.
+
+If $E = 1$ then $\Sigma_E$ consists of the equilibrium point $x =
+(\pi,0)$ and two orbits which are asymptotic to the equilibrium in
+both positive and negative time.  They are called \emph{homoclinic}
+orbits to the equilibrium.
+
+An orbit which is asymptotic to one equilibrium in positive time and
+another equilibrium in negative time is called a \emph{heteroclinic}
+orbit.
+
+Finding all the equilibria is easy --- you just have to set $v(x) =
+0$.
+
+The equilibrium $\theta = 0$ and each of the periodic orbits are
+\emph{stable}.
+
+\begin{definition}
+  An invariant set $\Lambda$ for a flow $\phi \colon \R \times X \mapsto X$
+  is (Lyapunov) stable if $\forall$ neighbourhoods $U$ of $\Lambda$,
+  $\exists$ a neighbourhood $V$ of $\Lambda$ such that $x_0 \in V
+  \Rightarrow \phi_t(x_0) \in U\ \forall t \ge 0$.
+\end{definition}
+
+\begin{notes}
+It's useful to spot conserved quantities (if any exist).  Some types
+of system for which there exist useful conserved quantities are
+frictionless mechanical systems (in which the Hamiltonian is
+conserved) and chemical reactions --- numbers of atoms of each kind of
+element must be constant.
+\end{notes}
+
+\section{The Damped Pendulum}
+
+This has ODE $\ddot{\theta} + k \dot{\theta} + \sin \theta = 0$, where
+$k > 0$.  As a linked system, we obtain
+
+\[
+\left[
+\begin{matrix}
+  \dot{\theta} \\ \dot{p}
+\end{matrix}
+\right] = \left[
+\begin{matrix}
+  p \\ - k p - \sin \theta
+\end{matrix}
+\right].
+\]
+
+Now, $H = \tfrac{1}{2} p^2 - \cos \theta$ is no longer conserved, but
+$\dot{H} = - k p^2$.  Thus $H$ decreases along solutions (except when
+$p=0$).  $H$ decreases strictly along all solutions except on two
+equilibria at $\theta = 0, \pi$.
+
+\begin{theorem}
+  If $H\left(\phi_t(x)\right) < H\left(\phi_s(x)\right)$ for $t > s$
+  and $x$ is not an equilibrium then $\phi_t(x)$ tends to an
+  equilibrium as $t \rightarrow \infty$.
+\end{theorem}
+
+\begin{proof}
+  Given $x \in X$, then $P = \{ y : H(y) \le H(x) \}$ is compact.
+  Therefore $\left( \phi_t(x) \right)_{t \rightarrow \infty}$ has a
+  limit point (in $P$).  Define
+\[
+\omega(x) = \left\{ \text{Limit points of } \left( \phi_t(x)
+  \right)_{t \rightarrow \infty} \right\}.
+\]
+
+Now $\omega(x) \neq \emptyset$ (by compactness)\footnote{$\omega(x)$
+  is called the $\omega$-limit set of $x$.  Similarly, as $t
+  \rightarrow -\infty$ there is the $\alpha$-limit set.  For the
+  advanced student --- why $\alpha$ and $\omega$?}.  Note that
+$d(\phi_t(x),\omega(x)) \rightarrow 0$, otherwise $\exists \epsilon >
+0$ and $t_j \rightarrow \infty$ such that $2 \epsilon \ge
+d(\phi_{t_j}(x),\omega(x)) \ge \epsilon$.  Now $Q = \{ y : 2 \epsilon
+\ge d(y,\omega(x) \ge \epsilon \}$ is compact, so $\phi_{t_j}(x)$ has
+a limit point in $Q$.  This is a contradiction.
+
+Now $H$ must be constant on $\omega(x)$.  Otherwise, suppose $\exists
+\xi, \eta \in \omega(x)$ with $H(\xi) < H(\eta)$.  Let $\epsilon =
+H(\eta) - H(\xi) > 0$.  Now $\exists t_1$ such that $\phi_{t_1}(x)$ is
+close enough to $\xi$ that $H(\phi_{t_1}(x))$ is within $\epsilon/3$
+of $H(\xi)$.  Now, $\exists t_2 > t_1$ such that $\phi_{t_2}(x)$ is
+close enough to $\eta$ that $H(\phi_{t_2}(x))$ is within $\epsilon/3$
+of $H(\eta)$.  Thus $H(\phi_{t_2}(x)) - H(\phi_{t_1}(x)) \ge \epsilon
+/3 > 0$ and $t_2 > t_1$.  This is a contradiction.  Now $\omega(x)$ is
+invariant, since if $\phi_{t_j}(x) \rightarrow y$, then
+$\phi_{t_j+\tau}(x) \rightarrow z$ by the continuity of $\phi_{\tau}$.
+
+Since $H$ is constant on $\omega(x)$, $\omega(x)$ consists only of
+equilibria.  In fact, $\omega(x)$ has to be only a single equilibrium,
+as $H(\pi,0) = 1$ and $H(0,0) = -1$.
+\end{proof}
+
+More generally, we have La Salle's Invariance Principle.
+
+\begin{theorem}[La Salle's Invariance Principle]
+  If $H \colon X \mapsto \R$ is continuous, decreasing along all solutions
+  of a flow except at equilbria, and $x_0 \in X$ has a bounded orbit
+  then $\phi_t(x_0)$ converges as $t \rightarrow \infty$ to a
+  connected subset of the set of equilibria on which $H$ is
+  constant.\footnote{Such a function $H$ is called a Lyapunov
+    function.}
+\end{theorem}
+
+The proof is left as an exercise.
+
+We now need to examine the way that the orbits approach the equilibria
+and which orbits converge to which equilibrium.  The first step is to
+perform linear stability analysis of the equilibria.  Linearise the
+system about $\theta = 0 \text{ or } \pi$, $p = 0$.  We obtain
+
+\[
+\left(
+\begin{matrix}
+  \dot{\delta \theta} \\ \dot{\delta p}
+\end{matrix}
+\right) = \left(
+\begin{matrix}
+  0 & 1 \\ -c & -k
+\end{matrix}  
+\right) \left(
+\begin{matrix}
+  \delta \theta \\ \delta p
+\end{matrix}
+\right) \qquad \text{ where } c = \cos \theta = \pm 1.
+\]
+
+This matrix has eigenvalues $-\tfrac{k}{2} \pm \tfrac{\sqrt{k^2-4
+    c}}{2}$.
+
+At $\theta = \pi$, $c = -1$, so we have real eigenvalues, one positive
+and one negative.  Thus we have a saddle point.
+
+At $\theta = 0$, $c = 1$ so if $0 < k < 2$ we have complex conjugate
+eigenvalues with negative real part.  This is a focus.  If $k > 2$ we
+have a pair of negative real eigenvalues.  This is a node.
+
+We wish now to ask which features of the linearised system survive the
+nonlinear remainder term.  In particular, does a sink attract all nearby
+orbits and does a saddle have precisely two invariant curves through it?
+
+\subsection{The effect of nonlinearity on stability of equilibria}
+
+\begin{definition}
+A sink is an equilibrium all of whose eigenvalues lie in the open left
+half plane $\Re(\lambda) < 0$.
+\end{definition}
+
+\begin{definition}
+An invariant set $\Lambda$ is attracting if it has a neighbourhood $U$ such
+that $\phi_t(U) \subset U$ for $t > 0$ and $\bigcap_{t>0} \phi_t(U) = \Lambda$.
+\end{definition}
+
+\begin{lemma}
+If $A$ is a linear operator on a finite-dimensional real vector space $E$, and
+all eigenvalues $\lambda_i$ of $A$ have $\alpha < \Re (\lambda_i) < \beta$,
+then there is an inner product on $E$ such that
+\[
+\alpha \abs{x}^2 \le \langle x, Ax \rangle \le \beta \abs{x}^2.
+\]
+\end{lemma}
+
+\begin{proof}
+We choose a basis for $E$ such that $A$ has real JNF with blocks of the forms
+\begin{center}
+\begin{tabular}{c c c c}
+$\left[ \lambda_1 \right]$ \\
+& $\left[ \begin{matrix}
+\alpha_2 & -\omega_2 \\ \omega_2 & \alpha_2
+\end{matrix} \right] $\\
+& & $\left[
+\begin{matrix}
+\lambda_3 & \epsilon & & \\
+          & \ddots   & \ddots  & \\
+          &          & \ddots & \epsilon \\
+          &          &        & \lambda_3         
+\end{matrix}
+\right]$ \\
+& & & $\left[
+\begin{matrix}
+\alpha_4 & -\omega_4 & \epsilon & 0 & & \\
+\omega_4 & \alpha_4 & 0 & \epsilon \\
+         &          & \alpha_4 & -\omega_4 & \ddots \\
+         &          & \omega_4 & \alpha_4 & \ddots \\
+\end{matrix}
+\right]$
+\end{tabular}
+\end{center}
+
+Now $\epsilon$ can be chosen arbitrarily small (by rescaling of basis vectors),
+so that $\lambda_3 \pm \epsilon \in [ \alpha, \beta ]$ for all non-trivial
+blocks.  Let $x_i$ be the co-ordinates with respect to this basis and choose
+the standard inner product $\langle x,y \rangle = \sum_i x_i y_i$.  The
+blocks contribute additively to $\langle x, Ax \rangle$ and the contributions
+are respectively
+\begin{align*}
+&\lambda_1 x_1^2 \\
+&\alpha_2 \abs{x}^2 \\
+&\lambda_3 \abs{x}^2 + \epsilon \sum x_i x_{i+1} \in [\lambda_3 - \epsilon,
+\lambda_3 + \epsilon ] \abs{x}^2 \\
+&\alpha_4 \abs{x}^2 + \epsilon \sum x_i x_{i+2} \in [\alpha_4 - \epsilon,
+\alpha_4 + \epsilon ] \abs{x}^2,
+\end{align*}
+where $\abs{x}$ refers only to components in the appropriate block and the
+inclusion is obtained using Cauchy-Schwarz.  Summing over the blocks we obtain
+the result
+\[
+\alpha \abs{x}^2 \le \langle x, Ax \rangle \le \beta \abs{x}^2.
+\]
+\end{proof}
+
+\begin{theorem}
+Every sink of a $C^1$ vector field is attracting.
+\end{theorem}
+
+\begin{proof}
+If all eigenvalues have $\Re (\lambda_i) < 0$ then $\exists b > 0$ such
+that $\Re (\lambda_i) < -b$.  The lemma gives us an inner product with
+$\langle x, Ax \rangle \le -b \abs{x}^2$.  So $\ddt{}\abs{x}^2 =
+2 \langle x, \dot{x} \rangle \le -2 b \abs{x}^2 + o(\abs{x}^2)$, as
+$\dot{x} = A x + o(\abs{x})$ as $\abs{x} \rightarrow 0$.  Now given
+$c \in (0,b)$, there exists $\delta > 0$ such that $\ddt{} \abs{x}^2
+\le -2 c \abs{x}^2$ for $\abs{x} \le \delta$.  Let
+$U = \{x : \abs{x} \le \delta \}$.  If $x(0) \in U$ then $\abs{x(t)}^2$ is
+non-increasing so that $x(t)$ remains in $U$.  Furthermore, for $x \in U 
+\setminus \{ 0 \}$, $\ddt{} \log \abs{x}^2 \le -2 c$, so that
+$\abs{x(t)} \le \abs{x(0)} e^{-c t}$.  Thus $\phi_t(U) \subset U \forall t
+\ge 0$ and $\bigcap_{t \ge 0} \phi_t(U) = \{0 \}$.
+\end{proof}
+
+We can clearly assume that the stationary point is at the origin.  
+Note that by reversing time, if all eigenvalues have $\Re(\lambda) > 0$
+then $0$ is repelling.
+
+\begin{theorem}
+If $A$ has an eigenvalue with $\Re \lambda > 0$ then $0$ is unstable.
+\end{theorem}
+
+\begin{proof}
+If $A$ has an eigenvalue with $\Re \lambda > 0$ then using JNF or otherwise
+decompose $E = E_1 \oplus E_2$ into invariant subspaces $E_1$ and $E_2$ such
+that all eigenvalues of $B_1 = A\mid_{E_1}$ have $\Re \lambda > 0$ and
+all eigenvalues of $B_2 = A\mid_{E_2}$ have $\Re \lambda \le 0$.  Now,
+$\exists a>0$ such that all eigenvalues of $B_1$ have $\Re \lambda > a$.
+By the lemma there is an inner product on $E_1$ such that 
+$\langle x, B_1 x \rangle \ge a \abs{x}^2$ for all $x \in E_1$.  Similarly,
+$\forall b > 0$, there is an inner product on $E_2$ such that 
+$\langle y, B_2 y \rangle \le b \abs{y}^2$ for all $y \in E_2$.  Choose
+$b \in (0,a)$.  Take the direct sum inner product on $E$ and write $z \in E$
+as $(x,y)$, with $x \in E_1$ and $y \in E_2$.  Then $v(x,y)
+= (B_1 x, B_2 y) + o(\abs{x})$.
+
+Let $C= \{(x,y) : \abs{x} \ge \abs{y} \}$
+and $V(z) = \frac{1}{2}\left( \abs{x}^2 - \abs{y}^2 \right)$. Then
+\begin{align*}
+\ddt{}V(z) &= \langle x, \dot{x} \rangle - \langle y, \dot{y} \rangle \\
+&= \langle x, B_1 x \rangle + o(\abs{x}\abs{z})
+- \langle y, B_2 y \rangle + o(\abs{y}\abs{z}) \\
+& \ge a \abs{x}^2 - b \abs{y}^2 + o(\abs{z}^2).
+\end{align*}
+
+Given $\alpha \in (0,a-b)$, $\exists \delta > 0$ such that $\dot{V} 
+\ge \abs{x}^2$ on $C \cap U$ where $U = \{ z : \abs{z} \le \delta\}$.
+So $V$ increases along all orbits in $C \cap U \setminus \{ 0 \}$.  They
+cannot cross $\partial C$ because $V$ decreases across $\partial C$.  They
+cannot stay in $C \cap U$ for all $t > 0$ else by La Salle's Invariance
+Principle they converge to a set of equilibria with strictly larger $V$
+than initially - but there are no equilibria except $0$ in $C \cap U$
+because $V$ increases in $C \cap U \setminus \{ 0 \}$, $V(0) = 0$ and
+$V(z(0)) > 0$.
+
+Thus there exist points $z$ arbitrarily close to $0$ such that $\phi_t(z)$
+leaves $U$ for some $t > 0$.  This contradicts stability of $0$, hence
+$0$ is unstable.
+\end{proof}
+
+\subsection{Equivalence of ``attracting'' and ``asymptotically stable''}
+
+Suppose $\phi : \R \times X \mapsto X$ is a continuous flow on a locally
+compact metric space $X$.
+
+\begin{definition}
+$\Lambda \subset X$ is attracting for $\phi$ if $\exists$ compact
+$K \subset X$ such that $\phi_t(K) \subset \inter K\ \forall t>0$
+and $\bigcap_{t \ge 0} \phi_t(K) = \lambda$.
+\end{definition}
+
+\begin{definition}
+$\Lambda \subset X$ is (Lyapunov) stable if $\forall$ neighbourhoods
+$U$ of $\Lambda$, $\exists$ a neighbourhood $V$ of $\Lambda$ such that
+$\phi_t(V) \subset U\ \forall t \ge 0$.
+\end{definition}
+
+\begin{definition}
+$\Lambda \subset X$ is asymptotically stable for $\phi$ if it is stable
+and $\exists$ a neighbourhood $W$ of $\Lambda$ such that $\forall x \in W$,
+$d(\phi_t(x),\Lambda) \to 0$ as $t \to +\infty$.
+\end{definition}
+
+\begin{theorem}
+$\Lambda \subset X$ is attracting iff compact, invariant and asymptotically
+stable.
+\end{theorem}
+
+\begin{proof}[Proof of $\Rightarrow$]
+$\phi_t$ is continuous, $K$ is compact, so $\phi_t(K)$ is compact,
+therefore $\Lambda = \bigcap_{t \ge 0} \phi_t(K)$ is compact.  Now
+$\phi_s \bigcap_{t \ge 0} \phi_t(K) \subset \bigcap_{t \ge 0} \phi_t(K)$
+for $s \ge 0$ so $\Lambda$ is forward invariant.  For $s \ge 0$,
+$\phi_{-s}(\Lambda) = \phi_s \bigcap_{t \ge s} \phi_t(K) = \Lambda$,
+so $\Lambda$ is backward invariant too.
+
+Now, let $D(t) = \sup_{x \in K} d(\phi_t(x),\Lambda)$.  Then
+$\phi_t(K)$ nested, so that $D$ is non-increasing.  If $D \nrightarrow
+0$ as $t \to \infty$ then $\exists \epsilon >0$ such that $\forall t > 0$,
+$\exists x_t \in \phi_t(K)$ such that $d(x_t,\Lambda) \ge \epsilon$.  The
+$x_t$ all lie in $\tilde{K} = \{ x \in K : d(x,\Lambda) \ge \epsilon \}$,
+which is compact, so they have a limit point $\tilde{x} \in \tilde{K}$.
+Now for all $s$, $x_t \in \phi_s(K)$ when $t \ge s$, so $\tilde{x} \in
+\phi_s(K)$ and $\tilde{x} \in \bigcap_{s \ge 0} \phi_s(K)$.  But
+$d(\tilde{x},\Lambda) \ge \epsilon$, giving a contradiction.  So $D(t) \to
+0$ as $t \to \infty$.  In particular, $d(\phi_t(x),\Lambda) \to 0$
+as $t \to \infty$ for all $x \in K$.  Also, for all neighbourhoods
+$U$ of $\Lambda$, $\exists T$ such that $\phi_t(K) \subset U$ for all
+$t \ge T$ --- or alternatively such that $D(T) < \inf_{x \notin U}
+d(x,\Lambda)$, which is positive by the compactness of $\Lambda$.  Let
+$V = \phi_T(K)$.  It is a neighbourhood of $\Lambda$ because $\forall t > 0$
+$\Lambda \subset \phi_t(V) \subset \inter V$.  Thus $\Lambda$ is stable.
+\end{proof}
+
+\begin{proof}[Proof of $\Leftarrow$]
+Let $\Lambda_\epsilon = \{ x \in X : d(x,\Lambda) \le \epsilon \}$ and
+$W$ be a neighbourhood of $\Lambda$.  Then $\Lambda$ compact gives
+$\exists \epsilon_0 > 0$ such that $\Lambda_\epsilon \subset W\ \forall
+\epsilon \le \epsilon_0$.  Given $\epsilon \le \epsilon_0$, there exists
+a neighbourhood $V$ of $\Lambda$ such that $\phi_t(V) \subset
+\Lambda_{\frac{\epsilon}{2}}$ for all $t \ge 0$ ($\Lambda$ stable).
+
+Also $d(\phi_t(x,\Lambda)) \to 0\ \forall x \in \Lambda_\epsilon$, so
+$\forall x_0 \in \Lambda_\epsilon\ \exists t_0$ and an open neighbourhood
+$N$ of $x_0$ such that $\phi_{t_0}(x) \in \inter V\ \forall x \in N$
+(as $\phi_{t_0}$ is continuous).  So $\phi_t(x) \in
+\Lambda_{\frac{\epsilon}{2}}\ \forall t \ge t_0$.  The neighbourhoods
+$N$ form an open cover of the compact $\Lambda_\epsilon$, so finitely many
+suffice.  Let $T(\epsilon) = \max_i t_i$.  Then $\phi_t(\Lambda_\epsilon)
+\subset \Lambda_{\frac{\epsilon}{2}}$ for all $t \ge T(\epsilon)$.  So
+by iteration $\exists T_n(\epsilon)$ such that $\phi_t(\Lambda_\epsilon)
+\subset \Lambda_{\frac{\epsilon}{2^n}}$ for all $t \ge T_n(\epsilon)$.
+
+Then we define $D \colon W \mapsto \R_+$ by $D(x) = \sup_{t \ge 0}
+d(\phi_t(x),\Lambda)$.  If $D(x) > 0$ then $\exists t_1(x) > 0$ such
+that $d(\phi_t(x),\Lambda) \le \frac{1}{2} D(x)$ for all $t \ge t_1(x)$.  Then
+for all $y$ near enough to $x$ the supremum of $d(\phi_t(y), \Lambda)$
+is attained in $[0,t_1(x)]$ and $D$ is continuous at $x$.
+
+If $D(x) = 0$ then $x \in \Lambda$ (by compactness) and $\forall \epsilon
+> 0$ there exists a neighbourhood $V$ of $\Lambda$ such that
+$y \in V \Rightarrow d(\phi_t(y),\Lambda) \le \epsilon\ 
+\forall t > 0$ ($\Lambda$ stable).  So $D(y) < \epsilon$ for $y \in V$
+and $D$ is continuous at $x$.
+
+$D$ is non-increasing along orbits and goes to zero along each orbit.  Let
+$w = \inf_{x \notin W} d(x,\Lambda) > 0$ by compactness of $\Lambda$.
+Let $\tilde{K} = \{ x \in W : D(x) \le \frac{w}{2} \}$ is compact,
+$\phi_t(\tilde{K}) \in \tilde{K}\ \forall t > 0$ and $\bigcap_{t \ge 0}
+\phi_t(\tilde{K}) = \Lambda$, because $\tilde{K} \subset \Lambda_{\frac{w}{2}}$
+and $\phi_t(\Lambda{w}{2}) \subset \Lambda_{\frac{w}{2^n}}$ for
+$t \ge \text{ some } T_n$, so $d(x,\Lambda) = 0$ for all $x \in 
+\bigcap_{t \ge 0} \phi_t(\tilde{K})$ so $x \in \Lambda$ as $\Lambda$ is
+compact, and conversely each $x \in \Lambda$ lies in $\phi_t(\tilde{K})$
+for all $t \ge 0$ because $\Lambda$ is negatively invariant.  To achieve
+$\phi_t(K) \subset \inter K\ \forall t > 0$ we modify
+$D$ to
+\[
+D^*(x) = \int_0^\infty e^{-s} D(\phi_s(x))\,\ud s.
+\]
+Then $D^*$ is decreasing along orbits except on $\Lambda$.  So defining
+$K = \{ x \in W : D^*(x) \le \frac{w}{2} \}$ we obtain $\Lambda$ attracting.
+\end{proof}
+
+\begin{enumerate}
+\item An equivalent definition of $\Lambda$ attracting is: $\exists$
+a compact neighbourhood $K$ of $\Lambda$ such that $\phi_t(K) \subset K$
+for all $t \ge 0$ and $\bigcap_{t \ge 0} \phi_t(K) = \Lambda$.  One
+way to prove the equivalence is to show that this second definition is
+equivalent to compact, invariant and asymptotically stable.  The proof
+of stability works as before and the proof of $\Leftarrow$ gives a 
+neighbourhood $K$.
+\item Similarly, it is equivalent to require either
+``$\exists$ compact $K \subset X$ and $T > 0$ such that $\phi_T(K)
+\subset \inter K$ and $\bigcap_{t \ge 0} \phi_t(K) = \Lambda$'' or
+``$\exists $ compact neighbourhood $K$ and $T > 0$ such that $\phi_T(K)
+\subset K$ and $\bigcap_{t \ge 0} \phi_t(K) = \Lambda$''.
+\end{enumerate}
+
+\section{Damped Pendulum with torque}
+
+This has the ODE $\ddot{\theta} + k \dot{\theta} + \sin \theta = F$,
+with $k, F > 0$.  The equivalent linked system is
+\begin{align*}
+\dot{\theta} &= p \\
+\dot{p} &= -k p - \sin \theta + F.
+\end{align*}
+
+Alternative motivations for this differential equation come from 
+AC electricity generation and the Josephson junction with steady current.
+
+Again, we investigate how $H = \frac{1}{2} p^2 - \cos \theta$ changes with
+time.  $\dot{H} = -k p^2 + F p$, which is $ < 0$ for $p$ outside $[0, F/k]$
+but $> 0$ for $p$ in $(0,F/k)$.  $H$ is still useful.  Let $E
+= \max_{p \in [0,F/k]} H(\theta,p)$ and choose any $E' > E$.
+
+\begin{proposition}
+For all $x_0$, $\phi_t(x_0)$ eventually enters $H < E'$ and stays there
+forever after.  So $H$ acts as a ``bounding function''.
+\end{proposition}
+
+\begin{proof}
+If $H(x) > E$ then $\dot{H} < 0$.  Let $M = \inf_{t \ge 0} H(\phi_t(x))$.
+If $M > E'$ then the flows must converge to a set of equilibria in $\{ H = M
+\}$ --- but there are none, as equilibria must have $\dot{H} = 0$.  So
+all orbits eventually enter $\{ H < E' \}$.  Once in $\{ H < E' \}$ they
+cannot escape: suppose $\tau$ is the time of first escape from
+$\{H < E'\}$ for the orbit of $x$.  Then $H(\phi_\tau(x)) = E'$.  Thus
+$\dot{H} < 0$ and it is not an escape but an entry --- giving a contradiction.
+\end{proof}
+
+We are left with analysing the dynamics in $\{ H < E'\}$.  We seek the
+equilibria, which require $p = 0$ and $\sin \theta = F$.  There are
+two equilibria if $F < 1$, one in $F = 1$ and none if $F > 1$.  Performing
+linear stability analysis gives that one equilibrium is a saddle and the
+other is a focus if $\frac{k^2}{4} < \sqrt{1 - F^2}$ and a node if
+$\frac{k^2}{4} > \sqrt{1 - F^2}$.  The process of annihilation of saddle 
+and node at $F=1$ is called a ``saddle-node bifurcation''.
+
+A number of questions spring to mind:
+
+\begin{enumerate}
+\item Where do the stable and unstable manifolds of the saddle go?  The
+unstable manifold (``separatrix'') is particularly important as it
+separates orbits which go two opposite ways at the saddle.  A reasonable
+guess is that the left branch of the stable manifold goes into the sink,
+but what about the rest?
+\item Where do the orbits go when $F > 1$, when there are no equilibria to
+converge to?
+\end{enumerate}
+
+We will tackle the second question first.  We have an annulus $A
+= \{ H < E'\}$ which no orbits can escape and which contains no equilibria.
+Imagine flattening the annulus and regarding it as a subset of $\R^2$.
+
+\subsection{The Poincar\'e - Bendixson Theorem}
+
+\begin{theorem}[Poincar\'e - Bendixson Theorem]
+If the forward orbit of $x$ ($o^+(x)$) under a $C^1$ vector field on an
+open subset $U$ of the plane lies in a compact subset of $U$ for all
+$t \ge 0$ then $\omega(x)$ is either a periodic orbit or contains an
+equilibrium.
+\end{theorem}
+
+\begin{proof}
+Given $x$ with $o^+(x)$ bounded then $\omega(x) \ne \emptyset$ (by
+compactness).  Suppose $\omega(x)$ contains no equilibria and take $y
+\in \omega(x)$.  $\omega(x)$ is compact and invariant, so
+$\omega(y) \subset \omega(x)$ and is non-empty.  Take $z \in \omega(y)$.
+Then $z$ is not an equilibrium, so there exists a $C^1$ arc $\Sigma$
+transverse to $v$ through $z$.  Then $o^+(y)$ comes arbitrarily
+close to $z$ as $t$ goes to $\infty$, so in particular it crosses $\Sigma$
+arbitrarily close to $z$.
+
+If $o^+(y)$ is not periodic then successive intersections with $\Sigma$
+are distinct (by uniqueness in backwards time).  But if the first
+two intersections are $y_1 \neq y_2$ then $o^+(x)$ is eventually bounded 
+away from $y$ (by the Jordan Curve Theorem).  So $o^+(y)$ is periodic,
+intersecting $\Sigma$ at one point only.
+
+Now $\omega(x)$ is invariant so $o^+(y) \subset \omega(x)$.  Take a
+transverse section $\Sigma'$ at $y$.  If $o^+(x)$ intersects $\Sigma'$
+at $y$ then $o^+(x)$ is periodic and $\omega(x) = o^+(y)$.  Else the
+successive intersections $x_n$ on $\Sigma'$ converge monotonically to
+$y$.  The return times $\tau_n$ converge to the period $T$ of
+$o^+(y)$, so are bounded, $\tau_n < T'$.  Thus given $\epsilon > 0$,
+$d(\phi_t(x_n), \phi_t(y)) < \epsilon$ for all $t \in [0,T']$ and
+$x_n$ close enough to $y$.  But $o^+(x_n)$ is trapped between the
+piece from $x_n$ to $x_{n+1}$ and $o^+(y)$, so $d(\phi_t(x_n), o^+(y))
+< \epsilon$ for all $t \ge 0$.  Thus $\omega(x) = o^+(y)$.
+\end{proof}
+
+\begin{definition}
+A periodic orbit $\gamma$ such that $\exists x \notin \gamma$ with
+$\omega(x) = \gamma$ is called a limit cycle.
+\end{definition}
+
+We apply Poincar\'e-Bendixson to the damped forced pendulum for $F>1$ to
+obtain that for all $x\in S_1 \times \R$, $\omega(x)$ is a periodic orbit.
+
+Now that we have the existance of a periodic orbit, we have further questions:
+
+\begin{enumerate}
+\item Is it unique?
+\item What is the homotopy class of the periodic orbit(s)?
+\item Is it (Are they) stable?
+\item What if equilibria are present?
+\item What are the possibilities when $\omega(x)$ contains an equilibrium?
+\end{enumerate}
+
+In general uniqueness may not hold -- the ideal pendulum has uncountably many
+periodic orbits.  Even when true it is hard to prove, but for the damped
+forced pendulum it is possible.  The same technique will answer questions 2
+and 3.  The simplest case is problem 2.
+
+Consider an infinitesimal parallelipiped spanned by the columns of $B$ moving
+with the flow.  The volume of the parallelipiped, $V = \det B$.
+
+\begin{theorem}
+Under a vector field $\dot{x} = v(x)$,
+\[
+\ddt{V} = (\dive v) V.
+\]
+\end{theorem}
+
+\begin{proof}
+\begin{align*}
+\det B(t+h) &= \det(B(t) + h Dv B(t) + o(h))\\
+&= \det B \left( \det (I + h Dv  + o(h) \right) \\
+&= \det B \left( 1 + h \dive v + o(h) \right) \qquad \text{as required.} 
+\end{align*}
+\end{proof}
+
+\begin{theorem}
+$\dive v < 0$ implies no invariant sets of positive volume.
+\end{theorem}
+
+\begin{proof}
+Invariance implies that $V(t)$ is constant, but $\dive v < 0$ implies 
+that $V$ decreases.
+\end{proof}
+
+\begin{proposition}
+There does not exist a contractible periodic orbit for the damped
+forced pendulum.
+\end{proposition}
+
+\begin{proof}
+Such an orbit bounds an invariant disk of area $A > 0$.  But
+$\dive v = -k < 0$, giving a contradiction.
+\end{proof}
+
+We must also have at most one non-contractible periodic orbit, for the area
+between two non-contractible periodic orbits is an invariant annulus.
+
+We now have the negative divergence test (or Dulac criterion) for non-existance
+of periodic orbits for 2D vector fields.  It is clear that
+$\dive v > 0$ is just as good, and so is $\dive (gv) \gtrless 0$ for $g > 0$,
+as
+\[
+M = \int_\Omega g\, dV \qquad \text{is a ``mass'' on $\Omega$.}
+\]
+
+\begin{theorem}
+$\dive v < 0$ in 2D also implies that periodic orbits are attracting.
+\end{theorem}
+
+\begin{proof}
+Given a periodic orbit $\gamma$ such that $\dive v < 0$ in a neighbourhood
+of $\gamma$ choose a transverse arc $\Sigma$ to $\gamma$.  Then, by continuity
+of $\phi$, the forward orbits of points of $\Sigma$ near $\gamma(0)$
+come back to $\Sigma$ close to $\gamma(0)$.  In fact, by $\dive v < 0$ they
+come back closer by a factor $e^{\int_0^T \dive v(\gamma(t))\, \ud t}$, where
+$T$ is the period of $\gamma$.  We prove this as follows.
+
+Take a volume $A$ formed by letting an arc $I$ from $\gamma(0)$ on $\Sigma$
+flow for a time $\epsilon > 0$.  After a time $T$ we obtain a skewed 
+parallelogram from $A$.  The area $A$ satisfies
+\[
+\frac{A(T)}{A(0)} \sim e^{\int_0^T \dive v(\gamma(t))\,\ud t},
+\]
+so the height must decrease as the base stays the same length -- so
+\[
+\frac{\abs{I'}}{\abs{I}} \sim e^{\int_0^T \dive v(\gamma(t))\, \ud t} < 1.
+\]
+
+Now choose an interval $J \subset \Sigma$ small enough so the above applies.
+Let $U$ be the region swept out by $\phi_t(J)$.  Then $\phi_t(U) \subset U$
+for all $t \ge 0$.  After a time $T + \delta$, $\phi_t(U) \subset U'$,
+which is the analog of $U$, but started from $J'$, the first return of $J$
+to $\Sigma$.  $U'$ is thinner than $U$ by a factor of $e^{\int \dive
+  v\, \ud t}$.
+Thus $\bigcap_{t \ge 0} \phi_t(U) = \gamma$ and $\gamma$ is attracting.
+\end{proof}
+
+We will come across other ways of testing for homotopy class, uniqueness
+and stability, but the negative divergence test is easiest if it works.
+
+For the damped forced pendulum with $F>1$, for all $x \in S_1 \times \R$,
+$\omega(x)$ is a periodic orbit and is the same for all $x \in S_1 \times \R$.
+We can get more information about it by considering ``nullclines'', curves
+on which $\dot{\theta}=0$ or $\dot{p} = 0$.
+
+Which direction does the periodic orbit rotate?  $\dot{\theta}=0$ iff
+$p = 0$ and $\dot{p} = 0$ iff $p = \frac{F - \sin \theta}{k}$.  We obtain
+this picture.
+
+\newpage
+
+$\gamma \subset \{ p > 0 \}$ because $p(0) < 0$ implies that $p$ increases
+until positive and can never go negative again.  Thus $\dot{\theta} > 0$ on
+$\gamma$. By periodicity $\gamma$ spends some time in $\dot{H} < 0$ and
+some in $\dot{H} > 0$, as $\int_\gamma \dot{H}\,\ud t = 0$.  It spends some
+time in $\dot{p} > 0$ and some in $\dot{p} < 0$.
+
+What about $0 < F < 1$?  It is important to decide where the stable and
+unstable manifolds of the saddle go.
+
+\vspace*{2in}
+
+$W_D^+$ must exit the annulus $\{ H < E' \}$ downwards and $W_L^-$
+goes at least to the $\dot{p} = 0$ nullcline.  There are three possible
+cases for the phase portrait, determined by $W_U^+$
+
+\begin{enumerate}
+\item $W_U^+$ hits $p=0$.
+\item $W_U^+$ escapes annulus.
+\item $W_U^+$ remains in annulus and converges to saddle after one revolution.
+\end{enumerate}
+
+\newpage
+
+The first case happens with small $k$, because $k=0$ conserves
+$H= \frac{1}{2} p^2 - \cos \theta -F \theta$.  This is the phase portrait.
+\vspace{2in}
+
+$W_U^+$ hits $p=0$ and hence does so for all nearby $k$.  The
+second case occurs for $k$ large.  If we rescale time by putting $s = k t$,
+then
+\begin{align*}
+\frac{\ud\theta}{\ud s} &= \frac{p}{k} \\
+\frac{\ud p}{\ud s} &= -p + \frac{F - \sin \theta}{k}.
+\end{align*}
+But $k$ is large, so we get $\frac{\ud\theta}{\ud s} = 0$ and
+$\frac{\ud p}{\ud s} = -p$.
+
+Both the first two cases are open, meaning that
+$\{ (k,F) \in (0,\infty) \times (0,1) : \text{case 1 (case 2)}\}$ is open.  But
+$(0,\infty) \times (0,1)$ is connected, so case 3 occurs in between.  In case 3
+we get homoclinic orbits --- those whose $\alpha$ and $\omega$ limit sets
+consist of equilibria but are not themselves equilibria.  For all $x$ above
+the homoclinic, $\omega(x) = \text{homoclinic} \cup \text{saddle}$.
+
+When $F = 1$ we have a ``saddle-node'' instead of the saddle and sink.
+It has JNF
+\[
+\left[
+\begin{matrix}
+0 & 0 \\ 0 & -k 
+\end{matrix}
+\right]
+\]
+and the linearised system has a line of equilibria.  The generic phase
+portrait near a saddle-node equilibrium is
+\vspace{2.5in}
+
+\begin{itemize}
+\item one sided stable manifold $W^-$ (1D)
+\item half plane stable manifold $W^+$ (2D)
+\item two sided strong stable manifold $W^{++}$ (1D)
+\end{itemize}
+
+\begin{definition}
+A strong stable manifold is a set
+\[
+\left\{
+x : d(\phi_t(x),0) \le d(x,0) e^{-\alpha t}
+\right\}
+\]
+for $\alpha > 0$ small enough.
+\end{definition}
+
+(We have the time reversed picture if the non-zero eigenvalue is positive.)
+
+For the damped pendulum with torque $F=1$ we obtain 3 cases according to
+the behaviour of $W^{++}_U$.  See the next page for the pictures.
+
+For $F=1$ and $k$ large we have a homoclinic to the saddle-node.
+\vspace{1.5in}
+
+Crossing either of the curves where there is a homoclinc to the saddle-node
+or saddle generates (or destroys) a periodic orbit in a ``homoclinic
+bifurcation''.
+
+\begin{theorem}[Extension of Poincar\'e-Bendixson]
+If $v$ is a planar $C^1$ vector field and $o^+(x)$ is bounded then
+$\omega(x)$ is non-empty, compact, connected and either a periodic orbit
+or the union of a non-empty compact set of equilibria $E$ and a possibly
+empty set of trajectories whose $\alpha$ and $\omega$ limit sets lie in
+$E$.
+\end{theorem}
+
+\begin{proof}
+It is enough to consider the case where $\omega(x)$ contains both an
+equilibrium and a non-equilibrium.  Call the non-equilibrium $\gamma(0)$
+and its trajectory $\gamma$.  Then $\omega(\gamma)$ consists of
+equilibria, else is $q \in \omega(\gamma)$ is not an equilibrium we can take
+a transverse arc $\Sigma$ through $q$ and $\gamma \cap \Sigma = \{q\}$ by
+the same argument as before and $\gamma$ is a periodic orbit.  But then
+$\omega(x) = \gamma$ by the same argument as before.  Similiarly $\alpha(x)$
+consists of equilibria.
+\end{proof}
+
+\newpage
+\subsection*{The damped forced pendulum}
+\newpage
+
+\section{The van der Pol equation}
+
+This is
+\[
+\ddot{x} + (x^2 - \beta)\dot{x} + x = 0, \qquad \beta > 0.
+\]
+
+Damping is positive for $\abs{x} > \sqrt{\beta}$ and negative for
+$\abs{x} < \sqrt{\beta}$.  A generalisation is the system
+$\ddot{x} + f(x)\dot{x} + g(x)=0$.
+
+We could write it as a system using $y = \dot{x}$, but it is more usual
+to introduce $y = \dot{x} + F(x)$, where $F(x) = \int_0^x f(x)\,\ud x$.
+Then
+\begin{align*}
+\dot{x} &= y - F(x) \\
+\dot{y} &= -g(x).
+\end{align*}
+
+This reflects the original motivation: an electronic oscillator.  We find
+the equilibria at $g(x) = 0$ and $y = F(x)$.
+
+For the van der Pol equation there is one equilbrium at the origin,
+a repelling focus  for $0 < \beta < 2$ or repelling node for $\beta > 2$.
+
+\vspace{3in}
+
+Every non-zero orbit moves from quadrant to quadrant clockwise.  We
+try to find a bounding function ($H$ such that $H$ is decreasing when large
+and $H$ is bounded below). We try $H = \frac{1}{2} y^2 + G(x)$, where
+$G(x) = \int_0^x g(x)\,\ud x$.  Now $\dot{H} = -g(x) F(x)$, so $H$ does
+not provide a bounding function, though it does tell us that the origin is
+repelling.  It will be useful to consider the change $\Delta H$ is $H$
+per half revolution.
+
+We will assume that $g(0)=0$, $g'(x) > 0$, $f(0) < 0$, $f'(x) \ge C >  0$
+so that $F(x)$ has precisely three zeroes at $a < 0 < b$.
+
+\vspace{2in}
+
+Let $Y_1$ be the first intersection of the backwards orbit of $(b,0)$ with
+the $y$ axis.  For $Y \ge Y_1$ the forward orbit of $(0,Y)$ must enter
+$x \ge b$ and hit the negative $y$ axis at $y'$.
+\begin{align*}
+\Delta H_{Y Y'} &= \int \dot{H}\,\ud t \\
+&= \int - g(x) F(x)\,\ud t.
+\end{align*}
+
+We will break the path into three pieces.
+
+\begin{align*}
+\Delta H_{Y B} & = \int_0^b \frac{-g(x) F(x)}{y - F(x)}\,\ud x \\
+&= \int_0^b \frac{g(x)}{1 - \frac{y}{F(x)}}\,\ud x \\
+&> 0 \quad \text{but decreases at $Y$ increases.  The same holds for
+$H_{B' Y'}$.}
+\end{align*}
+
+\begin{align*}
+\Delta H_{B B'} &= \int -g(x) F(x)\,\ud t \\
+&= - \int_{B'}^B F(x)\,\ud y \\
+& < 0 \quad \text{and decreases to $-\infty$ as $Y$ increases.}
+\end{align*}
+
+Hence $\Delta H_{Y Y'}$ decreases to $-\infty$ as $Y$ increases
+and starts positive at $y = Y_1$. It thus has a unique zero $Y_0$ in between.
+If we assume further that $g$ and $F$ are both odd then the phase portrait is
+symmetric with respect to reflection in $y=-x$ and so the unique zero
+corresponds to a unique periodic orbit.  It attracts the orbit of all non-zero
+points because they must cross the $y$ axis and then $H$ is driven
+monotonically to $H_0 = H(0,Y_0)$ at successive intersections.
+
+If we do not assume odd symmetry then we need to consider the full revolution
+to the positive $y$ axis. If we let $Y_2$ be the first intersection with
+the positive $y$ axis of the backward orbit from $(a,0)$ then
+for $Y > \max Y_1, Y_2$ we can divide the orbit into five pieces and
+deduce that $\Delta H_{\text{one revolution}}$ decreases as $Y$ increases.
+Also, for $0 < Y \le \min Y_1, Y_2$, $\Delta H > 0$.
+Thus there must be a zero of $\Delta H > 0$, but we can no longer be sure
+that it is unique.  In general the question of the number of periodic orbits
+is hard.
+
+\subsection{Topics arising from the van der Pol equation}
+
+\subsubsection*{Hopf bifurcation}
+
+As $\beta$ decreases through zero our periodic orbit shrinks to $0$ at
+$\beta=0$ and is annihilated.  Similarly the source at $0$ turns into a sink
+which attracts all orbits.
+
+\vspace{2.5in}
+
+This is called Hopf bifurcation (Andronov, Poincar\'e).  It is very common,
+for instance feedback in a PA system as gain is increased, singing wires in
+the wind as speed passes a critical value.
+
+\subsubsection*{Nearly conservative systems}
+
+For $\beta$ small it is only interesting to consider $x$ small since energy
+decreases for large amplitude ($x \sim \sqrt{\beta}$).  Then the equation
+is close to the harmonic oscillator $\ddot{x} + x = 0$.  We can use
+this to determine the approximate size and shape of the periodic orbit.  We
+compute $\Delta H = \oint -g(x) F(x)\,\ud t$ around a periodic orbit of the
+harmonic oscillator with radius $r$.
+
+\begin{align*}
+\Delta H &= \oint -r \cos t \left(\frac{r^3}{3} \cos^3 t - \beta r \cos t
+\right)\,\ud t \\
+&= \pi r^2 \left( \beta - \frac{r^2}{4} \right). 
+\end{align*}
+
+To first order in $\beta$ we expect the periodic orbit of the van der Pol
+oscillator to be close to the periodic orbit of the harmonic oscillator
+for which $\Delta H = 0$, thus $r \approx 2 \sqrt{\beta}$ and
+$T \approx 2 \pi$.
+
+\subsubsection*{Relaxation Oscillators}
+
+For $\beta$ large, what is the periodic orbit?  We rescale $x$ by
+$\sqrt{\beta}$ and $y$ by $\beta^{\frac{3}{2}}$ to obtain
+\begin{align*}
+\dot{x} &= \beta \left( y - \frac{x^3}{3} \right)  + x \\
+\dot{y} &= - \frac{x}{\beta}.
+\end{align*}
+
+If $\beta$ is large then $\dot{x}$ is large unless
+$y \approx \frac{x^3}{3} -x$. Then $\dot{y} = \frac{-x}{\beta}$ gives the
+direction of motion along the curve until the turning points.
+
+\vspace{2.5in}
+
+We can get the approximate period by integrating $\ud t$ over the slow phases:
+
+\[
+T \approx 2 \int_{-\frac{2}{3}}^{\frac{2}{3}} \frac{\ud y}{\dot{y}}.
+\]
+
+We use $y \approx \frac{x^3}{3} - x$ and $\ud y = (x^2 - 1) \ud x$.  Thus
+$T \approx \frac{\beta}{2}\left( 3 - 2 \log 2\right)$ for large $\beta$.
+
+\subsubsection*{Poincar\'e Index}
+
+Continuity of the vector field imposes strong restrictions of the possible
+arrangements of equilibria and limit cycles.
+
+Given a vector fields $v$ on $\R^2$ and any simple closed curve $\gamma$
+on which $v \neq 0$ define the index of $\gamma$ to be the number of times
+$v$ rotates around $0$ for one revolution around $\gamma$ (taken
+anticlockwise).
+
+For instance, a small curve around an attracting focus has index $+1$ and
+a small curve around a saddle has index $-1$.
+
+\vspace{1in}
+
+\begin{itemize}
+\item Index is preserved under continuous deformations of $\gamma$ in
+the clan of curves such that $v \neq 0$ on them.  We can therefore defined
+the index of an isolated equilibrium to be the index of all small enough
+curves aroung it.  Attracting and repelling foci/nodes, improper nodes,
+stars and centres have index $+1$, whereas saddles have index $-1$.  The
+index of a small curve surrounding no equilibria is $0$.
+\item The index of a ``sum'' of closed curves is the sum of the indices.
+\item Hence the index of $\gamma$ is the sum of the indices of the equilibria
+inside $\gamma$.
+\item Index of a periodic orbit is $+1$.
+\end{itemize}
+
+So every periodic orbit must surround at least one equilibrium and the
+sum of the indices of the equilibria surrounded must be $+1$.
+
+\subsubsection*{Floquet multipliers of a periodic orbit}
+
+Take a transverse section $\Sigma$ to $\gamma$ and let $f \colon \Sigma
+\mapsto \Sigma$ be the first return map.  Then $\gamma(0)$ is a fixed
+point of $f$.
+
+\begin{definition}
+$\lambda = f'(\gamma(0))$ is the (Floquet) multiplier of $\gamma$.
+\end{definition}
+
+$\lambda$ does not depend on the choice of $\Sigma$ and $\lambda > 0$ for
+orientable surfaces.  If $\abs{\lambda} < 1$ the periodic orbit
+is attracting and if $\abs{\lambda} > 1$ the periodic orbit is repelling.
+We say that $\gamma$ is hyperbolic is $\abs{\lambda} \neq 1$.
+
+In higher dimensions, the multipliers are the eigenvalues of $Df_{\gamma(0)}$.
+
+\chapter{Bifurcations of 2D flows}
+
+We have seen that the dynamics of planar vector fields is fairly simple ---
+the $\omega$-limit sets are of limited types.  There can be interesting changes
+in qualitative behaviour as parameters are varied (bifurcations).
+
+\section{Structural stability}
+
+The first step is a non-bifurcation result.
+
+\begin{theorem}[Andronov-Pontryagin]
+Suppose a $C^1$ vector field $v$ points inwards on the disk
+$D^2 \subset \R^2$, flow $\phi$ all its equilibria and periodic orbits
+are hyperbolic and there are no saddle connections, then the flows
+$\tilde{\phi}$ for all $C^1$-close vector fields $\tilde{v}$ are topologically
+equivalent, that is
+\[
+\tilde{\phi}_{\tau(t,x)}(h(x)) = h(\phi_t(x))
+\]
+for some near-identity homeomorphism $h \colon D^2 \mapsto D^2$ and
+continuous $\tau \colon \R_+ \times D^2 \mapsto \R_+$ which is
+an orientation-preserving homeomorphism of $\R_+$ for each $x \in D^2$
+and $\tau(t,\phi_s(x)) = \tau(t+s,x)$.
+\end{theorem}
+
+Vector fields $v$ such that all $C^1$-close $\tilde{v}$ have topologically
+equivalent flows are called ``structurally stable''.
+
+\begin{note}
+The $C^1$-norm is $\norm{v}_1 = \sup_{x \in D^2} \max \left( \abs{v(x)},
+\norm{Dv(x)}\right)$.
+\end{note}
+
+We'll prove a small part of this and then investigate what happens
+when any of the hypotheses are not satisfied.
+
+\begin{definition}
+An equilibrium $x$ of a $C^1$ vector field $v$ is non-degenerate if $0$ is
+not an eigenvalue of $Dv_x$.
+\end{definition}
+
+\begin{theorem}[Persistence of non-degenerate equilibria]
+If $x_0$ is a non-degenerate equilibrium of $C^1$ vector field $v_0$
+and $U$ is a neighbourhood of $x_0$ then there exists a subneighbourhood
+$V$ and $\epsilon > 0$ such that $\norm{v-v_0}_1 < \epsilon$ on $V$
+implies that $v$ has a unique equilibrium $\tilde{x} \in V$, and it is
+non-degenerate and depends $C^1$ on $v$.
+\end{theorem}
+
+This is an application of the Implicit Function Theorem, an important
+result in analysis which we will use frequently.  Here is a general statement.
+
+\begin{theorem}[Implicit Function Theorem]
+Let $X$, $Y$ and $Z$ be open subsets of complete normed vector spaces
+and $F \colon X \times Y \mapsto Z$ be $C^1$.  Suppose $F(x_0,y_0) = z_0$
+and $\pd{F}{x} \colon X \mapsto Z$ is invertible there.  Then for all
+small enough neighbourhoods $V$ of $x_0$ there exists a neighbourhood
+$W$ of $y_0$ such that $y \in W$ implies that $\exists! \tilde{x}(y) \in V$
+with $F(\tilde{x}(y),y) = z_0$.  Furthermore, $\pd{F}{x}$ is invertible
+at $(\tilde{x}(y),y)$ and the mapping $\tilde{x} \colon W \mapsto V$
+is $C^1$, with $\frac{\ud\tilde{x}}{\ud y} = - \left[
+\pd{F}{x} \right]^{-1} \pd{F}{y}$.
+\end{theorem}
+
+We will not prove this here, but we will apply it to three cases.
+
+\subsubsection*{Persistence of Equilibria}
+Given a $C^1$ vector field $v$ on $\R^n$, let $F(x,v) = v(x)$,
+$F \colon \R^n \times \text{``$C^1$ vector fields''} \mapsto \R^n$.
+If we have a vector field $v_0$ and equilibrium $x_0$, $F(x_0,v_0)=0$.  If
+$\pd{F}{x}$ is invertible at $(x_0,v_0)$ then there is a locally unique
+equilibrium $\tilde{x}(v)$ for each $v$ near $v_0$.  We conclude by
+saying that $\pd{F}{x}=\pd{v}{x}$ is invertible if no eigenvalue is $0$.
+
+\subsubsection*{Return map to a $C^1$ transverse section for a $C^1$ vector
+field is $C^1$}
+Suppose $\Sigma$ is a given $C^1$ transverse section to $v$.  Suppose it is
+given by choosing 1 co-ordinate $x_n$ for which $v_n$ is non-zero on $\Sigma$
+and let $x'$ stand for the remaining co-ordinates.  Then $\Sigma$ has form
+$x_n = \zeta(x')$ for some $C^1$ $\zeta$.  We can also write $\Sigma$ as
+$\{ x : \alpha(x) = 0 \}$ for $C^1$ $\alpha$.
+
+Now $v$ induces a $C^1$ flow $\phi \colon \R \times \R^n \mapsto \R^n$,
+$t \times x \mapsto \phi_t(x)$.  Suppose $\Bar{x} \in \Sigma$ and
+$\phi_{\Bar{t}}(\Bar{x}) \in \Sigma$ for some $\Bar{t}>0$.  Then we
+would like to deduce that $\exists$ $C^1$ $\tilde{t}(x)$, $\Sigma \mapsto
+\R$ such that $f(x) = \phi_{\tilde{t}(x)}(x) \in \Sigma$, so the
+return map $f$ is $C^1$.  We apply the IFT to
+\[
+F \colon ( x',t) \mapsto \alpha(\phi_t(x',\zeta(x'))).
+\]
+Now $F(\Bar{x}',\Bar{t}) = 0$ and $\pd{F}{t} = d\alpha\, v(\phi_t(x',\zeta(x'))
+\neq 0$, so it is invertible.  Hence there exists a locally unique
+$\tilde{t}(x')$ such that $F(x',\tilde{t}(x'))=0$.  The return time
+$\tilde{t}$ is $C^1$.
+
+\subsubsection*{Persistence of non-degenerate periodic orbits}
+
+\begin{definition}
+A periodic orbit is non-degenerate if it has no Floquet multiplier $+1$.
+\end{definition}
+
+A periodic orbit of $v$ corresponds to a fixed point of the return map $f$
+to some transverse section $\Sigma$.  Non-degenerate means that
+$(I - D f_x)$ is invertible.  It can be proved that $f$ depends $C^1$ on
+$v$.  The equation to solve for a fixed point of $f$ if $f(x,v)=x$.  We
+apply the IFT to $F(x,v) = f(x,v) - x$, $F \colon \Sigma \times 
+\text{``$C^1$ vector fields''} \mapsto \Sigma$.  Now $\pd{F}{x}$ is
+invertible, so we \emph{can} apply the IFT to get the required result.
+
+\section{Saddle-node equilibria}
+
+\begin{definition}
+A \emph{saddle-node} is an equilibrium with an eigenvalue $0$, but this
+does not suffice to determine the local phase portrait.  In addition we
+require :-
+\begin{enumerate}
+\item $0$ is a simple eigenvalue (multiplicity $1$),
+\item there is no other spectrum on the imaginary axis,
+\item a non-degeneracy assumption on the quadratic part of the Taylor
+expansion (to be revealed later).
+\end{enumerate}
+\end{definition}
+
+The linearised picture has a line of equilibria, which is not typical in
+nonlinear systems.  We will find that all sufficiently smooth nonlinear
+systems possess an invariant curve tangent to the $0$-eigenvector such
+that the motion relative looks the same (topological equivalence) as for
+the linear system, but the dynamics on the invariant curve is in general
+non-trivial.  This invariant curve is called a centre manifold $W^c$.
+
+\vspace{1in}
+
+\begin{theorem}[Centre manifold theorem]
+Given an equilibrium with some spectrum on the imaginary axis, let
+$E^c$ be the span of eigenvectors corresponding to eigenvalues on the
+imaginary axis and let $E^h$ be the span of eigenvectors corresponding to
+eigenvalues off the imaginary axis.  Choose the corresponding co-ordinate
+system $(c,h)$ and write the vector field as $\dot{c} = C(c,h)$,
+$\dot{h} = H(c,h)$.  Then there is a locally invariant submanifold of the
+form $h = W(c) = o(\abs{c})$ and the dynamics is topologically
+equivalent to
+\[
+\begin{cases}
+\dot{c} = C(c,W(c)) \\
+\dot{h} = \pd{H}{h}|_0 . h
+\end{cases}.
+\]
+\end{theorem}
+
+We will not prove this theorem, but knowing the result we can compute
+$W^c$ to any desired accuracy by searching for it as a Taylor series
+and comparing coefficients.  The goal is to determine the dynamics
+$\dot{c} = C(c,W(c))$ on $W^c$ to sufficiently high order to determine
+its topological type.
+
+\begin{example}
+\[
+\begin{cases}
+\dot{x} = x^2 + xy + y^2 = X(x,y) \\
+\dot{y} = -y + x^2 + xy = Y(x,y)
+\end{cases}
+\]
+\end{example}
+
+\begin{proof}[Solution]
+This is already in a good co-ordinate system, $c=x$ and $h=y$.  We look
+for $y = W(x) = a_2 x^2 + a_3 x^3 + a_4 x^4 + \dots$.  Invariance means
+that the two expressions for $\dot{y}$ on $y = W(x)$ must be equal.
+
+\begin{enumerate}
+\item $\dot{y} = Y(x,W(x)) = -(a_2 x^2 + a_3 x^3 + a_4 x^4 + \dots)
++ x^2 + x(a_2 x^2 + a_3 x^3 + \dots)$
+\item $\dot{y} = \pd{W}{x} X(x,W(x)) = (2 a_2 x + 3 a_3 x^2 + \dots)
+(x^2 + x(a_2 x^2 + \dots) + (a_2 x^2 + \dots)^2)$.
+\end{enumerate}
+
+Comparing coefficients yields $y= x^2 - x^3 + o(x^4)$ and the dynamics
+on $W^c$ is $\dot{x} = X(x,W(x)) = x^2 + x^3 - 2x^5 + o(x^5)$.  The
+first term suffices to determine local topological type and the full local
+phase portrait is as above.
+\end{proof}
+
+\begin{example}[Damped pendulum with $F=1$]
+\[
+\begin{cases}
+\dot{\theta} = p \\
+\dot{p} = -k p - \sin \theta + 1
+\end{cases}
+\]
+has an equilibrium at $(\frac{\pi}{2},0)$ with eigenvalue $0$.
+\end{example}
+
+\vspace{1in}
+
+\begin{proof}[Solution]
+  It is not necessary to transform to co-ordinates in which $E^c$ and
+  $E^h$ are axes.  We just need to shift the origin to
+  $(\frac{\pi}{2},0)$ by using $\phi = \theta - \frac{\pi}{2}$ and
+  look for an invariant manifold tangent to $E^c$.  We set $p = a_2
+  \phi^2 + a_3 \phi^3 + \dots$ and compare coefficients.  After some
+  fiddling we get the center manifold $p = \frac{1}{2k} \phi^2 -
+  \frac{1}{2k^3} \phi^3 + O(\phi^4)$ with motion
+  $\dot{\phi} = \frac{1}{2k} \phi^2 - \frac{1}{2k^3} \phi^3 + O(\phi^4)$.
+  Again the local picture is determined by the first term.
+\end{proof}
+
+We can now give the non-degeneracy condition referred to earlier:
+the quadratic part of the vector field on the centre manifold is non-zero.
+
+\begin{notes}
+\begin{enumerate}
+\item Centre manifolds are in general not unique, for instance $\dot{x} =x^2$,
+$\dot{y}= - y$: we can take any trajectory on the left $\cup$ the positive
+$x$ axis.
+\item But they all have the same Taylor expansion.
+\item There is not necessarily any analytic centre manifold, and the Taylor
+expansion need not converge, or if it does the limit need not be a centre
+manifold.
+\end{enumerate}
+\end{notes}
+
+Now we want to find out what happens to a saddle-node if we change some
+parameters of the vector field.  We consider the damped forced pendulum
+with $F = 1+\mu$. We add the equation $\dot{\mu} = 0$ and compute the
+2D centre manifold $p=W(\phi,\mu)$ of the extended system, which should
+be tangent to the span of the eigenvectors and generalised eigenvectors
+for eigenvalue $0$, that is
+\[
+\begin{pmatrix}
+1 \\ 0 \\ 0
+\end{pmatrix}
+\qquad \text{and} \qquad
+\begin{pmatrix}
+0 \\ \frac{1}{k} \\ 1
+\end{pmatrix}.
+\]
+
+We write $p = \frac{\mu}{k} + a_{11} \phi^2 + a_{12} \phi \mu  + a_{22} \mu^2
++ \dots$ and fiddle a bit to get
+$p = \frac{\mu}{k} + \frac{1}{2 k} \phi^2 - \frac{1}{k^3} \phi \mu
++ \frac{1}{k^5} \mu^2 + \dots$, and the dynamics on the centre manifold is
+\[
+\begin{cases}
+\dot{\phi} = \frac{\mu}{k} + \frac{1}{2 k} \phi^2 + o(\phi^2 + \abs{\mu}) \\
+\dot{\mu} = 0
+\end{cases}.
+\]
+
+This is easy to analyse, we have a curve of equilibria $\mu = -\frac{1}{2}
+\phi^2 + o(\phi^2)$ and so have an attracting and repelling equilibrium for
+each $\mu < 0$ and no equilibria for $\mu > 0$.
+
+\vspace{1.75in}
+
+We put in contracting dynamics in the $p$ direction to obtain the following
+transition.
+
+\vspace{1.75in}
+
+This is called a saddle-node bifurcation.  We obtain an equivalent picture
+whenever we have a saddle-node equilibrium for $\mu = 0$ such that the
+coefficient $a \neq 0$ in the CM flow
+\[
+\begin{cases}
+\dot{\phi} = a \mu + b \phi^2 + o(\phi^2 + \abs{\mu}) \\
+\dot{\mu} = 0
+\end{cases}.
+\]
+
+\section{Other cases of degenerate equilibria}
+
+If either $a$ or $b$ is zero we need to compute the flow on the centre
+manifold to higher order.
+
+\subsubsection*{The transcritical bifurcation}
+
+\parbox{3in}
+{Here, $a=0$ and $b \neq 0$ and $\dot{x} = b x^2 + c x \mu + d\mu^2 + O(3)$
+with $c^2 > 4 b d$.  Then we obtain two curves of equilibria, both
+transverse to $\mu = const$ and the dynamics looks like this.}
+
+\begin{proof}
+If we ignore $O(3)$ the equation for equilibria gives a line pair through
+$(x,\mu) =  (0,0)$.  Write it as $PQ = 0$ by factorising the quadratic.
+Then to prove that there is a curve of equilibria near $P=0$,
+for $F(P,Q) = PQ + O(3)$ write $G(R,Q) = F(RQ,Q) = RQ^2 + Q^3 O(1)$ and
+then let $H(P,Q) = \frac{G}{Q^2} = R + Q O(1)$.  Then $\pd{H}{R}$ is
+invertible and $H(0,0) = 0$, so by the IFT there is a locally unique solution
+$R=R(Q)$, ie $P = QR(Q)$.
+\end{proof}
+
+The transcritical bifurcation is common where $0$ is always an equilibrium.
+
+\subsubsection*{The pitchfork bifurcation}
+
+\parbox{3in}
+{In this case $a=b=0$,
+\[
+\dot{x} = c x \mu + d \mu^2 + e x^3 +o(x^3 + \mu^2),
+\]
+with $c,e \neq 0$.  There exist two curves of equilibria,
+$x \sim - \frac{d}{c} \mu$ and $\mu \sim - \frac{e}{c} x^2$.  This is
+clear if there is no remainder, and if the remainder is present the
+IFT can be applied to scaled problems for $x = \mu \xi(\mu)$ and
+$\mu = x^2 \nu(x)$.
+}
+
+The picture depends on the sign of $c$ and $e$.  It is ``supercritical''
+if $ce < 0$ --- one attracting equilibrium gives two attracting and one
+repelling as $c \mu$ increases.  It is ``subcritical'' if $ce > 0$, in
+this case one repelling equilibrium gives two repelling and one
+attracting as $c \mu$ increases.
+
+The pitchfork is common in systems with odd symmetry,
+$\dot{x}(-x,\mu) = - \dot{x}(x,\mu)$.  Then $a=b=d=0$.
+
+\subsection{Imperfections}
+
+If a one-parameter family of vector fields $v_\mu$ has a saddle-node
+bifurcation and then we make a small change to the family, represented
+by an additional parameter $\epsilon$, then we can make a 3D centre manifold
+$(x,\mu,\epsilon)$.  (By the IFT) The curve $\mu \sim -\frac{b}{a} x^2$ of
+equilibria for $\epsilon = 0$ persists to a curve $\mu \sim -\frac{b}{a} x^2 +
+\epsilon g(x,\epsilon)$ for some $g$, but all this does for small
+$\epsilon$ is to move the saddle-node bifurcation by $O(\epsilon)$ in
+$(x,\mu)$, giving a topologically equivalent bifurcation.
+\vspace{1.5in}
+
+On a transcritical bifurcation
+\[
+\dot{x} = b x^2 + c x \mu + d \mu^2 + O(3) + \epsilon f(x,\mu,\epsilon)
+\qquad \text{on the centre manifold.}
+\]
+We find generically one of two cases for $\epsilon > 0$ (depending on
+$f$).
+\vspace{1.5in}
+
+Lastly we consider the effect of imperfection on a pitchfork.
+$\dot{x} = c x \mu + d \mu^2+ ex^3 + o(x^3 + \mu^2) + \epsilon
+f(x,\mu,\epsilon)$ on the centre manifold.
+Generically the pitchfork breaks as shown (or the other way!).
+
+\section{Hopf Bifurcation}
+
+Another way the hypotheses of Andronov-Pontryagin is if there is
+an equilibrium with a pair of eigenvalues on the imaginary axis.  Suppose
+they are simple and there is no other spectrum on the imaginary axis.
+
+Suppose we have a one-parameter family of vector fields going through this
+case at $\mu=0$.  Then the equilibrium persists and moves smoothly with
+$\mu$, so we could shift the origin as a function of $\mu$ to keep the
+equilibrium at $0$.  Furthermore, simple eigenvalues of a matrix
+$A_\mu$ move smoothly with $\mu$.  Thus we have eigenvalues
+$\alpha(\mu) \pm \imath \beta(\mu)$ with $\alpha(0) = 0$ and
+$\beta(0) \neq 0$. Take a centre manifold and use polar co-ordinates
+$(r,\theta,\mu)$.
+
+\begin{theorem}
+  Suppose $\alpha'(\mu) \neq 0$.  Then, for $r$ small, $\exists$ a
+  smooth function $\tilde{\mu}(r) \colon \R_+ \mapsto \R$ such that
+  for $\mu = \tilde{\mu}(r)$ the orbit of $(r,\theta=0)$ is periodic
+  and $\tilde{\mu}(0) = 0$, $\tilde{\mu}'(0) = 0$.
+\end{theorem}
+
+\begin{proof}
+WLOG use co-ordinates so that the linear part is 
+\[
+\begin{bmatrix}
+\dot{x} \\ \dot{y}
+\end{bmatrix}
+=
+\begin{bmatrix}
+\alpha(\mu) & - \beta(\mu) \\
+\beta(\mu) & \alpha(\mu)
+\end{bmatrix}
+\begin{bmatrix}
+x \\ y
+\end{bmatrix}
+\]
+
+and WLOG $\alpha'(\mu) > 0$, $\beta(\mu)>0$.  Then, switching to polars,
+$\dot{r} = \alpha(\mu) r + O(r^2)$ and $\dot{\theta} = \beta(\mu) + O(r)$.
+So $\frac{\ud r}{\ud\theta}= \frac{\alpha(\mu)}{\beta(\mu)} r + O(r^2)$.
+Then the return map from $\theta=0$ to $\theta = 2\pi$ is well defined:
+$r' = \rho(r,\mu)$.  Now $\exists$ a periodic orbit through $r>0$,
+$\theta=0$ iff $\rho(r,\mu)=r$.  It is most convenient to write this as
+\[
+F(\mu,r) = \log \rho (\mu,r) - \log r = 0.
+\]
+
+Since $\frac{\ud}{\ud\theta} \log r = \frac{\alpha}{\beta} + O(r)$,
+$F(\mu,r) = \frac{2 \pi \alpha(\mu)}{\beta(\mu)} + O(r)$,
+so we can extend $F$ to $r=0$.  Now $F(0,0)=0$ and $\pd{F}{\mu}(0,0)
+= \frac{2 \pi \alpha'(0)}{\beta(0)} \neq 0$, so we can apply
+the IFT to deduce a locally unique curve of solutions $\mu = \tilde{\mu}(r)$,
+provided we show that $F$ is $C^1$.  Now $F$ is $C^1$ for $r>0$ by the
+basic theorem of ODEs extended to time- and parameter-dependent vector fields.
+But what about at $r=0$?
+
+To tackle this we will perform some further co-ordinate changes to simplify
+the differential equations.  It is easiest to do this in the complex
+co-ordinate $z = r e^{\imath \theta} = x + \imath y$.  The linear part
+is already in the form $\dot{z} = \lambda z$ where $\lambda = \alpha
++ \imath \beta$.  Suppose we have a Taylor expansion
+\[
+\dot{z} = \lambda z + a_{11} z^2 + a_{12} z \Bar{z} + a_{22} \Bar{z}^2
++ O(\abs{z}^3) \qquad a_{11}, a_{12}, a_{22} \in \C.
+\]
+
+We seek to eliminate the quadratic terms by change of variable
+\[
+z = w + b_{11} w^2 + b_{12} w \Bar{w} + b_{22} \Bar{w}^2
+\qquad b_{11}, b_{12}, b_{22} \in \C.
+\]
+The inverse function theorem gives
+$w = z - b_{11} z^2 - b_{12} z \Bar{z} - b_{22} \Bar{z}^2 + O'(\abs{z}^3)$
+Then (after substituting and fiddling), we find that if we choose
+\begin{align*}
+b_{11} &= \frac{a_{11}}{\lambda} \\
+b_{12} &= \frac{a_{12}}{\Bar{\lambda}} \\
+b_{22} &= \frac{a_{22}}{\alpha - 3 \imath \beta}
+\end{align*}
+
+we eliminate all quadratic terms to obtain $\dot{w} = \lambda{w} +
+O(\abs{w}^3)$.  Now use polar co-ordinates $w = r e^{\imath \theta}$
+to obtain $\frac{\ud}{\ud\theta} \log r = \frac{\alpha}{\beta} +
+O(r^2)$.  Then $F = \log \rho(\mu,r) - \log r = 2 \pi
+\frac{\alpha(\mu)}{\beta(\mu)} + O(r^2)$ is $C^1$ at $r=0$ also with
+$\pd{F}{r} = 0$.  So the IFT gives a locally unique solution $\mu =
+\tilde{\mu}(r)$ for $r$ small and $\tilde{\mu}(0) = 0$,
+$\tilde{\mu}'(0) = 0$.
+\end{proof}
+
+\subsubsection*{Remarks}
+
+In fact $\alpha'(\mu) > 0$ WLOG, and then for $(\mu,r)$ small, $F(\mu,r) < 0$
+for $\mu < \tilde{\mu}(r)$ so intersections with $\theta=0$ move towards $0$
+and for $\mu > \tilde{\mu}(r)$, $F(\mu,r) > 0$ and intersections with
+$\theta=0$ move away from $0$.
+
+If we carry out the elimination to higher order we can determine the
+topological type of the flows for $(\mu,r)$ small.
+
+Suppose $\dot{w} = \lambda w + a_{111} w^3 + a_{112}w^2\Bar{w}
++ a_{122}w \Bar{w}^2 + a_{222} \Bar{w}^3 + O(\abs{w}^4)$.  We try to
+eliminate all cubic terms by change of variable
+$w = v + b_{111} v^3 + b_{112}v^2\Bar{v} + b_{122}v \Bar{v}^2 + b_{222}
+\Bar{v}^3$.  We find that we cannot eliminate all the cubic terms, the
+best we can do is if we choose
+\begin{align*}
+b_{111} &= \frac{a_{111}}{2 \lambda} \\
+b_{112} & = 0 \\
+b_{122} & = \frac{a_{122}}{2 \Bar{\lambda}} \\
+b_{222}  &= \frac{a_{222}}{3 \Bar{\lambda} - \lambda}
+\end{align*}
+and we reduce the equation to $\dot{v} = \lambda{v}
++ a v^2 \Bar{v} + O(\abs{v}^4)$, where $a=a_{112}$.  This is called
+a ``normal form''.  In polars,
+\[
+\begin{cases}
+\dot{r} = \alpha r + \Re(a)\, r^3 + O(r^4) \\
+\dot{\theta} = \beta + \Im(a)\, r^2 + O(r^3)
+\end{cases},
+\]
+so we expect a periodic orbit of radius $r \sim \sqrt{-\frac{\alpha(\mu)}
+{\Re(a)}}$.
+
+Now $\frac{\ud}{\ud\theta} \log r = \frac{\alpha + \Re(a)\, r^2}{\beta
++ \Im(a)\, r^2} + O(r^3)$ and 
+\[
+F = \left[ \log r \right]_\theta^{2 \pi}
+= \frac{2 \pi}{\beta} \left(\alpha + \Re(a)\, r^2 \right)
+\left(1- \frac{\Im(a)}{\beta} r^2 \right) + O(r^3).
+\]
+
+Thus the solution curve has $\mu \sim - \frac{\Re(a)}{\alpha'(\mu)}r^2$.
+WLOG $\alpha'(\mu) > 0$.  If $\Re(a) < 0$ we get a supercritical bifurcation
+and if $\Re(a) > 0$ we get a subcritical bifurcation.
+
+\vspace{1.5in}
+
+\section{Homoclinic Bifurcation}
+
+A third way in which Andronov-Pontryagin can fail is if there is a saddle
+connection.  Let's consider the simplest interesting case: a 2D vector
+field with a saddle and a homoclinic orbit to it.  Suppose this occurs at
+$\mu=0$ in a smooth one-parameter family of vector fields $v_\mu$.
+
+The saddle is hyperbolic (and therefore persistent), so we can take it
+at $0$ for all $\mu$.  It can also be proved that the local stable
+and unstable manifolds $W_\epsilon^\pm = \{ x : d(\phi_t(x),0)
+\le \epsilon\ \forall t \gtrless 0\}$ respectively, for $\epsilon$ small,
+vary smoothly with $\mu$, so for any $t>0$ so do $\phi_{\pm t}$ and
+$W_\epsilon^\pm$.  In particular, if we choose a transverse section $\Sigma$
+to the homoclinic orbit at $\mu = 0$ then the first intersections of
+$\phi_{\pm t}(W_\epsilon^\pm)$ with $\Sigma$ vary smoothly with $\mu$.
+
+\parbox{3in}
+{Choose a co-ordinate $s$ along $\Sigma$ with $s^+ = 0$ WLOG for all $\mu$,
+oriented as shown.  Assume $\frac{\ud s^-}{\ud\mu} \neq 0$ (WLOG $>0$)
+and analyse the first return map from $s>0$ to $s'$ on $\Sigma$.
+
+Clearly $\lim_{s \to 0} s'(s) = s^-$ and $s'(s)$ is increasing, but
+results will depend crucially on the slope $\frac{\ud s'}{\ud s}$.  This is
+decided by the eigenvalues of the saddle as follows.}
+
+We can choose co-ordinates (depending smoothly on $\mu$) so that the
+linearisation at $0$ is
+\[
+\begin{cases}
+\dot{x} = - \alpha(\mu) x \\
+\dot{y} =  \beta(\mu) y
+\end{cases},
+\quad \text{where $-\alpha < 0$ and $\beta > 0$ are the eigenvalues.}
+\]
+
+Furthermore we make $W_\epsilon^\pm$ go exactly along the axes
+\[
+\begin{cases}
+\dot{x} = -x f(x,y,\mu) \\
+\dot{y} =  y g(x,y,\mu)
+\end{cases}
+\text{near $0$} \qquad
+\begin{matrix}
+f(0,0,\mu) = \alpha \\
+g(0,0,\mu) = \beta.
+\end{matrix}
+\]
+
+Then we compute the ``transit map'' from $x=\xi$ to $y=\eta$, $\xi, \eta$
+small.
+
+\begin{align*}
+\Delta \log x &= \int \frac{\dot{x}}{x}\, \ud t
+= \int \frac{\dot{x}}{x \dot{y}}\,\ud y =
+\int - \frac{f(x,y)}{g(x,y)}\,\ud(\log y) \\
+&\sim - \frac{\alpha}{\beta} \Delta \log y.
+\end{align*}
+
+The slope is given by $\frac{\delta x_1}{\xi} \sim \frac{\alpha}{\beta \eta}
+\left( \frac{y_0}{\eta} \right)^{\frac{\alpha}{\beta}-1}$.  This cannot
+be deduced by differentiation.  Instead use volume changes by a factor
+$e^{\int \dive v\, dt}$.  Thus
+\[
+\frac{\delta x_1 \frac{\dot{y}}{\eta}}{\delta y_0 \frac{\dot{x}}{\xi}}
+= e^{\int \dive v\,\ud t} \sim e^{(b-a)T},
+\]
+where the transit time
+\[
+T = \int \ud t = \int \frac{\ud y}{\dot{y}} = \int \frac{\ud y}{y g}
+\sim \frac{1}{\beta} \Delta \log y = \frac{1}{\beta} \log \frac{\eta}{y_0}.
+\]
+\parbox{3in}{
+So $\frac{\delta x_1}{\delta y_0} \sim \frac{ \alpha \xi}{\beta \eta}
+\left( \frac{y_0}{\eta} \right)^{\frac{\alpha}{\beta}-1}.$
+Caution: the $\sim$ is not strong enough to deduce behaviour for
+$\alpha = \beta$.  To obtain the return map to $\Sigma$ we must compose
+3 maps.  The first and third are diffeomorphisms, as they are achieved in
+bounded time, so they do not change the power law of the second map.
+Hence we obtain:}
+
+\vspace{2in}
+
+For $\alpha > \beta$ an attracting periodic orbit is born as $\mu$ increases
+through $0$.  For $\alpha < \beta$ a repelling periodic orbit is destroyed
+as $\mu$ increased through $0$.  The case $\alpha = \beta$ requires further
+analysis.
+
+\vspace{1.5in}
+
+The period of the periodic orbit is dominated by the time spent near the
+saddle.  For $\alpha > \beta$ it has $y_0 \sim C \mu$ for some $C$,
+so $T \sim \frac{1}{\beta} \log \frac{\eta}{C \mu} \to \infty$ as $\mu 
+\searrow 0$.  For $\alpha < \beta$ it has $x_1 \sim - C \mu$, so
+\[
+T = \int \frac{\ud x}{\dot{x}} \sim - \frac{1}{\alpha} \log \frac{x_1}{\xi}
+\sim \frac{1}{\alpha} \log \frac{\xi}{C \abs{\mu}}
+\to \infty \text{ as } \mu \nearrow 0.
+\]
+
+Let's compute its Floquet multiplier.  If $\alpha > \beta$
+\[
+\text{slope at fixed point }
+\sim C' \left(\frac{y_0}{\eta}
+\right)^{\frac{\alpha}{\beta} - 1} \sim C' 
+\left( \frac{C \mu}{\eta}
+\right)^{\frac{\alpha}{\beta} - 1} \to 0 \text{ as } \mu \searrow 0.
+\]
+
+If $\alpha < \beta$,
+\[
+\text{slope at fixed point }
+\sim C' \left(\frac{x_1}{\xi}
+\right)^{1 - \frac{\alpha}{\beta}} \sim C' 
+\left( \frac{C \abs{\mu}}{\xi}
+\right)^{1 - \frac{\alpha}{\beta}} \to \infty \text{ as } \mu \nearrow 0.
+\]
+
+We define the Lyapunov (or Floquet) exponents of a periodic orbit to be
+the logarithm of the Floquet multiplier divided by the period.  In both
+the above cases the Lyapunov exponent is $\beta - \alpha$.
+
+\begin{note}
+In 2D there is only one Lyapunov exponent and we can get it using volume
+change: the Floquet multiplier is $e^{\int \dive v\,\ud t}$, so the
+Lyapunov exponent is $\frac{1}{T} \oint \dive v\,\ud t$, the average of
+$\dive v$ around the orbit.
+\end{note}
+
+\subsection{Finding homoclinic bifurcations in nearly Hamiltonian systems}
+
+In 2D, a Hamiltonian system is one
+\[
+\begin{cases}
+\dot{x} = \pd{H}{y} \\
+\dot{y} = - \pd{H}{x}
+\end{cases}
+\]
+for some $H \colon \R^2 \mapsto \R$.  It automatically conserves $H$.
+If $H$ has a saddle point $s$ then it gives a saddle equilibrium for $v$.
+The level set $\{ H = H(s) \}$ often contains a homoclinic orbit.
+
+In a Hamiltonian system the eigenvalues $-\alpha$ and $\beta$ always
+satisfy $\alpha = \beta$, so we can't immediately apply the previous
+results. But suppose we have a two-parameter family $v_{\mu,\epsilon}$
+of the form
+\[
+\dot{x} = \begin{bmatrix} H_y \\ - H_x \end{bmatrix} + f_{\mu,\epsilon}(x),
+\qquad f_{0,0} \equiv 0.
+\]
+Then under suitable conditions, we will find a curve of homoclinic bifurcations
+in the $(\mu, \epsilon)$ plane.
+
+Choose a transverse section $\Sigma$ to the homoclinic orbit of
+$(\mu,\epsilon) = (0,0)$.  Then for nearby $(\mu,\epsilon)$ the saddle
+persists and local stable/unstable manifolds move smoothly to obtain.
+\vspace{1in}
+
+Let us evaluate $\Delta H = H(s_-) - H(s^+)$.  We get a homoclinic orbit
+if $\Delta H_{\mu,\epsilon} = 0$.  Now
+\begin{align*}
+\Delta H &= \int_s^{s^-} \ddt{H} dt + \int_{s^+}^s \ddt{H}\,\ud t \\
+&= \left(\int_s^{s^-} + \int_{s^+}^s \right) \left(
+DH.f_{\mu,\epsilon}(x)\,\ud t\right) \\
+&= \left(\int_s^{s^-} + \int_{s^+}^s \right) \left( f_{\mu,\epsilon}.
+\nabla H\right)\,\ud t.
+\end{align*}
+
+To leading order in $\mu, \epsilon$ we can evaluate this by integrating
+along the homoclinic $\gamma$ of $\mu, \epsilon = 0$.  Define
+$M(\mu,\epsilon) = \int_\gamma DH.f_{\mu,\epsilon}(x(t))\,\ud t$.
+If $M(\mu,\epsilon)$ has a curve $\Gamma$ of simple zeroes then use
+the IFT to deduce that $v_{\mu,\epsilon}$ has a curve of homoclinic
+bifurcations along a nearby curve $\tilde{\Gamma}$.
+
+\subsubsection*{Return to the DFP}
+
+If you've forgotten(!), this has equations $\dot{\theta} = p$ and
+$\dot{p} = - k p - \sin \theta + F$.  The case $k=F=0$ is Hamiltonian,
+$H(\theta,p) = \frac{1}{2}p^2 - \cos \theta$.  This has two homoclinics to
+the saddle at $p=0$, $\theta = \pi$ (or $-\pi$) with equations
+$p = \pm 2 \cos \frac{\theta}{2}$.
+
+\begin{align*}
+M(k,F) &= \int_{\gamma_+} DH \begin{pmatrix} 0 \\ -k p + F
+\end{pmatrix}\,\ud t
+= \int_{\gamma_+} \begin{pmatrix} \sin \theta & p \end{pmatrix}
+\begin{pmatrix} 0 \\ -k p + F \end{pmatrix} dt \\
+&= \int_{\gamma_+} -k p^2 + F p\,\ud t \\
+\intertext{Now use $\ud t = \frac{\ud\theta}{\theta} = \frac{\ud\theta}{p}$.}
+M(k,F) &= \int_{-\pi}^\pi F - 2 k \cos \frac{\theta}{2}\,\ud\theta \\
+&= 2 \pi F - 8 k
+\end{align*}
+
+\begin{flushright}
+\parbox{2in}
+{For $k >0$, note that $\alpha > \beta$.  The homoclinic bifurcation
+generates an attracting periodic orbit. \vspace{0.75in}}
+\end{flushright}
+
+Other cases of saddle connections:
+\begin{itemize}
+\item $n$-D vector field with homoclinic to hyperbolic equilibrium
+\item homoclinic to saddle-node
+\item heteroclinic cycle
+\item 2 homoclinics to the same saddle.
+\end{itemize}
+
+\vspace{1.5in}
+
+The energy method can also be used to find approximate periodic orbits
+for nearly Hamiltonian systems.  In general, Hamiltonian systems have
+a family of periodic orbits labelled by energy.  Choose a transverse
+section and compute $\Delta H$ for the first return for the perturbed system.
+\[
+M(\mu,\epsilon,E) = \oint_{\gamma(E)} DH.f_{\mu,\epsilon}\,\ud t,
+\]
+where $\gamma(E)$ is the periodic orbit of the unperturbed system with energy
+$E$.  If $M$ has a simple zero as a function of $E$ then
+$v_{\mu,\epsilon}$ has a periodic orbit near $\gamma(E)$.
+
+\section{Saddle-node of periodic orbits}
+
+Take a periodic orbit $\gamma$ with Floquet multiplier $+1$.  Take a transverse
+section $\Sigma$ with co-ordinate $s$.  The return map $f$ has
+$f(\gamma(0)) = \gamma(0)$ and $f'(\gamma(0))'=+1$.  Suppose $f'' \neq 0$.
+If we change a parameter $\mu$ then $f$ changes smoothly with $\mu$ and
+we obtain (if $\pd{f}{\mu}|_0 > 0$):
+
+\vspace{2in}
+
+As $\mu$ increases through $0$ an attracting and a repelling fixed point
+collide and annihilate.
+
+\vspace{2in}
+
+This is a saddle-node bifurcation of periodic orbits.  We can extend this
+to higher dimensional vector fields by constructing a centre manifold
+for fixed points of the return map $f \colon \Sigma \mapsto \Sigma$
+analogously to the centre manifold for equilibria.
+
+\chapter{Introduction to dynamics in 3D}
+
+We restrict attention to periodically forced 2D systems, as many of the
+interesting phenomena already occur here.
+
+For instance, the periodically forced van der Pol oscillator,
+$\ddot{x} + (x^2 - \beta) \dot{x} + x = A \cos \omega t$, which may be
+rewritten as
+\[
+\begin{cases}
+\dot{x} = y-F(x) \\
+\dot{y} =-x + A \cos \phi \\
+\dot{\phi} = \omega
+\end{cases}\text{ for $\phi \in S_1$.  Remember that } F(x) = \frac{x^3}{3}
+- \beta x.
+\]
+
+Or the periodically additively forced pendulum, $\ddot{\theta}
++ k \dot{\theta} + g \sin \theta = F + A \cos \omega t$, which is
+\[
+\begin{cases}
+\dot{\theta} = p \\
+\dot{p} = -k p - g \sin \theta + F + A \cos \phi. \\
+\dot{\phi} = \omega
+\end{cases}
+\]
+
+The parametrically forced pendulum is $\ddot{\theta} + k \dot{\theta}
++ (\alpha + \epsilon \sin \omega t) \sin \theta = 0$ may be written as
+\[
+\begin{cases}
+\dot{\theta} = p \\
+\dot{p} = -k p - (\alpha + \epsilon \sin \phi) \sin \theta, \\
+\dot{\phi} = \omega
+\end{cases}\text{a vector field on } S_1 \times \R \times S_1.
+\]
+
+\section{Time-$T$ map}
+
+At least conceptually, dynamics of a periodically forced 2D system,
+$\dot{x} = v(x,t) = v(x,t+T)$ can be reduced to iteration of a 2D map
+$f$.  Define $\phi_{s,t}$ to be the map which, gives $x(t)$ given $x(s)$,
+that is $x(t) = \phi_{s,t}(x(s))$.  Then let $f$ be $\phi_{0,T}$, the
+``time-$T$ map''.  Now $\phi_{0,nT} = f \circ \dots \circ f = f^n$.
+So we can find $x(nT)$ from $x(0)$ by iterating.  Also,
+$\phi_{m T + s,n T + t} = \phi_{0,t} \circ f^{n-m} \circ \phi_{0,s}^{-1}$
+($0 \le s,t < T$), so we can get from any time to any other time
+by knowing $f$ and $\phi_{0,s}$ for $s \in [0,T)$.
+
+The problem is that in general $f$ is not explicitly available.  But we can
+often get sufficient information about $f$ to determine a lot about the
+dynamics.
+
+\section{Existence of periodic orbits}
+
+The period of any periodic orbit of $\dot{x} = v(x,\phi)$, $\dot{\phi} = 1$,
+$\phi \in S_T^1$ is a multiple of $T$.  Period $T$ orbits correspond to
+fixed points of $f$, period $n T$ orbits correspond to period $n$ orbits
+of $f$, or fixed points of $f^n$.  We therefore want the fixed points of
+a map.  It is sometimes easy.
+
+\subsubsection*{Contraction Mapping}
+
+If $f$ maps a closed set $B$ into itself and contracts distances in $B$
+then $f$ has a unique attracting fixed point in $B$. We can often verify
+this even without a formula for $f$.
+
+\begin{example}
+  We prove the existance of a periodic orbit for the van der Pol
+  oscillator
+\[
+\ddot{x} + (x^2 - \beta) \dot{x} + x = A \cos \omega t, \quad \beta < 0.
+\]
+\end{example}
+
+\begin{proof}[Solution]
+  We consider the Riemannian metric $\ud l^2 = \ud x^2 +(\ud y -
+  \frac{\abs{\beta}}{2} \ud x)^2$.  We find that $\dot{\delta l} \le
+  -\frac{1}{2} \abs{\beta} \delta l$ for a line element.  Thus $\delta
+  l(T) \le \delta l(0) e^{-\frac{1}{2} \abs{\beta} T}$.  In
+  particular, after one period $\delta l(T) \le \lambda \delta l(0)$,
+  $\lambda = e^{-\frac{1}{2} \abs{\beta} T} < 1$.  Let $K = l(f(0))$.
+  For all $R \ge \frac{K}{1-\lambda}$, $f$ maps the disc of $l$-radius
+  $R$ into itself and contracts by at least $\lambda$.  Thus $f$ has a
+  fixed point in $\R^2$ which attracts all orbits.  This is a
+  ``globally attracting fixed point''.
+\end{proof}
+
+\subsubsection*{Lefschetz Index}
+
+This is the discrete-time analog of the Poincar\'e index.  Let $\gamma$
+be a simple closed curve which passes through no fixed points.  Then
+the index of $\gamma$ under $f$ is the number of revolutions of $f(x) - x$
+around $0$ for one revolution of $x$ about $\gamma$.
+
+\vspace{1in}
+
+If the index of $\gamma$ under $f$ is non-zero then $\gamma$ surrounds
+at least one fixed point. The index of a small curve about a
+non-degenerate fixed point is $\left(-1\right)^{\text{\# Real positive
+    multipliers $>1$}}$.
+
+\subsubsection*{Perturbation}
+
+If the unforced case has an equilibrium then 
+$\dot{x} = v(x)$, $\dot{\phi} = 1$ then this will persist for
+$\epsilon$ small in the system $\dot{x} = v_\epsilon(x,\phi)$,
+$\dot{\phi} = 1$ to give a periodic orbit.
+
+If the equilibrium has eigenvalues $\lambda_j$ then the period-$T$ orbit
+has multipliers $e^{\lambda_j}$.  The periodic orbit is therefore
+non-degenerate iff $e^{\lambda_j} \neq 1\ \forall j$.
+
+\subsubsection*{Harmonic balance}
+
+Try Fourier series to get
+
+\[
+x(t) = \sum_{n \in \Z} x_n e^{\frac{2 \pi}{T} \imath n t}.
+\]
+
+\subsubsection*{Energy balance}
+
+For nearly Hamiltonian systems the method of energy balance can be used
+as before.
+
+\section[Linear stability]
+{Linear stability of periodic orbits of $T$-periodic vector fields}
+
+Given a $T$-periodic vector field $\dot{x} = v(x,t)$ and a periodic orbit
+$\gamma(t)$ of period $T$, linearise about it to get
+$\dot{\delta x} = Dv (\gamma(t),t) \delta x$.  Write this as 
+$\dot{x} = A(t) x$.  Let $\Phi(t)$ be the matrix solution of
+$\dot{\Phi} = A(t) \Phi(t)$ with $\Phi(0) = I$ (the ``fundamental
+matrix solution'').  Then the solution for any $x_0$ is
+$x(t) = \Phi(t) x_0$.  In particular, $x(n T) = \Phi(T)^n x_0$, so
+stability is determined by the eigenvalues of $\Phi(T)$.  These are the
+Floquet multipliers because $\Phi(T) = Df$, the derivative of the return map.
+$\Phi(T)$ is called the ``monodromy matrix''.
+
+In the 2D case, write $\Phi(t) = \begin{bmatrix} a & b \\ c & d
+\end{bmatrix}$.  Then the Floquet multipliers $\lambda_j$ are the roots
+of $\lambda^2 - \tr \lambda + \det = 0$, that is
+$\lambda_\pm = \frac{\tr}{2} \pm \sqrt{\frac{\tr^2}{4} - \det}$.
+
+If both $\abs{\lambda_\pm} < 1$ then the periodic orbit is attracting.
+If one of $\abs{\lambda_\pm} > 1$ then the periodic is unstable.  The
+stability boundaries are given by $\tr = 1 + \det$, $\tr = - (1+\det)$,
+$\det = 1$ and $\tr^2 \le 4 \det$.  Note that $\det = e^{\oint \tr
+  A(t)\,\ud t} > 0$.
+
+\vspace{4.5in}
+
+In practice, $\Phi(T)$ is not easy to calculate unless $A(t)$ is constant,
+$A(t)$ is piecewise constant or $A(t)$ is diagonalisable by a constant
+matrix.  But we can always get $\det \Phi(T)$ and we can compute
+$\tr \Phi(T)$ to any desired accuracy by perturbation from a known case.
+
+\subsection{The Mathieu Equation}
+
+This is $\ddot{x} + k \dot{x} + (\alpha + \epsilon \sin t) x = 0$,
+the linearisation about $\theta = 0$ of the parametrically forced
+pendulum.  The linked first order system is
+\[
+\begin{cases}
+\dot{x} = y \\
+\dot{y} = -k y - (\alpha + \epsilon \sin t) x
+\end{cases}
+\]
+or $\dot{x} = \left[ C + \epsilon P(t) \right] x$.  The solution for
+$\epsilon = 0$, $\alpha > 0$ is
+\[
+\Phi(t) = \begin{bmatrix}
+\cos \omega t & \frac{1}{\omega} \sin \omega t \\
+- \omega \sin \omega t & \cos \omega t
+\end{bmatrix} \text{, where $\omega = \sqrt{\alpha}.$}
+\]
+For shorthand we write this as $e^{C t}$.  Now $\Phi(t)$ depends
+smoothly on $\epsilon$ and so $\Phi(t) = e^{C t} + \epsilon B(t)
++ O(\epsilon^2)$, where $\dot{B} = C B + P(t) e^{C t}$, $B(0) = 0$.
+This is ``linear inhomogeneous'', so we get the solution by ``variation
+of constants'' (or more accurately ``convolution with impulse response'')
+
+\[
+B(t) = \int_0^t e^{C(t-s)} P(s) e^{C s}\,\ud s.
+\]
+
+In particular, the (horrendous!) expression for $B(2 \pi)$ is
+\[
+\int_0^{2 \pi}
+\begin{bmatrix}
+\cos \omega (2\pi -s) & \frac{1}{\omega} \sin \omega (2\pi - s) \\
+- \omega \sin \omega (2 \pi - s) & \cos \omega (2 \pi - s)
+\end{bmatrix}
+\begin{bmatrix}
+0 & 0 \\
+- \sin s & 0
+\end{bmatrix}
+\begin{bmatrix}
+\cos \omega s & \frac{1}{\omega} \sin \omega s \\
+- \omega \sin \omega s & \cos \omega s
+\end{bmatrix}\,\ud s
+\]
+
+which we write as $\begin{bmatrix} a_1 & b_1 \\ c_1 & d_1 \end{bmatrix}
+(\omega)$.  Then $\det \Phi(2 \pi) = 1$ and
+\[
+\tr \Phi(2 \pi)
+= 2 \cos 2 \pi \omega + \epsilon (a_1 + d_1) + O(\epsilon^2).
+\]
+
+It turns out that $a_1(\omega) + d_1(\omega) = 0$ so we need to compute
+to higher order to see how $\tr \Phi(2 \pi)$ changes with $\epsilon$.
+But we already see that the solution is linearly stable provided that
+$\omega$ is not within $O(\epsilon)$ of a half-integer, so let us
+restrict attention to $\omega = \frac{n}{2} + \delta$ with $n \in \N$
+and $\delta = O(\epsilon)$.  There is a trick which will enable us
+to get $\tr \Phi(2 \pi)$ to $O(\epsilon^2)$ without computing $\Phi(2 \pi)$
+to $O(\epsilon^2)$.  Note that 
+\[
+\det = ad - bc = \frac{(a+d)^2}{4} - \frac{(a-d)^2}{4} - bc.
+\]
+
+Thus $\tr = \pm 2 \sqrt{\det} \sqrt{1 - \frac{\frac{(a-d)^2}{4} + bc}{\det}}$.
+Now $a - d = \epsilon (a_1 - d_1) + O(\epsilon^2)$ and
+$bc = (\frac{1}{\omega} \sin 2 \pi \omega + \epsilon b_1)
+(- \omega \sin 2 \pi \omega + \epsilon c_1)$.  At $\omega = \frac{1}{2}$,
+$B(2 \pi) = \begin{bmatrix} - \pi & 0 \\ 0 & \pi \end{bmatrix}$ and hence
+for $\omega = \frac{1}{2} + \delta$ we obtain
+\[
+\frac{\tr^2}{4} = 1 + \pi^2 \epsilon^2 - 4 \pi^2  \delta^2 + O(\epsilon^3)
+\]
+and thus
+\[
+\tr = -2 ( 1 + \frac{\pi^2}{2} \epsilon^2 - 2 \pi^2 \delta^2 + O(\epsilon^3)),
+\]
+leading to instability in a wedge $\abs{\delta} \le \frac{\epsilon}{2}$.
+If we now add damping $k$ then $\det \Phi(T) = e^{-2 \pi k} < 1$.
+We get stability iff $\abs{\tr} \le 1 + \det$.  Rewrite using the trick as
+$(1-\det)^2 \ge (a-d)^2 + 4 b c$.  For $k = O(\epsilon)$ this gives
+instability in a region $\epsilon^2 \ge k^2 + 4 \delta^2$, which is
+how you work a swing.  For $\omega = \frac{n}{2}$ with $n > 1$ we find
+that $B(2 \pi) = 0$, so we need to compute $\Phi(2 \pi)$ to higher order.
+We obtain the stability diagram:
+
+\vspace*{4in}
+
+\begin{notes}
+\begin{enumerate}
+\item Need to do nonlinear analysis to see where the instability leads, for
+the parametrically forced pendulum with $k > 0$ the instability saturates
+onto a period $4 \pi$ orbit (period-doubling bifurcation) near threshold.
+\item There are thin strips of stability for $\alpha < 0$.  Thus in principle
+one can stabilise an inverted pendulum by choosing forcing frequency
+and amplitude correctly.
+\item The $n^{\text{th}}$ tongue has a width $\Delta \alpha = \epsilon^n$
+for $k=0$, but this is a special feature of the forcing having only
+one Fourier component, and in general each opens linearly.
+\end{enumerate}
+\end{notes}
+
+\section{Near-identity maps and averaging}
+
+If the time-$T$ map happens to be close to the identity, say
+$f(x) = x + \epsilon g(x)$, $C^\infty$ then it can be proved that
+there exists an asymptotic series $v(x,\epsilon) = \epsilon v_1(x)
++ \epsilon^2 v_2(x) + \dots$ of autonomous vector fields such that
+$\forall n \in \N$, $\abs{f - \phi_1^{(n)}} = O(\epsilon^n)$, where
+$\phi_1^{(n)}$ is the time-$1$ map of $\epsilon v_1(x)
++ \epsilon^2 v_2(x) + \dots + \epsilon^n v_n(x)$.  It is clear
+that we can start with $v_1(x) = g(x)$: then $f$ is the Euler step for
+$\phi_1^{(1)}$.  Unfortunately the series often fails to converge, but this
+``flow approximation'' is still useful.
+
+The first terms in the series can be computed explicitly for
+time-$T$ maps of $T$-periodic vector fields which are small on the
+scale of one period of the forcing, i.e. $\dot{x} = \epsilon 
+v(x,t,\epsilon)$, period $T$, $\epsilon T \ll 1$, by the ``method of
+averaging''.  Crudely, we average over one period and write
+
+\[
+\dot{\Bar{x}} = \epsilon \frac{1}{T} \int_0^T
+v(\Bar{x},t,\epsilon)\,\ud t.
+\]
+
+To make a proper derivation, and a procedure that can be pushed to
+arbitrarily higher order, introduce a co-ordinate change
+$x = y + \epsilon w(y,t,\epsilon)$, $w(y,t+T,\epsilon) = w(y,t,\epsilon)$
+and choose $w$ to push the time-dependence of $v$ to higher order:
+\begin{equation}\label{E:ave}\tag{$\ast$}
+\dot{y} = \epsilon \left[
+I + \epsilon \pd{w}{y}
+\right]^{-1}
+\left[
+\Bar{v}(y + \epsilon w) + \tilde{v}(y + \epsilon w,t,\epsilon)
+- \pd{w}{t}
+\right],
+\end{equation}
+where we have split $v = \Bar{v} + \tilde{v}$ into mean and zero-mean parts.
+The leading order time-dependence can be eliminated by choosing
+\[
+w(y,t,\epsilon) = \int_0^t \tilde{v}(y,s,\epsilon)\,\ud s + w_0(y,\epsilon),
+\]
+where $w_0$ is chosen to give $w$ zero mean.  Then the time-dependence 
+of the RHS of \eqref{E:ave} is only via the terms $\epsilon w$, and hence
+is $O(\epsilon^2)$.  This procedure can be iterated, but the first
+step often suffices and it gives $\dot{y} = \epsilon \Bar{v}(y,\epsilon)
++ O(\epsilon^2)$.
+
+\begin{example}[A 1D example]
+$\dot{x} = \epsilon x \sin^2 t$.
+\end{example}
+
+\begin{proof}[Solution]
+This has $w = - \frac{y}{4} \sin 2 t$ and $\dot{y} = \frac{\epsilon}{2} y$.
+Compare the exact solution $x(t) = x_0 e^{\epsilon(\frac{t}{2} -
+\frac{1}{4} \sin 2 t)}$ with the approximate one
+$x = y + \epsilon w = x_0 e^{\frac{\epsilon t}{2}} ( 1 - \frac{\epsilon}{4}
+\sin 2 t)$.
+\end{proof}
+
+\subsection{Application of averaging to the periodically forced
+van der Pol equation}
+
+\[
+\begin{cases}
+\dot{x} = y - \alpha \left( \frac{x^3}{3} - x \right) \\
+\dot{y} = -x + \beta \cos \phi \\
+\dot{\phi} = \omega
+\end{cases}
+\]
+
+For $\alpha$, $\beta$ small, dynamics is close to rotation in $x,y$
+with frequency $1$.  So change to rotating co-ordinates $u$, $v$
+for $\alpha$, $\beta$, $\omega - 1$ small.
+\[
+\begin{bmatrix}
+u \\ v
+\end{bmatrix}
+= 
+\begin{bmatrix}
+\cos \phi & - \frac{1}{\omega} \sin \phi \\
+-\sin \phi & - \frac{1}{\omega} \cos \phi
+\end{bmatrix}
+\begin{bmatrix}
+x \\ y
+\end{bmatrix}.
+\]
+
+Now average $\begin{bmatrix}
+\dot{u} \\ \dot{v}
+\end{bmatrix}$ with respect to $\phi$ to obtain to leading order in
+$\alpha$:
+\[
+\begin{cases}
+\dot{u} = \frac{\alpha}{2} \left(u - \sigma v - \frac{u}{4} (u^2 + v^2)
+\right) \\
+\dot{v} = \frac{\alpha}{2} \left(\sigma u + v - \frac{v}{4} (u^2 + v^2)
+\right) - \alpha \gamma
+\end{cases}
+\]
+where $\sigma = \frac{1-\omega^2}{\alpha \omega}$ and $\gamma = \frac{\beta}
+{2 \alpha \omega}$ are assumed $O(1)$.
+
+We apply chapters 2 and 3 (and extensions) to obtain:
+\vspace*{5.5in}
+
+Entrainment to the forcing frequency in regions I, II and IVb, and for
+some initial conditions in IVa, whereas in III and for other initial
+conditions in IVa the averaged motion goes to a limit cycle, implying
+quasiperiodic oscillation.  There is hysteresis on crossing the cusp via
+II or IVa.
+
+The time-dependent remainder terms which are ignored by averaging cause locking
+of quasiperiodic motion to a ratio of the rotation frequency and fattening
+of the curve $OS$ of homoclinic bifurcations into a wedge of ``chaos''.
+
+\section{Differences from autonomous systems}
+
+Given an autonomous vector field $\dot{x} = v(x)$ with an attracting
+periodic orbit of period $T$, if we add equation $\dot{\phi}=1$ on
+$\R/2 \pi \Z$ we obtain an attracting invariant 2-torus for the full system.
+
+\vspace*{1.5in}
+
+Define the winding ratio of the flow on the torus to be
+\[
+w = \lim_{t \to \infty} \frac{\text{\# revolutions in $x-y$ plane}}{
+\text{\# revolutions in $\phi$}}.
+\]
+Then $w = \frac{2 \pi}{T}$ and the motion is conjugate to $\dot{\theta} = w$,
+$\dot{\phi} = 1$.  Now if we perturb the system to $\dot{x} = v(x) 
++ \epsilon v_1(x,\phi)$ it can be proved that there is still an attracting
+invariant 2-torus for small $\epsilon$ and it has a winding ratio
+$w(\epsilon)$ near $w(0)$.  But in general the motion is not conjugate to
+a constant vector field: the phenomenon of ``frequency locking'' occurs:
+$w(\epsilon)$ will have intervals of $\epsilon$ on which it is
+rational $\frac{p}{q}$ and the flow on the (flattened) torus typically
+looks like:
+
+\vspace{1.5in}
+
+\begin{flushright}
+\parbox{2in}{%
+i.e. some attracting and some repelling periodic orbits.  Hence the
+periodically forced van der Pol has frequency locking regions
+(depending on $\alpha$).}
+\end{flushright}
+
+Given a saddle fixed point $0$ for the time-$T$ map $f$ we can define
+\[
+W^\pm(0) = \{ x : d(f^n(x),0) \to 0 \text{ as } t \to \infty\}
+\text{ respectively.}
+\]
+
+\parbox{3in}{%
+They can be proved to be smooth curves tangent to the stable and unstable
+eigenvectors respectively, just as in the case of a vector field.  But unlike
+vector field vase, in discrete-time $W^+$ and $W^-$ can cross each other.
+The only constraint is the backward and forward images of any intersection
+give another intersection, because both $W^\pm$ are invariant under $f$.
+Because $\det Df > 0$ this obliges a second orbit of intersections in between.}
+
+\begin{flushright}
+\parbox{3in}{%
+A situation like this is almost certain to occur when an
+autonomous family of vector fields with a homoclinic bifurcation is forced
+periodically.}
+\end{flushright}
+
+We get these portraits.
+
+\vspace*{5in}
+
+What are the consequences of transverse homoclinic orbits?  If you follow
+$W^\pm$ far enough they are bound to intersect in yet another homoclinic
+orbit (typically two).
+
+\vspace{2in}
+
+Obtain a box $B$ bounded by pieces of $W^\pm$.  Now consider its forward
+images.  After a finite number $N$ of iterations, $f^N(B) \cap B$ consists
+of $2$ strips $0$ and $1$.  Let $g = f^N$.  Then we can prove that
+for all sequences $a = (a_n)_{n \in \Z} \in \{ 0,1 \}$.  There exists a point
+$x_a \in B$ such that $g^n(x_a) \in a_n$ for all $n \in \Z$, which is
+\emph{deterministic chaos}, behaviour as random as a sequence of coin tosses.
+
+\backmatter
+
+\begin{thebibliography}{9}
+  
+\bibitem{Glendinning} P.A.~Glendinning, \emph{Stability, Instability
+    and Chaos}, CUP, 1994.
+  
+  {\sffamily \small Fairly fun to read and probably the ``best'' book
+    for the course. }
+
+\bibitem{Drazin} P.G.~Drazin, \emph{Nonlinear Systems}, CUP, 1992.
+  
+  {\sffamily \small Again a fairly fun read but not as
+    relevant to the course. }
+
+\bibitem{GH} Guckenheimer \& Holmes, \emph{Nonlinear Oscillations,
+    Dynamical Systems and Bifurcations of Vector Fields}, Springer,
+  1983.
+  
+  {\sffamily \small Rather above the level of this course but probably
+    worth a bit of bedtime reading if you're interested. }
+
+\bibitem{Robinson} Clark Robinson, \emph{Dynamical Systems}, CRC
+  Press, 1994.
+  
+  { \sffamily \small Feeling brave?  This one certainly isn't bedtime
+  reading. }
+
+\end{thebibliography}
+
+\section*{Related courses}
+
+There is a course on \emph{Dynamical Systems} in Part 2B.
+
+\end{document}

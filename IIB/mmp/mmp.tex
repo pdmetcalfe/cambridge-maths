@@ -1,0 +1,2296 @@
+\documentclass{notes}
+
+\usepackage{amsmath,amsfonts,amsthm,amssymb,varioref,times}
+
+\newcommand{\cR}{\mathcal{R}}
+\DeclareMathOperator{\Pv}{\mathcal{P}}
+\newcommand{\Res}{\mathrm{Res}}
+\newcommand{\D}{\mathcal{D}}
+\newcommand{\cO}{\mathcal{O}}
+\newcommand{\cC}{\mathcal{C}}
+\newcommand{\cL}[1]{\mathcal{L}\left[#1\right]}
+
+\theoremstyle{plain}
+\newtheorem*{theorem}{Theorem}
+\newtheorem*{definition}{Definition}
+\newtheorem*{corollary}{Corollary}
+\newtheorem*{example}{Example}
+\newtheorem*{lemma}{Lemma}
+\newtheorem*{notes}{Notes}
+\newtheorem*{proposition}{Proposition}
+\newtheorem*{note}{Note}
+
+\begin{document}
+
+\frontmatter
+
+\title{Methods of Mathematical Physics}
+
+\lecturer{Dr.~M.~G.~Worster}
+\maintainer{Paul Metcalfe}
+\date{Mich\ae lmas 1997} \maketitle
+
+\thispagestyle{empty}
+
+\noindent\verb$Revision: 2.5 $\hfill\\
+\noindent\verb$Date: 1999/11/25 16:19:50 $\hfill
+
+\vspace{1.5in}
+
+The following people have maintained these notes.
+
+\begin{center}
+\begin{tabular}{ r  l}
+-- date & Paul Metcalfe
+\end{tabular}
+\end{center}
+
+\tableofcontents
+\chapter{Introduction}
+
+These notes are based on the course ``Methods of Mathematical
+Physics'' given by Dr.~M.~G.~Worster in Cambridge in the Mich\ae lmas
+Term 1997.  These typeset notes are totally unconnected with
+Dr.~Worster.  Recommended books will be discussed at the end.
+
+\alsoavailable
+\archimcopyright
+
+\mainmatter
+
+\chapter{Complex Variables}
+
+\section{Conventions}
+
+Various people use different meanings for analytic, regular, etc.  We
+will use these:
+
+\begin{definition}
+A function is \emph{analytic} at a point iff there exists an open
+neighbourhood of the point in which the function is complex differentiable.
+This is true iff the function has a Taylor expansion about that point.
+\end{definition}
+
+\begin{definition}
+A function is \emph{analytic} in a domain iff it is analytic at every
+point in the domain and single valued in the domain.
+\end{definition}
+
+\begin{definition}
+A function is \emph{singular} at a point iff it is not analytic at the point.
+\end{definition}
+
+\begin{definition}
+A function has an \emph{isolated singularity} at a point iff it is analytic in
+some punctured ball about the point, or iff it has a Laurent expansion about
+the point.
+\end{definition}
+
+\section{Cauchy Principal Value}
+
+The integral $\int_{-1}^2 \frac{\ud x}{x}$ does not exist.  If we consider
+\[
+I(\eta,\xi) = \int_{-1}^\eta \frac{\ud x}{x} + \int_\xi^2 \frac{\ud x}{x}
+= \log \frac{2 \eta}{\xi}
+\]
+then we see that $\lim_{\eta, \xi \to 0} I(\eta,\xi)$ can be made to
+do anything we want.  The particular choice $\eta = \xi$ gives a limit
+of $\log 2$, and this is the Cauchy principal value of the original integral.
+More formally:
+
+If $f(x)$ has a \emph{simple} pole at $x=c$ with $a < c < b$ then the
+Cauchy principal value of $\int_a^b f(x)\, \ud x$ is defined to be
+\[
+\lim_{\epsilon \to 0} \left[ 
+\int_a^{c - \epsilon} f(x)\, \ud x + \int_{c + \epsilon}^b f(x)\, \ud x
+\right].
+\]
+
+It is written $\Pv \int_a^b f(x)\, \ud x$.  For instance,
+$\Pv \int_{-1}^1 \frac{\ud x}{x} = 0$.
+
+\vspace{1in}
+
+Consider the complex contour $\Gamma$ shown and let
+$I = \int_\Gamma f(z)\, \ud z$, and let $f$ be analytic except for a simple
+pole at $c$.
+
+By Cauchy's theorem, $\int_{\Gamma} = \int_{\Gamma'}$.  In the limit
+$\epsilon \to 0$, we get
+\[
+\int_{\Gamma'} f(z)\, \ud z = \Pv \int_a^b f(x)\, \ud x
++ \lim_{\epsilon \to 0} \int_{C_\epsilon} f(z)\, \ud z.
+\]
+
+On $C_\epsilon$ $z = c + \epsilon e^{\imath \theta}$ for $\pi < \theta
+< 2 \pi$.  Since $f$ has only a simple pole at $z=c$ we get $f(z) =
+\frac{\Res}{z-c} + a_0 + \dots$.  Then $\lim_{\epsilon \to 0}
+\int_{C_\epsilon} f(z)\, \ud z = \pi \imath \Res$ by Cauchy's theorem.
+Thus finally
+\[
+\int_\Gamma f(z)\, \ud z = \Pv \int_a^b f(x)\, \ud x + \pi \imath \Res,
+\]
+where as the name suggests, $\Res$ is the residue of $f$ at $z=c$.  Similarly,
+going the other way round,
+\vspace{1in}
+\[
+\int_{\Gamma} f(z)\, \ud z = \Pv \int_a^b f(x)\, \ud x - \pi \imath \Res.
+\]
+
+We can extend this idea to more general complex contours, such as
+
+\vspace{1in}
+
+to get
+\[
+\int_{\Gamma_1} f(z)\, \ud z = \Pv \int_\Gamma f(z)\, \ud x - \pi \imath \Res
+\quad \text{and} \quad
+\int_{\Gamma_2} f(z)\, \ud z = \Pv \int_\Gamma f(z)\, \ud x + \pi \imath \Res.
+\]
+
+\begin{example}
+Find
+\[
+\int_\Gamma \cot z\, \ud z.
+\]
+\end{example}
+
+\begin{proof}[Solution]
+\begin{align*}
+\int_\Gamma \cot z\, \ud z &= \Pv \int_{-\infty}^\infty \cot x\, \ud x
+- \pi \imath \\
+&= 0 - \pi \imath \qquad \text{by symmetry.}
+\end{align*}
+\end{proof}
+
+\begin{example}
+Find
+\[
+\int_{-\infty}^\infty \frac{1 - \cos x}{x^2}\, \ud x.
+\]
+\end{example}
+
+\vspace{0.5in}
+
+\begin{proof}[Method 1]
+As the integrand is analytic we can deform the real axis into the
+contour $\Gamma$, thus
+\[
+\int_{-\infty}^\infty \frac{1 - \cos x}{x^2}\, \ud x
+= \int_\Gamma  \frac{1 - \cos z}{z^2}\, \ud z.
+\]
+Now we consider $\int_{\Gamma \vee C_R} \frac{1 - e^{\imath z}}{z^2}\, \ud z$
+and take the real part.  This integral is $2 \pi \imath \Res$.
+\end{proof}
+
+\begin{proof}[Method 2]
+We consider 
+\begin{align*}
+\int_\Gamma \frac{1-e^{\imath z}}{z^2}\, \ud z &=
+\Pv \int_{-\infty}^\infty \frac{1-e^{\imath x}}{x^2}\, \ud x
+- \imath \pi \Res \\
+&= \Pv \int_{-\infty}^\infty \frac{1-e^{\imath x}}{x^2}\, \ud x
+- \pi = 0.
+\end{align*}
+
+Thus $\Pv \int_{-\infty}^\infty \frac{1-\cos x}{x^2}\, \ud x = \pi$,
+but this is the actual integral $\int_{-\infty}^\infty
+\frac{1-\cos x}{x^2}\, \ud x$ as this has no singularity at $0$.
+\end{proof}
+
+\subsubsection*{Singularities at Infinity}
+
+If the integral diverges at $\infty$ define
+\[
+\Pv \int_{-\infty}^\infty f(x)\, \ud x =
+\lim_{R \to \infty} \int_{-R}^R f(x)\, \ud x.
+\]
+
+For instance, $\Pv \int_{-\infty}^\infty \frac{\ud x}{x-\imath}
+= \lim_{R \to \infty} \log \frac{R-\imath}{-R - \imath}
+= \imath \pi$ on the principal branch.
+
+\begin{theorem}
+The function $f(z) = \int_{t_1}^{t_2} g(z,t)\, \ud t$ is analytic in some
+domain $\D \subset \C$ if $g(z,t)$ is analytic in $z$ for each $t
+\in (t_1,t_2)$.  Furthermore $\diff{f}{z} = \int_{t_1}^{t_2}
+\pd{g}{z}(z,t)\, \ud t$.
+\end{theorem}
+
+\begin{proof}
+Omitted; see Copson page 108.
+\end{proof}
+
+If either $t_1$ or $t_2$ is infinite then the convergence of the integral
+must be uniform for $z \in \D$.  This result extends to
+\[
+f(z) = \int_\Gamma g(z,\zeta)\, \ud\zeta
+\]
+simply by parametrizing $\Gamma$.
+
+\section{Analytic Continuation}
+
+\begin{theorem}
+Suppose $\D_1$ and $\D_2$ are disjoint simply connected domains which share
+a piece of common boundary $\Gamma$, with $\D = \D_1 \cup \D_2 \cup \Gamma$
+simply connected as well.  Let $f_1(z)$ be analytic on $\D_1$ and continuous
+on $\D_1 \cup \Gamma$ and similarly let $f_2(z)$ be analytic on $\D_2$ and
+continuous on $\D_2 \cup \Gamma$.  Suppose further that $f_1 = f_2$ on
+$\Gamma$.  Then if we define
+\[
+g(z) = \begin{cases} f_1(z) & z \in \D_1 \cup \Gamma \\
+f_2(z) & z \in \D_2
+\end{cases}
+\]
+$g$ is analytic on $\D$.  $g$ is called the analytic continuation of $f_1$
+from $\D_1$ into $\D$.
+\end{theorem}
+
+\begin{proof}
+Consider $I = \oint_C g(z)\, \ud z$ for some contour $C \subset \D$.
+Now $I=0$ if $C \subset \D_1$ or $C \subset \D_2$, so we just need to
+consider the sketched case.  Then $\oint_C = \oint_{C_1} + \oint_{C_2} = 0$
+and thus $g$ is analytic by Morera's theorem.
+\end{proof}
+
+The analytic continuation is unique (if it exists) by the following theorem.
+
+\begin{theorem}
+If $f$ is analytic in $\D$ and has an infinite sequence of zeroes with a
+limit point in $\D$ then $f \equiv 0$ on $\D$.
+\end{theorem}
+
+\begin{proof}
+Let the limit point be at $a$; then $f(a)=0$ by continuity.  Either
+$f \equiv 0$ or $f(z) = (z-a)^m \phi(z)$ with $\phi$ analytic and
+$\phi(a) \neq 0$.  Now $\phi$ is continuous and so there is a neighbourhood
+of $a$ on which $\phi \neq 0$.  Thus there exists a neighbourhood of
+$a$ on which $f$ is nonzero, giving a contradiction.
+\end{proof}
+
+If $g_1$ and $g_2$ are \emph{both} analytic continuations then
+$g_1 - g_2 = 0$ on $\D_1$ and so $g_1 \equiv g_2$ on $\D$.
+
+\subsubsection*{Continuation of power series}
+
+Suppose (for instance) that by hook or by crook we have obtained the
+power series expansion for $f(z) = \sum_n z^n$.  This is analytic in
+$\abs{z} < 1$.  Then we can form a new series by Taylor expansion about some
+other point $z_0$ such that $\abs{z_0} < 1$.  Hopefully this new power series
+has a convergent circle part of which is outside the original domain.  We
+can continue this process to try to cover $\C$, but we may run into
+singularities or branch cuts.
+
+\subsubsection*{Functions defined by integrals}
+
+Suppose we have
+\[
+f(z) = \int_{-\infty}^\infty \frac{e^{-t^2}}{z-t}\, \ud t
+\]
+defined for $\Im z \neq 0$.  Can we find an analytic continuation of
+$f_1(z) = f(z)$ for $\Im z > 0$ into $\C$?  Define
+$g(z) = \int_\Gamma \frac{e^{-\zeta^2}}{z-\zeta}\, \ud\zeta$, with
+$\Gamma$ chosen to lie below $\zeta = z$.  Then $g(z)$ is analytic.
+
+\begin{enumerate}
+\item If $\Im z > 0$ we can deform $\Gamma$ into $\R$ to get $g(z) = f_1(z)$.
+\item If $\Im z = 0$ we get
+$g(z) = \Pv \int_{-\infty}^\infty \frac{e^{-t^2}}{z-t}\, \ud t + \pi \imath
+\Res$.
+\item If $\Im z < 0$ we use the $\Gamma$ sketched to get
+$g(z) = f(z) + 2 \pi \imath \Res$.
+\end{enumerate}
+
+There are functions defined by integrals which we cannot continue, for
+example
+\[
+f(z) = \int_{-\infty}^\infty \frac{e^{-t^2}}{z^2+t^2}\, \ud t
+\]
+cannot be continued from $\Im z > 0$ into $\C$ --- there are two
+``pinching'' singularities which prevent deformation of the contour as
+above.
+
+\section{Multivalued functions}
+
+The usual example is: $f(z) = z^{\frac{1}{2}}$.  If we take
+$z = r e^{\imath \theta}$ then $f(z) = \sqrt{r} e^{\frac{\imath \theta}{2}}$.
+If we trace $f(z)$ as $z$ moves around a closed curve not encircling the
+origin we find that $\theta$ returns to its original value and $f$ is
+continuous.  If the curve encircles the origin then $\theta$ increases
+to $2 \pi$ and $f(z) \to - \sqrt{r} e^{\imath \theta}$.  $f$ is
+singular at $z=0$ --- it is not analytic because it is not single valued
+in any neighbourhood of $0$.  $f(z)$ has neither a Laurent expansion nor a
+residue at $0$.  $0$ is called a branch point.
+
+$f$ has a Taylor expansion about $z=1$ (for example) with circle of
+convergence $\abs{z-1} < 1$.  We can extend the Taylor expansion by
+analytic continuation.
+
+\vspace{1.5in}
+
+The continued function is discontinuous across a curve (or ray) from
+the origin to infinity.  This curve is called a \emph{branch cut},
+and $f$ is continued analytically to a simply-connected domain which excludes
+the branch cut.
+
+Another favourite example is $f(x) = \log z = \log r + \imath \theta$.
+Now $\Im f$ increases by $2 \pi$ on any trip around the origin and so $z=0$
+is a branch point.
+
+\vspace{1in}
+
+A slightly more complicated example is $f(z) = \left( z^2 -1
+\right)^{\frac{1}{2}}$ which has branch points at $z = \pm 1$.  A
+useful way of doing it if we want $f$ in the neighbourhood of the origin
+is:
+\vspace{1in}
+
+but if we want to consider $\abs{z} \gg 1$ we may prefer to send both
+cuts away on the negative real axis as shown on the left.
+
+\vspace{1in}
+
+It is easy to see that this is equivalent to the branch cut from
+$-1$ to $+1$ shown on the right (which is why it is useful for $\abs{z}$
+large).
+
+\subsection{Branch cut integrals}
+
+These can be considered simplest by example.  We thus look at
+\[
+I = \oint_C \left(z^2 - 1\right)^{\frac{1}{2}}\,\ud z, 
+\]
+where $C$ is any closed curve encircling the origin outside $\abs{z} = 1$.
+
+We introduce a branch cut on the real axis between $\pm 1$, and as the
+integrand is analytic in the cut plane we can deform the contour onto the
+cut.  It is easy to see that $\int_{\Gamma_{\epsilon_1}} \to 0$
+and $\int_{\Gamma_{\epsilon_2}} \to 0$.  By fiddling some more
+we get that $f(x) = (1-x^2)^{\frac{1}{2}} e^{\frac{\imath \pi}{2}}$
+on $\Gamma_1$ and $f(x) = (1-x^2)^{\frac{1}{2}} e^{-\frac{\imath \pi}{2}}$
+on $\Gamma_2$.  Thus
+\[
+I = \left( e^{-\frac{\imath \pi}{2}} - e^{\frac{\imath \pi}{2}}
+ \right) \int_{-1}^1 \left( 1-x^2 \right)^{\frac{1}{2}}\, \ud x = - \pi \imath.
+\]
+
+Another example, where we deliberately introduce a branch cut, is
+$I = \int_0^\infty f(x)\, \ud x$ with $f$ not even.  We consider
+$\int_0^\infty f(x) \log x\, \ud x$ as follows:
+
+If $f$ is sufficiently nice then $\int_{C_R} \to 0$ as $R \to \infty$.
+We have 
+\[
+\int_{\Gamma_1} = \int_0^\infty f(x) \log x\, \ud x \qquad \text{and} \qquad
+\int_{\Gamma_2} = - \int_0^\infty f(x) (\log x + 2 \pi \imath)\, \ud x.
+\]
+Adding these two gives
+\[
+\int_0^\infty f(x)\, \ud x = - \sum \Res \left( f(z) \log z \right).
+\]
+
+\subsection{Riemann surfaces}
+
+We consider $f_1(z) = z^{\frac{1}{2}}$ with $f_1(x) = \sqrt{x}$ for
+$x \in \R$ positive and $f_2(z) = z^{\frac{1}{2}}$ with $f_1(x) = -\sqrt{x}$
+for $x \in \R$ positive.  We continue $f_1$ around the origin from the
+positive real axis.  At $z = r e^{\imath \pi}$ we can continue $f_1$ onto
+a copy of the complex plane where it becomes $f_2$.  If we follow $f_2$
+around again until its branch cut on the copy of the negative real axis
+we find that we can jump back onto our original complex plane.  We
+have a function which is analytic everywhere in an enlarged space with
+two ``Riemann sheets''.  Closed curves in this space encircle the origin an
+even number of times.
+
+Another example is $f(z) = \log z$ which has Riemann sheets in the form
+of an infinite spiral ramp.
+
+\chapter{Special Functions}
+
+This chapter deals mainly with the gamma function and its relatives.
+Other special functions are encountered in the next chapter.
+
+\section{The Gamma Function}
+
+This is an analytic continuation of the factorial function from the
+positive integers into $\C$.  We define
+\begin{equation}\label{eq:gammfn1}
+\Gamma(z) = \int_0^\infty t^{z-1} e^{-t}\, \ud t.
+\end{equation}
+This integral is well defined for $\Re z > 0$.  For $\Re z > 1$
+we integrate by parts to get the recurrence
+$\Gamma(z) = (z-1) \Gamma(z-1)$ which we use to continue $\Gamma$
+into $\Re z \le 0$.  This continuation is analytic except for simple
+poles at the negative integers.
+
+By straight integration we see that $\Gamma(1) = 1$ and so
+by iteration, $\Gamma(n+1) = n!$ for $n$ a positive integer. 
+
+\vspace{2in}
+
+Note that (by change of variable in \eqref{eq:gammfn1}).
+\begin{equation}\label{eq:gammfn2}
+\Gamma(m) = 2 \int_0^\infty x^{2 m - 1} e^{-x^2}\, \ud x.
+\end{equation}
+
+\section{The Beta function}
+
+We define
+\begin{equation}\label{eq:betafn1}
+B(m,n) = \int_0^1 t^{m-1} (1-t)^{n-1}\,\ud t.
+\end{equation}
+
+This is well-defined for $\Re m$, $\Re n > 0$.  We now derive a
+formula for the beta function in terms of the gamma function, using equation
+\eqref{eq:gammfn2}.
+
+\begin{align*}
+\Gamma(m) \Gamma(n) &= 4 \int_0^\infty \int_0^\infty x^{2 m - 1}
+y^{2 n - 1} e^{-x^2 + y^2}\,\ud x \ud y \\
+\intertext{Changing to polar co-ordinates we obtain}
+\Gamma(m) \Gamma(n)
+&= 4 \int_0^\infty r^{2(m+n)-1} e^{-r^2}\, \ud r \int_0^{\frac{\pi}{2}}
+\cos^{2m - 1} \theta \sin^{2 n - 1} \theta\, \ud\theta \\
+&= \Gamma(m+n) \int_0^{\frac{\pi}{2}} 2 \cos^{2m - 1} \theta \sin^{2 n - 1}
+\theta\, \ud\theta. \\
+\intertext{Putting $\tau = \cos^2 \theta$ gives}
+\Gamma(m) \Gamma(n)
+&= \Gamma(m+n) \int_0^1 \tau^{m-1} (1-\tau)^{n-1} \ud\tau \\
+&= \Gamma(m+n) B(m,n).
+\end{align*}
+
+Thus we have the required formula,
+\begin{equation}\label{eq:betagamm}
+B(m,n) = \frac{\Gamma(m) \Gamma(n)}{\Gamma(m+n)}
+\end{equation}
+and another integral representation of the beta function
+\begin{equation}\label{eq:betafn2}
+B(m,n) = \int_0^{\frac{\pi}{2}} 2 \cos^{2m - 1} \theta \sin^{2 n - 1}
+\theta\, \ud\theta.
+\end{equation}
+
+\subsection*{Special cases}
+
+Putting $m=n=\frac{1}{2}$ into \eqref{eq:betagamm} and \eqref{eq:betafn2}
+we get $\pi = \Gamma(\frac{1}{2})^2$,
+which ought to be familiar, although perhaps not in quite this form.
+
+If $m = z$ and $n = 1-z$ we require $0 < \Re z < 1$ for convergence
+of \eqref{eq:betafn1}.  With this restriction we evaluate $B(z,1-z)
+= \Gamma(z) \Gamma(1-z)$.
+
+\begin{align*}
+\Gamma(z) \Gamma(1-z) &= \int_0^1 t^{z - 1} (1-t)^{-z}\, \ud t = I
+\quad \text{say.}\\
+\intertext{Putting $t=\frac{1}{1+s}$ we get}
+I &= \int_0^\infty \frac{s^{-z}}{1+s}\, \ud s.\\
+\intertext{Evaluating this as a branch cut integral gives}
+I ( 1- e^{-2 \pi \imath z} ) &= 2 \pi \imath e^{- \pi \imath z}\\
+\intertext{and hence}
+I &= \frac{\pi}{\sin \pi z}.
+\end{align*}
+
+Thus $B(z,1-z) = \frac{\pi}{\sin \pi z}$ for $0 < \Re z < 1$.  But
+this formula is analytic on $\C \setminus \Z$ and so by analytic
+continuation
+\begin{equation}\label{eq:gammprod}
+\Gamma(z) \Gamma(1-z) = \frac{\pi}{\sin \pi z}
+\end{equation}
+on $\C \setminus \Z$.  In fact it is true on the integers as well --- if
+interpreted correctly!
+
+We now want $B(z,z)$ with $\Re z > 0$.  \eqref{eq:betafn1} gives
+
+\begin{align*}
+B(z,z) &= \int_0^1 \left(t - t^2 \right)^{z-1}\, \ud t \\
+& = 2 \int_{\frac{1}{2}}^1 \left(t - t^2 \right)^{z-1}\, \ud t,\\
+\intertext{to avoid a branch cut on putting $s = \left(2t - 1 \right)^2$}
+&= 2^{1-2 z} \int_0^1 s^{-\frac{1}{2}} \left( 1-s\right)^{z-1}\, \ud s \\
+&= 2^{1-2z} B(\tfrac{1}{2},z).
+\end{align*}
+
+We relate this to the gamma function using \eqref{eq:betagamm} to get
+\emph{Legendre's duplication formula}
+\begin{equation}
+\Gamma(z) \Gamma(z + \tfrac{1}{2}) = \pi^{\frac{1}{2}} 2^{1 - 2 z}
+\Gamma(2 z).
+\end{equation}
+
+Now we do
+\begin{align*}
+B(z,n+1) = \frac{\Gamma(z) \Gamma(n+1)}{\Gamma(z+n+1)}
+&= \int_0^1 t^{z-1} (1-t)^n\,\ud t \\
+&= n^{-z} \int_0^n \tau^{n-1} \left( 1- \frac{\tau}{n}\right)^n\, \ud \tau.
+\end{align*}
+
+We take the limit as $n \to \infty$ to get
+\begin{equation}\label{eq:gammlm1}
+\lim_{n \to \infty} \frac{\Gamma(z) \Gamma(n+1) n^z}{\Gamma(z+n+1)} 
+= \int_0^\infty \tau^{z-1} e^{- \tau}\, \ud \tau = \Gamma(z).
+\end{equation}
+
+We can rearrange this to get \emph{Euler's limit} for the gamma function:
+
+\begin{equation}\label{eq:eulim}
+\Gamma(z) = \lim_{n \to \infty} \frac{n^z n!}{z (z+1) \dots (z+n)},
+\end{equation}
+
+which can be thought of as showing the poles at $\{ 0, -1, -2, \dots \}$.
+We can use \eqref{eq:gammlm1} to get
+\begin{equation}
+\lim_{n \to \infty} \frac{n! n^z}{(n+z)!} = 1.
+\end{equation}
+
+We introduce the Hankel contour shown here.
+
+\vspace{1.5in}
+
+Consider $I(z) = \int_C e^t t^{-z}\, \ud t$, which is also written
+$\int_{-\infty}^{(0+)}$.
+
+\begin{align*}
+\int_{\Gamma_1} & = \int_\infty^0 e^{-r} r^{-z} e^{\imath \pi z}
+e^{-\imath \pi}\,\ud r \\
+&= e^{\imath \pi z} \int_0^\infty e^{-r} r^{-z}\, \ud r\\
+\int_{\Gamma_2} & = - e^{\imath \pi z} \int_0^\infty e^{-r} r^{-z}\, \ud r.
+\end{align*}
+
+$\int_{\Gamma_\epsilon} \sim \epsilon^{1-z}$ which tends to zero if
+$\Re z < 1$.  Thus
+
+\begin{equation}\label{eq:gammhank}
+\frac{1}{\Gamma(z)} = \frac{1}{2 \pi \imath}
+\int_{-\infty}^{(0+)} e^t t^{-z}\, \ud t.
+\end{equation}
+
+We proved this for $\Re z < 1$, but in fact the derivative of
+\eqref{eq:gammhank} exists for all $z$ and so $\frac{1}{\Gamma(z)}$
+is analytic and \eqref{eq:gammhank} holds for all $z$.
+
+\section{The Riemann zeta function}
+
+The Riemann zeta function is defined for $\Re z > 1$ by
+\begin{equation}\label{eq:riezeta}
+\zeta(z) = \sum_{n=1}^\infty n^{-z}.
+\end{equation}
+
+Some ``famous'' results are $\zeta(2) = \frac{\pi^2}{6}$ and
+$\zeta(4) = \frac{\pi^4}{90}$.  We use the Hankel representation
+of the gamma function \eqref{eq:gammhank} to get
+
+\begin{align*}
+\frac{2 \pi \imath n^{-z} }{\Gamma(1-z)} &=
+\int_{-\infty}^{(0+)} e^{n \tau} \tau^{z-1}\, \ud \tau \qquad \text{and so}\\
+\zeta(z) &= \frac{\Gamma(1-z)}{2 \pi \imath}
+\int_{-\infty}^{(0+)} \frac{\tau^{z-1}}{e^{-\tau} - 1}\, \ud \tau.
+\end{align*}
+
+Thus $\zeta(z)$ can only be singular at $z = 1,2,\dots$, thus the
+only singularity is at $z=1$.  We therefore have the analytic
+continuation of $\zeta$:
+
+\begin{equation}\label{eq:zetacon}
+\zeta(z) = \frac{\Gamma(1-z)}{2 \pi \imath} \int_{-\infty}^{(0+)}
+\frac{\tau^{z-1}}{e^{-\tau}-1}\, \ud \tau.
+\end{equation}
+
+Something which we do not prove is the reflection formula
+
+\begin{equation}
+\zeta(1-z) = 2^{1-z} \pi^{-z} \cos \left( \tfrac{1}{2} \pi z \right)
+\zeta(z) \Gamma(z),
+\end{equation}
+which shows us that $\zeta(z) = 0$ at $z = 2 n + 1$ for $n=1, 2, \dots$.
+
+By noting that $2^{-z} \zeta(z) = \frac{1}{2^z} + \frac{1}{4^z} + \dots$
+we see that $(1-2^{-z}) \zeta(z) = \frac{1}{1^z} + \frac{1}{3^z} + \dots$.
+Continuing this process with the rest of the primes we obtain the Euler
+product for $\zeta$:
+\begin{equation}\label{eq:euprod}
+\zeta(z) = \prod_{i=1}^\infty \left(1-p_m^{-z} \right)^{-1},
+\end{equation}
+where $p_m$ is the $m^{\text{th}}$ prime.  This is the reasoning behind
+the following (starred) section.
+
+\subsection{Applications to number theory}
+
+Let $\pi(x)$ be the number of primes less than or equal to the real number
+$x$.  Then from the Euler product \eqref{eq:euprod} we have
+
+\begin{align*}
+\log \zeta(z) &= - \sum_{m=1}^\infty \log \left( 1 - p_m^{-z}\right) \\
+& = - \sum_{m=2}^\infty \left(\pi(m) - \pi(m-1)
+\right) \log \left( 1 - m^{-z}\right)\\
+&= - \sum_{m=2}^\infty \pi(m) \left[ \log \left( 1-m^{-z} \right) -
+\log \left( 1-(m+1)^{-z}\right) \right] \\
+&= \sum_{m=2}^\infty \pi(m) \int_m^{m+1} \frac{z}{x \left( x^z - 1
+\right)}\, \ud x \qquad \text{and so}\\
+z^{-1} \log \zeta(z) &= \int_2^\infty \frac{z \pi(x)}{x \left( x^z - 1
+\right)}\, \ud x.
+\end{align*}
+
+This looks like some kind of transform of $\pi(x)$.  We will see later
+that we can find approximations of $\pi(x)$ from the locations of
+the singularities of $\log \zeta(z)$ (or zeroes of $\zeta(z)$).
+
+In 1890 Hadamard proved that $\zeta$ has no zeroes on $\Re z = 1$, which
+was enough to prove the \emph{Prime Number Theorem}, that
+$\pi(x) \sim \frac{x}{\log x}$ as $x \to \infty$.  The Riemann Hypothesis
+of 1860 that the only zeroes of $\zeta(z)$ in $0 < \Re z < 1$ are on
+$\Re z = \frac{1}{2}$ is enough to prove the stronger result
+\[
+\pi(x) = \int_0^x \frac{\ud t}{\log t} + \cO (x^{\frac{1}{2}} \log x),
+\]
+the snag being merely that the Riemann hypothesis is still a hypothesis.
+
+\chapter[Second order linear ODE\lowercase{s}]%
+{Second order linear differential equations}
+
+We shall discuss equations of the general form
+\begin{equation}\label{eq:solode}
+w'' + p(z) w' + g(z) w = 0.
+\end{equation}
+
+The form of the solutions of this equation can be determined by the location
+and nature of the singularities of $p$ and $q$ in $\C$.
+
+\subsubsection*{Ordinary points}
+
+$z_0$ is an ordinary point (or regular point) of \eqref{eq:solode} if
+$p$ and $q$ are both analytic at $z_0$.  The behaviour of $w$ near
+$z=z_0$ is determined by the leading order terms of the Taylor expansions
+of $p$ and $q$ about $z_0$.  If $p = \sum p_n (z-z_0)^n$ and $q
+= \sum q_n (z-z_0)^n$, and either $p_0 \neq 0$ or $q_0 \neq 0$ then we get
+\begin{equation}\label{eq:lotode}
+w'' + p_0 w' + q_0 w \sim 0.
+\end{equation}
+
+This has solutions $e^{m (z-z_0)}$, which is analytic at $z=z_0$.  This is
+enough to show that the solution of \eqref{eq:solode} is analytic, and
+carries over to cases when $p_0 = q_0 = 0$, and shows
+that $w = \sum a_n (z-z_0)^n$.  We can determine the coefficients $a_n$
+by substitution, and the series converges at least out to the nearest
+singularity of $p$ or $q$ in $\C$.  We can see this with Legendre's
+equation of order 1
+\begin{equation}\label{eq:legone}
+(1-z^2) w'' - 2 z w' + 2 w = 0.
+\end{equation}
+
+We see that $p$ and $q$ both have singularities at $z=\pm 1$, but are analytic
+at $z=0$.  We expand $w$ about $z=0$, and equating coefficients gives
+$a_n = \frac{n-3}{n-1} a_{n-2}$.  We thus get two series solutions, one of
+which terminates:
+\begin{align*}
+w &= a_0 \left(1  - z^2 - \tfrac{1}{3}z^4 + \dots \right) \qquad \text{and}\\
+w &= a_1 z.
+\end{align*}
+
+The series has (unsurprisingly) a radius of convergence $1$.  $p$ and $q$ are
+both singular at $z=\pm 1$, but we wish to know if we can analytically
+continue the series around these singularities.
+
+\subsubsection*{Singular points}
+
+$z=a$ is a singular point if either $p$ or $q$ is singular at $z=a$.  We
+restrict to isolated singularities (when $p$ and $q$ have Laurent
+expansions).
+
+Let $z=a$ be an isolated singularity and choose $R$ such that $p$
+and $q$ are analytic in $\D = \{z \in \C : 0 <\abs{z-a} < R \}$.
+Let $\cC$ be the circle $\{ z \in \C : \abs{z-a} = \rho = \tfrac{R}{2}\}$
+and take $z_0 \in \cC$.  We can construct two independent solutions
+(by series substitution, say) $w_1$ and $w_2$ about $z = z_0$, which
+both have radius of convergence $\rho$.  We then choose $z_1 \in \cC$
+with $\abs{z_1 - z_0} < \rho$.  Repeat (about 8 times) until we get
+back to a circle containing $z_0$.  We have obtained solutions
+$w_1^\ast$ and $w_2^\ast$, which are linear combinations of $w_1$
+and $w_2$:
+
+\begin{equation}
+\begin{pmatrix}
+w_1^\ast \\ w_2^\ast
+\end{pmatrix}
+= \left( \alpha_{i j} \right)
+\begin{pmatrix}
+w_1 \\ w_2
+\end{pmatrix}.
+\end{equation}
+
+The matrix $\left( \alpha_{i j} \right)$ is called the continuation matrix,
+which must be invertible, as we can continue the solutions backwards.  We
+now examine the eigenvalues of $\left( \alpha_{i j} \right)$ to see what
+happens.
+
+We first consider the distinct eigenvalue case, say $\lambda_1$ and
+$\lambda_2$.  Therefore, $w_1^\ast = \lambda_1 w_1$ and
+$w_2^\ast = \lambda_2 w_2$.  We write $\lambda_i = e^{2 \pi \imath
+\sigma_i}$, and write $w_k(z) = \left( z-a \right)^{\sigma_k} v_k(z)$.
+Then $w_k^\ast = \lambda_k \left( z-a \right)^{\sigma_k} v_k(z)$.  Thus
+$v_k$ is single-valued around the circle, and therefore has at worst an
+isolated singularity at $a$, and so has a Laurent expansion.  If
+the Laurent expansion terminates below then we can write
+\[
+w_k(z) = \left( z - a \right)^{\sigma_k} \sum_{n=0}^\infty c_{n,k}
+\left( z - a \right)^n
+\]
+(redefining $\sigma_k$ if necessary).  This is
+a \emph{Frobenius expansion} and in this case we call $z=a$ a regular
+singular point.
+
+If we have two identical eigenvalues, $\lambda_1 = \lambda_2 = \lambda$
+(say), there are two distinct cases.  If we can diagonalise
+$\left( \alpha_{i j} \right)$ then the results above hold.  If we
+can't diagonalise $\left( \alpha_{i j} \right)$ then we can put
+$\left( \alpha_{i j} \right)$ in a Jordan Normal Form
+\[
+\left( \alpha_{i j} \right) =
+\begin{pmatrix} \lambda & 0 \\ 1 & \lambda \end{pmatrix}.
+\]
+
+Then the analysis for $w_1$ is as before, and we look for
+$w_2(z) = u(z) w_1(z)$.  Then $u^\ast w_1^\ast = \left( 1 + \lambda u \right)
+w_1$.  So we write $u = \frac{\lambda^{-1}}{2 \pi \imath}
+\log \left( z - a\right) + s(z)$, so $s(z)$ is single-valued and has
+a Laurent expansion.  Putting all this together we get
+\[
+w_2 = \frac{\lambda^{-1}}{2 \pi \imath} \left( z - a\right)^{\sigma_1}
+\left(v_1 \log \left( z - a\right) + v_2(z) \right),
+\]
+where $v_1$ and $v_2$ both have Laurent expansions.
+
+\section{Method of Frobenius}
+
+\begin{theorem}
+If $z=0$ is a singular point of \eqref{eq:solode} then it is a
+regular singular point (Laurent expansions terminate below) iff
+$z p(z)$ and $z^2 q(z)$ are both analytic at $z=0$.
+\end{theorem}
+
+The method of Frobenius is to propose an infinite series
+$w(z) = \sum_n a_n z^{\sigma + n}$.  We substitute this into \eqref{eq:solode}
+and take the coefficient of the lowest power of $z$.  This is the indicial
+equation which determines two values of $\sigma$, $\sigma_1$ and $\sigma_2$
+say.
+
+If $\sigma_1 - \sigma_2 \notin \Z$ then we have two Frobenius series
+for $w$.
+
+If $\sigma_1 = \sigma_2$ then we must insert a logarithm,
+\[
+w(z) = z^{\sigma} \left( \left( A + B \log z \right) \sum_{n=0}^\infty
+a_n z^n + B \sum_{n=0}^\infty b_n z^n \right).
+\]
+
+If we have $\sigma_1 - \sigma_2$ a positive integer then there is
+always a Frobenius series $z^{\sigma_1} \sum_{n=0}^\infty a_n z^n$.
+Either (by some miracle), $z^{\sigma_2} \sum_{n=0}^\infty b_n z^n$ is
+also a solution, or we need to insert a logarithm to get
+\[
+w_2(z) = z^{\sigma_1} \left(A + B \log z\right) \sum_{n=0}^\infty a_n z^n
++ z^{\sigma_2} \sum_{n=0}^\infty b_n z^n.
+\]
+
+\subsubsection*{The point at infinity}
+
+We set $\zeta = \frac{1}{z}$ and examine what happens as $\zeta \to 0$.
+\eqref{eq:solode} becomes
+\begin{equation}\label{eq:ptinf}
+\diff{^2w}{\zeta^2} + \left( \frac{2}{\zeta} - \frac{p}{\zeta^2} \right)
+\diff{w}{\zeta} + \frac{1}{\zeta^4} q w = 0.
+\end{equation}
+
+We then apply all our previous results to equation \eqref{eq:ptinf}.  We
+find that the point at infinity is a regular singular point if
+$2 - z p(z)$ and $z^2 q(z)$ are regular at infinity.
+
+\subsection{Bessel's Equation}
+
+We apply our theory to Bessel's equation
+\begin{equation}\label{eq:bessel}
+w'' + \frac{1}{z} w' + \left( 1 - \tfrac{\nu^2}{z^2} \right)w = 0.
+\end{equation}
+
+This arises frequently in cylindrical geometries.  $\nu$ is a constant
+parameter.  \eqref{eq:bessel} has a regular singular point at $z=0$
+and an irregular singular point at infinity.  The indicial equation
+(at $z=0$) is $\sigma^2 = \nu^2$.  We look for Frobenius series solutions
+of the form
+\[
+w = z^\sigma \sum_{n=0}^\infty a_n z^n, \quad a_0 \neq 0.
+\]
+
+We get a recurrence for $a_n$, $a_n n (n+2 \sigma) = - a_{n-2}$.  We
+thus split our study of the form of the solutions of \eqref{eq:bessel}
+according to $\nu$.
+
+\textbf{Case 1.}  $2 \nu \notin \N$.  Then $\sigma_1 - \sigma_2 = 2
+\nu \notin \N$ and we get two series solutions.  The coefficients of
+the equation can be determined by the recurrence and, on choosing
+$a_0$ appropriately, we get the standard Bessel function $J_\nu(z)$.
+
+\begin{equation}\label{eq:jnu}
+J_\nu(z) = \left( \tfrac{1}{2} z \right)^\nu
+\sum_{k=0}^\infty \frac{\left( - \tfrac{1}{4} z^2 \right)^k}
+{k! \Gamma(k+\nu+1)}
+\end{equation}
+
+The series is clearly entire, the only finite singularity being the branch
+point at $z=0$ from the $z^\nu$ factor. We get the linearly independent
+solution $J_{-\nu}$ by replacing $\nu$ with $-\nu$ in \eqref{eq:jnu}.
+
+\textbf{Case 2.}  $\nu = 0$.  Then $\sigma_1 = \sigma_2 = 0$.  We get
+the solution $J_0(z)$ ($\nu = 0$ in \eqref{eq:jnu}) and a second
+solution with a logarithmic singularity at $z=0$,
+\[
+w_2(z) = J_0(z) \log z + \sum_{n=0}^\infty b_n z^n.
+\]
+
+\textbf{Case 3.}  $2 \nu \in \N$.  This has two subcases:
+\textbf{Case 3a.} $\nu \in \N$.  Then we get $J_n$ as before and a
+second logarithmic solution. \textbf{Case 3b.}  $2 \nu$ is odd.  This
+is one of the ``black magic'' cases referred to earlier.  The
+first solution with $\sigma = \nu > 0$ works to give
+$J_\nu$ (it always works).  The recurrence with $\sigma = -\nu$
+could potentially go wrong, but it just jumps over the trouble and we
+get $J_{-\nu}$.  If you wish to persuade yourself of this just take a
+specific case (say $\nu = \frac{3}{2}$) and play with it.
+The integer plus a half Bessel functions $J_{n + \frac{1}{2}}(z)$ are all
+expressible in terms of elementary functions, for instance  $J_{\frac{1}{2}}(z)
+= \frac{2}{\sqrt{\pi z}} \sin z$ and $J_{-\frac{1}{2}}(z) =
+\frac{2}{\sqrt{\pi z}} \cos z$.
+
+\section{Classification of equations by singularities}
+
+We will only consider second order equations with at most three
+regular singular points (including at infinity).  This class, although
+it seems restrictive, in fact covers most of the differential equations of
+mathematical physics.
+
+It will be convenient to ensure that our singularities are in nice
+places.  The M\"obius transform is useful, and we write it as
+\begin{equation}\label{eq:mobius}
+z \mapsto \frac{ (z - \alpha)(\beta - \gamma)}{(\beta-\alpha)(z - \gamma)}.
+\end{equation}
+
+This maps $\alpha \mapsto 0$, $\beta \mapsto 1$ and $\gamma \mapsto \infty$,
+and this seems a good place to point out that our discussion will be
+on the complex sphere $\C_\infty$ (or the complex plane with the point
+at infinity attached).
+
+\subsection{Equations with no regular singular points}
+
+This will be a rather brief discussion.
+
+\begin{proposition}
+There are no second order linear differential equations with no regular
+singular points.
+\end{proposition}
+
+\begin{proof}
+Since there are no finite singularities $p$ and $q$ are entire.
+We must have $p \sim \frac{2}{z}$ as $z \to \infty$, so $p$ is bounded
+and thus constant.  We now have a contradiction.
+\end{proof}
+
+\subsection{Equations with one regular singular point}
+
+Without loss of generality we can assume that this point is at $z=0$.  Thus
+$p = \frac{A(z)}{z}$ and $q = \frac{B(z)}{z^2}$, with $A(z)$ and $B(z)$ entire
+functions.  As the equation is regular at $\infty$ we must have $A = 2$
+and $B=0$.  Thus the only second order linear differential equation with
+one regular singular point is
+
+\begin{equation}\label{eq:onesp}
+w'' + \tfrac{2}{z} w' = 0.
+\end{equation}
+
+This has a general solution $w(z) = \frac{\alpha}{z} + \beta$.
+
+\subsection{Equations with two regular singular points}
+
+WLOG we can put these singular points at $0$ and $\infty$, so we must
+have $p = \frac{A(z)}{z}$ and $q = \frac{B(z)}{z^2}$ with $A$ and $B$
+entire.  As $z \to \infty$ we must have $z p(z)$ and $z^2 q(z)$ bounded
+and thus $A$ and $B$ are bounded entire functions and therefore constant.
+
+Thus the most general equation with two regular singular points
+at $0$ and $\infty$ is
+\begin{equation}\label{eq:twosp}
+z^2 w'' + A z w' + B w = 0.
+\end{equation}
+
+This is a homogenous equation and so
+\[
+w(z) = \begin{cases}
+\alpha z^{\sigma_1} + \beta z^{\sigma_2} & \sigma_1 \neq \sigma_2 \\
+z^\sigma \left( \alpha + \beta \log z\right) & \sigma_1 = \sigma_2 = \sigma.
+\end{cases}
+\]
+
+We can work backwards to find $A$ and $B$ in terms of $\sigma_1$ and
+$\sigma_2$; we find $A = 1 - \sigma_1 - \sigma_2$ and $B = \sigma_1 \sigma_2$.
+
+\subsubsection*{Confluence of singularities}
+
+We map $z \mapsto z+\alpha$ and let $\alpha \to \infty$ and define
+$\lambda_i = \alpha \sigma_i$.  Then we get the equation
+
+\begin{equation}\label{eq:twospc2}
+w'' + (\lambda_1 + \lambda_2) w' + \lambda_1 \lambda_2 w = 0,
+\end{equation}
+
+which has the general solution $w(z) = \alpha e^{\lambda_1 z}
++ \beta e^{\lambda_2 z}$.  \eqref{eq:twospc2} has an irregular singular
+point at infinity and the solution has an essential singularity there.
+
+\subsection{Equations with three regular singular points}
+
+Or, a User's Guide to the hypergeometric equation.  This section is only
+vaguely on the edge of the Schedules.  We can assume that the 
+singular points are at $0$, $1$ and $\infty$, and let the
+indices at $0$ be $0,1-c$, at $1$ be $0,c-a-b$ and at infinity be $a,b$
+respectively.  We get the hypergeometric equation
+\begin{equation}\label{eq:hypgeo}
+z(z-1) w'' + \left[\left( a+b-1\right)z + c \right] w' + a b w = 0.
+\end{equation}
+
+There is one solution which is regular at the origin.  It
+is written $F(a,b,c;z)$ and
+\begin{equation}\label{eq:Ffn}
+F(a,b,c;z) = 1 + \frac{a b}{c} z + \frac{a(a+1) b(b+1)}{c (c+1)} \frac{z^2}{2!}
++ \dots.
+\end{equation}
+
+This series is convergent for $\abs{z} < 1$.  The other solution
+is $z^{1-c} F(1 + a - c,1+b-c,2-c;z)$ if $c \notin \Z$.  If
+$c \in \Z$ the second solution is logarithmic.
+
+\subsubsection*{Transformations to hypergeometric form}
+
+Suppose we have a second order linear differential equation of the
+form $w'' + p w' + q w = 0$ with three regular singular points at $z=A$,
+$z=B$ and $z=C$.  We transform this into hypergeometric form by
+applying a M\"obius transform on the independent variable taking
+$(A,B,C) \mapsto (0,1,\infty)$ to put the singularities in the right place
+and applying a transform of the form $w_{\text{old}} = (z-A)^\xi (z-B)^\eta
+(z-C)^\zeta w_{\text{new}}$ on the dependent variable to give the correct
+indices at the singularities.  We illustrate this with an example, Legendre's
+equation:
+
+\begin{equation}\label{eq:legend}
+(1-z^2) w'' - 2 z w' + \left( n(n+1) - \frac{m^2}{1-z^2} \right) = 0,
+\end{equation}
+
+which has regular singularities at $\pm 1$ and $\infty$.  The indices
+at $\pm 1$ are $\pm \frac{m}{2}$ and the indices at infinity are $-n$
+and $n+1$.  The transform
+\[
+w(z) = (1-z)^{\frac{m}{2}} (1+z)^{\frac{m}{2}} f(z)
+\]
+gives $f$ indices of $0,-m$ at $z = \pm 1$ and $m-n,m+n+1$ at $z=\infty$.
+and we also put $\zeta = \frac{1-z}{2}$ to move the singularities at $\pm 1$
+to $0$ and $1$ respectively.
+The coefficients $a$, $b$ and $c$ of the hypergeometric equation
+are therefore $a=m-n$, $b=m+n+1$ and $c=m+1$ and so
+\[
+w(z) = \left(1-z^2\right)^{\frac{m}{2}} F(m-n,m+n+1,m+1;\tfrac{1-z}{2})
+\]
+is a solution of \eqref{eq:legend}.
+
+\subsubsection*{Integral representation}
+
+The point of departure is the series for $F(a,b,c;z)$, \eqref{eq:Ffn}.  We
+have
+\begin{align*}
+F(a,b,c;z) &= \sum_{k=0}^\infty \frac{\Gamma(k+a)}{\Gamma(a)}
+\frac{\Gamma(k+b)}{\Gamma(b)} \frac{\Gamma(c)}{\Gamma(k+c)} \frac{z^k}{k!} \\
+&= \frac{\Gamma(c)}{\Gamma(b) \Gamma(c-b)}
+\sum_{k=0}^\infty \frac{\Gamma(k+a)}{\Gamma(a)} \frac{\Gamma(k+b) \Gamma(c-b)}
+{\Gamma(k+c)} \frac{z^k}{k!} \\
+&= \frac{\Gamma(c)}{\Gamma(b) \Gamma(c-b)}
+\sum_{k=0}^\infty \frac{\Gamma(k+a)}{\Gamma(a)} B(b+k,c-b) \\
+&= \frac{\Gamma(c)}{\Gamma(b) \Gamma(c-b)} \sum_{k=0}^\infty
+\frac{z^k}{k!}  \frac{\Gamma(k+a)}{\Gamma(a)}
+\int_0^1 t^{b+k-1} (1-t)^{c-b-1}\, \ud t\\
+&= \frac{\Gamma(c)}{\Gamma(b) \Gamma(c-b)} \int_0^1
+t^{b-1} (1-t)^{c-b-1} (1-tz)^{-a}\, \ud t.
+\end{align*}
+
+We thus get the final result
+
+\begin{equation}\label{eq:Ffnint}
+F(a,b,c;z) = \frac{\Gamma(c)}{\Gamma(b) \Gamma(c-b)} \int_0^1
+t^{b-1} (1-t)^{c-b-1} (1-tz)^{-a}\, \ud t.
+\end{equation}
+
+\subsubsection*{Confluent hypergeometric equation}
+
+We move the singularity at $z=1$ to $z=b$ using $z \mapsto b z$ and then
+let $b \to \infty$.  We get the confluent hypergeometric equation
+
+\begin{equation}\label{eq:hypcon2}
+z w'' + (c-z) w' - a w = 0.
+\end{equation}
+
+This has a regular singular point at $z=0$ with indices $0$ and $1-c$
+and an irregular singular point at infinity.  The regular solution is
+
+\begin{equation}\label{eq:hypphi}
+\Phi(a,c;z) = 1+ \frac{a}{c} z + \frac{a (a+1)}{c (c+1)} \frac{z^2}{2!} + \dots
+\end{equation}
+
+and the other solution is $z^{1-c} \Phi(1+a-c,2-c;z)$ if $c \notin \Z$. The
+series representation \eqref{eq:hypphi} is entire.
+
+If $a=c$ we get $\Phi(a,a;z) = e^z$.  If $-a \in \N$ the series
+terminates to give the Laguerre polynomials.  Hermite's equation
+
+\begin{equation}\label{eq:hermite}
+w'' - 2z w' + 2n w = 0
+\end{equation}
+
+has solutions $\Phi(-\tfrac{1}{2} n, -\tfrac{1}{2}; z^2)$ and
+$z^{\frac{1}{2}} \Phi(\tfrac{1-n}{2}, -\tfrac{3}{2}; z^2)$.  After
+some work we can get the Bessel functions
+\begin{equation}\label{eq:hypbes}
+J_\nu(z) \propto z^\nu e^{-\imath z} \Phi(\nu + \tfrac{1}{2}, 2\nu +1;
+2 \imath z).
+\end{equation}
+
+\subsubsection*{Triple confluence}
+
+This can be done in a symmetric way by placing the singularities
+at $K$, $Ke^{\frac{2 \pi \imath}{3}}$ and $K e^{\frac{4 \pi \imath}{3}}$
+with indices $\frac{1}{6} \pm \frac{1}{3} K^{\frac{3}{2}}$ and letting
+$K \to \infty$.  This results in Airy's equation
+\begin{equation}\label{eq:airy}
+w'' - z w = 0,
+\end{equation}
+which has no singularities in the finite complex plane but a really
+evil singularity at infinity.
+
+If we let $\zeta = \frac{2}{3}z^{\frac{3}{2}}$ and define
+$W(\zeta) = z^{-\frac{1}{2}} w(z)$ we get
+\[
+W'' + \frac{1}{3} W' + \left(1 - \frac{1}{9 \zeta^2} \right) W = 0.
+\]
+
+This is Bessel's equation \eqref{eq:bessel} for $W(\imath \zeta)$, so
+we get $w(z) = z^{\frac{1}{2}}
+J_{\pm \frac{1}{3}}(\tfrac{2 \imath}{3} z^{\frac{3}{2}})$ as a solution
+of \eqref{eq:airy}.
+
+\section{Integral representation of solutions}
+
+In general, look for a solution of the form
+
+\begin{equation}\label{eq:kernel}
+w(z) = \int_\Gamma K(z,t) f(t)\, \ud t,
+\end{equation}
+
+where we have freedom to choose $K$, $f$ and $\Gamma$ so as to satisfy the
+differential equations.  $K(z,t)$ is known as the \emph{kernel}.  Some
+(famous?) kernels are:
+
+\begin{enumerate}
+\item Laplace kernel: $K(z,t) = e^{z t}$.  This is used in Laplace transforms
+in the form $e^{-z t}$ with $\Gamma = \R^+$.
+\item Fourier kernel: $K(z,t) = e^{\imath z t}$.  This is used in Fourier
+transforms with $\Gamma = \R$.
+\item Euler kernel: $(t-z)^\mu$.
+\item Mellin kernel: $t^{-z}$.
+\end{enumerate}
+
+The Laplace kernel and Fourier kernel amount to the same thing, the choice
+between them just influences $\Gamma$.  We will only examine this kernel.
+Use is best illustrated by example.
+
+Consider Airy's equation \eqref{eq:airy}, and look for a solution
+of the form
+\[
+w(z) = \int_\Gamma e^{z t} f(t)\, \ud t,
+\]
+where $\Gamma$ and $f$ are to be determined.  We substitute into
+\eqref{eq:airy} to get
+\begin{align*}
+0 &= \int_\Gamma (t^2 - z) e^{z t} f(t)\, \ud t \\
+&= \int_\Gamma \left(t^2 f(t) + f'(t) \right) e^{z t}\, \ud t - 
+\left[e^{z t} f(t) \right]_\Gamma \qquad \text{integrating by parts.}
+\end{align*}
+
+So if by hook or by crook we can find $f$ such that the integrand
+is zero and $\left[e^{z t} f(t) \right]_\Gamma = 0$ we have found a
+solution to \eqref{eq:airy}.  We choose $f$
+such that $f' + t^2 f = 0$, which gives $f(t) = A e^{-\frac{t^3}{3}}$
+and
+\begin{equation}\label{eq:aisoln}
+w(z) = \int_\Gamma e^{z t} e^{-\frac{t^3}{3}}\, \ud t.
+\end{equation}
+
+We now have to choose $\Gamma$ such that $\left[e^{z t} e^{-\frac{t^3}{3}}
+\right]_\Gamma = 0$.  As we are dealing with an analytic function
+this is true on any closed $\Gamma$, but in this case \eqref{eq:aisoln}
+gives the true but not-very-useful solution $w(z) \equiv 0$ (by Cauchy's
+theorem).
+
+We can get this if we integrate over an infinite range and the
+integrand tends to zero at infinity.  This happens iff
+$-\tfrac{\pi}{2} < \arg t^3 < \tfrac{\pi}{2}$, which is in
+the shaded regions of the $t$-plane.
+\vspace{1.5in}
+
+Contours starting and ending in the same sector give $w \equiv 0$, so
+we have three choices of contour, $\Gamma_1$, $\Gamma_2$ and $\Gamma_3$.
+We note that
+\[
+\int_{\Gamma_3} = \int_{\Gamma_1} - \int_{\Gamma_2}
+\]
+and so we only have two linearly independent solutions.  One choice is
+\[
+w_{1,2} = \int_{\Gamma_{1,2}} e^{z t} e^{-\frac{t^3}{3}}\, \ud t.
+\]
+
+Although this seems on the face of it to not be overly helpful we will see
+later that this can be approximately evaluated when $\abs{z} \gg 1$, which is
+usually the physical case we are interested in.
+
+For another example we try the confluent hypergeometric equation
+\eqref{eq:hypcon2}.  We try as before
+\[
+w(z) = \int_\Gamma e^{z t} f(t)\, \ud t
+\]
+
+and find that this works if
+\[
+\left[ e^{zt} (t^2-t) f(t) \right]_\Gamma -
+\int_\Gamma \left(\diff{}{t}\left\{ (t^2 - t)f \right\}
+- ctf + a f\right)e^{z t}\, \ud t =0.
+\]
+
+As before we choose $f(t)$ to make the integrand zero,
+which gives $f(t) = (t-1)^{c-a-1} t^{a-1}$ and then choose
+$\Gamma$ to make $\left[ e^{z t} t^a (1-t)^{c-a} \right]_\Gamma = 0$.
+Choosing $\Gamma$ depends on the particular ranges of $a$, $c$ and $a-c$,
+and given a range of $a$, $c$ and $a-c$ it is not difficult to find
+$\Gamma$ such that $\left[ e^{z t} t^a (1-t)^{c-a} \right]_\Gamma = 0$
+and the integral for $w(z)$ does not give the trivial zero solution.
+
+\chapter{Asymptotic Expansions}
+
+\section{Motivation}
+
+We will motivate this discussion with an example.  Suppose we wish to
+evaluate the error function
+\begin{equation}\label{eq:erf}
+\erf z = \frac{2}{\sqrt{\pi}} \int_0^z e^{-s^2}\, \ud s.
+\end{equation}
+
+This occurs throughout statistics and mathematical physics, for instance
+as a solution to the diffusion equation
+$\pd{T}{t} = \kappa \pd{^2 T}{x^2}$ (put $z = \tfrac{x}{2 \sqrt{\kappa t}}$
+to get an ODE for $T(z)$).  One naive approach is to expand
+$e^{-s^2}$ as an infinite sum and integrate termwise, which is certainly
+analytically permissible.  As $e^{-s^2}$ is entire then the series
+we obtain for $\erf z$ will have an infinite radius of convergence.  The
+series is
+
+\begin{equation}\label{eq:erfT}
+\erf z = \tfrac{2}{\sqrt{\pi}} z \left(1 - \tfrac{1}{3} z^2
++ \tfrac{1}{10} z^4 - \tfrac{1}{42} z^6 + \dots \right).
+\end{equation}
+
+If we evaluate this at $z=1$ we need eight terms to get an accuracy
+of $10^{-5}$.  If we evaluate at $z=2$ we need 16 terms and if we evaluate
+at $z=5$ we need 75 terms.  Although the series \emph{is} convergent,
+the terms of the series get quite large before eventually tending to zero.
+At $z=5$ the largest term is approximately $7 \times 10^8$, so although
+a computer (say) can perform the sum of 75 terms in no time at all it
+will converge to something which is incorrect even in the first significant
+digit.
+
+For large $\abs{z}$ a better approach is to obtain an asymptotic expansion
+for $\erf z$.  We know that $\erf z \to 1$ as $z \to \infty$ and so we
+write
+\begin{align*}
+\erf z &= 1 - \frac{2}{\sqrt{\pi}} \int_z^\infty e^{-s^2}\, \ud s \\
+& = 1 - \frac{2}{\sqrt{\pi}} \int_z^\infty s e^{-s^2} \frac{1}{s}\, \ud s \\
+& = 1 - \frac{1}{\sqrt{\pi}} \frac{e^{-z^2}}{z} + \frac{1}{\sqrt{\pi}}
+\int_z^\infty \frac{e^{-s^2}}{s^2}\, \ud s \qquad \text{integrating by parts.}
+\end{align*}
+
+We can continue this to get the asymptotic series for $\erf z$
+\begin{equation}\label{eq:erfAs}
+\erf z = 1 - \frac{e^{-z^2}}{z \sqrt{\pi}} \left(
+1 - \frac{1}{2 z^2} + \frac{1 \times 3}{(2z^2)^2} 
+- \frac{1 \times 3 \times 5}{(2z^2)^3} + \cR \right).
+\end{equation}
+
+If we apply the ratio test we see that this series is convergent nowhere.
+However, if we consider the remainder term $\cR$ we see that
+\begin{align*}
+\cR &= \int_z^\infty \frac{105}{16} \frac{t e^{-t^2}}{t^9}\, \ud t \\
+&\le \frac{105}{32} \frac{e^{-z^2}}{z^9}
+\end{align*}
+
+and so the remainder term tends to zero very rapidly as $z \to \infty$. At
+$z=2.5$ only three terms of the series are needed for an accuracy of
+$10^{-5}$ and at $z=3$ two terms will do.  The truncated series is an
+asymptotic expansion of $\erf z$ as $z \to \infty$.  Note that the
+Taylor expansion is an asymptotic expansion of $\erf z$ as $z \to 0$.
+
+\section{Definitions and examples}
+
+\begin{definition}
+The sum $\sum_{n=1}^N f_n(z)$ is an asymptotic expansion of $f(z)$
+in the limit $z \to \infty$ if $\forall M \le N$ we have
+\[
+\frac{f(z) - \sum_{n=1}^M f_n(z)}{f_M(z)} \to 0 \text{ as } z \to \infty.
+\]
+\end{definition}
+
+We can state this informally as ``the remainder is smaller than the
+last included term'' and a similiar definition holds in any limit
+$z \to c$.  The property of asymptoticness may depend on
+$\arg (z-c)$.
+
+\begin{definition}
+A sequence of function $\{ \phi_n(z) \}_{n=0}^\infty$ is an
+asymptotic sequence as $z \to c$ in some sector if $\forall n$,
+$\frac{\phi_{n+1}(z)}{\phi_n(z)} \to 0$ as $z \to c$ in that sector.
+\end{definition}
+
+For instance $\phi_n(z) = z^{-n}$ is asymptotic as $z \to \infty$ with
+any argument.  $\phi_n(z) = e^{-n z}$ is asymptotic as $z \to \infty$
+for $-\tfrac{\pi}{2} < \arg z < \tfrac{\pi}{2}$.  $\phi_n(z)
+= \left( \sin z \right)^n$ is asymptotic as $z \to 0$ for any argument.
+
+\begin{definition}
+If for a given asymptotic sequence $\{\phi_n(z)\}$ there exist constants
+$\{ a_n \}$ such that for all $n$, $f(z) = \sum_0^N a_n \phi_n(z)
+= o(\phi_N(z))$ as $z \to c$ in some sector then we write
+\[
+f(z) \sim \sum_0^\infty a_n \phi_n(z) \text{ as } z \to c.
+\]
+\end{definition}
+
+These infinite asymptotic expansions go against the spirit of their use,
+but they are conceptually useful as they allow us to show
+\[
+f(z) = \sum_{n=0}^N a_n \phi_n(z) + a_{N+1} \phi_{N+1}(z) + o(\phi_{N+1})
+= \sum_{n=0}^N a_n \phi_n(z) + \cO(\phi_{N+1}).
+\]
+
+For a given asymptotic sequence $\{\phi_n\}$ the coefficients
+$a_n$ are unique and can be found recursively from
+\[
+a_N = \lim_{z \to c} \frac{f(z) - \sum_0^{N-1} a_n \phi_n}{\phi_N},
+\]
+remembering that possibly $z \to c$ in some sector.  A given function
+can have different asymptotic expansions in terms of different
+asymptotic sequences:
+\begin{align*}
+\tan z &\sim z + \tfrac{1}{3} z^3 + \tfrac{2}{15} z^5\\
+& \sim \sin z + \tfrac{1}{2} \left(\sin z \right)^3
++ \tfrac{3}{8} \left( \sin z \right)^5,
+\end{align*}
+both as $z \to 0$ for any $\arg z$.
+
+\subsection{Manipulations}
+
+Asymptotic expansions can be naively added, subtracted, multiplied
+and divided to form new asymptotic expansions, but perhaps in terms
+of a new asymptotic series.  The size of terms must be checked.
+Obviously, if we have an asymptotic expansion of $f_1$ about $c$ confined
+to a sector $S_1$ and an asymptotic expansion of $f_2$ about $c$ confined
+to a sector $S_2$ then the asymptotic expansion obtained by multiplication
+is only valid in the sector $S_1 \cap S_2$.
+
+Asymptotic expansions can be integrated termwise but cannot in general be
+differentiated.  However if $f(z)$ is analytic in a sector and
+differentiable in the sector at $c$ (some kind of one-sided limit) then
+the asymptotic expansion can be differentiated termwise in that sector.
+
+\section{Stokes Phenomenon}
+
+Suppose $f(z) \sim \sum_N^\infty a_n z^{-n}$ as $z \to \infty$ for all
+$\arg z$.  Let $f$ be analytic in a punctured neighbourhood of
+infinity.  Then $f$ has a (convergent) Laurent expansion
+$\sum_{-\infty}^\infty b_n z^{-n}$.  This is asymptotic so by
+uniqueness $b_n = 0$ for $n < N$ and $a_n = b_n$ for $n \ge N$ and the
+asymptotic expansion is convergent.
+
+Conversely if the asymptotic expansion is divergent then it cannot be
+valid for all $\arg z$.  Divergent asymptotic expansions are associated with
+essential singularities of $f$.  For instance we have seen that
+for real positive $z$ we have
+$\erf z \sim 1 - \frac{e^{-z^2}}{z \sqrt{\pi}}$ as $z \to \infty$.  In
+deriving this we considered $\int_z^\infty e^{-s^2}\, \ud s$, and for
+more general $\arg z$ this integral can be shifted onto the original
+contour provided we're in the sector such that $e^{-s^2} \to 0$ as
+$s \to \infty$; thus the asymptotic expansion is valid for
+$-\tfrac{\pi}{4} < \arg z < \tfrac{\pi}{4}$.  Noting that
+$\erf$ is an odd function of $z$ we see that
+$\erf z \sim -1 - \frac{e^{-z^2}}{z \sqrt{\pi}}$ as $z \to \infty$
+for $\tfrac{3\pi}{4} < \arg z < \tfrac{5 \pi}{4}$.
+
+An alternative method gives that $\erf z \sim - \frac{e^{-z^2}}{z \sqrt{\pi}}$
+as $z \to \infty$ for $\tfrac{\pi}{4} < \arg z < \tfrac{3 \pi}{4}$
+and $\tfrac{5\pi}{4} < \arg z < \tfrac{7 \pi}{4}$.  The lines separating
+these sectors are called Stokes lines; asymptotic expansions have
+jump discontinuities across Stokes lines.
+
+\section{Asymptotic Approximation of Integrals}
+
+\subsection{Integration by parts}
+
+This is used if the independent variable is in a limit of the integral.
+
+For instance, consider the exponential integral (with $z$ real and positive
+at first)
+
+\begin{align*}
+E_1(z) &= \int_z^\infty \frac{e^{-s}}{s}\, \ud s \\
+&= \left[ - \frac{e^{-s}}{s} \right]_z^\infty - \int_z^\infty
+\frac{e^{-s}}{s^2}\, \ud s \\
+&= \frac{e^{-z}}{z} \left( 1 - \frac{1}{z} \right)
++ 2 \int_z^\infty \frac{e^{-s}}{s^3}\, \ud s
+\end{align*}
+
+We can bound the remainder term with
+$\frac{2}{z^3} e^{-z} = o\smash{\left(\tfrac{e^{-z}}{z^2}\right)}$ and so
+\[
+E_1(z) \sim \frac{e^{-z}}{z} \left( 1 - \frac{1}{z} \right)
+\quad \text{as $z \to \infty$ for positive real $z$.}
+\]
+
+For complex $z$ we can see that the above method works if $e^{-z}
+\to 0$ as $z \to \infty$, that is for $\Re z > 0$.  The result is
+in fact true for all arguments of $z$, but we need another method to
+cope with that.
+
+As another example we will find asymptotic expansions as $z \to \infty$
+for the Fresnel integrals (at first for positive real $z$)
+\begin{align*}
+c(z) = \int_0^z \cos t^2\, \ud t && s(z) = \int_0^z \sin t^2\, \ud t.
+\end{align*}
+
+We will consider
+\begin{align*}
+f(z) &= \int_0^z e^{\imath t^2}\, \ud t \\
+&= \int_0^\infty e^{\imath t^2}\, \ud t - \int_z^\infty e^{\imath t^2}\,
+\ud t.
+\end{align*}
+
+The first of these integrals can be done as a standard contour integral
+to give $\tfrac{\sqrt{\pi}}{2} e^{\imath \frac{\pi}{4}}$.  As for the
+second:
+
+\begin{align*}
+\int_z^\infty e^{\imath t^2}\, \ud t &= \int_z^\infty \frac{2 \imath t
+e^{\imath t^2}}{2 \imath t}\, \ud t \\
+&= \left[ \frac{e^{\imath t^2}}{2 \imath t}\right]_z^\infty + \cO(z^{-2}) \\
+&= - \frac{e^{\imath z^2}}{2 \imath z} + \cO(z^{-2}).
+\end{align*}
+
+The evaluation of this second integral carries over to negative real $z$.
+We need to change the first integral and we get
+\[
+f(z) \sim \pm \frac{\sqrt{\pi}}{2} e^{\imath \frac{\pi}{4}} +
+\frac{e^{\imath z^2}}{2 \imath z} \qquad \text{as } z \to \pm \infty \in \R.
+\]
+
+We ask if we can extend these results into more of $\C$.  The key point
+is the $e^{\imath z^2}$ term, which must decay as $z \to \infty$.  This
+restricts the series to the regions $0 \le \arg z \le \frac{\pi}{2}$
+and $\pi \le \arg z \le \frac{3 \pi}{2}$ respectively.
+
+\vspace{1in}
+
+In the quadrants with exponential growth the exponential term of the
+series dominates and we get $f(z) \sim \frac{e^{\imath z^2}}{2 \imath z}$
+as $z \to \infty$.  The real and imaginary axes are clearly Stokes lines.
+
+\subsection{Watson's Lemma}
+
+This applies to integrals of the form
+\begin{equation}\label{eq:wlem}
+\int_0^A e^{- z t} g(t)\, \ud t
+\end{equation}
+and relies on the fact that (in this case), $e^{-z t}$ decays rapidly as
+$\abs{z} \to \infty$ with $\Re z > 0$.  The integral is dominated by a
+neighbourhood of $t=0$.
+
+\begin{lemma}[Watson's Lemma]
+Suppose $g(t)$ has an asymptotic expansion in a sector $S$,
+\[
+g(t) \sim a_0 t^{\alpha_0} + \dots + a_n t^{\alpha_n} \qquad \text{as }
+t \to 0
+\]
+with $\alpha_0 > - 1$.  Then the integral \eqref{eq:wlem} can be evaluated
+termwise and
+\begin{align*}
+\int_0^A e^{- z t} g(t)\, \ud t &\sim
+\int_0^{\text{``$\infty\!$''}} e^{-z t} \left( a_0 t^{\alpha_0} + \dots +
+a_n t^{\alpha_n}\right)\, \ud t \\
+&\sim \sum_0^n a_k z^{-\alpha_k - 1} \Gamma(\alpha_k+1)
+\end{align*}
+as $z \to \infty$ with $z^{-1}$ and $A$ in $S$. 
+\end{lemma}
+
+We do not prove this but give examples of its use.  Consider (again) the
+exponential integral
+
+\begin{align*}
+\int_z^\infty \frac{e^{-s}}{s}\, \ud s
+&= e^{-z} \int_0^\infty \frac{e^{-zt}}{t+1}\, \ud t \\
+&\sim e^{-z} \int_0^\infty e^{-zt} \left(1 - t +t^2 + \dots\right)\, \ud t \\
+&\sim e^{-z} \left( 1 - \frac{1}{z} \right)
+\end{align*}
+as $z \to \infty$, and as the Taylor series for $(1+t)^{-1}$ we used is
+asymptotic as $t \to 0$ for any argument the end result we get for
+$E_1$ is valid for any argument.  Using similar artifice we can do
+the same sort of thing for the error function, although it is easier to
+work with the complementary error function $\erfc z = 1 - \erf z$.
+
+\subsection{Laplace's Method}
+
+This applies to integrals of the form
+\begin{equation}\label{eq:lapmet}
+I(x) = \int_\alpha^\beta g(t) e^{x h(t)}\, \ud t
+\end{equation}
+
+in the asymptotic limit $x \to \infty$ (which is understood to mean $x \gg 1$).
+The integrand is largest where $h$ has its maximum.  If the maximum is
+at an endpoint (say at $\alpha$) with $h'(\alpha) < 0$ then by
+expanding $h(t) = h(\alpha) +(t-\alpha)h'(\alpha) + \cO(t-\alpha)^2$
+and expanding $g(t) = g(\alpha) + \cO(t-\alpha)$ we get
+\[
+I(x) \sim - \frac{e^{x h(\alpha)} g(\alpha)}{x h'(\alpha)}.
+\]
+The remainder term is $\cO(x^{-2})$ and so this an asymptotic expansion.  We
+get the leading order term easily but the higher order terms are unpleasant.
+
+If there is an interior maximum (at $t_0$) then only the highest maximum
+contributes to the leading order term.  Then
+$h(t) = h_0 + \frac{1}{2} h_2 (t-t_0)^2 + \cO(t-t_0)^3$ with
+$h_2 < 0$.  Now
+
+\begin{align*}
+I &= e^{x h_0} \int_\alpha^\beta e^{x\left(\frac{1}{2} h_2 (t-t_0)^2
++ \cO(t-t_0)^3\right)} g(t)\, \ud t \\
+&\sim \int_{- ``\infty\text{''}}^{``\infty\text{''}}
+e^{\frac{x}{2} h_2 u^2}\left(1 + \cO(u^4 x)\right)\left(g_0 + \cO(u^2)
+\right)\, \ud u \\
+&\sim g_0 e^{h_0 x} \left\{\frac{2 \pi}{-h_2 x}\right\}^{\frac{1}{2}}
++ g_0 e^{h_0 x} \cO(x^{-\frac{3}{2}}).
+\end{align*}
+
+Note that the $\cO(u^3x)$ and $\cO(ux)$ terms are lost (integrating an
+odd function).
+
+This gives us an easy way to derive Stirling's formula for $x!$. Recall
+that $x! = \int_0^\infty t^x e^{-t}\, \ud t$.  Put $t = x \tau$ to get
+\begin{align*}
+x! &= \int_0^\infty e^{x \left( \log x + \log \tau \right)} e^{-x \tau} x
+\, \ud \tau \\
+&= x x^x \int_0^\infty e^{x\left( \log \tau - \tau\right)}\, \ud \tau.
+\end{align*}
+
+The maximum of $\log \tau - \tau$ is at $\tau = 1$ and we apply the formula
+developed above to get $x! \sim \sqrt{2 \pi x} x^x e^{-x}$ as $x \to \infty$.
+
+A harder example (which comes from scattering cross-sections in
+fusion reactions) is
+\[
+I(a,b) = \int_0^\infty \exp \left\{ - \left(\frac{a}{t}\right)^{\frac{1}{2}}
+ - \frac{t}{b} \right\}\, \ud t.
+\]
+
+The integrand is peaked at $\left(\frac{a b^2}{4}\right)^{\frac{1}{3}}$.
+The integral is locally dominated by this region.  We pick up the
+major contribution by rescaling $t = \left( a b^2 \right)^{\frac{1}{3}}\tau$.
+We put $x = \left(\frac{a}{b}\right)^{\frac{1}{3}}$ and let this tend to
+infinity.  This gives
+\[
+I(a,b) = a^{\frac{1}{3}} b^{\frac{2}{3}} \int_0^\infty
+e^{-x \left(\tau^{-\frac{1}{2}} + \tau \right)}\, \ud \tau
+\]
+
+and is now in a suitable form for the application of Laplace's method.
+Applying this gives (eventually)
+\[
+I(a,b) \sim \left( \frac{16 \pi^3 a b^5}{27} \right)^{\frac{1}{6}}
+\exp - \left(\frac{27 a}{4 b} \right)^\frac{1}{3}.
+\]
+
+\subsection{The method of stationary phase}
+
+We will need the Riemann-Lebesgue lemma, which is stated but not
+proved.
+
+\begin{lemma}[Riemann-Lebesgue]
+If $f(t)$ is continuous in $[a,b]$ then
+\[
+\int_a^b f(t) e^{\imath x t}\, \ud t \to 0 \text{ as } x \to \infty.
+\]
+\end{lemma}
+
+We can see intuitively that when $x$ becomes large the exponential term is
+oscillating faster and faster and getting more and more cancellation.
+
+The method of stationary phase applies to integrals of the form
+\[
+f(x) = \int_a^b e^{\imath x h(t)} g(t)\, \ud t \qquad x \gg 1,
+\]
+
+where $x$, $g$ and $h$ are all real.
+
+First we note that if $h$ is strictly monotonic in some subinterval
+$[\alpha,\beta]$ then
+\[
+\int_\alpha^\beta e^{\imath x h(t)} g(t)\, \ud t
+= \int_\alpha^\beta e^{\imath x h} \frac{g(t(h))}{h'(t(h))}\, \ud h
+\]
+which tends to $0$ as $x \to \infty$ (by the Riemann-Lebesgue lemma).
+This change of variables also suggests that the dominant contributions to
+$f$ are when $h'(t) = 0$.  Near a stationary point $t_0$ of
+$h$ we expand $h(t) = h_0 + \frac{1}{2} (t-t_0)^2 h_2 + \cO(t-t_0)^3$
+and then
+\begin{align*}
+f(x) &\sim \int_{-``\infty\text{''}}^{``\infty\text{''}}
+e^{\imath h_0 x} g(t_0) e^{\imath x \tau^2 h_2}\, \ud \tau \\
+&\sim g(t_0) e^{\imath h_0 x} \int_{-``\infty\text{''}}^{``\infty\text{''}}
+\exp \left( \frac{1}{2} \imath h_2 x \tau^2 \right)\, \ud \tau \\
+& \sim \left[ \frac{2 \pi}{x h''(t_0)} \right]^{\frac{1}{2}}
+g(t_0) e^{\imath x h(t_0) + \imath \frac{\pi}{4}}.
+\end{align*}
+
+As an example we will consider the Airy function for large negative
+$x$.
+\[
+Ai(-x) = \frac{1}{\pi} \int_0^\infty \cos\left( \frac{1}{3}\omega^3
+-x \omega \right)\, \ud \omega.
+\]
+
+This is most easily approached with
+\[
+I(x) = \int_0^\infty e^{\imath \left(\frac{\omega^3}{3} - x \omega
+\right)}\, \ud \omega.
+\]
+
+Let $\omega = \sqrt{x} t$ and $\lambda = x^{\frac{3}{2}}$.  We get
+\[
+I(x) = \sqrt{x} \int_0^\infty e^{\imath \lambda \left( \frac{t^3}{3}
+- t \right)} \, \ud t,
+\]
+which is now in the correct form for the method of stationary phase.
+Applying the theory gives
+\[
+Ai(-x) \sim \left( \pi x^{\frac{3}{2}} \right)^{-\frac{1}{2}}
+\cos \left( \frac{2}{3} x^{\frac{3}{2}} - \frac{\pi}{4} \right)
+\quad \text{as } x \to \infty.
+\]
+
+Another (more physical) example is that of group velocity.  Many waves are
+dispersive --- different wavelengths travel at different speeds.  If the waves
+are linear they can be superposed and Fourier analysis used to obtain
+\begin{equation}\label{eq:wave}
+f(x,t) = \int_{-\infty}^\infty F(k) e^{\imath \left(k x - \omega(k) t
+\right)}\, \ud k
+\end{equation}
+given an initial disturbance
+\[
+f(x,0) = \int_{-\infty}^\infty F(k) e^{\imath k x}\, \ud k.
+\]
+
+Suppose the initial disturbance is compact to $\abs{x} < a$.  What does one
+see at large distances from the initial disturbance?  We also need $t$
+to be large, else no waves reach $x$.  The method of stationary phase
+gives the asymptotic behaviour of \eqref{eq:wave} as dominated by the point
+where $\pd{}{k} \left( k x - \omega(k) t \right) = 0$, or in other
+words $\frac{x}{t} = \pd{\omega}{k}$.  For a given large $x$, $t$ find
+$k_0$ such that $\left.\pd{\omega}{k}\right|_{k_0}= \frac{x}{t}$.  Then the
+dominant waveform is $F(k_0) e^{\imath \left(k_0 x - \omega(k_0) t \right)}$.
+
+Conversely, given $k_0$ then an observer moving with speed
+$\left.\pd{\omega}{k} \right|_{k_0}$ asymptotically sees waves of
+wavenumber $k_0$.  This speed $\left.\pd{\omega}{k}\right|_{k_0}$ is called
+the group velocity and is the physical quantity: the speed at which
+energy is transferred.
+
+For water waves $\omega = \sqrt{g k}$ and along a ray
+$\frac{x}{t} = c_g = \frac{1}{2} \sqrt{\frac{g}{k}}$.  The method of
+stationary phase gives
+\[
+f(x,t) \sim 2 \sqrt{2 \pi} k_0^{-\frac{3}{4}} t^{-\frac{1}{2}}
+g^{-\frac{1}{4}} F(k_0) e^{\imath \left( k_0 x - \omega(k_0) t + \frac{\pi}{4}
+\right)}.
+\]
+
+\subsection{Method of Steepest Descents}
+
+In this section we generalise the method of stationary phase (or
+equivalently Laplace's method) into the complex plane.  We consider
+integrals of the form
+\[
+f(z) = \int_{\gamma} g(\zeta) e^{z h(\zeta)}\, \ud \zeta
+\]
+with $h$ and $g$ analytic on $\gamma$.  To begin with we consider $z$
+real and positive and split $h$ into real and imaginary parts,
+$h = u + \imath v$.  We cannot naively apply the previous methods as if
+the maximum of $u(z)$ on $\gamma$ is not a saddle point of $h$ then
+$v$ is varying monotonically and in the limit a large amount of cancellation
+occurs.
+
+We can deform $\gamma$ into $\gamma'$ to pass through a saddle point
+of $h$ along a contour of $v$.  In this case $u$ has its maximum on
+$\gamma'$ at the saddle point, so the integral is locally dominated
+\emph{and} $v$ is stationary so no rapid cancellation occurs.
+
+By letting $\gamma'$ be tangent to a contour of $v$ at the saddle point
+we get $u$ decreasing most rapidly either side of the saddle and
+$e^{z h}$ is most strongly peaked.  This is the method of steepest descents.
+If only the leading order term is required then any descending path through
+the saddle point will do --- this is the saddle point method.
+
+As an example we consider the Airy function
+\[
+Ai(z) = \frac{1}{2 \pi \imath} \int_{C_1} e^{z t - \frac{1}{3}t^3}\, \ud t
+\]
+with $z$ real and positive.  We write $t = z^{\frac{1}{2}} \tau$ and then
+\[
+Ai(z) = \frac{z^{\frac{1}{2}}}{2 \pi \imath} \int_{C_1}
+e^{z^{\frac{3}{2}} \left( \tau - \frac{\tau^3}{3}\right)}\, \ud \tau.
+\]
+
+We now consider the integral
+\[
+f(x) = \int_{C_1} e^{x \left(\tau - \frac{\tau^3}{3} \right)}\, \ud \tau
+\]
+for $x = z^{\frac{3}{2}} \gg 1$ and $h(\tau) = \tau - \frac{\tau^3}{3}$,
+which has saddles at $\tau = \pm 1$.  Although $\tau = 1$ is the higher saddle
+we will go through $\tau = -1$ so that $\Re h(\tau) < 0$ on the path of
+integration and $Ai(z)$ remains bounded as $z \to \infty$.
+
+Put $\tau = -1 + \eta$ with $\eta = \xi + \imath \zeta$.  $h(\tau)
+= - \frac{2}{3} + \eta^2 + \dots$.  The steepest descent path at
+$\tau = -1$ is parallel to the imaginary axis, so we have $\xi = 0$.  Then
+
+\begin{align*}
+f(x) & \sim \int_{-\infty}^\infty e^{x \left( -\frac{2}{3} - \zeta^2\right)}
+\imath \ud \zeta \\
+& \sim \imath e^{-\frac{2}{3}x} \int_{-\infty}^\infty e^{-x \zeta^2}\, \ud
+\zeta \\
+&\sim \imath \sqrt{\frac{\pi}{x}} e^{-\frac{2}{3}x}.
+\end{align*}
+
+Putting all this together $Ai(z) \sim \frac{z^{-\frac{1}{4}}}{2 \sqrt{\pi}}
+e^{-\frac{2}{3}z^{\frac{3}{2}}}$.
+
+We also want to know how far we can generalise this result for
+different values of $\arg z$.  Suppose $\arg z = \alpha$; this causes
+rotation of the steepest descent paths of $\Re \left(z h(\tau)\right)$
+by $\alpha$.  For small $\alpha$ this doesn't matter --- we get the
+same asymptotic expansion.  For larger $\alpha$ other saddles come
+into view.  As the steepest descent path jumps from one saddle to
+another we get Stokes' phenomenon.  For the Airy function the
+asymptotic expansion we found is valid for $\abs{\arg z} < \pi$.
+
+\vspace{1in}
+
+The Hankel functions
+\[
+H^{(1,2)}_\nu = \frac{1}{\pi \imath} \int_{C_{1,2}}
+e^{z \sinh t - \nu t}\, \ud t.
+\]
+
+The Bessel function $J_\nu(z) = \frac{1}{2} \left( H^{(1)}_\nu(z)
++ H^{(2)}_\nu(z) \right)$.  We will seek an asymptotic approximation for
+$H^{(1)}_\nu(z)$, and use the method of steepest descent with
+$g(t) = e^{-\nu t}$ and $h(t) = \sinh t$. This has saddles where
+$\cosh t = 0$, or $t = \left( n + \frac{1}{2} \right) \imath \pi$.  We
+deform $C_1$ to go through the saddle at $t_0 = \frac{\imath \pi}{2}$.
+
+$g(t_0) = e^{-\imath \frac{\pi \nu}{2}}$, $h(t_0) = \imath$ and
+$h(t_0) = \imath$.  Then $h \sim \imath  + \frac{\imath}{2} \left(t - t_0
+\right)^2$ and put $t - t_0 = r e^{\imath \theta}$.  Then
+$h \sim \imath - \frac{1}{2} r^2 e^{\imath \left(2 \theta - \frac{\pi}{2}
+\right)}$.  It is clear that the path of steepest descent has
+$\theta = \frac{\pi}{4}$.  However, any $\theta$ such that $0 < \theta
+< \frac{\pi}{2}$, since in this range $\Re \left( e^{\imath \left(
+2 \theta - \frac{\pi}{2}\right)} \right) > 0$.  If we put $2 \alpha
+= 2 \theta - \frac{\pi}{2}$ we have
+
+\begin{align*}
+H^{(1)}_\nu(z) & \sim \frac{1}{\pi \imath} e^{-\imath \frac{\pi \nu}{2}}
+e^{\imath z} \int e^{-\frac{1}{2} z r^2 e^{2 \imath \alpha}} e^{\imath \theta}
+\, \ud r \\
+& \sim \frac{1}{\pi \imath} e^{-\imath \frac{\pi \nu}{2}} e^{\imath z}
+\left( \frac{2 \pi}{z} \right)^{\frac{1}{2}} e^{-\imath \alpha} e^{\imath
+\theta} \\
+& \sim \left(\frac{2}{\pi z}\right)^{\frac{1}{2}} e^{\imath \left(
+z - \frac{\pi \nu}{2} - \frac{\pi}{4} \right)}
+\end{align*}
+
+\section{Liouville-Green Functions}
+
+This area has a number of names associated with it; it is usually called
+WKB theory\footnote{and in Cambridge, WKBJ theory.  W, K, B and J
+are Wentzel, Kramers, Brillouin and Jeffrey respectively.}.
+
+We return to equations of the form $w'' + p(z) w' + q(z) w = 0$
+and by putting $w(z) = W(z) e^{-\frac{1}{2} \int^z p(s) \ud s}$
+we convert into the standard form $w'' + q(z) w = 0$.
+
+If $q$ is a constant then we can write down a solution of this equation;
+$w(z) = A e^{\imath \theta}$ where $\theta = q^{\frac{1}{2}} z$.  When
+$q > 0$ solutions are oscillatory with wavelength proportional to
+$q^{-\frac{1}{2}}$.
+
+The WKBJ method can be applied to problems in which $q$ varies slowly,
+that is $\frac{\Delta q}{q}$ is small when $\Delta z = \cO(q^{-\frac{1}{2}})$,
+or alternatively ``the fractional change in $q$ is small over one wavelength''.
+
+\marginpar{This derivation is starred --- the final result isn't.}
+
+Take $\epsilon \ll 1$ and $q = q(\epsilon z)$ so that $\diff{q}{z} =
+\epsilon q' = \cO(\epsilon)$.  We expect solutions with a
+slowly varying amplitude $a = a(\epsilon z)$ and a slowly varying
+phase $\theta = \epsilon^{-1} \phi(\epsilon z)$.  The factor
+$\epsilon^{-1}$ ensures the wavelength is $\cO(1)$ to leading order.  Then
+
+\begin{align*}
+e^{\imath \theta} &\sim e^{\imath \left( \epsilon^{-1} \phi(0)
++ \phi'(0) z + \frac{1}{2} \epsilon \phi''(0) z^2 + \dots\right)} \\
+&\sim e^{\frac{\imath \phi(0)}{\epsilon}} e^{\imath \phi'(0) z}.
+\end{align*}
+
+We propose a solution $w(z) = a(\epsilon z) e^{\frac{\imath \phi(\epsilon z)}
+{\epsilon}}$.  Substituting into the governing equation we get
+
+\begin{align*}
+\cO(1) &: & -a \phi'{}^2 + q a &= 0 \\
+\cO(\epsilon) &: & 2 a' \phi' + a \phi'' &= 0.
+\end{align*} 
+
+The $\cO(1)$ equation gives $\phi = \pm \int^z q^{\frac{1}{2}}\, \ud z$
+and the $\cO(\epsilon)$ equation gives $a = q^{-\frac{1}{4}}$ (integrating
+and using the $\cO(1)$ equation).  We have the Liouville-Green approximate
+solutions to the differential equation:
+
+\begin{equation}\label{eq:WKBJplus}
+w \sim q^{-\frac{1}{4}} \left\{
+A \exp \left( \imath \int^z q^{\frac{1}{2}}\, \ud z \right) +
+B \exp \left( -\imath \int^z q^{\frac{1}{2}}\, \ud z \right)
+\right\}.
+\end{equation}
+
+If $q < 0$ a more convenient form is
+
+\begin{equation}\label{eq:WKBJminus}
+w \sim \left(-q\right)^{-\frac{1}{4}} \left\{
+a \exp \left( \int^z \left(-q\right)^{\frac{1}{2}}\, \ud z \right) +
+b \exp \left( \int^z \left(-q\right)^{\frac{1}{2}}\, \ud z \right) \right\}.
+\end{equation}
+
+These give asymptotic solutions for large $z$ under certain conditions:
+
+Suppose $q \sim z^n$ as $z \to \infty$.  Then $a \sim z^{-\frac{n}{4}}$
+and $\phi \sim z^{\frac{n}{2} + 1}$.  Recalling the derivation
+we see that we can neglect the term corresponding to the $\epsilon^2$
+term provided $a'' \ll a' \phi'$ as $z \to \infty$, or substituting in
+we get $n > -2$.  This is the converse of the condition for the point
+at $\infty$ to be a regular singular point.  The WKBJ method thus works
+when the point at infinity is an irregular singular point.
+
+As an example we consider Airy's equation $w'' - z w = 0$ (again).  Thus
+$q = - z$ and $q^{\frac{1}{2}} = \pm \imath z^{\frac{1}{2}}$.
+$\int \sqrt{q}\, \ud z = \pm \imath \frac{2}{3} z^\frac{3}{2}$ and
+so
+
+\begin{align*}
+w(z) &\sim z^{-\frac{1}{4}} \exp \left( \pm z^\frac{3}{2} \right) &
+z \to +\infty \\
+&\sim \abs{z}^{\frac{1}{4}} \begin{matrix}\cos \\ \sin \end{matrix}
+\left( \frac{2}{3} \abs{z}^{\frac{3}{2}} \right) & z \to -\infty.
+\end{align*}
+
+We do not get the constants from this method.
+
+\subsection{Connection formulae}
+
+These Liouville-Green functions \eqref{eq:WKBJplus} and \eqref{eq:WKBJminus}
+work well where $q > 0$ or $q < 0$ but do not work where $q$ passes through
+zero, at which points the frequency is zero ($q$ is no longer slowly varying
+on scales of the wavelength, which becomes infinite) and the amplitude is
+infinite.
+
+Points at which $q=0$ are called turning points and the equation.  WLOG
+consider $q<0$ for $z < 0$ and $q > 0$ for $z > 0$
+
+\vspace{1in}
+
+In regions 1 and 3 we have the Liouville-Green solutions
+
+\begin{align*}
+w(z) &\sim \frac{1}{\left(-q\right)^{\frac{1}{4}}} \left[
+A e^{\phi} + B e^{-\phi}
+\right]  &
+\phi(z) &= \int^z \left(-q\right)^\frac{1}{2}\, \ud z \\
+w(z) &\sim \frac{1}{q^{\frac{1}{4}}} \left[ a \cos \theta
++ b \sin \theta \right] &
+\theta(z) &= \int^z q^{\frac{1}{2}}\, \ud z.
+\end{align*}
+
+We have four unknown constants.  We get two equations from the boundary
+conditions at $\pm \infty$ and two others from the connection formulae
+across region 2.
+
+As $z \to 0$, $q(z) \sim q_1 z$ (since $q(0) = 0$) and the above
+expansions become
+\begin{align}
+\label{eq:WKBJ1}
+w &\sim \frac{1}{\left(-q_1 z\right)^{\frac{1}{4}}} \left[
+A e^{\phi} + B e^{-\phi}
+\right]  &
+\phi(z) &= \frac{2}{3} q_1^{\frac{1}{2}} \left(-z\right)^{\frac{3}{2}}\\
+\label{eq:WKBJ2}
+w &\sim \frac{1}{\left(q_1 z\right)^{\frac{1}{4}}} \left[
+a \cos \theta + b \sin \theta
+\right]  &
+\theta(z) &= \frac{2}{3} q_1^{\frac{1}{2}} z^{\frac{3}{2}},
+\end{align}
+
+valid for $z \to 0_-$ in region 1 and $z \to 0_+$ in region 3 respectively.
+They need to be matched across the intermediate region 2.  In this
+region we approximate the differential equation as
+$w'' + q_1 z w \sim 0$ and on letting $\tau = - \left( q_1
+\right)^{\frac{1}{3}} z$ we get Airy's equation $w'' - \tau w \sim 0$.  This
+has solutions $w \sim \alpha Ai(\tau) + \beta Bi(\tau)$.  We can use
+steepest descents (for instance) to find asymptotic expressions for this
+inner solution as $z \to \pm ``\infty\text{''}$.  As $z \to
+-``\infty\text{''}$, $\tau \to +\infty$ and we get the asymptotic expression
+\begin{equation}\label{eq:WKBJi1}
+w \sim \frac{1}{\sqrt{\pi} q_1^{\frac{1}{12}} \left(-z\right)^\frac{1}{4}}
+\left\{\frac{1}{2} \alpha e^\phi + \beta e^{-\phi} \right\}.
+\end{equation}
+
+As $z \to ``\infty\text{''}$ we have $\tau \to -\infty$ and
+\begin{equation}\label{eq:WKBJi2}
+w \sim \frac{1}{\sqrt{2 \pi} q^{\frac{1}{12}} z^{\frac{1}{4}}}
+\left\{
+\left( \alpha - \beta \right) \sin \theta
++ \left( \alpha + \beta \right) \cos \theta
+\right\}.
+\end{equation}
+
+We now need to match coefficients between \eqref{eq:WKBJi1} and
+\eqref{eq:WKBJ1}; we get
+
+\begin{align*}
+\alpha &= \frac{2 \sqrt{\pi}}{q_1^{\frac{1}{6}}} A \\
+\beta &= \frac{\sqrt{\pi}}{q_1^{\frac{1}{6}}} B.
+\end{align*}
+
+Doing the same thing with \eqref{eq:WKBJi2} and \eqref{eq:WKBJ2} we get
+\begin{align*}
+a &= \frac{q_1^{\frac{1}{6}}}{\sqrt{2 \pi}} \left( \alpha + \beta \right) \\
+b &= \frac{q_1^{\frac{1}{6}}}{\sqrt{2 \pi}} \left( \alpha - \beta \right).
+\end{align*}
+
+Eliminating $\alpha$ and $\beta$ we obtain the connection formulae
+
+\begin{equation}\label{eq:connect}
+\begin{split}
+A &= \frac{a + b}{2 \sqrt{2}} \\
+B &= \frac{a - b}{\sqrt{2}}.
+\end{split}
+\end{equation}
+
+As an example of the use of the connection formulae we seek to find
+approximate energy eigenvalues for the non-dimensional Schr\"odinger equation
+$\psi'' + \left( E - z^2 \right) \psi = 0$ with the boundary conditions
+$\psi \to 0$ as $z \to \pm \infty$ (quantum harmonic oscillator).
+In particular we will consider $E \gg 1$.  We see that there are oscillations
+of frequency $E^{\frac{1}{2}}$ (and so the wavelength is
+proportional to $E^{-\frac{1}{2}}$).  $q = E - z^2$ is varying on a scale
+of $E^{\frac{1}{2}}$ and so is slowly varying on the scale of the oscillations.
+We can therefore apply WKBJ theory and the connection formulae.
+
+There are turning points at $\pm E^{\frac{1}{2}}$ and exponentially
+decaying solutions in $\abs{z} > E^{\frac{1}{2}}$.  In $z < - E^{\frac{1}{2}}$
+we have $B = 0$ and WLOG $A=1$.  The connection formulae at $z =
+- E^{\frac{1}{2}}$ give $a = b = \sqrt{2}$ and so in $\abs{z} <
+E^{\frac{1}{2}}$ we have
+
+\begin{align*}
+\psi &\sim \frac{1}{\left( E - z^2 \right)^{\frac{1}{4}}}
+\left( \sqrt{2} \sin \theta + \sqrt{2} \cos \theta \right) \\
+& \sim \frac{2}{\left( E - z^2 \right)^{\frac{1}{4}}} \sin \left( \theta
++ \frac{\pi}{4} \right)
+\end{align*}
+
+where $\theta = \int_{-\sqrt{E}}^z \left( E - z^2 \right)^{\frac{1}{2}}
+\, \ud z$ (the lower limit puts the origin at $0$ for the connection
+formulae).  Near $z = \sqrt{E} $ we write
+
+\begin{align*}
+\psi &\sim \frac{2}{q^{\frac{1}{4}}} \sin \left(
+\int_{-\sqrt{E}}^{\sqrt{E}} q^{\frac{1}{2}}\, \ud z
+- \int_z^{\sqrt{E}} q^{\frac{1}{2}}\, \ud z + \frac{\pi}{4}
+\right) \\
+& \sim \frac{2}{q^{\frac{1}{4}}} \left\{
+\sin \alpha \cos \theta' + \cos \alpha  \sin \theta'
+\right\},
+\end{align*}
+where $\alpha = \int_{-\sqrt{E}}^{\sqrt{E}} q^{\frac{1}{2}}\, \ud z +
+\frac{\pi}{4}$ and $\theta' = \int_{\sqrt{E}}^z q^{\frac{1}{2}}\, \ud z$.
+This moves the origin to $z = \sqrt{E}$ and we can now apply the
+connection formulae \eqref{eq:connect}.
+
+In $z > \sqrt{E}$ we have $A' = 0$ (for exponential decay) and so
+$\psi = B' e^{-\phi}$.  Therefore we obtain
+\[
+2 \cos \alpha = \frac{B'}{\sqrt{2}} \qquad 2 \sin \alpha = -
+\frac{B'}{\sqrt{2}}.
+\]
+
+This implies that $\tan \alpha = -1$, or that $\alpha = n \pi -
+\frac{\pi}{4}$.  We can easily do the integral for $\alpha$, and we
+obtain $E_n = n - \frac{1}{2}$ for $n \in \N$.  We have
+(coincidentally) obtained the exact eigenvalues, and it is clear that
+this method can be used to find approximate eigenvalues of
+more complicated potentials.
+
+\chapter{Laplace Transforms}
+
+\section{Definition and simple properties}
+
+The Laplace transform of a function $f(t)$ is defined by
+\begin{equation}\label{eq:lapt}
+F(p) = \cL{f(t)} = \int_0^\infty e^{-p t} f(t)\, \ud t.
+\end{equation}
+
+The variable $p$ may be complex but we must have $\Re(p) > \gamma$ where
+$\gamma$ is sufficiently large to permit convergence.  A greater class
+of functions have Laplace transforms than have Fourier transforms, due to
+the exponential attenuation at large $t$.
+
+Since the integral's range is $[0,\infty)$ we lose all knowledge of
+the function for $t < 0$ and the inversion of $\cL{f(t)}$ is $H(t)
+f(t)$.
+
+The following properties are both trivial to prove and very useful in
+both evaluating and inverting Laplace transforms.
+
+\begin{itemize}\label{it:Lapl}
+\item $\cL{\lambda f + \mu g} = \lambda \cL{f} + \mu \cL{g}$
+\item shifting: $\cL{e^{a t} f(t)} = F(p-a)$
+\item $\cL{H(t-a) f(t-a)} = e^{-a p} F(p)$
+\item change of scale: $\cL{f(\alpha t)} = \frac{1}{\alpha}
+F(\frac{p}{\alpha})$
+\item $\cL{\diff{f}{t}} = -f(0) + p F(p)$
+\item $\cL{\int_0^t f(u)\, \ud u} = \frac{F(p)}{p}$
+\item $\cL{t^n f(t)} = (-1)^n \diff{^n}{p^n} F(p)$
+\end{itemize}
+
+These properties often give the best way to calculate Laplace
+transforms and to guess inverses.  We can now, starting from $\cL{1} =
+\frac{1}{p}$ obtain Laplace transforms for a reasonably useful class
+of functions.
+
+\begin{table} \label{tab:Lapl}
+\begin{center}
+\begin{tabular}{c | c}
+$f$ & $\cL{F}$ \\ \hline
+$H(t-\alpha)$ & $\tfrac{e^{-\alpha p}}{p}$ \\
+$t^n$ & $\tfrac{n!}{p^{n+1}}$ \\
+$e^{\alpha t}$ & $\tfrac{1}{p-\alpha}$ \\
+$\cos \alpha t$ & $\tfrac{p}{p^2 + \alpha^2}$ \\
+$\sin \alpha t$ & $\tfrac{\alpha}{p^2 + \alpha^2}$ \\
+$\cosh \alpha t$ & $\tfrac{p}{p^2 - \alpha^2}$ \\
+$\sinh \alpha t$ & $\tfrac{\alpha}{p^2 - \alpha^2}$ \\
+\end{tabular}
+\end{center}
+\caption{Simple Laplace transforms}
+\end{table}
+
+\subsection{Asymptotic Limits}
+
+Using Watson's Lemma as $p \to \infty$ we get
+\[
+F(p) \sim \sum_{n=0}^\infty \frac{1}{p^{n+1}} f^{(n)}(0)
+\]
+and so $\lim_{p \to \infty} p F(p) = f(0)$.
+
+From the properties of the Laplace transform \vpageref{it:Lapl} we have
+that
+\[
+p F(p) = f(0) + \int_0^\infty e^{-p t} \diff{f}{t}\,\ud t
+\]
+and so letting $p \to 0$ we get $\lim_{p \to 0} p F(p) = \lim_{t \to
+  \infty} f(t)$ (if both limits exist).  This begs the obvious
+question; how do we know that both limits exist?  If all
+the singularities of $F(p)$ lie in $\{ z \in \C : \Re z < 0 \}$
+then both the limits exist.
+
+\subsection{Convolutions}
+
+We define
+
+\begin{equation} \label{eq:convol}
+f \ast g = \int_{-\infty}^\infty f(\tau) g(t -\tau)\, \ud \tau
+\end{equation}
+and since $f(y) = g(y) = 0$ for $y < 0$ we have that
+\[
+f \ast g = \int_0^t f(\tau) g(t - \tau).
+\]
+
+Now
+
+\begin{align*}
+\cL{f \ast g} &= \int_0^\infty \int_0^t e^{-p t} f(\tau)
+g(t - \tau)\, \ud \tau \ud t \\
+&= \int_0^\infty \int_\tau^\infty e^{-p t} f(\tau) g(t-\tau)\, \ud t
+\ud \tau \\
+&= \int_0^\infty e^{-p \tau} f(\tau)\, \ud \tau
+\int_0^\infty e^{-p u} g(u)\, \ud u \\
+&= \cL{f} \cL{g}.
+\end{align*}
+
+\section{Inversion}
+
+Consider
+\[
+I = \int_{\gamma - \imath \infty}^{\gamma + \imath \infty}
+e^{p t} F(p)\, \ud p
+\]
+
+where the contour lies to the right of all of the singularities of
+$F(p)$.
+
+At this stage you should be scenting waffle; recall that the Laplace
+transform was defined only for $p$ with sufficiently large real part.
+What we mean by $F(p)$ is the analytic continuation of the Laplace transform
+into the whole of $\C$.
+
+We now evaluate $I$ (recall that we insisted that $f(t) = 0$ for
+$t < 0$).
+
+\begin{align*}
+I &= \int_{\gamma-\imath \infty}^{\gamma + \imath \infty}
+e^{p t} \int_0^\infty f(\tau) e^{-p \tau}\, \ud \tau \ud p \\
+&= \int_{\gamma-\imath \infty}^{\gamma + \imath \infty}
+\int_{-\infty}^\infty e^{p(t-\tau)} f(\tau)\, \ud \tau dp \\
+&= \imath e^{\gamma t} \int_{y=-\infty}^\infty \int_{\tau = -\infty}^\infty
+e^{\imath y ( t -\tau)} f(\tau)\, \ud \tau \ud y \\
+&= 2 \pi \imath e^{\gamma t} \int_{-\infty}^\infty \delta(t-\tau)
+e^{-\gamma \tau} f(\tau)\, \ud \tau \\
+&= 2 \pi \imath f(t).
+\end{align*}
+
+We thus obtain the Bromwich inversion formula:
+
+\begin{equation}\label{eq:bromwich}
+f(t) = \frac{1}{2 \pi \imath} \int_{\gamma - \imath \infty}^{\gamma
++ \imath \infty} F(p) e^{p t}\, \ud p.
+\end{equation}
+
+Since $\gamma$ is chosen so that the contour of integration lies to
+the right of all the singularities we can close the contour
+in the right half-plane for $t < 0$ and use Cauchy's theorem to
+get $f(t) = 0$ for $t < 0$.
+
+Note that if $F(p)$ is meromorphic then
+\[
+f(t) = \sum \text{residues of } F(p) e^{p t}.
+\]
+
+It is usually \emph{much} easier to invert Laplace transforms by
+knowing the answer than by using the inversion formula.
+
+\section{Application to differential equations}
+
+\subsection{Ordinary differential equations}
+
+We will illustrate this with an example.  Suppose we have
+
+\begin{equation}\label{eq:lapex}
+\ddot{x}  - 3 \dot{x} + 2 x = 4 e^t \qquad x(0) = -3,\ \dot{x}(0) = 5.
+\end{equation}
+
+Incidentally, Laplace transforms are overkill for this problem; it can
+be solved easily by using the methods learnt at A-level or in Part 1A.
+
+Generally we use Laplace transforms when we have an initial value problem,
+not a boundary value problem.
+
+We write $X(p)$ for the Laplace transform of $x(t)$ and on transforming
+\eqref{eq:lapex} we get
+\[
+X \left\{ p^2 - 3 p + 2\right\} + 3p - 14 = \frac{4}{p-2}
+\]
+which has the solution
+\begin{equation}\label{eq:lapexX}
+X(p) = \frac{4}{(p-2)^2 (p-1)} + \frac{14-3p}{(p-2)(p-1)}.
+\end{equation}
+
+To invert this we convert to partial fractions:
+\[
+X(p) = \frac{4}{(p-2)^2} + \frac{4}{p-2} - \frac{7}{p-2}
+\]
+which can be inverted (trivially) to get $x(t) = 4 t e^{2 t} + 4 e^{2 t}
+- 7 e^t$.
+
+\subsubsection*{Asymptotic behaviour as $t \to \infty$}
+
+Deform the Bromwich contour such that it folds back around the singularity
+of $F(p)$ with largest real part (say at $p = p_0$).  Then the
+integral $\int_\Gamma F(p) e^{p t}\, \ud p$ is dominated by the neighbourhood
+of $p_0$.
+
+We can approximate this integral by forming an asymptotic expansion of
+$F(p)$ about $p=p_0$.
+
+In our example (using \eqref{eq:lapexX}) we see that $p_0 = 2$ and
+on writing $p = 2+ \eta$ we have
+\[
+X(p) = \frac{4}{\eta^2} \left(1+\eta\right)^{-1}
++ \frac{8 - 3 \eta}{\eta} \left( 1+ \eta\right)^{-1}
+\sim \frac{4}{\eta^2} + \frac{4}{\eta} + \text{analytic terms}.
+\]
+
+Thus
+\begin{align*}
+f(t) &\sim \frac{1}{2 \pi \imath} e^{2 t} \int_{\gamma - 2 - \imath \infty}
+^{\gamma+2+\imath \infty} F(\eta) e^{\eta t}\, \ud \eta \\
+&\sim e^{2 t} \left( 4 t + 4 \right).
+\end{align*}
+
+The $-7 e^t$ term in the exact solution is exponentially smaller than this
+asymptotic solution and so doesn't feature in the asymptotic expansion.
+
+\subsubsection*{Green's functions}
+
+For our example we wish to solve
+\[
+\ddot{g} - 3 \dot{g} + 2 g = \delta(t^+) \qquad g(0) = \dot{g}(0) = 0,
+\]
+where $\delta(t^+)$ is such that $\int_0^\infty \delta(t^+)\, \ud t = 1$.
+
+Laplace transforming the problem we get $G(p) = \frac{1}{p-2} - \frac{1}{p-1}$
+and so $g(t) = e^{2 t} - e^t$.
+
+For the general problem
+\[
+\ddot{x} - 3 \dot{x} + 2 x = f(t)\qquad x(0) = x_0,\, \dot{x}(0) = x_1
+\]
+we find $X(p) = G(p) \left\{ F(p) + p x_0 + x_1 - 3 x_0\right\}$ and
+so
+\[
+x(t) = g(t) \ast \left\{ f(t) + x_0\delta'(t^+) - (x_1 - 3 x_0) \delta(t^+)
+\right\}.
+\]
+
+\subsection{Partial differential equations}
+
+Consider the problem
+\[
+\pd{\phi}{t} = \kappa \pd{^2 \phi}{x^2}
+\]
+subject to the boundary conditions $\phi(x,0) = 0$, $\phi(x,t) \to 0$
+as $x \to \infty$ and $\phi(0,t) = \phi_0$.  This models (say) the
+concentration of diffusing salt in a semi-infinite tube.
+
+Laplace transforming the diffusion equation (with respect to $t$) we
+get (in obvious notation) $p \Tilde{\phi} = \kappa \Tilde{\phi}_{xx}$.
+
+Using the boundary conditions on $\phi$ we get the solution
+$\Tilde{\phi} = \frac{\phi_0}{p} e^{-\sqrt{\frac{p}{\kappa}} x}$.
+
+We can find a lot out about $\phi$ without doing the inversion.  Suppose
+we wish to evaluate
+\[
+\Phi(t) = \int_0^\infty \phi(x,t)\, \ud x
+\]
+which could be the total amount of salt in the tube.  Then
+
+\[
+\Tilde{\Phi} = \int_0^\infty \Tilde{\phi}(x,p)\, \ud x
+= \phi_0 \sqrt{\frac{\kappa}{p^3}}.
+\]
+
+We can now inverse transform this to get
+\[
+\Phi(t) = 2 \phi_0 \sqrt{\frac{\kappa t}{\pi}}.
+\]
+
+For the asymptotic behaviour of $\phi$ as $t \to \infty$ we find
+an asymptotic expansion for $\Tilde{\phi}$ about the largest singularity,
+which in this case is at $p = 0$.
+
+\begin{align*}
+\Tilde{\phi} &\sim \frac{\phi_0}{p} \left(1 - \sqrt{\frac{p}{\kappa}} x
++ \dots \right) \qquad \text{thus} \\
+\phi &\sim \phi_0 \left( 1 - \frac{x}{\sqrt{\pi \kappa t}} + \dots \right),
+\end{align*}
+
+valid when $x \ll \sqrt{\kappa t}$.  This approximation shows that
+$\left. \pd{\phi}{x}\right|_{x = 0} = - \frac{\phi_0}{\sqrt{\pi \kappa t}}$.
+
+We now do the full inversion, we see that
+\begin{align*}
+\phi(x,t) &= \frac{\phi_0}{2 \pi \imath} \int_{\gamma - \imath \infty}
+^{\gamma + \imath \infty} \frac{1}{p} e^{p t - \sqrt{\frac{p}{\kappa}} x}
+\, \ud p \\
+&= \frac{\phi_0}{2 \pi \imath} \int_{-\infty}^{(0+)}
+\frac{1}{p} e^{p t - \sqrt{\frac{p}{\kappa}} x}
+\, \ud p \\
+&= \frac{\phi_0}{\pi \imath} \int_{-\infty}^\infty \frac{1}{y}
+e^{-y^2 t - \frac{\imath y x}{\sqrt{\kappa}}}\, \ud y. \\
+\text{Thus} \quad
+\pd{}{x} \phi(x,t) &= - \frac{\phi_0}{\pi \sqrt{\kappa}}
+\int_{-\infty}^\infty e^{-y^2 t - \frac{\imath y x}{\sqrt{\kappa}}}\, \ud y \\
+&= - \frac{\phi_0}{\sqrt{\pi \kappa t}} e^{-\frac{x^2}{4 \kappa t}}.
+\end{align*}
+
+Thus
+
+\[
+\phi(x,t) = \int_x^\infty \frac{\phi_0}{\sqrt{\pi \kappa t}}
+e^{-\frac{x^2}{4 \kappa t}}\, \ud x
+= \frac{2 \phi_0}{\sqrt{\pi}} \int_{\frac{x}{2\sqrt{\kappa t}}}^\infty
+e^{-\eta^2}\, \ud \eta = \phi_0 \erfc \frac{x}{2 \sqrt{\kappa t}}.
+\]
+
+\backmatter
+
+\begin{thebibliography}{9}
+\bibitem{Arfken} Arfken and Weber, \emph{Mathematical Methods for
+    Physicists}, Fourth ed., Academic Press, 1995.
+  
+  {\sffamily \small Quite a lot of people sing Arfken's praises; I am
+    not one of them.  Although it is useful I think it tries to do too
+    much.  If nothing else though, it could be used to kill small mammals. }
+  
+\bibitem{Hinch} E.J.~Hinch, \emph{Perturbation Methods}, CUP, 1991.
+  
+  {\sffamily \small Useful for the asymptotic expansions part of the
+    course and with enough other theory to make it interesting.
+    Rather more rigorous than the approach taken in this course and
+    much less of a threat to wildlife than Arfken.}
+  
+\bibitem{Priestley} H.A.~Priestley, \emph{Introduction to Complex
+    Analysis}, Revised ed., OUP, 1990.
+  
+  {\sffamily \small An excellent introduction to contour integrals and
+    the complex analysis needed in this course.  Some discussion of
+    transforms but not enough to justify it as a textbook on
+    transforms. }
+
+\end{thebibliography}
+
+This is an area which appears to be very well served with textbooks.  Someone
+recommend some good ones to me (with \emph{brief} reviews).
+
+\end{document}

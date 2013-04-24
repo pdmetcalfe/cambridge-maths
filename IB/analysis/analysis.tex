@@ -1,0 +1,3992 @@
+\documentclass{notes}
+
+\theoremstyle{plain}
+\newtheorem{proposition}{Proposition}[chapter]
+\newtheorem{theorem}[proposition]{Theorem}
+\newtheorem{corollary}[proposition]{Corollary}
+\newtheorem{observation}[proposition]{Observation}
+\newtheorem{definition}[proposition]{Definition}
+\newtheorem{example}[proposition]{Example}
+\newtheorem{lemma}[proposition]{Lemma}
+
+\newtheorem*{axiom}{Axiom}
+\newtheorem*{application}{Application}
+\newtheorem*{applications}{Applications}
+\newtheorem*{remark}{Remark}
+\newtheorem*{remarks}{Remarks}
+\newtheorem*{notation}{Notation}
+\newtheorem*{recall}{Recall}
+\newtheorem*{examples}{Examples}
+\newtheorem*{note}{Note}
+\newtheorem*{warning}{Warning}
+\newtheorem*{aside}{Aside}
+
+\DeclareMathOperator{\lub}{lub}
+\DeclareMathOperator{\glb}{glb}
+\DeclareMathOperator{\mesh}{mesh}
+
+\newcommand{\Q}{\mathbb{Q}}
+\newcommand{\cL}{\mathcal{L}}
+\renewcommand{\F}{\mathbb{F}}
+
+\newcommand{\dis}{\mathfrak{D}}
+
+\newcommand{\Forall}[1]{\forall #1 \quad}
+\newcommand{\Exists}[1]{\exists #1 \quad}
+
+\begin{document}
+
+\frontmatter
+\title{Analysis}
+\lecturer{Dr.~J.M.E.~Hyland}
+\maintainer{Paul Metcalfe}
+\date{Mich\ae lmas 1996}
+
+\maketitle
+
+\thispagestyle{empty}
+\noindent\verb$Revision: 1.6 $\hfill\\
+\noindent\verb$Date: 1999/09/17 17:34:31 $\hfill\
+
+\vspace{1.5in}
+
+The following people have maintained these notes.
+
+\begin{center}
+\begin{tabular}{ r  l}
+initial typing & Richard Cameron \\
+-- date & Paul Metcalfe
+\end{tabular}
+\end{center}
+
+\tableofcontents
+
+\chapter{Introduction}
+
+These notes are based on the course ``Analysis'' given by
+Dr.~J.M.E.~Hyland in Cambridge in the Mich\ae lmas Term 1996.  These
+typeset notes are totally unconnected with Dr.~Hyland.
+
+\alsoavailable
+\archimcopyright
+
+\mainmatter
+
+\chapter{Real Numbers}
+\section{Ordered Fields}
+\begin{definition}
+\label{d1.1}
+A \emph{field} is a set $ \F $ equipped with:
+\begin{itemize}
+\item an element $ 0 \in \F $ and a binary operation $ 
++\colon \F\mapsto \F $, making $ \F $ an abelian group; we write $ -a 
+$ for the additive inverse of $ a \in \F $;
+\item an element $ 1 \in \F $ and a binary operation $ \cdot \colon \F 
+\mapsto \F $ such
+\begin{itemize}
+\item multiplication distributes over addition, that is: $ a \cdot 0 
+=0 $ and $ a\cdot (b+c)=a\cdot b+a\cdot c $
+\item $ 1 \neq 0 $, multiplication restricts to $ \F^{\times}=\F\setminus\{ 
+0 \} $, and $ \F^{\times} $ is an abelian group under multiplication; we 
+write $ a^{-1}= 1/a $ for the multiplicative inverse of $ a \in 
+\F^{\times} $
+\end{itemize}
+\end{itemize}
+\end{definition}
+
+Examples: $ \Q $ (rational numbers); $ \R $ (real numbers); $ \C 
+$ (complex numbers).
+
+\begin{definition}
+\label{d1.2}
+A relation $ < $ on a set $ \F $ is a \emph{strict total order} 
+when we have $a \not< a$,  $a<b$ and $b < c  \Rightarrow a<c$, 
+$a<b$ or $a=b$ or $b>a$
+for all $ a,b $ and $ c $ in $ \F $.  We write $ a \leq b $ for $ a<b $
+or $ a=b $, and note that in a total order $ a\leq b 
+\Leftrightarrow b \not<a $.
+\end{definition}
+
+Familiar ordered fields are $ \Q $ and $ \R $, but not $ \C $.
+
+\section{Convergence of Sequences}
+\begin{definition}
+\label{d1.3}
+In an ordered field we define the \emph{absolute value} $ \abs{a} $ of $ 
+a $ as:
+
+\[ \abs{a} = \begin{cases}
+a& a>0 \\
+-a& a<0 \\
+0& a=0
+\end{cases} \]
+and then we have the \emph{distance} $ 
+d(a,b) = \abs{a-b}$ between $ a $ and $ b $.
+\end{definition}
+
+In an ordered field the distance $ d(a,b) $ satisfies
+\begin{gather*}
+d(a,b) \geq 0 \quad \text{and} \quad d(a,b)=0 \text{ iff } a=b \\
+d(a,b)=d(b,a) \\
+d(a,c) \leq d(a,b)+d(b,c).
+\end{gather*}
+
+\begin{proof}
+Proof of this is easy.  Start from
+
+\begin{eqnarray*}
+-\abs{x} & \leq x \leq & \abs{x} \cr
+-\abs{y} & \leq y \leq & \abs{y}.
+\end{eqnarray*}
+
+Add these to get
+
+\begin{gather*}
+-(\abs{x}+\abs{y})  \leq x+y \leq \abs{x}+\abs{y} \\
+\abs{x+y} \leq \abs{x}+\abs{y}.
+\end{gather*}
+ Put $ x=a-b, y=b-c $ for result.
+\end{proof}
+
+In general the distance takes values in the field in question; but 
+in the case of $ \Q $ and $ \R $, the distance is real valued, so 
+we have a \emph{metric}.
+
+\begin{example}
+Any ordered field has a copy of $ \Q $ as an ordered subfield.
+\end{example}
+\begin{proof}
+We set \[ n= \underbrace{1+1+\ldots+1+1}_{n \quad times} \] and so 
+get $ -n $, and so get $ r/s $, $ r \in \Z, s>0 $  in $ \Z $, 
+all ordered correctly.
+\end{proof}
+
+\begin{definition}
+\label{d1.4}
+A sequence $ a_{n} $ \emph{converges to a limit} $ a $, or $ a_{n} 
+$ tends to $ a $ in an ordered field $ \F $, just when for 
+all $ \epsilon > 0 $ in $ \F $, there exists $ N \in \N $ with
+$\abs{a_{n}-a} < \epsilon$ for all $n \geq N$.
+\end{definition}
+
+We write $ \lim_{n \to \infty}a_{n}=a $ or $ a_{n} 
+\to a $ as $ n \to \infty $ or just $ a_{n} 
+\to a $, when $ a_{n} $ converges to a limit $ a $. So we 
+have
+\[ a_{n}\to a \quad \Leftrightarrow
+ \quad \Forall{\epsilon>0} \Exists{N}
+\Forall{n \geq N} \abs{a_{n}-a}<\epsilon \]
+
+\begin{example}
+\
+
+\begin{enumerate}
+\item $ a_{n} \to a $ iff $ \abs{a_{n}-a} \to 0 $
+\item $ b_{n}\geq 0, b_{n} \to 0, 0 \leq c_{n} \leq b_{n} $, 
+then $ c_{n} \to 0 $
+\item Suppose we have $ N, k \in \N $ such that $ b_{n}= a_{n+k} 
+$ for all $ n \geq N $, then $ a_{n} \to a $ iff $ b_{n} 
+\to a $.
+\item The sequence $ a_{n} =n $ for $ n= 0,1,2,\ldots $ does not 
+converge.
+\begin{proof}
+Suppose $ a_{n}=n \to \alpha $, say. 
+
+Taking $ \epsilon = 1/2 $, we can find $ N $ such that
+$\abs{a_{n}-\alpha} < 1/2$ for all $n\geq N$.
+Then \[ 1 = \abs{a_{n+1}-a_{n}} \leq \abs{a_{n+1}-\alpha} + 
+\abs{a_{n}- \alpha} < 1/2 + 1/2 =1. 
+\]
+This is a contradiction and so $ a_{n} $ does not
+converge.\footnote{This is a rigorous form of the thought---if $ n
+\to \alpha $ 
+we can't have both $ n, n+1 $ within $ 1/2 $ of $ \alpha $.}
+\end{proof}
+\end{enumerate}
+\end{example}
+
+\begin{lemma}[Uniqueness of limit]
+\label{lem:uniq-lim}
+If $a_{n}\to a$ and $a_{n}\to a'$ then $a = a' $.
+\end{lemma}
+
+\begin{proof}
+Given $\epsilon >0$ there exists $N$ such that
+$n \ge N$ implies $\abs{a_n - a} < \epsilon$ and $K$ such that $n \ge
+K$ implies $\abs{a_n - a'} < \epsilon$.  Let $L$ be the greater of $N$
+and $K$.  Now
+
+\begin{align*}
+\abs{a - a'} &= \abs{a - a_n + a_n - a'} \\
+&\le \abs{a-a_n} + \abs{a_n - a'} \\
+& \le \epsilon + \epsilon = 2 \epsilon.
+\end{align*}
+
+But $2 \epsilon > 0$ is arbitrary, so $\abs{a - a'}=0$ and $a = a'$.
+\end{proof}
+
+\begin{observation}
+Suppose $a_{n} \to a$ and $a_{n} \leq \alpha$ for 
+all (sufficiently large) $ n $. Then $a \leq \alpha$.
+\end{observation}
+
+\begin{proof}
+Suppose $ \alpha < a $, so that $\epsilon = a - \alpha > 0$.
+We can find $ N $ such that $|a_{n}-a|< \epsilon$ for all $ n 
+\geq N $.
+
+Consider
+\[
+a_{N}-\alpha = (a_{N}-a)+(a-\alpha) = \epsilon + 
+(a_{N}-a)  \geq \epsilon - 
+|a_{n}-a| > \epsilon - \epsilon = 0.
+\]
+
+So $a_{N}> \alpha$ --- a contradiction.  We deduce $ a \leq \alpha $.
+\end{proof}
+
+\begin{example}
+We ``know'' that $ 1/n \to 0 $ in $ \R $. \emph{WHY?} 
+There are ordered fields in which $ 1/n \not\to 0 $ (e.g. 
+$ \Q(t) $, field of rational functions, ordered so that $ t $ is 
+``infinite'')
+
+(Easy to see that $ 1/n \to 0  $ in $ \Q $).
+\end{example}
+
+\begin{proposition}
+\label{p1.1}
+Suppose that $ a_{n} \to a $ and $ b_{n}\to b $. 
+Then
+\begin{enumerate}
+\item $ a_{n}+b_{n} \to a+b $
+\item $ \lambda a_{n} \to \lambda a$
+\item $ a_{n}b_{n} \to ab $.
+\end{enumerate}
+\end{proposition}
+
+Proof of 1 and 2 are both trivial and are left to the reader.
+
+\begin{proof}[Proof of 3]
+Given $ \epsilon > 0 $ take $N$ such that $\abs{a_n - a} < \epsilon$ for
+all $n \ge N$ and $M$ such that $\abs{b_n - b} < \min \{\epsilon,1\}$ for
+all $n \ge M$.  Let $K = \max \{M,N\}$.  Now
+
+\begin{align*}
+\abs{a_n b_n - a b} &\le \abs{a_n - a} \abs{b_n} + \abs{a} \abs{b_n -
+  b} \\
+& \le \epsilon (1 + \abs{b} + \abs{a})
+\end{align*}
+
+for all $n \ge K$.  Now $\epsilon (1 + \abs{b} + \abs{a})$ can be made
+arbitrarily small and the result is proved.
+\end{proof}
+
+%%%%%%%%%%
+
+\section{Completeness of $ \R $: Bounded monotonic sequences}
+
+\begin{definition}
+\label{d1.6}
+A sequence $ a_{n} $ is (monotonic) \emph{increasing} just when $ 
+a_{n} \leq a_{n+1} $ for all $ n $; it is (monotonic) 
+\emph{decreasing} just when $ a_{n} \geq a_{n+1} $ for all $ n $. 
+To cover either case we say the sequence is \emph{monotonic}.
+
+N.B. $ a_{n}  $ is increasing iff $ (-a_{n})  $ is decreasing.
+
+A sequence $ a_{n} $ is \emph{bounded above} when there is $ B $ 
+with $ a_{n} \leq B $ for all $ n $; it is \emph{bounded below} 
+when there is $ A $ with $ a_{n} \geq A $ for all $ n $; it is 
+\emph{bounded} when it is bounded above and below.
+\end{definition}
+
+\begin{axiom}[Completeness Axiom]
+The real numbers $\R$ form an ordered field and every bounded 
+monotonic sequence of reals has a limit (ie converges).
+\end{axiom}
+
+\begin{remarks}
+\ 
+
+\begin{itemize}
+\item This can be justified on further conditions, but here we take it 
+as an axiom.
+
+\item It is enough to say an increasing sequence bounded above 
+converges.
+
+\item In fact, this characterizes $ \R $ as the completion of 
+$ \Q $.
+\end{itemize}
+\end{remarks}
+
+From now on, we consider only the complete ordered field $ \R $, and 
+occasionally its (incomplete) ordered subfield $ \Q $.
+
+\begin{proposition}[Archimedean Property]\hfill
+
+\begin{enumerate}
+\item For any real $ x $, there is $ N \in \N $ with $ N > x $.
+\item For any $ \epsilon>0 $ there is $ N \in N $ with $ 0 < 
+\frac{1}{N} < \epsilon $.
+\item The sequence $ \frac{1}{n} \to 0 $.
+\end{enumerate}
+\end{proposition}
+
+\begin{proof}\hfill
+
+\begin{enumerate}
+\item Recall that $a_{n} = n$ is an increasing non-convergent 
+sequence. Hence it is not bounded above and so for any $ x \in \R $ 
+there is $ N $ with $ x < N $.
+\item If $ \epsilon > 0 $, then consider $\epsilon^{-1} (>0)$ and 
+take $ N \in \N$ with $\epsilon^{-1} < N$. Then $0 < 1/N < \epsilon$
+\item Given $ \epsilon > 0 $ we can find $ N $ with $0 < 
+\frac{1}{N} < \epsilon$.  Now if $ n \geq N $, 
+\[
+0 < 1/n \leq 1/N < \epsilon
+\]
+and the result is proved.
+\end{enumerate}
+\end{proof}
+
+\begin{definition}
+\label{d1.5}
+If $ a_{n} $ is a sequence and we have $ n(k) $ for $ k \in \N 
+$, with \[ n(k)<n(k+1) \] then $(a_{n(k)})_{k \in \N}$ is a 
+\emph{subsequence} of $ a_{n} $.
+\end{definition}
+
+\begin{observation}
+Suppose $a_{n}\to a $ has a subsequence $(a_{n(k)})_{k \in \N}$.
+Then $ a_{n(k)} \to a$ as $ k \to \infty $.
+\end{observation}
+
+\begin{theorem}[The Bolzano-Weierstrass Theorem]
+Any bounded sequence of reals has a convergent subsequence.
+\end{theorem}
+
+\begin{proof}[Cheap proof]
+Let $ a_{n} $ be a bounded sequence. Say that $ m \in \N $ is a 
+`peak number' iff $ a_{m} \geq a_{k} $ for all $ k \geq m $.
+
+Either there are infinitely many peak numbers, in which case we enumerate 
+them $p(1)<p(2)<p(3)<\ldots$ in order. Then $a_{p(k)} \geq a_{p(k+1)}$ and so $ a_{p(k)} $ is a bounded decreasing subsequence of $ a_{n} $, so converges.
+
+Or there are finitely many peak numbers.  Let $ M $ be the greatest.
+Then for every $ n > M $, $ n $ is not a peak number and so we can
+find $ g(n)>n $: the least $ r>n $ with $a_{r}>a_{n}$.
+
+Define $q(k)$ inductively by $q(1)=M+1$, $q(k+1) = g(q(k))$.
+
+By definition $ q(k)<q(k+1) $ for all $ k $, and $ a_{q(k)}< 
+a_{q(k+1)} $ for all $ k $, so $ a_{q(k)} $ is a bounded, 
+(strictly) increasing subsequence of $ a_{n} $ and so converges.
+\end{proof}
+
+This basis of this proof is that any sequence in a total order has a
+monotonic subsequence.
+
+%%%%%%%%%% Completeness of R ( LUB Principle) %%%%%%%%
+
+\section{Completeness of $ \R $: Least Upper Bound Principle}
+
+\begin{definition}
+Let $ (\emptyset \neq) S \subseteq \R $ be a (non-empty) set of 
+reals.
+
+\begin{itemize}
+\item $ b $ is an \emph{upper bound} for $ S $ iff $ s \leq b $ for 
+all $ s \in S $ and if $ S $ has such, S is \emph{bounded above}.
+
+\item $ a $ is a \emph{lower bound} for $ S $ iff $ a\leq s 
+$ for all $ s \in S $, and if $ S $ has such, S is \emph{bounded 
+below}.
+
+\item $S$ is \emph{bounded} iff $ S $ is bounded above and below, ie if $ S 
+\subseteq [a,b] $ for some $ a,b $.
+\end{itemize}
+
+$ b $ is the \emph{least upper bound} of $ S $ or the 
+\emph{supremum} of $ S $ iff
+\begin{itemize}
+\item $ b $ is an upper bound
+\item If $ c < b $ then $ c<s $ for some $ s \in S $ (ie $ c $ 
+is not an upper bound for $ S $)
+\end{itemize}
+
+Similarly, $ a $ is the \emph{greatest lower bound} of $ S $ or 
+the \emph{infimum} of $ S $ iff
+\begin{itemize}
+\item $ a $ is a lower bound
+\item If $ a < c $ then $ s<c $ for some $ s \in S $ (ie $ c 
+$ is not a lower bound).\footnote{Aside: If $ b, b' $ are both least upper bounds of $ S $, 
+then can't have $ b < b' $ and can't have $ b'<b $ and so $ b = b' $.}
+\end{itemize}
+
+Notation: $ b = \lub S= \sup S; a = \glb S = \inf S $.
+\end{definition}
+
+\begin{theorem}[Least Upper Bound Principle]
+A non-empty set $ S $ of reals which is bounded above has a least 
+upper bound.
+\end{theorem}
+
+\begin{proof}
+Suppose $ S \neq \emptyset $ and bounded above. Take $ b $ an 
+upper bound and $ a $ (in $ S $ say) so that $[a,b] \cap S 
+\neq \emptyset$.
+
+Set $a_{0}=a$, $b_{0}=b$ so that $a_{0} \leq b_{0}$ and define 
+$ a_{n}\leq b_{n} $ inductively as follows:
+
+Suppose $ a_{n}, b_{n} $ given, then $ a_{n+1}, b_{n+1} $ are 
+defined by stipulating:-
+\begin{itemize}
+\item If $ \left[ \frac{a_{n}+b_{n}}{2}, b_{n} \right] \cap S \neq 
+\emptyset  $ then $a_{n+1}= \frac{a_{n}+b_{n}}{2}$, $b_{n+1}=b_{n}$.
+\item If otherwise, then $a_{n+1}=a_{n}, b_{n+1}= 
+\frac{a_{n}+b_{n}}{2}$.
+\end{itemize}
+
+We can see inductively that:
+\begin{enumerate}
+\item $a_{n}\leq a_{n+1} \leq b_{n+1} \leq b_{n}$ for all $ n $.
+\item $(b_{n+1}-a_{n+1}) = \frac{1}{2}(b_{n}-a_{n})$ for all $n$.
+\item $[a_{n},b_{n}] \cap S \neq \emptyset$
+for all $ n $.\footnote{True for $ n=0 $, and inductively, certainly true for
+$ n+1 $ 
+in first alternative, and in the 2nd alternative since \[ 
+\left[\frac{a_{n}+b_{n}}{2}, b_{n}\right] \cap S = \emptyset\] \[ \left[a_{n}, 
+\frac{a_{n}+b_{n}}{2}\right] \cap S = [a_{n}, b_{n}] \cap S \neq \emptyset 
+\] by induction hypothesis}
+
+\item $ b_{n} $ is an upper bound of $ S $ for every $ n $.\footnote{
+True for $ n=0$ and inductively, trivial in first case and in the 
+second, clear as \[ [b_{n+1}, b_{n}] \cap S = \emptyset \]}
+\end{enumerate}
+
+By 1. $ b_{n} $ is decreasing, bounded below by $ a $ so $ b_{n}\to \beta$ say; $ a_{n} $ is increasing, bounded 
+above by $ b $ so $a_{n}\to \alpha$
+
+By 2. $(b_{n}-a_{n}) = \frac{1}{2^{n}}(b_{0}-a_{0}) \to 0$ 
+as $ n \to \infty $. But $b_{n} -a_{n} \to 
+\beta - \alpha$ and so $ \beta = \alpha $.
+
+Claim: $ \alpha = \beta $ is $ \sup S $.
+
+\begin{itemize}
+\item Each $ b_{n}  $ is an upper bound of $ S $ and so $\beta = 
+\lim_{n \to \infty}b_{n}$ is an upper bound --- for if $ s 
+\in S $ we have $ s \leq b_{n} $ all $ n $ and so $s \leq 
+\lim_{n \to \infty}b_{n}$
+
+\item Take $\gamma < \beta = \alpha = \lim_{n \to
+    \infty}a_{n}$.  We can take $ N $ such that $ a_{n} > \gamma $ for
+  all $ n \geq N $.\footnote{Let $\epsilon = \beta - \gamma
+    >0$.  We can find $ N $ such that $\abs{a_{n} - \beta} < \epsilon$ and thus
+    $ a_{n} > \gamma $.}
+
+But then $ \left[a_{N}, b_{N}\right] \cap S \neq \emptyset$ and
+so there is $ s \in S $ such that $s \geq a_{n} > \gamma$.
+\end{itemize}
+
+This shows that $ \beta $ is the least upper bound.
+
+\end{proof}
+
+\begin{observation}
+We can deduce the completeness axiom from the LUB principle.
+\end{observation}
+
+\begin{proof}
+If $ a_{n} $ is increasing and bounded above then $S= \{a_{n}: 
+n \in \N \}$ is non-empty and bounded above and so we can set
+$a = \sup S$
+
+Suppose $ \epsilon>0 $ given. Now $a - \epsilon < a$ and so there 
+is $ N $ with $a_{N}>a-\epsilon$ but then for $ n \geq N $,
+$a- \epsilon < a_{N} \leq a_{n} \leq a$ and so $\abs{a_{n} -a } < 
+\epsilon$.
+\end{proof}
+ 
+\section{Completeness of $ \R $: General Principle of Convergence}
+\begin{definition}
+A real sequence $ a_{n} $ is a \emph{Cauchy Sequence} if and only 
+if for all $ \epsilon > 0  $ there exists $ N $ with
+\[
+\abs{a_{n}-a_{m}}< \epsilon \quad \forall n,m \ge N.
+\]
+That is $ a_{n} $ is Cauchy iff \[ \Forall{\epsilon >0} \Exists{N} \Forall{
+n,m \geq N} \abs{a_{n}-a_{m}}<\epsilon \]
+\end{definition}
+
+\begin{observation}
+A Cauchy sequence is bounded, For if $ a_{n}  $ is Cauchy, take $ N 
+$ such that $\abs{a_{n}-a_{m}}<1$ for all $ n, m \geq N $. 
+Then $ a_{n}$ is bounded by \[ \pm \max( |a_{1}|, \abs{a_{2}}, \ldots, 
+\abs{a_{N}+1}) \]
+\end{observation}
+
+\begin{lemma}
+\label{l1.1}
+Suppose $ a_{n}$ is Cauchy and has a convergent subsequence
+$a_{n(k)} \to a$ as $ k \to \infty $. Then $a_{n}
+\to a$ as $n \to \infty$.
+\end{lemma}
+
+\begin{proof}
+Given $\epsilon > 0 $, take $ N $ such that $\abs{a_{n}-a_{m}}< 
+\epsilon$ for all $ m,n \geq N $, and take $ K $ with $ n(K) 
+\geq N $ (easy enough to require $ K \geq N $) such that
+$\abs{a_{n(k)}-a} < \epsilon$ for all $ k \geq K $.
+
+Then if $ n \geq M = n(K) $
+\[
+\abs{a_{n}-a} \leq \abs{a_{n}-a_{n(k)}} + \abs{a_{n(k)}-a} < \epsilon + 
+\epsilon = 2 \epsilon.
+\]
+
+But $ 2 \epsilon > 0$ can be made arbitrarily small, so $ a_{n} 
+\to a $.
+\end{proof}
+
+\begin{theorem}[The General Principle of Convergence]
+A real sequence converges if and only if it is Cauchy.
+\end{theorem}
+
+\begin{proof}
+\begin{description}
+\item[$ (\Rightarrow) $] Suppose $ a_{n} \to a $.
+Given $ \epsilon>0 $ take $ N $ such that $ \abs{a_{n}-a}< \epsilon $ 
+for all $ n \geq N $.
+
+Then if $ m,n \geq N $,
+\[
+\abs{a_{n}-a_{m}} \leq \abs{a_{n}-a} + \abs{a_{m}-a} 
+\leq \epsilon + \epsilon = 2 \epsilon.
+\]
+
+As $ 2 \epsilon > 0$ can be made arbitrarily small, $ a_{n} $ is Cauchy.
+
+\item[$ (\Leftarrow) $]
+Suppose $ a_{n} $ is Cauchy.\footnote{This second direction contains the completeness information.}
+Then $ a_{n} $ is bounded and so we can apply Bolzano-Weierstrass 
+to obtain a convergent subsequence $ a_{n(k)}\to a $ as $ 
+k \to \infty $.
+By lemma \ref{l1.1}, $ a_{n} \to a $.
+\end{description}
+\end{proof}
+
+\begin{proof}[Alternative Proof]
+Suppose $ a_{n} $ is Cauchy. Then it is bounded, say
+$a_{n} \in [\alpha, \beta]$
+
+Consider
+\[
+S = \{ s: a_{n} \geq s \text{ for infinitely many $n$} \}. 
+\]
+ 
+ First, $ \alpha \in S $ and so $ S \neq \emptyset $.  $ S $ is 
+ bounded above by $ \beta +1  $ (in fact by $ \beta $).
+ By the LUB principle we can take $ a = \sup S $.
+ 
+ Given $ \epsilon > 0 $, $ a - \epsilon < a $ and so 
+ there is $ s \in S $ with $a - \epsilon < s$.
+ Then there are infinitely many $ n $ with $a_{n}\geq s > 
+ a-\epsilon$. 
+ $ a+ \epsilon > a $, so $a+ \epsilon \notin S$ and so there 
+ are only finitely many $ n $ with $a_{n} \geq a+ \epsilon$.
+Thus there are infinitely many $ n $ with  $a_{n} \in (a - 
+\epsilon, a+\epsilon)$.
+
+Take $ N $ such that $\abs{a_{n}-a_{m}} < \epsilon$ for all $ m,n 
+\geq N $.
+We can find $ m \geq N $ with $a_{m}\in (a-\epsilon, a + \epsilon)$ 
+ie $\abs{a_{m}-a}<\epsilon$.
+Then if $ n \geq N $,
+\[
+\abs{a_{n}-a} \leq \abs{a_{n}-a_{m}} + \abs{a_{m}-a} < 
+\epsilon + \epsilon = 2 \epsilon
+\]
+
+As $ 2 \epsilon $ can be made arbitrarily small this shows $ a_{n} 
+\to a $.
+\end{proof}
+
+\begin{remarks}
+\
+
+\begin{itemize}
+\item This second proof can be modified to give a proof of 
+Bolzano-Weierstrass from the LUB principle.
+ 
+\item In the proof by bisection of the LUB principle, we could have used 
+GPC (general principle of convergence) instead of Completeness Axiom.
+
+\item We can prove GPC directly from completeness axiom as follows:
+
+Given $ a_{n} $ Cauchy, define \[ b_{n} = \inf \{ a_{m}: m \geq n \} 
+\] $ b_{n}  $ is increasing, so $ b_{n} \to b $ $ (= 
+\liminf a_{n}) $. Then show $ a_{n} \to b $.
+
+\item The Completeness Axiom, LUB principle, and the GPC are 
+equivalent expressions of the completeness of $ \R $. 
+\end{itemize}
+\end{remarks}
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%                                                                                  %
+%       Start of Section 2 (Euclidean Space)   %
+%                                                                                  %
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\chapter{Euclidean Space}
+\section{The Euclidean Metric}
+
+Recall that $ \R^{n} $ is a vector space with coordinate-wise 
+addition and scalar multiplication.
+
+\begin{definition}
+The \emph{Euclidean norm}\footnote{The norm arises from the standard
+inner product
+\[ <x,y> = \sum_{i=1}^{n}x_{i}y_{i} \]} $ \norm{ \cdot }\colon \R^{n}\mapsto \R   $ is 
+defined by
+\[
+\norm{x} = \norm{(x_{1},\ldots,x_{n})} = + 
+\sqrt{\sum_{i=1}^{n}x_{i}^{2}}
+\]
+and the \emph{Euclidean distance} $ d(x,y) $ between $ x $ and $ y 
+$ is $d(x,y) = \norm{x-y}$.
+\end{definition}
+
+\begin{observation}
+The norm satisfies
+\begin{gather*}
+\norm{x} \geq 0, \qquad \norm{x}=0 \Leftrightarrow x = 0 \in \R^{n} \\
+\norm{\lambda x} = \abs{\lambda} \, \norm{x} \\
+\norm{x+y} \leq \norm{x} + \norm{y}\\
+\end{gather*}
+
+and the distance satisfies
+\begin{gather*}
+d(x,y) \geq 0, \qquad d(x,y)=0 \Leftrightarrow x=y \\
+d(x,y) = d(y,x) \\
+d(x,z) \leq d(x,y)+d(y,z).
+\end{gather*}
+\end{observation}
+
+\section{Sequences in Euclidean Space}
+We can write $ x^{(n)} $ or $ x(n) $ for a sequence of points in 
+$ \R^{p} $. Then \[ x_{i}^{(n)}=x_{i}(n) \qquad 1 \leq i \leq p \]
+for the $ i^{\text{th}}$ coordinate of the $ n^{\text{th}}$ number of
+the sequence.
+
+\begin{definition}
+A sequence $ x^{(n)} $ converges to $ x $ in $ \R^{p} $ when for
+any $ \epsilon > 0 $ there exists $ N $ such that
+\footnote{$ x^{n} \to x $ in $ \R^{p} $ iff $ 
+\norm{x^{(n)}-x} \to 0 $ in $ \R $.}
+\[ \norm{x^{(n)}-x} < \epsilon \quad \text{for all} \quad n \geq N \]
+In symbols:
+\[ x^{(n)}\to x \Leftrightarrow \Forall{\epsilon>0}\Exists{N} 
+\Forall{n \geq N} \norm{x^{(n)}-x}<\epsilon \]
+\end{definition}
+
+\begin{proposition}
+$ x^{(n)}\to x $ in $ \R^p $ iff $ 
+x_{i}^{(n)}\to x $ in $ \R $ for $ 1 \leq i \leq p $.
+\end{proposition}
+
+\begin{proof}
+Note that
+
+\[
+0 < \abs{x_i^{(n)} - x_i} \le \norm{x^{(n)} - x} \to 0
+\]
+
+and
+
+\[
+0 \le \norm{x^{(n)} - x} \le \sum_{i=1}^p \abs{x_i^{(n)} - x_i} \to 0.
+\]
+
+\end{proof}
+
+\begin{definition}
+A sequence $ x^{(n)} \in \R^{p} $ is bounded if and only if there 
+exists $R$ such that $ \norm{x^{(n)}} \leq R $ for all $ n $.
+\end{definition} 
+
+\begin{theorem}[Bolzano-Weierstrass Theorem for $ \R^{p} $]
+Any bounded sequence in $ \R^{p} $ has a convergent subsequence.
+
+\begin{proof}[Proof (Version 1)]
+Suppose $ x^{(n)} $ is bounded by $ R $. Then all the coordinates $ 
+x_{i}^{(n)} $ are bounded by $ R $. By Bolzano-Weierstrass in $ 
+\R $ we can take a subsequence such that the 1st coordinates 
+converge; now by Bolzano-Weierstrass we can take a subsequence of 
+this sequence such that the 2nd coordinates converge. Continuing in 
+this way (in $ p $ steps) we get a subsequence all of whose 
+coordinates converge. But then this converges in $ \R^{p} $.
+\end{proof}
+
+\begin{proof}[Version 2]
+By induction on $p$.
+The result is known for $ p=1 $ (Bolzano-Weierstrass in $ \R $) 
+and is trivial for $ p=0 $.  Suppose result is true for $ p $.
+
+Take $ x^{n} $ a bounded subsequence in $ \R^{p} $ and write each
+$ x^{(n)} $ as  $ x^{(n)}=(y^{(n)}, x_{p+1}^{(n)})$
+ where $y^{(n)}\in \R^{p}$ and $x_{p+1}^{(n)} \in \R$
+is the $ (p+1)^{\text{th}}$ coordinate.
+
+Now $ y^{(n)} $ and $ x_{p+1}^{(n)} $ are both bounded, so we can apply
+Bolzano-Weierstrass in $\R^p$ to get a subsequence $y^{(n(k))} \to y$.
+Apply Bolzano-Weierstrass in $\R$ to get $x_{p+1}^{(n(k(j)))} \to x$.
+Then
+\[
+x^{(n(k(j)))} \to (y,x) \text{ as } j \to \infty.
+\]
+\end{proof}
+\end{theorem}
+
+
+\begin{definition}
+A sequence $ x^{(n)} \in \R^{p} $ is a \emph{Cauchy sequence} iff 
+for any $ \epsilon>0 $ there is $ N $ with
+$ \norm{x^{(n)}-x^{(m)}}< \epsilon$ for $ n, m \geq N $.  In symbols
+this is
+\[
+\Forall{\epsilon>0}\Exists{N} \Forall {n,m \geq N} 
+\norm{x^{(n)}-x^{(m)}}< \epsilon.
+\]
+\end{definition}
+
+\begin{observation}
+$ x^{(n)} $ is Cauchy in $ \R^{p} $ iff each $ 
+x_{i}^{(n)}=x_{i}(n) $ is Cauchy in $ \R $ for $ 1 \leq i \leq p $.
+\end{observation}
+
+\begin{proof}
+Suppose $ x^{(n)} $ is Cauchy. Take $ 1 \leq i \leq p $.
+Given $ \epsilon>0 $, we can find $ N $ such that
+$\norm{x^{(n)}-x^{(m)}}< \epsilon$ for all $ n, m \geq N $. But 
+then for $ n,m \geq N $,
+\[
+\abs{x_{i}(n)-x_{i}(m)} \leq \norm{x^{(n)}-x^{(m)}} < \epsilon
+\]
+so as $ \epsilon >0 $ is arbitrary, $ x_{i}(n) $ is Cauchy.
+
+Conversely, suppose each $ x_{i}(n) $ is Cauchy for $ 1 \leq i \leq 
+p $. Given $ \epsilon >0 $, we can find $ N_{1}, \ldots, N_{p} $ 
+such that
+\[
+\abs{x_{i}(n)-x_{i}(m)} < \epsilon \quad for \quad n,m \geq N_{i} 
+\qquad (1 \leq i \leq p)
+\]
+
+Now if $n,m \geq N = \max\{N_{1}, \ldots, N_{p}\}$ then
+\[
+\norm{x^{(n)}-x^{(m)}} \leq 
+\sum_{i=1}^{p}\abs{x_{i}^{(n)}-x_{i}^{(m)}} < p \epsilon
+\]
+
+As $ p \epsilon $ can be made arbitrarily small, $ x^{(n)} $ is Cauchy.
+\end{proof}
+
+\begin{theorem}[General Principle of Convergence in $ \R^{p} $]
+A sequence $ x^{(n)} $ in $ \R^{p} $ is convergent if and only 
+if $ x^{(n)} $ is Cauchy.
+\end{theorem}
+
+\begin{proof}
+  $ x^{(n)} $ converges in $ \R^{p} $
+
+iff $ x_{i}(n) $ converges in $\R $ $ (1 \leq i \leq p) $
+
+iff $ x_{i}(n) $ is Cauchy in $ \R $ $ (1 \leq i \leq p) $
+
+iff $ x^{(n)} $ is Cauchy in $ \R^{p} $.
+\end{proof}
+
+
+\section{The Topology of Euclidean Space}
+\label{EuclidianTopology}
+
+For $ a \in \R^{p} $ and $ r \geq 0 $ we have the \emph{open 
+ball} $ B(a,r) = O(a,r) $, defined by
+\[ B(a,r)=O(a,r) = \{ x : \norm{x-a} < r \} \]
+
+Also we have the \emph{closed ball} $ C(a,r) $ defined by
+\[ C(a,r) = \{ x : \norm{x-a} \leq r \} \]
+
+Also we shall sometimes need the \emph{``punctured'' open ball}
+\[ \{ x: 0 < \norm{x-a} < r \} \]
+
+\begin{definition}
+A subset $ U \subseteq \R^{p}  $ is \emph{open} if and only if for 
+all $ a \in U $ there exists $ \epsilon > 0 $ such that \[
+\norm{x-a} < \epsilon \Rightarrow x \in U \] [That is: $ U $ is open iff 
+for all $ a \in U $ there exists $ \epsilon >0 $ with $ 
+B(a,\epsilon) \subseteq U] $.
+\end{definition}
+
+The empty set $ \emptyset $ is trivially open.
+
+\begin{example}
+\
+
+\begin{itemize}
+\item $ O(a,r) $ is open, for if $ b \in O(a,r) $, then $ 
+\norm{b-a} < r $, setting \[ \epsilon = r - \norm{b-a}>0 \] we see
+$O(b, \epsilon) \subseteq O(a,r)$.
+
+\item Similarly  $\{ x: 0 < \norm{x-a}<r \}$ is open.
+
+\item But $ C(a,r) $ is not open for any $ r \geq 0 $.
+\end{itemize}
+\end{example}
+
+\begin{definition}
+A subset $ A \subseteq \R^{p} $ is \emph{closed} iff whenever $ 
+a_{n} $ is a sequence in $ A $ and $ a_{n}\to a $, then $ 
+a \in A $.  In symbols this is
+\[
+a_{n} \to a, a_{n} \in A \Rightarrow a \in A 
+\]
+\end{definition}
+
+\begin{example}
+\
+
+\begin{itemize}
+\item $ C(a,r) $ is closed, for suppose $ b_{n} \to b $ 
+and $ b_{n} \in C(a,r) $ then $\norm{b_{n}-a} \leq r$ for all
+$ n $. Now
+\[
+\norm{b-a} \leq \norm{b_{n}-b}+\norm{b_{n}-a} \le 
+r+\norm{b_{n}-b}
+\]
+As $ b_{n} \to b $, $ \norm{b_{n}-b} \to 0 $, and so
+$r + \norm{b_{n}-b} \to r$ as $ n \to \infty $.
+Therefore $ \norm{b-a} \leq r $.
+
+\item A product $[a_{1},b_{1}] \times \ldots \times 
+[a_{p},b_{p}] \subseteq \R^{p}$ of closed intervals is closed. For 
+if $ c^{(n)} \to c $ and \[ c^{(n)} \in [\,] 
+\times\ldots\times [\,] \] then each $ c_{i}^{(n)}\to c_{i} $ 
+with $c_{i}^{(n)} \in [a_{i},b_{i}]$ so that $c_{i} \in [a_{i}, b_{i}]$.
+Therefore 
+\[
+c \in [\,]\times\ldots\times[\,].
+\]
+
+\item But $ O(a,r) $ is not closed unless $ r=0 $.
+\end{itemize}
+\end{example}
+
+\begin{proposition}
+A set $ U \subseteq \R^{p} $ is open (in $ \R^{p} $) iff its 
+complement $ \R^{p} \setminus U $ is closed in $ \R^{p} $.
+A set $ U \subseteq \R^{p} $ is closed (in $ \R^{p} $) iff its 
+complement $ \R^{p} \setminus U $ is open in $ \R^{p} $.\footnote{Warning:
+ Sets need not be either open or closed: the half open 
+interval $ (a,b] $ is neither open nor closed in $ \R $.}
+\end{proposition}
+
+\begin{proof}
+Exercise.
+\end{proof}
+
+\section{Continuity of Functions}
+
+We consider functions $ f\colon E \mapsto \R^{m} $ defined on some $ 
+E \subseteq \R^{n} $. For now imagine that $ E $ is a simple open 
+or closed set as in \S \ref{EuclidianTopology}.
+
+\begin{definition}
+Suppose $ f\colon E \mapsto \R^{m} $ (with $ E \subseteq \R^{n} $) 
+Then $ f $ is \emph{continuous at $ a $} iff for any 
+$ \epsilon >0 $ there exists
+\footnote{The continuity of $ f $ at $ a $ depends only on 
+the behavior of $ f $ in an open ball $ B(a,r) $, $ r>0 $.}
+$ \delta >0  $ such that
+\[ \norm{x-a} < \delta \to \norm{f(x)-f(a)}<\epsilon \quad 
+\text{for all} \quad x \in E. \]
+In symbols:
+\[ \Forall{\epsilon>0}\Exists{\delta >0} \Forall{x \in E} 
+\norm{x-a}<\delta \Rightarrow \norm{f(x)-f(a)}< \epsilon. \]
+
+$ f $ is \emph{continuous} iff $ f $ is continuous at every point.
+\end{definition}
+
+This can be reformulated in terms of limit notation as follows:
+
+\begin{definition}
+Suppose $ f \colon E \mapsto \R^{n} $. Then $ f(x) \to b $ 
+as $ x \to a $ in $ E $\footnote{Then $ f $ is continuous at $ a $ iff $ f(x) \to 
+f(a) $ as $ x \to a $ in $ E $.} if an only if for any $ \epsilon>0 
+$ there exists $ \delta>0 $ such that
+\[
+0 < \norm{x-a} < \delta \Rightarrow \norm{f(x)-b)}<\epsilon \quad 
+\text{for all} \quad x \in E.
+\]
+\end{definition}
+
+
+\begin{remarks}
+\
+
+\begin{itemize}
+\item We typically use this when $ E $ is open and some punctured 
+ball \[ \{ x : 0 < \norm{x-a}<r \} \] is contained in $ E $. Then 
+the limit notion is independent of $ E $.
+
+\item If $ f(x) \to b $ as $ x \to a $, then 
+defining $ f(a)=b $ extends $ f $ to a function continuous at $ a $.
+\end{itemize}
+\end{remarks}
+
+\begin{proposition}\label{prop:seq-cont}
+Suppose $ f\colon E \mapsto \R^{m} $
+
+\begin{itemize}
+\item $ f $ is continuous (in $ E $) if and only if whenever $ 
+a_{n} \to a $ in $ E $, then $ f(a_{n}) \to f(a) $. 
+This is known as \emph{sequential continuity}.
+
+\item $ f $ is continuous (in $ E $) if and only if for any open 
+subset $ V \subseteq \R^{m} $:
+\[ F^{-1}(V) = \{ x \in E : f(x) \in 
+V \} \] 
+is open in $ E $.
+\end{itemize}
+\end{proposition}
+
+\begin{proof}
+We will only prove the first part for now.  The proof of the second
+part is given in theorem \ref{thm:open-cont} in a more general form.
+
+Assume $ f $ is continuous at $a$ and take a convergent sequence $
+a_{n}\to a $ in $ E $.
+Suppose $ \epsilon > 0  $ given.  By continuity of $ f $, there
+exists  $ \delta>0 $ such that
+
+\[
+\norm{x-a}< \delta \Rightarrow \norm{f(x)-f(a)} < \epsilon.
+\]
+
+As $ a_{n} \to a $ take $ N $ such that $ 
+\norm{a_{n}-a} < \delta  $ for all $ n \geq N $.
+
+Now if $ n \geq N $, $\norm{f(a_{n}) - f(a) } < \epsilon$.
+Since $ \epsilon>0 $ can be made arbitrarily small, $ f(a_{n}) \to 
+f(a) $.
+
+The converse is clear.
+\end{proof}
+
+\begin{remark} $ f(x) \to b $ as $ x \to a $ iff $ 
+\norm{f(x)-b} \to 0 $ as $ x \to a $.
+\end{remark}
+
+\begin{observation}
+\
+
+\begin{itemize}
+\item Any linear map $ \alpha\colon  \R^{n} \mapsto \R^{m} $ is 
+continuous.
+
+\begin{proof}
+If $ \alpha $ has matrix $ A=(a_{ij}) $ with respect to the 
+standard basis then 
+
+\[
+\alpha(x) = \alpha(x_{1}, \ldots, x_{n})
+= \left(\sum_{j=1}^{n}a_{ij}x_{j},\ldots, \sum_{j=1}^{n}a_{mj}x_{j} \right)
+\]
+and so
+\[
+\norm{\alpha(x)} \leq \sum_{ij}|a_{ij}| \, |x_{j}| \leq 
+\underbrace{\left(\sum_{i,j}|a_{ij}|\right)}_{K}\norm{x}.
+\]
+
+Fix $ a \in \R^{n} $. Given $ \epsilon > 0 $ we note that if $ 
+\norm{x-a} < \epsilon $ then \[ \norm{\alpha(x)-\alpha(a)} = 
+\norm{\alpha(x-a)} \leq K \norm{x-a} < K \epsilon \]
+
+As $ K\epsilon $ can be made arbitrarily small, $ f $ is 
+continuous at $ a $. But $ a \in \R^{n} $ arbitrary, so $ f $ 
+is continuous.
+\end{proof}
+
+\item If $ f\colon\R^{n}\mapsto \R^{m} $ is continuous at $ a $, 
+and $ g\colon\R^{m} \mapsto \R^{p} $ is continuous at $ f(a) $, 
+then $ g \circ f\colon\R^{n} \mapsto \R^{p} $ is continuous at $ a $.
+\begin{proof}
+Given $ \epsilon>0 $ take $ \eta>0 $ such that
+\[ \norm{y - f(a)} < \eta \Rightarrow 
+\norm{g(y)-g(f(a))} < \epsilon. \]
+
+Take $ \delta > 0 $ such that $\norm{x-a}<\delta \Rightarrow 
+\norm{f(x)-f(a)}<\eta$.
+
+Then $\norm{x-a} < \delta \Rightarrow 
+\norm{g(f(x))-g(f(a))} < \epsilon$.
+\end{proof}
+\end{itemize}
+\end{observation}
+
+\begin{proposition}
+Suppose $ f,g\colon \R^{n} \mapsto \R^{m}  $ are continuous at $ a $. 
+Then
+\begin{enumerate}
+\item $ f+g $ is continuous at $ a $.
+\item $ \lambda f $ is continuous at $ a $, any $ \lambda \in \R $.
+\item If $ m = 1 $, $ f \cdot g $ is continuous at $ a $.
+\end{enumerate}
+\end{proposition}
+
+\begin{proof}
+Proof is trivial. Just apply propositions \ref{p1.1} and \ref{prop:seq-cont}.
+\end{proof}
+
+Suppose $ f\colon  \R^{n} \mapsto \R^{m} $. Then we can write:
+\[ f(x) = (f_{1}(x),\ldots,f_{m}(x)) \] where 
+$f_{j}\colon \R^{n} \mapsto \R$
+is $ f $ composed with the $ j^{\text{th}} $ projection 
+or coordinate function.
+
+Then $ f $ is continuous if and only if each $ f_{1}, \ldots, 
+f_{m}  $ is continuous.
+
+\begin{theorem}
+Suppose that $ f\colon  E \mapsto \R $ is continuous on $ E $, a
+closed and bounded subset of $ \R^{n} $. Then $ f $ is bounded and (so 
+long as $ E \neq \emptyset $) attains its bounds.
+\end{theorem}
+
+\begin{proof}
+Suppose $ f $ not bounded. Then we can take $ a_{n} \in E $ with 
+$\abs{f(a_{n})}>n$.  By Bolzano-Weierstrass we can take a convergent 
+subsequence $ a_{n(k)} \to a $ as $ k \to \infty $ and as $ E $ is
+closed, $ a \in E $.
+
+By the continuity of $ f $, $f(a_{n(k)}) \to f(a)$ as $ k 
+\to \infty $. But $f(a_{n(k)})$ is unbounded --- a 
+contradiction and so $f$ is bounded.
+
+Now suppose $\beta = \sup \{ f(x)\colon  x \in E \}$.  We can take
+$ c_{n} \in E $ with \[ \abs{f(c_{n})-\beta}<\frac{1}{n}. \]
+
+By Bolzano-Weierstrass we can take a convergent subsequence $ c_{n(k)} 
+\to c $. As $ E $ is closed, $ c \in E $.
+By continuity of $ f $, $ f(c_{n(k)}) \to f(c) $, but by 
+construction $f(c_{n(k)}) \to \beta$ as $ k \to 
+\infty $. So $ f(c) = \beta $.
+\end{proof}
+
+Essentially the same argument shows the more general fact. 
+If $ f\colon E \mapsto \R^{n} $ is continuous in $ E $, closed and 
+bounded, then the image $ f(E) $ is closed and bounded. N.B. 
+\emph{compactness}.
+
+\section{Uniform Continuity}
+
+\begin{definition}
+Suppose $ f\colon E \mapsto \R^{m} $ where $ E \subseteq \R^{n} $.
+$ f $ is \emph{uniformly continuous} on $ E $ iff 
+for any $ \epsilon>0 $ there exists $ \delta>0 $ such that
+\[
+\norm{x-y}<\delta \Rightarrow \norm{f(x)-f(y)}< \epsilon \quad 
+\text{for all} \quad x,y \in E. \]
+
+In symbols:
+
+\[ \Forall{\epsilon>0} \Exists{\delta>0} \Forall{x,y \in E} \norm{x-y}< 
+\delta \Rightarrow \norm{f(x)-f(y)}<\epsilon \]
+\end{definition}
+
+Compare this with the definition of continuity of $ f $ at all points
+$ x \in E $:
+\[
+\Forall{x \in E} \Forall{\epsilon>0} \Exists{\delta>0} \Forall{y \in 
+E} \norm{x-y}<\delta \Rightarrow \norm{f(x)-f(y)}<\epsilon
+\]
+
+The difference is that for continuity, the $ \delta>0 $ to be found 
+depends on both $ x $ and $ \epsilon > 0 $; for uniform 
+continuity the $ \delta>0 $ depends only on $ \epsilon>0 $ and 
+is independent of $ x $.
+
+\begin{example}
+$x \mapsto x^{-1} : (0,1]\mapsto [1,\infty)$ is continuous 
+but \emph{not} uniformly continuous.
+
+Consider \[ \abs{\frac{1}{x}-\frac{1}{y} } = \abs{
+\frac{y-x}{xy} } \] Take $ x = \eta $, $ y = 2 \eta $. 
+Then \[ \abs{\frac{1}{x}-\frac{1}{y}} = \abs{ 
+\frac{1}{2\eta} } \] while $ \abs{x-y}= \eta $.
+\end{example}
+
+\begin{theorem}
+\label{uniformctsthm}
+Suppose $ f\colon  E \mapsto \R^{m} $ is continuous on $ E $, a 
+closed and bounded subset of $ \R^{n} $. Then $ f $ is uniformly 
+continuous on $ E $.
+\begin{proof}
+Suppose $ f $ continuous but not uniformly continuous on $ E $.
+
+Then there is some $ \epsilon>0 $ such that for no $ \delta>0 $ 
+is it the case that
+\[ \norm{x-y}<\delta \Rightarrow 
+\norm{f(x)-f(y)}<\epsilon \quad \forall\  x,y \in E.
+\]
+
+Therefore\footnote{%
+We want the ``opposite'' of
+\[ \Forall{\epsilon>0} \Exists{ 
+\delta>0} \Forall{x,y \in E} \norm{x-y}<\delta \Rightarrow 
+\norm{f(x)-f(y)}<\epsilon. \] It is: \[ \Exists{\epsilon>0} \Forall{
+\delta >0} \Exists
+{x,y \in E} \norm{x-y}< \delta \quad \text{and} \quad 
+\norm{f(x)-f(y)} \geq \epsilon. \]}
+for every $ \delta>0 $ there exist $ x,y \in E $ with
+$\norm{x-y}<\delta$ and
+\[
+\norm{f(x)-f(y)}\geq \epsilon.
+\]
+
+Now for every $ n \geq 1 $ we can take $ x_{n}, y_{n} \in E $ 
+with $\norm{x_{n}-y_{n}}< \frac{1}{n}$ and
+\[
+\norm{f(x_{n})-f(y_{n})} \geq \epsilon.
+\]
+
+By Bolzano-Weierstrass, we can take a convergent subsequence $ 
+x_{n(k)}\to x $ as $ k \to \infty $. $ x \in E $ since $E$ is closed.
+
+Now
+\[
+\norm{y_{n(k)}-x} \leq \norm{y_{n(k)}-x_{n(k)}} + 
+\norm{x_{n(k)}-x}\to 0 \text{ as }  k \to 0.
+\]
+
+Hence $ y_{n(k)} \to x $. So $x_{n(k)}-y_{n(k)} \to 0$ as $ k \to 
+\infty $ and so $f(x_{n(k)}) - f(y_{n(k)}) \to 0$ (by continuity of $ f $). 
+So
+\[
+\underbrace{\norm{f(x_{n(k)})-f(y_{n(k)})}}_{\geq 
+\epsilon}\to 0 \text{ as } k \to \infty.
+\]
+
+This is a contradiction and it follows that $ f $ must be uniformly
+continuous.
+\end{proof}
+\end{theorem}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%                                                                 %
+%       Section 3 (Differentiation)       %
+%                                                                 %
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+
+
+
+\chapter{Differentiation}
+
+\section{The Derivative}
+
+\begin{definition}
+Let $ f\colon  E \mapsto \R^{m} $ be defined on $ E $, an open subset 
+of $ \R^{n} $. Then $ f $ is \emph{differentiable} at $ a \in E 
+$ with derivative $Df_{a}\equiv f'(a) \in L(\R^{n},\R^{m})$ when
+
+\[
+\frac{ \norm{f(a+h)-f(a)-f'(a)h}}{\norm{h}} \to 0 \text{ as } h \to 0. \]
+\end{definition}
+
+The idea is that the best linear approximation to $ f $ at $ a \in E $ is 
+the affine map $x \mapsto a+f'(a)(x-a)$.
+
+\begin{observation}[Uniqueness of derivative]
+If $ f $ is differentiable at $ a $ then its derivative is 
+unique.
+\end{observation}
+
+\begin{proof}
+Suppose $ Df_{a}, \hat{Df_{a}} $ are both 
+derivatives of $ f $ at $a$. Then
+
+\begin{multline*}
+\frac{\norm{Df_{a}(h) - \hat{Df_{a}}(h)}}{\norm{h}} \leq \\
+\frac{ \norm{f(a+h)-f(a)-Df_{a}(h)}}{\norm{h}} +
+\frac{ \norm{f(a+h)-f(a)-\hat{Df_{a}}(h)}}{\norm{h}} \to 0.
+\end{multline*}
+
+Thus
+
+\[
+LHS  = \norm{(Df_{a}-\hat{D}f_{a})\left(\frac{h}{\norm{h}}\right)} \to
+ 0 \text{ as } h \to 0.
+\]
+
+This shows that $ Df_{a}-\hat{D}f_{a} $ is zero on all unit vectors, 
+and so $ Df_{a} \equiv \hat{D}f_{a} $.
+\end{proof}
+
+\begin{proposition}
+If $ f\colon E \mapsto \R^{m} $ is differentiable at $ a $, then
+$ f $ is continuous at $ a $.
+\end{proposition}
+
+
+\begin{proof}
+Now
+
+\begin{align*}
+\norm{f(x) - f(a)} &\le \norm{f(x) - f(a) - Df_a (x-a)}
++ \norm{Df_a(x-a)} \\
+\end{align*}
+
+But $ \norm{f(x)-f(a)-Df_a(x-a)} \to 0 $ as $ x \to a $ and
+ $ \norm{Df_a(x-a)} \to 0 $ as $ x \to a$ and so the result is proved.
+\end{proof}
+
+\begin{proposition}[Differentiation as a linear operator]
+
+Suppose that $ f,g\colon E \mapsto \R^{n} $ are differentiable at $ 
+a \in E $. Then
+\begin{enumerate}
+\item $ f+g $ is differentiable at $ a $ with 
+$ (f+g)'(a)=f'(a)+g'(a) $;
+\item $ \lambda f $ is differentiable at $ a $ with $ (\lambda 
+f)'(a) = \lambda f'(a) $ for all $ \lambda \in \R $.
+\end{enumerate}
+
+\end{proposition}
+
+\begin{proof}
+Exercise.
+\end{proof}
+
+\begin{observation}[Derivative of a linear map]
+If $ \alpha\colon  \R^{n}\mapsto \R^{m} $ is a linear map, then $ 
+\alpha  $ is differentiable at every $ a \in \R^{n} $ with $ 
+\alpha'(a)=\alpha(a) $.
+
+Proof is simple, note that
+
+\[
+\frac{ \norm{\alpha(a+h)-\alpha(a)-\alpha(h)}}{\norm{h}} \equiv 0.
+\]
+\end{observation}
+
+
+\begin{observation}[Derivative of a bilinear map]
+If $\beta\colon \R^{n}\times \R^{m} \mapsto \R^{p}$ is bilinear 
+then $ \beta $ is differentiable at each $ (a,b)\in \R^{n}\times 
+\R^{m}=\R^{n+m} $ with
+\[ \beta'(a,b)(h,k) = \beta(h,b)+\beta(a,k) \]
+\end{observation}
+
+\begin{proof}
+\[ \frac{ 
+\norm{\beta(a+h,b+k)-\beta(a,b)-\beta(h,b)-\beta(a,k)}}{\norm{ 
+(h,k)}} = \frac{\norm{\beta(h,k)}}{\norm{(h,k)}} \]
+
+If $ \beta $ is bilinear then there is $ (b_k^{ij}) $ such that 
+
+\[ \beta(h,k)=\left( \sum_{i=1,j=1}^{n,m}b_1^{ij}h_{i}k_{j}, 
+\ldots, \sum_{i=1,j=1}^{n,m}b_p^{ij}h_{i}k_{j} \right) \]
+
+\[ \norm{\beta(h,k)} \leq \sum_{i,j,k}|b_k^{ij}| \, |h_{i}| \, 
+|k_{j}| \leq 
+\underbrace{\sum_{i,j,k}|b_{n}^{ij}|}_{=K}\norm{h}\norm{k} \leq 
+\frac{K}{2}( \norm{h}^{2}+\norm{k}^{2}) \]
+
+So $ \frac{\norm{\beta(h,k)}}{\norm{(h,k)}} \leq \left( \frac{K}{2} 
+\right) \norm{(h,k)} $ and so $ \to 0 $ as $ (h,k) 
+\to 0 $.
+\end{proof}
+
+
+\begin{example}
+The simplest bilinear map is multiplication $ m\colon \R \times \R 
+\mapsto \R $ and we have
+\[ m'(a,b)(h,k) = hb+ak (=bh+ak). \]
+\end{example}
+
+\section{Partial Derivatives}
+
+\begin{example}[Derivative of a function $\R \mapsto \R$]
+Suppose $ f\colon E \mapsto \R $ with $ E \subseteq \R $ open is 
+differentiable at $ a \in E $. Then the derivative map $ f'(a) \in 
+L(\R, \R) $ and any such is multiplication by a scalar, also called 
+the derivative $f'(a) = \left.\diff{f}{x}\right|_{a}$.
+
+Now
+\[ \frac{ \abs{f(a+h)-f(a)-f'(a)h}}{\abs{h}} = \left| 
+\frac{f(a+h)-f(a)}{h}-f'(a) \right| \to 0 \quad as \quad h
+ \to 0 \]
+we see that
+\[
+f'(a) = \lim_{h \to 0}\frac{f(a+h)-f(a)}{h}.
+\]
+
+WARNING: This limit formula only makes sense in this case
+\end{example}
+
+\begin{definition}[Partial derivatives]
+Suppose $ f\colon E \mapsto \R $ with $ E \subseteq \R^{n} $ open. 
+Take $ a \in E $. For each $ 1 \leq i \leq n $ we can consider the function
+\[
+x_{i} \mapsto f(a_{1},\ldots,a_{i-1},x_{i},a_{i+1},\ldots,a_{n})
+\]
+which is a real-valued function defined at least on some open 
+interval containing $ a_{i} $.
+
+If this is differentiable at $ a_{i} $ we write
+\[
+D_{i}f(a)= 
+\left.\pd{f}{x_{i}}\right|_{a}
+\]
+for its derivative---the $i^{\text{th}}$ partial derivative of $ f $ at $ a $.
+\end{definition}
+
+Now suppose $f$ is differentiable at $ a $ with derivative
+$f'(a) \in L(\R^{n}, \R)$.
+From linear maths, any such linear map is uniquely of the form
+\[
+(h_{1},\ldots, h_{n}) \mapsto \sum_{i=1}^{n}t_{i}h_{i}
+\]
+for $ t_{1},\ldots,t_{n} \in \R $ (the coefficients w.r.t. the 
+standard basis).  Therefore
+
+\[
+\frac{|f(a+h)-f(a)-\sum t_{i}h_{i}|}{\norm{h}} \to 0 
+\] as $ h \to 0 $.  Specialize to $ h=(0,\ldots,0,h_{i},0,\ldots,0)$.  We get
+
+\[
+\frac{| f(a_{1},\ldots,a_{i-1},a_{i}+h,a_{i+1},\ldots,a_{n}) - 
+f(a_{1},\ldots,a_{n}) - t_{i}h_{i}|}{|h_{i}|} \to 0 \text{ as } h_i
+\to 0.
+ \]
+
+It follows that $ t_{i} = D_{i}f(a) \equiv \left.\pd{f}{x_{i}}\right|_{a}$
+and thus the coefficients of $ f'(a) $ are the partial derivatives.
+
+\begin{example}
+$ m(x,y)=xy $. Then \[ \pd{m}{x}=y, \pd{m}{y}=x \] and \[
+m'(x,y)(h,k) = \pd{m}{x}h + \pd{m}{y}k = yh+xk \]
+\end{example}
+
+\begin{proposition}
+Suppose $ f\colon E \mapsto \R^{m} $ with $ E \subseteq \R^{n} $ open. 
+We can write
+\[
+f=(f_{1},\ldots,f_m),
+\] 
+where $ f_{j}\colon E\mapsto \R $, $ 1 \leq j \leq m $.
+Then $ f $ is differentiable at $ a \in E $ if and only if all 
+the $ f_{i} $ are differentiable at $ a \in E $.  Then
+\[ 
+f'(a)=(f'_{1}(x),\ldots,f'_{m}(x)) \in L(\R^{n},\R^{m})
+\]
+\end{proposition}
+
+\begin{proof}
+If $ f $ is differentiable with
+$f'(a)=  ((f'(a))_{1},\ldots,(f'(a))_{m})$ then
+
+\[
+\frac{ \abs{f_{j}(a+h)-f_{j}(a)-(f'(a))_{j}(h)}}{\norm{h}}
+ \leq
+\frac{ \norm{ f(a+h)-f(a)-f'(a)(h)}}{\norm{h}} \to 0.
+\]
+
+So $ (f'(a))_{j} $ is the derivative $ f'_{j}(a) $ at $ a $.
+Conversely, if all the $f_{j}$'s are differentiable, then
+
+\begin{multline*}
+\frac{ \norm{f(a+h)-f(a)-(f'_{1}(a)(h),\ldots,f'_{m}(a)(h))}}{\norm{h}} \\
+\leq \sum_{j=1}^{m} \frac{\abs{f_{j}(a+h)-f_{j}(a)-f'_{j}(a)(h)}}{\norm{h}} 
+\to 0 \text{ as } h \to 0.
+\end{multline*}
+
+Therefore $ f $ is differentiable with the required derivative.
+\end{proof}
+
+It follows that if $ f $ is differentiable at $ a $, then $ f'(a) 
+$ has the matrix
+\[ \begin{pmatrix}\pd{f_{1}}{x_{1}}& \cdots & \pd{f_{1}}{x_{n}} \\
+             \vdots & & \vdots \\
+             \pd{f_{m}}{x_{1}} & \cdots & \pd{f_{m}}{x_{n}} 
+             \end{pmatrix}\]
+all evaluated at $ a $ with respect to the standard basis.
+\begin{remark} If the $ \pd{f_{j}}{x_{i}} $ are continuous at $ a $ then $ 
+f'(a) $ exists.
+\end{remark}
+
+\section{The Chain Rule}
+
+\begin{theorem}[The Chain Rule]
+Suppose $ f\colon \R^{n} \mapsto \R^{m} $ is differentiable at $ a 
+\in \R^{n} $ and $ g\colon \R^{m}\mapsto \R^{p} $ is differentiable 
+at $ b=f(a) \in \R^{m} $, then $ g \circ f \colon  \R^{n} \to 
+\R^{p} $ is differentiable at $ a \in \R^{n} $ and $ (g \circ 
+f)'(a) = g'(f(a)) \circ f'(a) $.
+\end{theorem}
+
+\begin{proof}
+
+Let $f(a+h)=f(a)+f'(a)(h) + R(a,h)$, where
+\[
+\frac{ \norm{R(a,h)}}{\norm{h}} \to 0 \text{ as } h \to 0.
+\]
+
+We also have $g(b+k) =g(b)+g'(b)(k)+S(b,k)$, where $S(b,k) 
+\to 0$ in the same manner.
+
+We can now define $\sigma(b,k) = \frac{S(b,k)}{\norm{k}}$ for
+$ k \neq 0 $, and $ \sigma(b,k)=0 $ otherwise, so that
+$ \sigma(b,k) $ is continuous at $ k=0 $.
+
+Now
+\begin{align*}
+ g(f(a+h)) &= g(f(a)+f'(a)(h)+R(a,h)) \\
+&= g(f(a))+g'(f(a))(f'(a)(h)+R(a,h))\\
+&+ \sigma(f(a),f'(a)(h)+R(a,h))
+\norm{f'(a)(h)+R(a,h)} \\
+&= g(f(a))+g'(f(a))(f'(a)(h))+g'(f(a))(R(a,h))+Y 
+\end{align*}
+ 
+as $ g'(f(a))  $ is linear.
+So it remains to show that
+
+\[
+\frac{g'(f(a))(R(a,h))+Y}{\norm{h}} \to 0 \text{ as } h \to 0.
+\]
+
+\begin{enumerate}
+\item
+\[ \frac{g'(f(a))(R(a,h))}{\norm{h}} = g'(f(a)) \left( 
+\frac{R(a,h)}{\norm{h}} \right) \]
+but as $ h \to 0 $, $ \frac{R(a,h)}{\norm{h}}\to 0 $, and
+since $ g'(f(a)) $ is continuous
+\[
+\frac{g'(f(a))(R(a,h))}{\norm{h}} \to 0 \text{ as }
+h \to 0.
+\]
+
+\item 
+\[ \frac{ \norm{f'(a)(h)}}{\norm{h}} \leq K 
+\frac{\norm{h}}{\norm{h}} = K \]
+as $ f'(a) $ is linear (and $ K $ is the sum of the norms of the 
+entries in the matrix $ f'(a) $).
+Also
+\[
+\frac{\norm{R(a,h)}}{\norm{h}} \to 0 \text{ as }
+h \to 0
+\]
+so we can find $ \delta >0 $ such that $ 0 < \norm{h} < \delta 
+\Rightarrow \frac{\norm{R(a,h)}}{\norm{h}} < 1$.
+Therefore, if $ 0 \leq \norm{h} < \delta $ then 
+\[ \frac{ \norm{f'(a)(h) + R(a,h)}}{\norm{h}} < K+1 \]
+
+Hence $f'(a)(h)+R(a,h) \to 0$ as $ h \to 0 $ and 
+so $\sigma(f(a),f'(a)(h) + R(a,h)) \to 0$ as $ h 
+\to 0 $.
+Thus $ \frac{Y}{\norm{h}} \to 0 $ as $ h \to 0 $.
+\end{enumerate}
+\end{proof}
+
+\begin{remark} In the 1-D case it is tempting to write $ f(a)=b, f(a+h)=b+k $ 
+and then consider
+\[
+\lim_{h \to 0}\frac{g(f(a+h))-g(f(a))}{h} = \lim_{h 
+\to 0}\frac{g(b+k)-g(b)}{k}\frac{f(a+h)-f(a))}{h}.
+\]
+But $ k $ could be zero.
+The introduction of $ \sigma $ is for the analogous problem in many 
+variables.
+\end{remark}
+
+\begin{application}
+Suppose $ f,g\colon  \R^{n} \mapsto \R $ are differentiable at $ a $. 
+Then their product ${(f \cdot g)\colon \R^n \mapsto \R}$ is differentiable 
+at $ a $, with derivative\footnote{multiplication in $ \R $ is commutative!}
+\[ (f\cdot g)'(a)(h) = g(a)\cdot f'(a)(h) + f(a)\cdot g'(a)(h) \]
+\end{application}
+
+\section{Mean Value Theorems}
+
+Suppose $ f\colon [a,b]\mapsto \R $ is continuous on the (closed,
+bounded) interval $ [a,b] $ and differentiable on $ (a,b) $. Then we
+have both Rolle's theorem and the mean value theorem.
+
+\begin{theorem}[Rolle's Theorem]
+If $ f(a)=f(b) $ then there exists $ c \in (a,b) $ with $ f'(c)=0 $.
+\end{theorem}
+
+\begin{proof}
+  Either $ f $ is constant and the result is then trivial, or else
+  without loss of generality, $ f $ takes values greater than
+  $f(a)=f(b) $.  Then there exists $ c \in (a,b) $ such that $f(c) =
+  \sup \{ f(t):t \in [a,b] \}$.  Thus $ f'(c)=0 $.%
+\footnote{This requires proof, which is left as an exercise.}
+\end{proof}
+
+\begin{theorem}[Mean Value Theorem]
+Suppose $ f\colon [a,b] \mapsto \R (a<b) $ is continuous and 
+differentiable on $ (a,b) $. Then there exists $ c \in (a,b) $ with
+\[ \frac{f(b)-f(a)}{b-a} = f'(c). \]
+\end{theorem}
+
+\begin{proof}
+  Set $g(x)=f(x)-\frac{x-a}{b-a}(f(b)-f(a))$.  Then $ g(a)=f(a)=g(b) $
+  so we can apply Rolle's theorem to get $ c \in (a,b) $ with $
+  g'(c)=0 $.  This $c$ does the trick.
+\end{proof}
+
+\begin{theorem}
+Suppose that $ f\colon E \mapsto \R^{m} $ ($ E $ open in $ \R 
+^{n} $ ) is such that the partial derivatives \[ D_{i}f_{j}(x) = 
+\pd{f_{j}}{x_{i}} \] evaluated at $ x $ (exist and) are continuous 
+in $ E $. Then $ f $ is differentiable in $ E $.
+\end{theorem}
+
+\begin{proof}
+Note that since $ f $ is differentiable iff each $ f_{j} $ is 
+differentiable $ (1\leq j \leq m) $, it is sufficient to consider 
+the case $ f\colon E \mapsto \R $.
+Take $ a = (a_{1},\ldots,a_{n}) \in E $.
+
+For $h=(h_{1},\ldots,h_{n})$ write $h(r) = 
+(h_{1},\ldots,h_{r},0,\ldots,0)$.
+Then by the MVT we can write
+\[ f(a+h(r)) - f(a+h(r-1)) = h_{r}D_{r}f(\xi_{r}) \]
+where $ \xi_{r} $ lies in the ``interval'' $(a+h(r-1), a+h(r))$.
+Summing, we get
+\[ f(a+h)-f(a) =  \sum_{i=1}^{n}D_{i}f(\xi_{i})h_{i}. \]
+
+Hence
+
+\begin{align*}
+\frac{\abs{f(a+h)-f(a) - \sum_{i=1}^{n}D_{i}f(a)h_{i}}}{\norm{h}} & =
+\frac{\abs{\sum_{i=1}^{n}(D_{i}f(\xi_{i})-D_{i}f(a))h_{i}}}{\norm{h}} \\
+& \leq \sum_{i=1}^{n} \abs{D_{i}f(\xi_{i}) - D_{i}f(a)}.
+\end{align*}
+
+As $ h \to 0 $, the $ \xi_{i}\to a $ and so by the 
+continuity of the $ D_{i}f $'s the RHS $ \to 0 $ and so the LHS 
+$ \to 0 $ as required.
+\end{proof}
+
+Alternatively: Given $ \epsilon>0 $, take $ \delta>0 $ such that%
+\footnote{$B(a,\delta) \subseteq E$ is also necessary.}
+for $ 0 < \abs{h} < \delta $,
+
+\[ 
+\abs{D_{i}f(a+h)-D_{i}f(a)}< \epsilon.
+\]
+
+Then if $ 0 < \abs{h} < \delta $, $\abs{\xi_{i}-a} < \delta $ and so 
+LHS $ \leq $ RHS $ < n \epsilon $, which can be made arbitrarily small.
+This shows that the LHS $ \to 0 $ as $ h \to 0 $.
+
+\section{Double Differentiation}
+Suppose $ f\colon E \mapsto \R^{m} $ ($ E $ open in $ \R^{n} $) is
+differentiable.  We can thus consider the function
+
+\[
+f'\colon E \mapsto L(\R^{n},\R^{m}) \text{ given by }
+x \mapsto f'(x).
+\]
+
+Vulgarly, we can identify $ L(\R^{n},\R^{m}) $ with $ \R^{mn} $ 
+via matrices, and so can ask whether $ f' $ is differentiable. If 
+it is differentiable at $ a \in E $, then its derivative
+$ f''(a) $ is a linear map
+$\R^{n}\mapsto L(\R^{n},\R^{m})$.
+It is better regarded as a bilinear map
+${\R^{n} \times \R^{n} \mapsto \R^{m}}$.
+Thus $ (f''(a)(h))(k) $ is regarded as $ f''(a)(h,k) $.
+Similarly, if the partial derivatives $ D_{i}f_{j} $ exist in $ E 
+$, we can ask whether the functions
+\[
+x \mapsto D_{i}f_{j}(x),  \qquad  E \mapsto \R \]
+are differentiable or even whether their partial 
+derivatives
+\[
+D_{k}D_{i}f_{j}(a) \equiv
+\left.\frac{\partial^{2}f_{j}}{\partial x_{k}\partial x_{i}}\right|_{a}
+\]
+exist.
+
+\begin{theorem}
+Suppose $ f\colon E \mapsto \R^{m} $ with $ E \subseteq \R^{n} $ 
+open, is such that all the partial derivatives $ D_{k}D_{i}f_{j}(x) 
+$ (exist and) are continuous in $ E $. Then $ f $ is twice 
+differentiable in $ E $ and the double derivative $ f''(a) $ is a 
+symmetric bilinear map for all $ a\in E $.
+\end{theorem}
+\begin{remarks}
+\
+
+\begin{itemize}
+\item Sufficient to deal with $ m=1 $.
+\item It follows from previous results that $ f''(a)$ exists for 
+all $ a \in E$.
+\item It remains to show $ D_{i}D_{j}f(a)=D_{j}D_{i}f(a) $, $ in E 
+$, where $ f\colon E \mapsto \R $.
+
+For this we can keep things constant except in the $i^{\text{th}}$ and
+$ j^{\text{th}}$ components.
+\end{itemize}
+\end{remarks}
+
+It suffices to prove the following:
+
+\begin{proposition}
+Suppose $ f\colon E \mapsto \R $, $ E \subseteq \R^{2} $ is such 
+that the partial derivatives $ D_{1}D_{2}f(x) $ and $ D_{2}D_{1}f(x) 
+$ are continuous.
+Then $ D_{1}D_{2}f(x)=D_{2}D_{1}f(x) $.
+\end{proposition}
+
+\begin{proof}
+Take $ (a_{1},a_{2}) \in E $. For $ (h_{1},h_{2}) $ small enough 
+(for $ a+h \in E $) define
+\begin{eqnarray*}
+T(h_{1},h_{2}) & = & f(a_{1}+h_{1},a_{2}+h_{2})-f(a_{1},a_{2}+h_{2}) 
+\cr
+               &   & - f(a_{1}+h_{1},a_{2}) + f(a_{1},a_{2})
+\end{eqnarray*}
+Apply the MVT to $ y \mapsto f(a_{1}+h,y)-f(a_{1},y) $ to get $ 
+\hat{y} \in (a_{2},a_{2}+h_{2}) $ such that 
+\[ T(h_{1},h_{2}) = (D_{2}f(a_{1}+h, \hat{y})-D_{2}f(a_{1},\hat{y}))h_{2}\]
+
+Now apply MVT to $ x \mapsto D_{2}f(x,\hat{y}) $ to get $ \hat{x} 
+\in (a_{1},a_{1}+h_{1}) $ with
+\[ T(h_{1},h_{2})=(D_{1}D_{2}f(\hat{x},\hat{y}))h_{1}h_{2} \]
+
+As $ h_{1},h_{2}\to 0 $ separately, $ (\hat{x}, \hat{y}) 
+\to (a_{1},a_{2}) $, and so, by continuity of $ D_{1}D_{2} $:
+
+\[ \lim_{h_{1}\to 0, h_{2} \to 
+0}\frac{T(h_{1},h_{2})}{h_{1}h_{2}} = D_{1}D_{2}f(a_{1},a_{2}) \]
+
+Similarly
+\[ \lim_{h_{1}\to 0, h_{2} \to 
+0}\frac{T(h_{1},h_{2})}{h_{1}h_{2}} = D_{2}D_{1}f(a_{1},a_{2}).
+\]
+The result follows by uniqueness of limits.
+\end{proof}
+
+\section{Mean Value Theorems in Many Variables}
+
+Suppose first that $ f\colon [a,b] \mapsto \R^{m}  $ is continuous and 
+is differentiable on $ (a,b) $. Then the derivative $ f'(t) \in 
+L(\R, \R^{m}) $ for $ a<t<b $. We identify $ L(\R, \R^{m}) $ 
+with $ \R^{m} $ via
+\[  \alpha \in L(\R, \R^{m}) \mapsto \alpha(1) \in \R^{m} \]
+Then write $ \norm{f'(t)} = \norm{f'(t)(1)} $.
+
+\begin{theorem}\label{thm:mvt2}
+With $ f $ as above, suppose $ \norm{f'(t)}\leq K $ for all $ t 
+\in (a,b) $. Then
+\[
+\norm{f(b)-f(a)} \leq K \abs{b-a}.
+\]
+\end{theorem}
+
+\begin{proof}
+Set $ e = f(b)-f(a) $ and let $ \phi(t) = \langle f(t),e\rangle $,
+the inner  product with $ e $.
+By the one dimensional MVT we have
+$ \phi(b)-\phi(a)=\phi'(c)(b-a) $ for some $ c  \in (a,b) $.
+
+We can calculate $ \phi'(t) $ by the chain rule as $\phi'(t) = \langle
+f'(t),e \rangle$.  ($ f'(t) $ regarded as begin a vector in $ \R^{m} $).
+Now
+
+\begin{align*}
+ \phi(b)-\phi(a) & = \langle f(b),e\rangle-\langle f(a),e\rangle \\
+ & = \langle f(b)-f(a), f(b)-f(a)\rangle \\
+  & = \norm{f(b)-f(a)}^{2}.
+\end{align*}
+
+Therefore
+
+\begin{align*}
+\norm{f(b)-f(a)}^{2} & = \abs{\langle f'(c),e\rangle} \, \abs{b-a} \\
+& \leq \norm{f'(c)} \, \norm{f(b)-f(a)} \, \abs{b-a}
+\end{align*}
+and so $ \norm{f(b)-f(a)} \leq K \abs{b-a} $.
+\end{proof}
+
+Finally, take the case $ f\colon E \mapsto \R^{m} $ differentiable on
+$ E $ with $ E $ open in $ \R^{n} $.
+For any $ d \in E $, $ f'(d) \in L(\R^{n}, \R^{m}) $.
+
+For $ \alpha \in L(\R^{n},\R^{m}) $ we can define $ \norm{\alpha} $ 
+by
+\[ \norm{\alpha} = \sup_{x \neq 0} \frac{\norm{\alpha(x)}}{\norm{x}} \]
+So $ \norm{\alpha} $ is least such that
+\[  \norm{\alpha(x)} \leq \norm{\alpha}\norm{x} \] for all $ x $.
+
+\begin{theorem}
+Suppose $ f $ is as above and $ a,b \in E $ are such that the 
+interval $ [a,b] $ (line segment), $ [a,b] = \{ c(t) = tb+(1-t)a: 
+0 \leq t \leq 1 \} $.
+
+Then if $ \norm{f'(d)}<K $ for all $ d \in (a,b) $,
+\[
+\norm{f(b)-f(a)} \leq K \norm{b-a}.
+\]
+\end{theorem}
+
+\begin{proof}
+Let  $ g(t) = f(c(t)) $, so that $ g\colon [0,1] \mapsto \R^{m} $.
+By theorem \ref{thm:mvt2},
+
+\[
+\norm{f(b)-f(a)}=\norm{g(1)-g(0)} \leq L\cdot 1 = L
+\]
+for $ L \geq \norm{g'(t)}$, $0<t<1 $.
+But by the chain rule
+\[
+g'(t)=f'(t) \underbrace{(b-a)}_{=c'(t)},
+\]
+so that $ \norm{g'(t)} \leq \norm{f'(t)}.\norm{b-a} \leq K \norm{b-a} $.
+The result follows.
+\end{proof}
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%                                                        %
+%       Section 4: Integration   %
+%                                                        %
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+
+\chapter{Integration}
+\section{The Riemann Integral}
+
+\begin{definition}
+A \emph{dissection} $ \dis $ of an interval $ [a,b] $ $ (a<b) 
+$, is a sequence 
+\[
+\dis = [x_{0}, \ldots, x_{n}] \quad \text{where} \quad
+a=x_{0}<x_{1}<x_{2}<\ldots<x_{n}=b.
+\]
+
+A dissection $ \dis_{1} $ is \emph{finer} than (or a \emph{refinement} of) 
+a dissection $ \dis_{2} $ if and only if all the points of $ 
+\dis_{2} $ appear in $ \dis_{1} $. Write $ \dis_{1}<\dis_{2} $.
+\footnote{The \emph{mesh} of $ \dis= [x_{0}, \ldots, x_{n}] $ is $ 
+\max_{1 \leq i \leq n}\{\abs{x_{i}-x_{i-1}}\} $.
+If $ \dis_{1}\leq \dis_{2}  $ then $\mesh(\dis_{1}) \leq \mesh (\dis_{2}) $.}
+
+\end{definition}
+
+
+\begin{definition}
+For $ f\colon  [a,b] \mapsto \R $ bounded and $ \dis $ a dissection 
+of $ [a,b] $ we define
+\begin{align*}
+S_{\dis}& = \sum_{i=1}^{n}(x_{i}-x_{i-1}) \sup_{x_{i-1}\leq x \leq 
+x_{i}}\{f(x)\} \\
+s_{\dis}& = \sum_{i=1}^{n}(x_{i}-x_{i-1}) \inf_{x_{i-1}\leq x \leq 
+x_{i}}\{f(x)\}.
+\end{align*}
+\end{definition}
+
+These are reasonable upper and lower estimates of the area under $ f $.
+For general $ f $ we take the area below the axis to be negative.
+
+\section*{Combinatorial Facts}
+
+\begin{lemma}
+For any $ \dis $, $ s_{\dis}\leq S_{\dis} $.
+\end{lemma}
+
+\begin{lemma}
+If $ \dis_{1}\leq \dis_{2} $, then $ S_{\dis_{1}}\leq S_{\dis_{2}} 
+$ and $ s_{\dis_{1}}\geq s_{\dis_{2}} $.
+\end{lemma}
+
+\begin{lemma}
+For any dissections $ \dis_{1} $ and $ \dis_{2} $, $ 
+s_{\dis_{1}}\leq S_{\dis_{2}} $.
+\end{lemma}
+\begin{proof}
+Take a common refinement $ \dis_{3} $, say, and
+\[ s_{\dis_{1}}\leq s_{\dis_{3}} \leq S_{\dis_{3}} \leq S_{\dis_{2}} \]
+
+It follows that the $ s_{\dis} $ are bounded by an $ S_{\dis_{0}} 
+$, and the $ S_{\dis} $ are bounded by any $ s_{\dis_{0}} $.
+\end{proof}
+
+\begin{definition}
+For $ f\colon [a,b] \mapsto \R $ bounded, define the upper Riemann integral
+\[
+S(f) \equiv \overline{\int_{a}^{b}}f(x)\,\ud x = 
+\inf_{\dis}\{S_{\dis}(f)\}
+\]
+and the lower Riemann integral
+\[
+s(f) \underline{\int_{a}^{b}}f(x)\,\ud x = 
+\sup_{\dis}\{s_{\dis}(f)\}.
+\]
+
+Note that $ s(f)\leq S(f) $.  $ f $ is said to be \emph{Riemann
+  integrable}, with $ \int_{a}^{b}f(x)\,\ud x = \sigma $  iff $s(f) =
+  S(f)$.
+\end{definition}
+
+\begin{example}
+\
+
+\begin{itemize}
+\item $ f(x)=
+\begin{cases} 0& \text{$ x $ irrational,} \\ 1& 
+\text{$ x $ rational.}
+\end{cases} \quad  x \in [0,1] $
+
+Then $ S(f)=1, s(f)=0 $ and so $ f $ is not Riemann integrable.
+
+\item $ f(x)=
+\begin{cases} 0& \text{$ x $ irrational,} \\ 
+\frac{1}{q}& 
+\text{$ x $ rational = $ \frac{p}{q} $ in lowest terms.} 
+\end{cases}
+\quad  x \in [0,1] $
+
+is Riemann integrable with \[ \int_{0}^{1}f(x)\,\ud x =0 \]
+\end{itemize}
+\end{example}
+
+\section*{Conventions}
+
+We defined $ \int_{a}^{b}f(x)\,\ud x $ for $ a<b $ only.
+For $ a=b $, $ \int_{a}^{b}f(x)\,\ud x=0 $ and for $ b<a $, $ 
+\int_{a}^{b}f(x)\,\ud x= - \int_{b}^{a}f(x)\,\ud x $.
+
+These give a general additivity of the integral with respect to 
+intervals, ie:
+
+If $ f $ is Riemann integrable on the largest of the intervals, \[ 
+[a,b], [a,c], [c,b] \]
+then it is integrable on the others, with
+\[
+\int_{a}^{b}f(x)\,\ud x = \int_{a}^{c}f(x)\,\ud x + \int_{c}^{b}f(x)\,\ud
+x.
+\]
+
+This makes sense in the obvious case $ a\leq c \leq b $, but also 
+in all others, eg $ b \leq a \leq c $.
+
+\begin{proof}
+Left to the reader.
+\end{proof}
+
+\section{Riemann's Condition: A GPC for integrability}
+
+\begin{theorem}
+Suppose  $f\colon [a,b] \mapsto \R$ is bounded. Then $ f $ is 
+Riemann-integrable iff for all $ \epsilon >0  $ there exists a
+dissection $ \dis $ with $S_{\dis}-s_{\dis}<\epsilon$.
+\end{theorem}
+\begin{proof}
+\
+
+$ (\Rightarrow) $ Take $ \epsilon>0 $, Pick $ \dis_{1} $ such that
+\[ S_{\dis_{1}}-\int_{a}^{b}f(x)\,\ud x < \frac{\epsilon}{2} \]
+
+Pick $ \dis_{2} $ such that
+\[ \int_{a}^{b}f(x)\,\ud x - s_{\dis_{2}}< \frac{\epsilon}{2} \]
+
+Then if $ \dis $ is a common refinement,
+\[ S_{\dis}-s_{\dis} \leq \left(S_{\dis_{1}}-\int_{a}^{b}f(x)\,\ud x 
+\right) +
+\left(\int_{a}^{b}f(x)\,\ud x-s_{\dis_{2}}\right) < \epsilon \]
+
+$ (\Leftarrow) $ Generally,
+$S_{\dis} \geq S \geq s \geq s_{\dis}$
+Riemann's condition gives $ S-s<\epsilon $ for all $ 
+\epsilon>0 $.
+Hence $ S=s $ and $ f $ is integrable.
+\end{proof}
+
+\begin{remarks}
+\
+
+\begin{itemize}
+\item If $ \sigma $ is such that
+$\forall\epsilon>0\ \exists\dis$ with
+$S_{\dis}-s_{\dis}<\epsilon$ and $S_{\dis}\geq \sigma \geq s_{\dis}$
+then $ \sigma $ is $ \int_{a}^{b}f(x)\,\ud x $.
+
+\item
+A sum of the form
+\[ \sigma_{\dis}(f) = \sum_{i=1}^{n}(x_{i}-x_{i-1})f(\xi_{i}) \]
+where $ \xi_{i}\in [x_{i-1},x_{i}] $, is an \emph{arbitrary Riemann 
+sum}.
+Then $ f $ is Riemann integrable with
+\[ \int_{a}^{b}f(x)\,\ud x = \sigma \]
+if and only if 
+$\forall\epsilon>0\ \exists \delta>0\ \forall \dis$ with 
+$\mesh(\dis)< \delta $ and all arbitrary sums \[ 
+\abs{\sigma_{\dis}(f)-\sigma}<\epsilon \]
+\end{itemize}
+\end{remarks}
+
+\section*{Applications}
+
+A function $ f\colon [a,b] \mapsto \R $ is
+
+\begin{description}
+\item[increasing] if and only if
+\[ x \leq y \Rightarrow f(x) \leq f(y),\qquad x,y \in [a,b]  \]
+\item[decreasing] if and only if
+\[ x \leq y \Rightarrow f(x) \geq f(y),\qquad x,y \in [a,b]  \]
+\item[monotonic] if and only if it is either increasing or decreasing.
+\end{description}
+
+\begin{proposition}
+Any monotonic function is Riemann integrable on $ [a,b] $.
+
+\begin{proof}
+By symmetry, enough to consider the case when $ f $ is increasing.
+Dissect $ [a,b] $ into $ n $ equal intervals, ie
+\begin{align*}
+\dis & =  \left[a,a+ \frac{(b-a)}{n}, a + 2 \frac{(b-a)}{n},
+\ldots, b\right] \\
+& = [x_{0},x_{1},\ldots,x_{n}].
+\end{align*}
+
+Note that if $ c<d $ then $\sup_{x \in [c,d]}\{f(x)\}=f(d)$
+and $\inf_{x \in [c,d]}\{f(x)\}=f(c)$.
+Thus
+\begin{align*}
+S_{\dis}-s_{\dis} & = 
+\sum_{i=1}^{n}(x_{i}-x_{i-1})(f(x_{i})-f(x_{i-1})) \cr
+& = \frac{b-a}{n}\sum_{i=1}^{n}\left( f(x_{i})-f(x_{i-1}) \right) \cr
+& = \frac{b-a}{n}\left( f(b)-f(a) \right)
+\end{align*}
+
+Now, the RHS$ \to 0 $ as $ n \to \infty $ and so
+given $ \epsilon>0 $ we can find $ n $ with 
+\[
+\frac{b-a}{n} \left( f(b)-f(a) \right) < \epsilon
+\]
+and so we have $ \dis $ with $S_{\dis}-s_{\dis}<\epsilon$.
+Thus $ f $ is Riemann integrable by Riemann's condition.
+\end{proof}
+\end{proposition}
+
+\begin{theorem}
+If $ f\colon [a,b] \mapsto \R $ is continuous, then $ f $
+is Riemann integrable.
+\end{theorem}
+
+Note that $ f $ is bounded on a closed interval.
+
+\begin{proof}
+We will use theorem \ref{uniformctsthm}, which states
+that if $ f $ is continuous on $ [a,b] $, $ f $ 
+is uniformly continuous on $ [a,b] $.
+Therefore, given $ \eta>0 $ we can find $ \delta>0 $ such that for all $ 
+x,y \in [a,b] $:
+\[ \abs{x-y}< \delta \Rightarrow \abs{f(x)-f(y)}<\eta \]
+
+Take $ n $ such that $\frac{b-a}{n}< \delta$
+and consider the dissection
+
+\begin{align*}
+\dis & =  \left[a,a+ \frac{(b-a)}{n}, a + 2 \frac{(b-a)}{n},
+\ldots, b\right] \\
+& = [x_{0},x_{1},\ldots,x_{n}].
+\end{align*}
+
+Now if $ x,y\in [x_{i-1},x_{i}] $ then $ \abs{x-y}< \delta $ and 
+so $\abs{f(x)-f(y)}< \eta$.  Therefore
+
+\[
+\sup_{x \in [x_{i-1},x_{i}]}\{f(x)\} - \inf_{x \in 
+[x_{i-1},x_{i}]}\{f(x)\} \leq \eta.
+\]
+
+We see that
+\[ S_{\dis}-s_{\dis} \leq \sum_{i-1}^{n}(x_{i}-x_{i-1})\cdot\eta = 
+(b-a)\eta \]
+
+Now assume $ \epsilon>0 $ given. Take $ \eta $ such that
+$(b-a)\eta < \epsilon$.
+As above, we can find $ \dis $ with
+$S_{\dis}-s_{\dis} \leq (b-a)\eta < \epsilon$,
+so that $ f $ is Riemann integrable by Riemann's condition.
+\end{proof}
+
+\section{Closure Properties}
+
+\begin{notation}
+Define
+$M(f;c,d) \equiv \sup_{x \in [c,d]}\{f(x)\}$ and
+$m(f;c,d) \equiv \inf_{x \in [c,d]}\{f(x)\}$.
+\end{notation}
+
+\begin{proposition}
+If $ f,g\colon [a,b]\mapsto \R $ are Riemann integrable, so are
+\begin{enumerate}
+\item $ f+g\colon [a,b] \mapsto \R $, with
+$\int_{a}^{b}(f+g)\,\ud x= \int_{a}^{b}f \,\ud x + \int_{a}^{b}g \,\ud x$.
+
+\item $ \lambda f\colon [a,b] \mapsto \R $ ($ \lambda \in \R $) with
+$\int_{a}^{b}\lambda f \,\ud x = \lambda \int_{a}^{b}f \,\ud x$.
+\end{enumerate}
+\end{proposition}
+
+\begin{proof}[Proof of 1]
+Given $ \epsilon>0 $.
+Take a dissection $ \dis_{1} $ with
+$S_{\dis_{1}}(f) - s_{\dis_{1}}(f) < \frac{\epsilon}{2}$
+and a dissection $ \dis_{2} $ with
+$S_{\dis_{2}}(g) - s_{\dis_{2}}(g) < \frac{\epsilon}{2}$.
+Let $ \dis $ be a common refinement.
+Note that
+
+\begin{align*}
+M(f+g;c,d) & \leq M(f;c,d)+M(g;c,d) \\
+m(f+g;c,d) & \geq m(f;c,d)+m(g;c,d)
+\end{align*}
+
+Hence
+\[ s_{\dis}(f)+s_{\dis}(g) \leq s_{\dis}(f+g) \leq S_{\dis}(f+g) \leq 
+S_{\dis}(f)+S_{\dis}(g) \]
+and so $S_{\dis}(f+g) - s_{\dis}(f+g) < \epsilon$.  Thus $f+g$ is
+Riemann integrable (by Riemann's condition).
+Further, given $ \epsilon>0 $ we have a dissection $ \dis $ with
+\begin{align*}
+S_{\dis}(f)-s_{\dis}(f) & <  \frac{\epsilon}{2} \\
+S_{\dis}(g)-s_{\dis}(g) & <  \frac{\epsilon}{2}.
+\end{align*}
+
+Then
+\begin{align*}
+s_{\dis}(f)+s_{\dis}(g) & \leq s_{\dis}(f+g) \\
+& \leq \int_{a}^{b}(f+g)\,\ud x \\
+& \leq S_{\dis}(f+g) \\
+& \leq S_{\dis}(f) + S_{\dis}(g)
+\end{align*}
+and so
+\begin{align*}
+\left( \int_{a}^{b}f \,\ud x - \frac{\epsilon}{2} \right) + 
+\left( \int_{a}^{b}g\,\ud x-\frac{\epsilon}{2} \right) & < 
+\int_{a}^{b}(f+g)\,\ud x \\
+& < \left( \int_{a}^{b}f \,\ud x + \frac{\epsilon}{2} \right) 
+ + \left( \int_{a}^{b}g\,\ud x+\frac{\epsilon}{2} \right)
+\end{align*}
+Since $ \epsilon>0 $ arbitrarily small, we have:
+\[ \int_{a}^{b}(f+g)\,\ud x = \int_{a}^{b}f\,\ud x + \int_{a}^{b}g\,\ud x \]
+\end{proof}
+
+Proof of 2 is left as an exercise.
+
+\begin{proposition}
+  Suppose $ f,g\colon [a,b]\mapsto \R $ are bounded and Riemann
+  integrable. Then $ \abs{f}$, $ f^{2} $ and $ fg $ are all Riemann
+  integrable.
+\end{proposition}
+
+\begin{proof}
+Note that
+
+\[
+M(\abs{f};c,d)-m(\abs{f};c,d) \leq M(f;c,d)-m(f;c,d),
+\]
+and so, given $ \epsilon>0 $, we can find a dissection $ \dis $ 
+with $S_{\dis}(f)-s_{\dis}(f) < \epsilon$
+and then
+\[
+S_{\dis}(\abs{f})-s_{\dis}(\abs{f}) \leq S_{\dis}(f)-s_{\dis}(f)< 
+\epsilon.
+\]
+
+Therefore $ \abs{f} $ is Riemann-integrable.
+
+As for $f^2$, note that
+
+\begin{multline*}
+M(f^{2};c,d)-m(f^{2};c,d) \cr
+= \left[ M(\abs{f};c,d) + m(\abs{f};c,d) \right] \times
+\left[ M(\abs{f};c,d)-m(\abs{f};c,d) \right] \\
+\leq 2K \left( M(\abs{f};c,d) - m(\abs{f};c,d) \right)
+\end{multline*}
+where $ K $ is some bound for $ \abs{f} $.
+
+Given $ \epsilon>0 $, take a dissection $ \dis $ with
+$S_{\dis}(\abs{f}) - s_{\dis}(\abs{f}) < \frac{\epsilon}{2K}$.
+Then
+\[ S_{\dis}(f^{2})-s_{\dis}(f^{2}) \leq 2K(S_{\dis}(\abs{f}) - 
+s_{\dis}(\abs{f})) < \epsilon. \]
+
+Therefore $ f^{2} $ is Riemann-integrable.
+
+The integrability of $fg$ follows at once, since
+\[ fg = \frac{1}{2} \left( (f+g)^{2}-f^{2}-g^{2} \right). \]
+\end{proof}
+
+\section*{Estimates on Integrals}
+\begin{enumerate}
+\item
+Suppose $ F\colon [a,b] \mapsto \R $ is Riemann-integrable, $ a<b $.
+If we take $\dis = [a,b]$
+then we see that
+\[
+(b-a)m(f;a,b) \leq \int_{a}^{b}f(x)\,\ud x \leq (b-a)M(f;a,b).
+\]
+
+It follows that if $ \abs{f} \leq K $ then
+\[
+\abs{ \int_{a}^{b}f(x)\,\ud x} \leq K \abs{b-a}.
+\]
+
+This is true even if $a \ge b$.
+
+\item
+Suppose $ f\colon [a,b] \mapsto \R $ is Riemann-integrable, $ a<b $.
+Then $S_{\dis}\abs{f} \geq S_{\dis}(f)$
+and so
+\[ \int_{a}^{b}\abs{f} \geq \int_{a}^{b}f \,\ud x. \]
+
+Also $S_{\dis}\abs{f} \geq S_{\dis}(-f)$.
+and so
+\[ \int_{a}^{b}\abs{f} \geq -\int_{a}^{b}f \,\ud x \]
+
+Thus\footnote{
+For general $ a,b $;
+\[ \abs{\int_{a}^{b}f \,\ud x} \leq \abs{\int_{a}^{b}\abs{f}\,\ud x} \]}
+
+\[ \abs{\int_{a}^{b}f \,\ud x } \leq \int_{a}^{b}\abs{f} \,\ud x. \]
+\end{enumerate}
+
+
+\section{The Fundamental Theorem of Calculus}
+
+If $ f\colon [a,b] \mapsto \R $ is Riemann-integrable, then for any 
+$ [c,d] \subseteq [a,b] $, $ f $ is Riemann integrable on $ [c,d] 
+$.\footnote{%
+For if $ \dis $ is a dissection of $ [a,b] $ such that
+$S_{\dis}(f)-s_{\dis}(f) < \epsilon$
+then $ \dis $ restricts to $ \dis' $, a dissection of $ [c,d] $ 
+with $S_{\dis'}(f)-s_{\dis'}(f) < \epsilon$.}
+Hence for $ c \in [a,b] $ we can define a function
+\[ F(x) = \int_{c}^{x}f(t)\,\ud t \]
+on $ [a,b] $.
+
+\begin{observation}
+\[ F(x) = \int_{c}^{x}f(t)\,\ud t \]
+is continuous on $ [a,b] $ if $f$ is bounded.
+\end{observation}
+
+\begin{proof}
+Note that 
+\[
+\abs{ F(x+h)-F(x)} = \int_{x}^{x+h}f(t)\,\ud t \leq \abs{h}K
+\]
+where $ K $ is an upper bound for $ \abs{f} $.
+Now $\abs{h}K \to 0$ as $ h \to 0 $, so $ F $ is continuous.
+\end{proof}
+
+\begin{theorem}[The Fundamental Theorem of Calculus]
+Suppose $ f\colon [a,b] \mapsto \R $ is Riemann integrable.
+Take $ c,d \in [a,b] $ and define
+
+\[ F(x)= \int_{c}^{x}f(t)\,\ud t. \]
+
+If $ f $ is continuous at $ d $, then $ F $ is differentiable at $ d
+$ with $ F'(d)=f(d) $.\footnote{ In the case $ d $ is $ a $ or $ b $
+  ($ a<b $), we have right and left derivatives. We ignore these cases
+  (result just as easy) and concentrate on $ d \in (a,b) $.}
+\end{theorem}
+
+\begin{proof}
+Suppose $ \epsilon>0 $ is given.
+By the continuity of $ f $ at $ d $ we can take $ \delta>0 $ such that
+$(d-\delta, d+\delta) \subset (a,b)$
+and
+\[ \abs{k}< \delta \Rightarrow \abs{f(k+d)-f(d)} < \epsilon. \]
+
+If $ 0 < \abs{h} < \delta $ then
+\begin{align*}
+\abs{ \frac{F(d+h)-F(d)}{h} - f(d)} & = \abs{ \frac{1}{h} 
+\int_{d}^{d+h}\left( f(t)-f(d) \right)\,\ud t } \\
+& \leq \frac{1}{\abs{h}} \epsilon \abs{h} \\
+& < 2 \epsilon.
+\end{align*}
+\end{proof}
+
+\begin{corollary}[Integration is anti-differentiation]
+
+If $ f=g' $ is continuous on $ [a,b] $ then
+\[ \int_{a}^{b}f(t)\,\ud t = g(b)-g(a). \]
+\end{corollary}
+
+\begin{proof}
+Set  $F(x) = \int_{a}^{x}f(t)\, \ud t$.
+Then 
+\[
+\diff{}{x} \left( F(x)-g(x) \right) = F'(x)-g'(x)=f(x)-f(x)=0
+\]
+and so $ F(x)-g(x)=k $ is constant.  Therefore
+\[
+\int_{a}^{b}f(t)\,\ud t = F(b)-F(a) = g(b)-g(a).
+\]
+\end{proof}
+
+\begin{corollary}[Integration by parts]
+Suppose $ f,g $ are differentiable on $ (a,b) $ and $ f',g' $ continuous 
+on $ [a,b] $.
+Then
+\[
+\int_{a}^{b}f(t)g'(t)\,\ud t = \left[ f(t)g(t) \right]^{b}_{a} - 
+\int_{a}^{b}f'(t)g(t)\,\ud t.
+\]
+\end{corollary}
+
+\begin{proof}
+Note that
+\[ \diff{}{x} \left( f(x)g(x) \right) = f(x)g'(x)+f'(x)g(x), \]
+and so
+\begin{align*}
+\left[ f(t)g(t) \right]^{b}_{a} & = f(b)g(b)-f(a)g(a) \\
+& = \int_{a}^{b}(fg)'(t)\,\ud t \\
+& = \int_{a}^{b}f'(t)g(t)\,\ud t + \int_{a}^{b}f(t)g'(t)\,\ud t.
+\end{align*}
+\end{proof}
+
+
+\begin{corollary}[Integration by Substitution]
+Take $ g\colon [a,b] \mapsto [c,d] $ with $ g' $ is continuous in $ 
+[a,b] $ and $ f\colon [c,d] \mapsto \R $ continuous.
+Then
+\[
+\int_{g(a)}^{g(b)}f(t)\, \ud t = \int_{a}^{b}f(g(s))g'(s)\,\ud s.
+\]
+\end{corollary}
+
+\begin{proof}
+Set $F(x)=\int_{c}^{x}f(t)\,\ud t$. Now
+
+\begin{align*}
+\int_{g(a)}^{g(b)}f(t)\,\ud t & = F(g(b))-F(g(a)) \\
+& = \int_{a}^{b}(F \circ g)'(s)\,\ud s \\
+& = \int_{a}^{b}F'(g(s))g'(s)\,\ud s \quad \text{by Chain Rule} \\
+& = \int_{a}^{b}f(g(s))g'(s)\,\ud s.
+\end{align*}
+\end{proof}
+
+\section{Differentiating Through the Integral}
+Suppose $ g\colon \R \times [a,b] \mapsto \R $ is continuous. Then we 
+can define
+\[
+G(x)=\int_{a}^{b}g(x,t)\,\ud t.
+\]
+
+\begin{proposition}
+$ G $ is continuous as a function of $ x $.
+\end{proposition}
+
+\begin{proof}
+Fix $ x \in \R $ and suppose $ \epsilon>0  $ is given.
+Now $ g $ is continuous and so is uniformly continuous on the closed 
+bounded set $E = [x-1,x+1] \times [a,b]$.
+Hence we can take $\delta \in (0,1)$ such that for $ u,v \in E $,
+\[
+\norm{u-v}<\delta \Rightarrow \abs{g(u_x,u_t)-g(v_x,v_t)} < \epsilon.
+\]
+So if $ \abs{h} < \delta $ then $\norm{(x+h,t)-(x,t)} = \abs{h} < \delta$
+and so
+\[
+\abs{g(x+h,t)-g(x,t)}< \epsilon.
+\]
+
+Therefore $\abs{G(x+h)-G(x)} \leq \abs{b-a}\epsilon < 2 \abs{b-a} \epsilon$,
+and as $ 2\abs{b-a}\epsilon $ can be made arbitrarily small
+$G(x+h)\to G(x)$ as $ h \to 0 $.
+\end{proof}
+
+Now suppose also that
+$D_{1}g(x,t) = \pd{g}{x}$
+exists and is continuous throughout $ \R \times [a,b] $.
+
+\begin{theorem}
+Then $ G $ is differentiable with
+\[ G'(x) = \int_{a}^{b}D_{1}g(x,t)\,\ud t \]
+\end{theorem}
+
+\begin{proof}
+Fix $ x \in \R $ and suppose $ \epsilon>0 $ is given.
+
+Now $ D_{1}g $ is continuous and so uniformly continuous on the 
+closed and bounded set $E=[x-1,x+1] \times [a,b]$.
+We can therefore take $ \delta> \in (0,1)$ such that for $ u,v \in E $,
+\[ \norm{u-v}< \delta \Rightarrow \abs{D_{1}g(a)-D_{1}g(x,t)} < 
+\epsilon. \]
+
+Now 
+\begin{multline*}
+\abs{\frac{G(x+h)-G(x)}{h} - \int_{a}^{b}D_{1}g(x,t)\,\ud t } \\
+= \frac{1}{\abs{h}} \abs
+{ \int_{a}^{b}g(x+h,t)-g(x,t)-hD_{1}g(x,t)\,\ud t}.
+\end{multline*}
+
+But
+\[ g(x+h,t)-g(x,t)-hD_{1}g(x,t) = h(D_{1}g(\xi,t)-D_{1}g(x,t)) \]
+for some $ \xi \in (x, x+h) $ by the MVT.
+
+Now if $ 0< \abs{h} < \delta $ we have $\norm{(\xi,t)-(x,t)} < \delta$
+and so
+\[
+\abs{g(x+h,t)-g(x,t)-hD_{1}g(x,t)} < \abs{h} \epsilon.
+\]
+
+Hence
+
+\begin{align*}
+\abs{\frac{G(x+h)-G(x)}{h}-\int_{a}^{b}D_{1}g(x,t)\,\ud t} &
+\leq \frac{1}{\abs{h}} \abs{b-a} \, \abs{h} \epsilon \\
+& < 2 \abs{b-a} \epsilon.
+\end{align*}
+
+But $ 2 \abs{b-a}\epsilon $ can be made arbitrarily small, so that
+\[
+G'(x) = \int_{a}^{b}D_{1}g(x,t)\,\ud t.
+\]
+\end{proof}
+
+\section{Miscellaneous Topics}
+
+\subsubsection{Improper Integrals}
+\begin{enumerate}
+\item
+Case $ f\colon [a,b] \mapsto \R $ but is unbounded (and possibly 
+undefined at a finite number of places). Set
+\[ f_{N,M}(x) =
+\begin{cases}
+N& f(x)>N \\
+f(x)& -M\leq f(x) \leq N \\
+-M& f(x) < -M.
+\end{cases} \]
+
+If
+\[
+\int_{a}^{b}f_{N,M}(x)\,\ud x \to \text{limit}
+\]
+as $ N,M \to \infty $ (separately), then the limit is the 
+improper integral
+\[
+\int_{a}^{b}f(x)\,\ud x.
+\]
+
+\item  Case $ f\colon (-\infty, \infty) \mapsto \R $ say.
+
+Then if
+\[
+\int_{-x}^{+y}f(t)\,\ud t \to \text{limit}
+\]
+as $ x,y \to \infty $ then the limit is the improper integral
+\[ \int_{-\infty}^{\infty}f(t)\,\ud t.
+\]
+\end{enumerate}
+
+\subsubsection{Integration of Functions $f\colon [a,b]\mapsto \R^{n}$}
+
+It is enough to integrate the coordinate functions separately so that
+\[
+\int_{a}^{b}f(t)\,\ud t = \left( \int_{a_{1}}^{b_{1}}f_{1}(t)\,\ud t, \ldots,
+\int_{a_{n}}^{b_{n}}f_{n}(t)\,\ud t \right),
+\]
+
+but there is a more intrinsic way of defining this.
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%                                                               %
+%       Section 5: Metric Spaces.       %
+%                                                               %
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\chapter{Metric Spaces}
+
+\section{Definition and Examples}
+
+\begin{definition}
+A \emph{metric space} $ (X,d) $ consists of a set $ X $ (the set 
+of \emph{points} of the space) and a function $ d\colon X \times X 
+\mapsto \R $ (the \emph{metric} or \emph{distance}) such that
+\begin{itemize}
+\item $d(a,b) \geq 0$ and $d(a,b)=0$ iff $a = b$,
+\item $d(a,b)=d(b,a)$,
+\item $d(a,c) \leq d(a,b)+d(b,c)\ \forall a,b,c \in X$.
+\end{itemize}
+\end{definition}
+
+\subsubsection{Examples}
+\begin{enumerate}
+\item
+$ \R^{n} $ with the Euclidean metric
+\[ d(x,y) = + \sqrt{ \sum_{i=1}^{n}(x_{i}-y_{i})^{2}} \]
+
+\item
+$ \R^{n} $ with the $ \sup $ metric
+\[ d(x,y) = \sup_{1 \leq i \leq n}\{ \abs{x_{i}-y_{i}} \} \]
+
+\item
+$ \R^{n} $ with the ``grid'' metric
+\[ d(x,y) = \sum_{i=1}^{n}\abs{x_{i}-y_{i}} \]
+
+\item
+$ C[a,b] $ with the $ \sup $ metric%
+\footnote{%
+Define
+\[ C[a,b] = \{ f\colon [a,b] \mapsto \R: f \text{ is continuous} \}
+\]}%
+\footnote{This is the standard metric on $ C[a,b] 
+$.  It's the one meant unless we say otherwise.}
+
+\[ d(f,g)=\sup_{t \in [a,b]}\{ \abs{f(t)-g(t)}\} \]
+
+\item $ C[a,b] $ with the $ L^{1} $-metric
+\[ d(f,g)= \int_{a}^{b}\abs{f(t)-g(t)}\,\ud t \]
+
+\item
+$ C[a,b] $ with the $ L^{2} $-metric
+\[ d(f,g) = \left( \int_{a}^{b}\abs{f(t)-g(t)}^{2}\,\ud t 
+\right)^{\frac{1}{2}} \]
+analogous to the Euclidean metric.
+
+\item
+Spherical Geometry: Consider $S^{2} = \{ x \in \R^{3}: \norm{x}=1 \}$.
+We can consider continuously differentiable paths $ \gamma\colon [0,1] 
+\mapsto S^{2} $ and define the length of such a path as
+\[ L(\gamma) = \int_{0}^{1}\norm{ \gamma'(t) }\, \ud t. \]
+
+The spherical distance is
+\[ S(x,y) = \inf_{\text{$ \gamma $ a path from $ x $ to $ y $ 
+in $ S^{2} $ }}\{L(\gamma)\}. \]
+
+This distance is realized along great circles.
+
+\item Hyperbolic geometry: Similarly for $ \mathcal{D} $: the unit
+  disc in $ \C $.  Take $ \gamma\colon [0,1] \mapsto \mathcal{D} $ and
+\[
+L(\gamma) = \int_{0}^{1}\frac{2
+  \abs{\gamma'(t)}}{1+\abs{\gamma(t)}^{2}}\,\ud t.
+\]
+Then
+\[ h(z,w) = \inf_{\text{$ \gamma $ a path from $ z $ to $ w $ 
+in $ S^{2} $ }}\{L(\gamma)\} \]
+is realized on circles through $ z,w $ meeting $ \partial 
+\mathcal{D} = S' $ (boundary of $ \mathcal{D} $) at right angles.
+
+\item
+The discrete metric: Take any set $ X $ and define
+\[ d(x,y) = 
+\begin{cases}
+1& x \neq y \\
+0& x=y
+\end{cases} \]
+
+\item The ``British Rail Metric'':
+On $ \R^{2} $ set
+\[ d(x,y) = \begin{cases}
+\abs{x}+\abs{y}& x \neq y \\
+0& x=y
+\end{cases} \]
+
+\end{enumerate}
+
+
+\begin{definition}
+Suppose $ (X,d) $ is a metric space and $ Y \subseteq X $. Then $ 
+d $ restricts to a map $ d|_{Y\times Y}\mapsto \R $ which is a 
+metric in $ Y $. $ (Y,d) $ is a \emph{(metric) subspace} of $ 
+(X,d) $, $ d $ on $ Y $ is the \emph{induced metric}.
+\end{definition}
+
+\begin{example}
+Any $ E \subseteq \R^{n} $ is a metric subspace of $\R^n$ with the metric 
+induced from the Euclidean metric.%
+\footnote{For instance, the Euclidean metric on $ S^{2} $ is
+\[ (x,y) \mapsto 2 \sin\left( \frac{1}{2}S(x,y) \right). \]}
+\end{example}
+
+\section{Continuity and Uniform Continuity}
+
+
+\begin{definition}
+Let $ (X,d) $ and $ (Y,c) $ be metric spaces.
+A map $ f\colon X \mapsto Y $ is continuous at $x \in X$ if and only if
+\[
+\Forall{\epsilon>0} \Exists{\delta>0} \Forall{x' \in X} d(x,x')< 
+\delta \Rightarrow c(f(x),f(x'))< \epsilon.
+\]
+
+Then $ f\colon (X,d)\mapsto (Y,c) $ is continuous iff $ f $ is 
+continuous at all $ x \in X $.
+
+Finally $ f\colon (X,d) \mapsto (Y,c) $ is uniformly continuous iff
+\[ \Forall{\epsilon>0} \Exists{\delta>0} \Forall{x,x' \in X} 
+d(x,x')<\delta \Rightarrow c(f(x),f(x'))<\epsilon. \]
+\end{definition}
+
+A bijective continuous map $ f\colon (X,d) \mapsto (Y,c) $ with 
+continuous inverse is a \emph{homeomorphism}.
+
+A bijective uniformly continuous map $ f\colon (X,d) \mapsto (Y,c) $ 
+with uniformly continuous inverse is a \emph{uniform homeomorphism}.
+
+\begin{enumerate}
+\item There are continuous bijections whose inverse is not continuous.
+For instance
+\begin{enumerate}
+
+\item Let $ d_{1} $ be the discrete metric on $ \R $ and $ d_{2}  $ 
+the Euclidean metric. Then the identity map
+$id\colon (\R,d_{1}) \mapsto (\R,d_{2})$
+is a continuous bijection; its inverse is not.
+
+\item (Geometric Example)
+Consider the map 
+
+\begin{align*}
+[0,1) &\mapsto S^{1}= \{ z \in \C : \abs{z}=1 \},\\
+\theta & \mapsto e^{2\pi i \theta}
+\end{align*}
+
+with the usual metrics.
+This map is continuous and bijective but its inverse is not continuous at 
+$ z=1 $.
+\end{enumerate}
+
+\item Recall that a continuous map $ f\colon E \mapsto \R^{m} $ where $ 
+E $ is closed and bounded in $ \R^{n}  $ is uniformly continuous. 
+Usually there are lots of continuous not uniformly  continuous 
+maps: For example
+\[ \tan\colon \left( - \frac{\pi}{2}, \frac{\pi}{2} \right) \mapsto \R \]
+is continuous but not uniformly continuous, essentially because
+\[
+\tan'(x) \to \infty \quad \text{as} \quad x \to \frac{\pi}{2}.
+\]
+\end{enumerate}
+
+\begin{definition}
+  Let $ d_{1}, d_{2} $ be two metrics on $ X $.  $ d_{1} $ and $ d_{2}
+  $ are \emph{equivalent} if and only if $id\colon (X,d_{1}) \mapsto
+  (X,d_{2})$ is a homeomorphism.  In symbols, this becomes
+
+\begin{align*}
+&\Forall{x \in X} \Forall{\epsilon>0} \Exists{\delta>0} \Forall{y 
+\in X} d_{1}(y,x)< \delta \Rightarrow d_{2}(y,x)<\epsilon & \text{and}\\
+&\Forall{x \in X} \Forall{\epsilon>0} \Exists{\delta>0} \Forall{y 
+\in X} d_{2}(y,x)< \delta \Rightarrow d_{1}(y,x)<\epsilon.
+\end{align*}
+\end{definition}
+
+\begin{notation}
+Define $O(x,r) \equiv N(x,r) \equiv N_r(x) \equiv \{y\colon d(x,y)<r\}$.
+\end{notation}
+
+Then $ d_{1} $ and $ d_{2} $ are equivalent if and only if
+\begin{enumerate}
+\item $ \Forall{x} \Forall{\epsilon>0} \Exists{\delta>0} 
+N^{1}_{\delta}(x) \subseteq N_{\epsilon}^{2}(x) $.
+\item $ \Forall{x} \Forall{\epsilon>0} \Exists{\delta>0} 
+N^{2}_{\delta}(x) \subseteq N_{\epsilon}^{1}(x) $.
+\end{enumerate}
+
+\begin{definition}
+$ d_{1} $ and $ d_{2} $ are \emph{uniformly equivalent} if and only if
+\[
+id\colon (X,d_{1}) \mapsto (X,d_{2})
+\] is a uniform homeomorphism.
+In symbols this is
+
+\begin{align*}
+&\Forall{\epsilon>0} \Exists{\delta>0} \Forall{x \in X} 
+N^{1}_{\delta}(x) \subseteq N_{\epsilon}^{2}(x) & \text{and} \\
+&\Forall{\epsilon>0} \Exists{\delta>0} \Forall{x \in X} 
+N^{2}_{\delta}(x) \subseteq N_{\epsilon}^{1}(x)
+\end{align*}
+\end{definition}
+
+The point of the definitions emerges from the following observation.
+
+\begin{observation}
+\
+
+\begin{enumerate}
+\item $ id\colon (X,d) \mapsto (X,d) $ is (uniformly) continuous.
+\item If $ f\colon (X,d) \mapsto (Y,c) $ and $ g\colon (Y,c) \mapsto 
+(Z,e) $ are (uniformly) continuous then so is their composite.
+
+Hence
+\begin{enumerate}
+\item for topological considerations an equivalent metric works just 
+as well;
+\item for uniform considerations a uniformly equivalent metric works 
+as well.
+\end{enumerate}
+\end{enumerate}
+\end{observation}
+
+\begin{example}
+On $ \R^{n} $, the Euclidean, $ \sup $, and grid metrics are 
+uniformly equivalent.
+\end{example}
+\begin{proof}
+\begin{description}
+\item[Euclidean and $ \sup $]
+\[
+N_{\epsilon}^{\text{Euc}}(x) \subseteq N_{\epsilon}^{\sup}(x)
+\quad \text{and} \quad
+N_{\frac{\epsilon}{\sqrt{n}}}^{\sup} \subseteq N_{\epsilon}^{\text{Euc}}(x)
+\]
+
+(A circle contained in a square; and a square contained in a circle).
+
+\item[Euclidean and Grid]
+\[
+N_{\epsilon}^{\text{grid}}(x) \subseteq 
+N_{\epsilon}^{\text{Euc}}(x) \quad \text{and} \quad
+N_{\frac{\epsilon}{\sqrt{n}}}^{\text{Euc}} \subseteq  
+N_{\epsilon}^{\text{grid}}(x).
+\]
+\end{description}
+\end{proof}
+
+Compare this with work in chapters 2 and 3.
+
+\section{Limits of sequences}
+\begin{definition}
+Let $ x_{n} $ be a sequence in a metric space $ (X,d) $. Then $ 
+x_{n} $ converges to $ x $ as $ n \to \infty $ if and 
+only if $\forall\epsilon>0\ \exists N\ \forall n \geq N d(x_{n},x)< 
+\epsilon$.
+Clearly $ x_{n} \to x $ iff $ d(x_{n},x) \to 0 $ as $ n 
+\to \infty $.
+\end{definition}
+
+Note that the limit of a sequence is unique.  Proof is as in lemma
+\ref{lem:uniq-lim}.
+
+\begin{theorem}
+Suppose $ (X,d_{X}) $ and $ (Y,d_{Y}) $ are metric spaces.
+A map
+\[
+f\colon (X,d_{X}) \mapsto (Y,d_{Y})
+\]
+is continuous if and only if whenever $ x_{n} \to x $ in $ X $ then $ 
+f(x_{n}) \to f(x) $ in $ Y $.
+\end{theorem}
+\begin{proof}
+\
+
+\begin{description}
+
+\item[$\Rightarrow$] Assume $ f $ continuous and take $ x_{n} \to x $ in $ X $.
+Suppose $ \epsilon > 0 $ given. By the continuity of $ f $, we 
+can take $ \delta>0 $ such that
+\[ d(x,x') < \delta \Rightarrow d(f(x),f(x'))< \epsilon \]
+
+As $ x_{n} \to x $ we can take $ N $ such that, for all
+$ n\geq N $, $ d(x_{n},x)<\delta $.
+Now if $ n \geq N $, $ d(f(x_{n}),f(x))<\epsilon $.
+But since $ \epsilon>0 $ was arbitrary $ f(x_{n}) \to 
+f(x) $.
+
+\item[$\Leftarrow $] Suppose $ f $ is not continuous at $ x \in X $. Then 
+there exists $ \epsilon>0 $ such that for any $ \delta>0 $ there 
+is $ x\in N_{\delta}(x') $ with $d(f(x),f(x')) \geq \epsilon$.
+
+Fix such an $ \epsilon>0 $.  For each $ n \geq 1 $ pick $ x_{n} $ with
+$d(x_{n},x) < n^{-1}$ and 
+$d(f(x_{n}),f(x)) \geq \epsilon$.
+Then $ x_{n}\to x $ but $ f(x_{n}) \not \to f(x) $.
+\end{description}
+\end{proof}
+
+
+\begin{definition}
+A sequence $ x_{n} $ in a metric space $ (X,d) $
+is \emph{Cauchy} if and only if
+\[
+\Forall{\epsilon>0} \Exists{N} \Forall{n,m \geq N} 
+d(x_{n},x_{m})<\epsilon.
+\]
+\end{definition}
+
+\begin{observation}
+If $ f\colon (X,d_{X}) \mapsto (Y,d_{Y}) $ is uniformly continuous, 
+then $ x_{n} $ Cauchy in $ X \Rightarrow f(x_{n}) $ Cauchy in $ Y $.
+\end{observation}
+
+\begin{proof}
+Take $ x_{n}  $ Cauchy in $ X $ and suppose $ \epsilon>0 $ is given.
+By uniform continuity we can pick $ \delta>0 $ such that
+\[
+\Forall{x,x'\in X} d_{X}(x,x')<\delta \Rightarrow
+d_{Y}(f(x),f(x'))<\epsilon.
+\]
+
+Now pick $ N $ such that
+$\forall n,m \geq N d_{X}(x_{n},x_{m})<\epsilon$.
+Then $d_{Y}(f(x_{n}),f(x_{m}))< \delta$
+for all $ m,n \geq N $.
+Since $ \epsilon>0 $ arbitrary, $ f(x_{n}) $ is Cauchy 
+in $ Y $.
+\end{proof}
+
+\begin{definition}
+A metric space $ (X,d) $ is \emph{complete} if and only if every 
+Cauchy sequence in $ X $ converges in $ X $.
+
+A metric space $ (X,d) $ is \emph{compact} if and only if every 
+sequence in $ X $ has a convergent subsequence.
+\end{definition}
+
+\begin{remarks}
+\
+
+\begin{enumerate}
+\item
+$ [0,1] $ or any closed bounded set $ E \subseteq \R^{n} $ is both 
+complete and compact.
+
+$ (0,1] $ is neither complete nor compact.
+
+Indeed if $ E \subseteq \R^{n} $ is compact it must be closed and 
+bounded and if $ E $ is complete and bounded, it is compact.
+
+\item
+Compactness $ \Rightarrow $ completeness:
+\begin{proof}
+Take a Cauchy sequence $ x_{n} $ in a compact metric space.
+Then there is a convergent subsequence $ x_{n(k)} \to x $ 
+as $ k \to \infty $. Therefore $ x_{n} \to x $ as $ n \to \infty $.
+\end{proof}
+
+However $ C[a,b] $ with the $ \sup $ metric is complete but not 
+compact.
+
+What is more, given $ f\in C[a,b] $ and $r > 0$, the set
+$\{ g: d(g,f) \leq r \}$
+is closed and bounded --- but not compact.
+
+\item
+Compactness is a ``topological property''. If $ (X,d_{X}) $ and $ 
+(Y,d_{Y}) $ are homeomorphic, then $ X $ compact implies $ Y  $ 
+compact.
+
+However, this isn't true for completeness:
+$ (0,1] $ is homeomorphic to $ [1,\infty) $ via $ x \mapsto 1/x $ 
+but $ (0,1] $ is not complete while $ [1,\infty) $ is.
+
+However if $ (X,d_{Y}) $ and $ (Y,d_{Y}) $ are uniformly 
+homeomorphic, then $ X $ complete implies $ Y $ complete.
+\end{enumerate}
+\end{remarks}
+
+\section{Open and Closed Sets in Metric Spaces}
+\begin{definition}
+Let $ (X,d) $ be a metric space.
+A subset $ U\subseteq X $ is open iff whenever $ x \in U $ there 
+is $ \epsilon>0 $ with
+$d(x',x)<\epsilon \Rightarrow x' \in U$
+or\footnote{Recall that in a metric space $ (X,d) $:
+$N_{\epsilon}(x)=\{ x':d(x,x')<\epsilon \}$.}
+$N_{\epsilon} \subseteq U$.
+\end{definition}
+
+\begin{observation}
+$ N_{\epsilon}(x) $ is itself open in $ (X,d) $.
+\end{observation}
+
+\begin{proof}
+If $ x' \in N_{\epsilon}(x) $ then $d(x',x)<\epsilon$ so that
+$\delta = \epsilon - d(x,x')>0$.
+Therefore ${N_{\delta}(x') \subseteq N_{\epsilon}(x)}$.
+\end{proof}
+
+\begin{theorem}\label{thm:open-cont}
+Let $ (X,d_{X}) $ and $ (Y,d_{Y}) $ be metric spaces.
+Then \[
+f\colon (X,d_{X}) \mapsto (Y,d_{Y})
+\]
+is continuous if and only  if $ f^{-1}(V) $\footnote{Where
+$f^{-1}(V) = \{ x \in X : f(x) \in V \}$.}
+is open in $ X $ whenever $ V $ is open in $ Y $.
+\end{theorem}
+
+\begin{proof}
+\
+
+\begin{description}
+\item[$\Rightarrow$] Assume $ f $ is continuous. Take $ V $ open in
+  $Y$ and $ x \in f^{-1}(V) $.  As $ V $ is open we can take $
+  \epsilon>0 $ such that $N_{\epsilon}(f(x)) \subseteq V$.  By
+  continuity of $ f $ at $ x $ we can take $ \delta>0 $ such that
+$d(x,x')< \delta \Rightarrow d(f(x'),f(x)) < \epsilon$,
+or alternatively
+$x' \in N_{\delta}(x) \Rightarrow f(x') \in N_{\epsilon}(f(x))$
+so that $x' \in N_{\delta}(x) \Rightarrow f(x') \in V$.
+Therefore $ x' \in f^{-1}(V) $ and so
+$N_{\delta}(x) \subseteq f^{-1}(V)$
+and $ f^{-1}(V) $ is open.
+
+\item[$\Leftarrow$] Conversely, assume $ f^{-1}(V) $ is open in $ X 
+$ whenever $ V $ is open in $ Y $.
+Take $ x \in X $ and suppose $ \epsilon>0 $ is given.
+Then $ N_{\epsilon}(f(x)) $ is open in $ Y $ and so by assumption
+$f^{-1}(N_{\epsilon}(f(x)))$
+is open in $ X $. But $x \in f^{-1}(N_{\epsilon}(f(x)))$ and so we can
+take $ \delta>0 $ such that
+$N_{\delta}(x) \subseteq f^{-1}(N_{\epsilon}(f(x)))$.
+Therefore
+$d(x',x)<\delta \Rightarrow d(f(x'),f(x)) < \epsilon$
+and as $ \epsilon>0 $ is arbitrary, $ f $ is continuous at $ x $.
+As $ x $ is arbitrary, $ f $ is continuous.
+\end{description}
+\end{proof}
+
+\begin{corollary}
+Two metrics $ d_{1}, d_{2}  $ on $ X $ are equivalent if and only 
+if they induce the same notion of open set.
+This is because $ d_{1} $ and $ d_{2} $ are equivalent iff
+\begin{itemize}
+\item For all $ V $ $ d_{2} $-open, $ id^{-1}(V)=V $ is $ d_{1} 
+$-open.
+\item For all $ U $ $ d_{1} $-open, $ id^{-1}(U)=U $ is $ d_{2} 
+$-open.
+\end{itemize}
+\end{corollary}
+
+\begin{definition}
+Suppose $ (X,d) $ is a metric space and $ A \subseteq X $.  $A$ is closed 
+if and only if $ x_{n} \to x $ and $ x_{n} \in A $ for 
+all $ n $ implies $ x \in A $.
+\end{definition}
+
+\begin{proposition}
+Let $ (X,d) $ be a metric space.
+\begin{enumerate}
+\item $ U $ is open in $ X $ if and only if $ X\setminus U $ is closed
+  in $ X $.
+\item $ A $ is closed in $ X $ if and only if $ X\setminus A $ is open
+  in $ X $.
+\end{enumerate}
+\end{proposition}
+\begin{proof} We only need to show 1.
+
+\begin{description}
+\item[$\Rightarrow$] Suppose $ U $ is open in $ X $.
+Take $ x_{n}\to x $ with $ x \in U $.
+As $ U $ is open we can take $ \epsilon>0 $ with
+$N_{\epsilon}(x) \subseteq U$.
+As $ x_{n} \to x $, we can take $ N $ such that
+\[ \Forall{n \geq N} x_{n} \in N_{\epsilon}(x). \]
+
+So $ x_{n} \in X$ for all $ n \geq N $.
+Then if $ x_{n}\to x $ and $ x_{n}\in X\setminus U $ then $ x 
+\not\in U $, which is the same as $ x \in X\setminus U $.
+Therefore $ X\setminus U $ is closed.
+
+\item[$ \Leftarrow $] Suppose $ X \setminus U $ is closed in $ X $.
+Take $ x \in U $. Suppose that for no $ \epsilon>0 $ do we have
+$N_{\epsilon}(x) \subseteq U$.
+Then for $ n\geq 1 $ we can pick $x_{n} \in
+N_{\frac{1}{n}}(x)\setminus U$.
+ Then $ x_{n}\to x $ and so as $ X\setminus U $ is closed, $ x \in
+ X\setminus U $. But $ x \in U $, giving a contradiction.
+Thus the supposition is false, and there exists $ \epsilon>0 $ with
+$N_{\epsilon}(x) \subseteq U$.
+As $ x \in U $ is arbitrary, this shows $ U $ is open.
+\end{description}
+\end{proof}
+
+\begin{corollary}
+A map $ f\colon (X,d_{X}) \mapsto (Y,d_{Y}) $ is continuous iff $ 
+f^{-1}(B) $ is closed in $ X $ for all $ B $ closed in $ Y 
+$.\footnote{Because $f^{-1}(Y\setminus B) = X\setminus f^{-1}(B)$.}
+\end{corollary}
+
+\section{Compactness}
+
+If $ (X,d) $ is a metric space and $ a \in X $ is fixed then the
+function $x \mapsto d(x,a)$ is (uniformly) continuous.  This is
+because $\abs{d(x,a) -d(y,a)} \leq d(x,y)$, so that if $
+d(x,y)<\epsilon $ then $\abs{d(x,a)-d(y,a)}<\epsilon$.
+
+\begin{recall}
+A metric space $ (X,d) $ is compact if and only if every sequence in 
+$ (X,d) $ has a convergent subsequence.
+\end{recall}
+
+If $ A\subseteq X $ with $ (X,d) $ a metric space we say 
+that $ A $ is compact iff the induced subspace $ (A,d_{A}) $ is 
+compact.\footnote{ $ x_{n} \in A$ implies $ x_{n}$ has a convergent
+subsequence.}
+
+\begin{observation}
+A subset/subspace $ E \subseteq \R^{n}$ is compact if and only if it 
+is closed and bounded.
+\end{observation}
+
+\begin{proof}
+\
+
+\begin{description}
+
+\item[$\Rightarrow$] This is essentially Bolzano-Weierstrass.
+Let $ x_{n} $ be a sequence in $ E $.
+As $ E  $ is bounded, $ x_{n}  $ is bounded, so by 
+Bolzano-Weierstrass $ x_{n}  $ has a convergent subsequence.
+But as $ E $ is closed the limit of this subsequence is in $E$.
+
+\item[$ \Leftarrow $] Suppose $ E $ is compact.
+If $ E $ is not bounded then we can pick a sequence $ x_{n} \in E $ with $ 
+\norm{x_{n}}>n $ for all $ n \geq 1 $. Then $ x_{n} $ has no 
+convergent subsequence. For if $ x_{n(k)}\to x $ as $ k 
+\to \infty $, then
+\[ \norm{x_{n(k)}} \to \norm{x} \text{ as } k \to \infty,
+\]
+ but clearly
+\[
+\norm{x_{n(k)}} \to \infty \text{ as } k \to \infty.
+\]
+
+This shows that $ E  $ is bounded.
+
+If $ E $ is not closed, then there is $ x_{n} \in E $ with
+$x_{n} \to x \not\in E$.
+But any subsequence
+$x_{n(k)} \to x \not\in E$ and so 
+$x_{n(k)} \not\to y \in E$ as limits of sequences are 
+unique---a contradiction.
+
+This shows that $ E $ is closed.
+\end{description}
+\end{proof}
+
+Thus, quite generally, if $ E $ is compact in a metric space 
+$ (X,d) $, then $ E $ is closed and $ E $ is bounded in the 
+sense that there exists $ a \in E, r \in \R $ such that
+\[ E \subseteq \{x:d(x,a) < r \} \]
+This is not enough for compactness.
+For instance, take \[ l^{\infty}=\{ (x_{n}): x_{n} \text{ is a bounded 
+sequence in } \R\} \]
+with $d( (x_{n}), (y_{n}) ) = \sup_{n}\abs{x_{n}-y_{n}}$.
+Then consider the points
+\[ e^{(n)}=(0,\ldots,0, \overbrace{1}^{n^{\text{th}}\text{ position}}
+,0,\ldots), \text{ or }
+\left( e^{(n)} \right)_{r}= \delta_{nr} \]
+Then $d(e^{(n)}, e^{(m)})=1$ for all $ n \neq m $.
+So
+$E = \{ e^{(n)} \}$ is closed and bounded:
+$E \subseteq \{(x_{n}):d(x_{n},0) \leq 1 \}$
+But $ \left( e^{(n)} \right) $ has no convergent subsequence.
+
+\begin{theorem}
+Suppose $ f\colon (X,d_{X}) \mapsto (Y,d_{Y}) $ is continuous and 
+surjective.
+Then $ (X,d_{X}) $ compact implies $ (Y,d_{Y})  $ compact.
+\end{theorem}
+
+\begin{proof}
+Take $ y_{n} $ a sequence in $ Y $.
+Since $ f $ is surjective, for each $ n $ pick $ x_{n}  $ with $ 
+f(x_{n}) = y_{n} $.
+Then $ x_{n} $ is a sequence in $ X $ and so has a convergent 
+subsequence $x_{n(k)}\to x$ as $ k \to \infty $.
+As $ f $ is continuous,
+$f(x_{n(k)}) \to f(x)$ as $ k \to \infty $, or
+$y_{n(k)} \to y = f(x)$ as $ k \to \infty $.
+
+Therefore $ y_{n} $ has a convergent subsequence and so $ Y $ is compact.
+\end{proof}
+
+\begin{application}
+Suppose $ f\colon E \mapsto \R^{n}, E \subseteq \R^{n} $ closed and 
+bounded. Then the image $ f(E)\in \R^{n} $ is closed and bounded.
+In particular when $ f\colon E \mapsto \R $ we have $ f(E) 
+\subseteq \R $ closed and bounded.
+But if $ F \subseteq \R $ is closed and bounded then $ \inf F, 
+\sup F \subseteq F $.
+Therefore $ f $ is bounded and attains its bounds.
+\end{application}
+
+\begin{theorem}
+If $ f\colon (X, d_{X}) \mapsto (Y,d_{Y}) $ is continuous with $ 
+(X,d_{X}) $ compact then $ f $ is uniformly continuous.
+\end{theorem}
+\begin{proof}
+As in theorem \ref{uniformctsthm}.
+\end{proof}
+
+\begin{lemma}
+\label{homeomorphismlemma}
+Let $ (X,d) $ be a compact metric space.  If $ A \subseteq X $ is
+closed then $A$ is compact.
+\end{lemma}
+
+\begin{proof}
+Take a sequence $ x_{n} $ in $ A $. As $ (X,d) $ is compact, $ 
+x_{n}  $ has a convergent subsequence
+$x_{n(k)}\to x$ as $ k \to \infty $.
+As $ A $ is closed, $ x \in A $ and so $ x_{n(k)}\to x \in A $.
+This shows $ A $ is compact.
+\end{proof}
+
+Note that if $ A \subseteq X $ is a compact subspace of a metric space
+$ (X,d) $ then $ A $ is closed.
+
+\begin{theorem}
+Suppose $ f\colon (X,d_{X}) \mapsto (Y,d_{Y}) $ is a continuous 
+bijection. Then if $ (X,d_{X}) $ is compact, then (so is $ 
+(Y,d_{Y}) $ and) $ f $ is a homeomorphism.
+\end{theorem}
+
+\begin{proof}
+  Write $ g\colon (Y,d_{Y}) \mapsto (X,d_{X}) $ for the inverse of $ f
+  $.  We want this to be continuous.  Take $ A $ closed in $ X $.  By
+  lemma \ref{homeomorphismlemma}, $ A $ is compact, and so as $ f $ is
+  continuous, $ f(A) $ is compact in $ Y $.  Therefore $ f(A) $ is
+  closed in $ Y $.
+  
+  But as $ f $ is a bijection, $f(A) = g^{-1}(A)$.  Thus $ A $ closed
+  in $ X$ implies $g^{-1}(A) $ closed in $ Y $ and so $ g $ is
+  continuous.
+\end{proof}
+
+\section{Completeness}
+
+Recall that a metric space $ (X,d) $ is complete if and only if every
+Cauchy sequence in $ X $ converges.  If $ A \subseteq X $ then $ A $
+is complete if and only if the induced metric space $ (A,d_{A}) $ is
+complete.  That is: $ A $ is complete iff every Cauchy sequence in $ A
+$ converges to a point of $ A $.
+
+\begin{observation}
+$ E \subseteq \R^{n} $ is complete if and only if $ E $ is closed.
+\end{observation}
+
+\begin{proof}
+\ 
+
+\begin{description}
+\item[$\Leftarrow$] This is essentially the GPC.
+If $ x_{n} $ is Cauchy in $ E $, then $ x_{n}\to x $ in 
+$ \R^{n}  $ by the GPC.  But $E$ is closed so that $ x \in E $ and so $ 
+x_{n} \to x \in E $.
+
+\item[$\Rightarrow$] If $ E $ is not closed then there is a
+  sequence $ x_{n} \in E $ with
+$x_{n}\to x \not\in E$.
+But $ x_{n} $ is Cauchy and by the uniqueness of limits
+$ x_{n} \not\to y \in E $ for any $ y \in E $.
+So $ E $ is not complete.
+\end{description}
+\end{proof}
+
+\begin{examples}
+\
+
+\begin{enumerate}
+\item $ [1,\infty) $ is complete but $ (0,1] $ is not complete.
+\item Any set $ X $ with the discrete metric is complete.
+\item $ \{ 1,2,..,n\} $ with \[ d(n,m) = 
+\abs{\frac{1}{n}-\frac{1}{m}} \] is not complete.
+\end{enumerate}
+\end{examples}
+
+Consider the space $ B(X, \R) $ of bounded real-valued functions $ 
+f\colon X \mapsto \R $ on a set $ X \neq \emptyset $; with
+\[ d(f,g) = \sup_{x \in X}\abs{f(x)-g(x)}, \] the \emph{$\sup$ metric}.
+
+\begin{proposition}
+The space $ B(X,\R) $ with the $\sup$ metric is complete.
+\end{proposition}
+
+\begin{proof}
+Take $ f_{n} $ a Cauchy sequence in $ B(X,\R) $.
+Fix $ x \in X $.  Given $ \epsilon >0 $ we can take $ N $ such that
+\[ \Forall{n,m \geq N} d(f_{n},f_{m}) < \epsilon \]
+Then
+\[ \Forall{n,m \geq N} d(f_{n}(x),f_{m}(x)) < \epsilon. \]
+
+This shows that $ f_{n}(x) $ is a Cauchy sequence in $ \R $ and so 
+has a limit, say $ f(x) $.
+As $ x \in X $ arbitrary, this defines a function
+$x \mapsto f(x)$ from $ X $ to $ \R $.
+
+Claim: $ f_{n} \to f $.
+Suppose $ \epsilon>0 $ given.
+Take $ N $ such that
+\[ \Forall{n,m \geq N} d(f_{m},f_{n}) < \epsilon. \]
+Then for any $ x \in X $
+\[ \Forall{n,m \geq N} \abs{f_{n}(x)-f_{m}(x)} < \epsilon. \]
+Letting $ m \to \infty $ we deduce that
+$\abs{f_{n}(x)-f(x)} \leq \epsilon$
+for any $ x \in X $.
+
+Thus
+$d(f_{n},f) \leq \epsilon < 2\epsilon$ for all $ n \geq N $.
+But $ 2 \epsilon>0$ is arbitrary, so this shows $ f_{n} \to 
+f $.
+\end{proof}
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%                                                                         %
+%       Section 6, Uniform Convergence.   %
+%                                                                         %
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\chapter{Uniform Convergence}
+\section{Motivation and Definition}
+Consider the binomial expansion
+\[ (1+x)^{\alpha} = \sum_{n=0}^{\infty} \binom{ \alpha}{ n } x^{n} \] 
+for $ \abs{x}<1 $.
+This is quite easy to show via some form of Taylor's Theorem.
+Thus
+\[ \lim_{N \to \infty} \sum_{n=0}^{N}\binom{ \alpha}{ n }x^{n}
+= (1+x)^{\alpha} \]
+
+As it stands this is for each individual $x$ such that $\abs{x}<1 $.  It 
+is pointwise convergence.
+
+For functions $ f_{n}, f \colon X \mapsto \R $, we say that $ f_{n} 
+\to f $ \emph{pointwise} iff
+\[ \Forall{x \in X} f_{n}(x) \to f(x). \]
+
+This notion is ``useless''.  It does not preserve any important
+properties of $f_n$.
+
+\begin{examples}
+\
+
+\begin{itemize}
+\item A pointwise limit of continuous functions need not be continuous.
+
+\[ f_{n}(x) =
+\begin{cases}
+0& x \leq 0 \\
+1& x \geq \frac{1}{n} \\
+nx& 0<x<\frac{1}{n}
+\end{cases} \]
+is a sequence of continuous functions which converge pointwise to
+\[ f(x) =
+\begin{cases}
+0& x \leq 0 \\
+1& x > 0
+\end{cases} \]
+which is discontinuous.
+
+\item The integral of a pointwise limit need not be the limit of the 
+integrals.
+
+\[ f_{n}(x) =
+\begin{cases}
+0& \text{$ x \leq 0 $ or $ x \geq \frac{2}{n} $} \\
+xn^{2}& 0 \leq n \leq \frac{1}{n} \\
+n-n^{2}(x-\frac{1}{n})& \frac{1}{n} \leq x \leq \frac{2}{n}
+\end{cases} \]
+has
+\[ \int_{0}^{2}f_{n}(x)\,\ud x = 1 \]
+for all $ n \geq 1 $, but $ f_{n} $ converges pointwise to $ 
+f(x)=0 $ which has
+\[ \int_{0}^{2}f(x)\,\ud x = 0. \]
+\end{itemize}
+\end{examples}
+
+We focus on real valued functions but everything goes through for 
+complex valued or vector valued functions.
+
+We will often tacitly assume that sets $ X $ (metric spaces ($ X,d $))
+are non-empty.
+
+\begin{definition}
+Let $ f_{n}, f $ be real valued functions on a set $ X $. Then $ 
+f_{n} \to f $ uniformly if and only if given $ \epsilon>0 
+$ there is $ N $ such that for all $ x \in X $
+\[ \abs{f_{n}(x)-f(x)}<\epsilon \]
+all $ n \geq N $.  In symbols:
+\[ \Forall{\epsilon>0} \Exists{N} \Forall{x \in X} \Forall{n \geq N} 
+\abs{f_{n}(x)-f(x)} < \epsilon. \]
+\end{definition}
+
+This is equivalent to
+
+\begin{definition}
+Let $ f_{n}, f \in B(X,\R) $. Then $ f_{n} \to f $ 
+uniformly iff $ f_{n} \to f  $ in the sup metric.
+\end{definition}
+
+The connection is as follows:
+\begin{itemize}
+\item If $ f_{n}, f \in B(X, \R) $, then these definitions
+are equivalent. (There's a bit of $ <\epsilon $ vs $ \leq \epsilon $ 
+at issue).
+
+\item Suppose $ f_{n} \to f $ in the sense of the first definition.
+There will be $ N $ such that
+\[ \Forall{x \in X} \abs{f_{n}(x)-f(x)} < 1 \] for all $ n \geq N $.
+Then $(f_{n}-f)_{n \geq N} \to 0$ uniformly in the sense 
+of the second definition.
+\end{itemize}
+
+\begin{theorem}[The General Principle of Convergence]
+Suppose $ f_{n}\colon  X \mapsto \R $ such that
+
+\begin{description}
+\item[Either] \[ \Forall{\epsilon>0} \Exists{N} \Forall{x \in X} 
+\Forall{n,m \geq N} \abs{f_{n}(x)-f_{m}(x)} < \epsilon \]
+\item[or] Suppose $ f_{n}\in B(X, \R) $ is a Cauchy sequence.
+Then there is $ f\colon  X \mapsto \R $ with $ f_{n} \to f 
+$ uniformly.
+\end{description}
+\end{theorem}
+
+\begin{proof}
+$B(X,\R)$ is complete.
+\end{proof}
+
+\section{The space $C(X)$}
+
+\begin{definition}
+Let $ (X,d) $ be a metric space.
+$ C(X) \equiv C(X,\R) $ is the space of bounded continuous functions 
+from $ X $ to $ \R $ with the $ \sup $ metric.
+\end{definition}
+
+This notation is usually used when $ X $ is compact, when all 
+continuous functions are bounded.
+
+\begin{proposition}
+Suppose $ (X,d) $ is a metric space, that $ f_{n} $ is a sequence 
+of continuous real-valued functions and that $ f_{n} \to f $ 
+uniformly on $ X $.  Then $ f $ is continuous.
+\end{proposition}
+
+\begin{proof}
+Fix $ x \in X $ and suppose $ \epsilon > 0 $ given.
+Take $ N $ such that for all $ y \in X $
+
+\[
+\Forall{n \geq N} \abs{f_{n}(y)-f(y)}< \epsilon.
+\]
+
+As $f_{N}$ is continuous at $x$ we can take $ \delta>0 $ 
+such that
+\[ d(y,x)< \delta \Rightarrow \abs{f_{N}(y)-f_{N}(x)}<\epsilon. \]
+Then if $ d(y,x)<\delta $,
+\begin{align*}
+\abs{f(y)-f(x)} & \leq \abs{f_{N}(y)-f(y)} + \abs{f_{N}(x)-f(x)} + 
+\abs{f_{N}(y)-f_{n}(x)} \\
+& < 3 \epsilon.
+\end{align*}
+But $ 3\epsilon $ can be made arbitrarily small and so $ f $ is
+continuous at $ x $. But $ x \in X $ is arbitrary, so $ f $ is
+continuous.
+\end{proof}
+
+
+
+\begin{theorem}
+The space $ C(X) $ (with the $ \sup $ metric) is complete.
+\end{theorem}
+\begin{proof}
+We know that $ B(X,\R) $ is complete, and the proposition says that $ 
+C(X) $ is closed in $ B(X,\R) $.
+\end{proof}
+\begin{proof}[Sketch of Direct Proof]
+Take $ f_{n} $ Cauchy in $ C(X) $.
+\begin{itemize}
+\item For each $ x \in X $, $ f_{n}(x) $ is Cauchy, and so 
+converges to a limit $ f(x) $.
+
+\item $ f_{n} $ converges to $ f $ uniformly.
+
+\item  $ f $ is continuous by the above argument.
+\end{itemize}
+\end{proof}
+
+\begin{theorem}[Weierstrass Approximation Theorem]
+If $ f \in C[a,b] $, then $ f $ is the uniform limit of a 
+sequence of polynomials.
+\end{theorem}
+
+\begin{proof} Omitted. \end{proof}
+
+\section{The Integral as a Continuous Function}
+
+Restrict attention to $ C[a,b] $, the space of continuous functions 
+on the closed interval $ [a,b] $.
+
+\begin{proposition}
+Suppose $ f_{n} \to f $ in $ C[a,b] $. Then
+
+\[
+\int_{a}^{b}f_{n}(x)\,\ud x \to \int_{a}^{b}f(x)\,\ud x \quad \text{in
+  $\R$.}
+\]
+\end{proposition}
+
+\begin{proof}
+Suppose $ \epsilon>0 $.
+Take $ N $ such that $\forall n \geq N d(f_{n},f)<\epsilon$. 
+Then if $ c<d $ in $ [a,b] $
+
+\[
+m(f_{n};c,d)-\epsilon \leq m(f;c,d) \leq M(f;c,d) \leq
+M(f_{n};c,d)+\epsilon
+\]
+for all $ n \geq N $.
+So for any dissection $ \dis $,
+\[
+s_{\dis}(f_{n})-\epsilon(b-a) \leq s_{\dis}(f) \leq S_{\dis}(f) 
+\leq S_{\dis}(f_{n}) +\epsilon(b-a)
+\] for all $ n \geq N $.
+
+Taking $ \sup $s and $ \inf $s, it follows that
+\[
+\int_{a}^{b}f_{n}(x)\,\ud x - \epsilon(b-a) \leq \int_{a}^{b}f(x) \,\ud x 
+\leq \int_{a}^{b}f_{n}(x)\,\ud x + \epsilon(b-a)
+\] for all $ n \geq N $.
+
+Then as $ \epsilon(b-a)>0 $ can be made arbitrarily small,
+\[
+\int_{a}^{b}f_{n}(x) \,\ud x \to \int_{a}^{b}f(x)\,\ud x.
+\]
+\end{proof}
+
+We can make the superficial generalization: If $ f \in C[a,b] $ then 
+so is \[ x \mapsto \int_{a}^{x}f(t)\,\ud t. \] So
+\[ \int_{a}^{x}\colon C[a,b] \mapsto C[a,b]. \]
+
+\begin{theorem}\label{thm:uc-int}
+The map
+\[
+\int_{a}^{x}\colon C[a,b] \mapsto C[a,b]
+\] is continuous with respect to the $ \sup $ metric.
+
+That is, if $ f_{n} \to f $ (uniformly), then
+\[ \int_{a}^{x}f_{n}(t)\,\ud t \to \int_{a}^{x}f(t)\,\ud t \] 
+(uniformly in $ x $).
+\end{theorem}
+
+\begin{proof}
+We see from the previous proof that if $ N $ is such that for all
+$ y \in [a,b] $,
+\[ \Forall{n \geq N} \abs{f_{n}(y) - f(y)} < \epsilon \] then
+\[ \abs{\int_{a}^{x}f_{n}(t)\,\ud t - \int_{a}^{x}f(t)\,\ud t} \leq 
+\epsilon(x-a) \leq \epsilon(b-a) < 2\epsilon(b-a). \]
+
+As $ 2 \epsilon (b-a) $ is arbitrarily small (and independent of $ 
+x $), this shows
+\[ \int_{a}^{x}f_{n}(t)\,\ud t \to \int_{a}^{x}f(t)\,\ud t \] 
+uniformly in $ x $.
+\end{proof}
+
+Uniform convergence controls integration, but \emph{not} 
+differentiation, for example the functions
+\[ f_n(x) = \frac{1}{n}\sin n x \] converge uniformly to zero as $ 
+n \to \infty $, but the derivatives $ \cos n x $ converge 
+only at exceptional values.
+
+\begin{warning}
+There are sequences of infinitely differentiable functions 
+(polynomials even) which converge uniformly to functions which are 
+necessarily continuous but nowhere differentiable.
+However, if we have uniform convergence of derivatives, all is well.
+\end{warning}
+
+\begin{theorem}
+Suppose $ f_{n}\colon [a,b] \mapsto \R $ is a sequence of functions 
+such that
+\begin{enumerate}
+\item the derivatives $ f_{n}' $ exist and are continuous on $ [a,b] $
+\item $ f_{n}' \to g(x) $ uniformly on $ [a,b] $
+\item for some $ c \in [a,b] $, $ f_{n}(c) $ converges to a 
+limit, $ d $, say.
+\end{enumerate}
+
+Then $ f_{n}(x) $ converges uniformly to a function $ f(x) $, 
+with $ f'(x) $ (continuous and) equal to $ g(x) $.\footnote{In 
+these cases we do have \[ \diff{}{x}\left( \lim_{n \to 
+\infty}f_{n}(x) \right) = \lim_{n \to \infty}\left( 
+\diff{}{x}f_{n}(x) \right) \]}
+\end{theorem}
+
+\begin{proof}
+By the FTC, \[ f_{n}(x) = f_{n}(c) + \int_{c}^{x}f_{n}'(t)\,\ud t. \]
+
+Using the lemma that if $ f_{n} \to f $ uniformly and $ 
+g_{n} \to g $ uniformly then $ f_{n}+g_{n} \to f+g $ 
+uniformly\footnote{This lemma is not actually part of the original 
+lecture notes}, we see that
+\[ f_{n}(x) \to d + \int_{c}^{x}g(t)\,\ud t \] uniformly in $ X 
+$ (by theorem \ref{thm:uc-int}).
+Thus \[ f_{n}(x) \to f(x) = d + \int_{c}^{x}g(t)\,\ud t \], and $ 
+f(x) $ has continuous derivative $ f'(x)=g(x) $ by FTC.
+\end{proof}
+
+\section{Application to Power Series}
+For $ M \geq N $, and $ \abs{z} \leq r $,
+\begin{align*}
+\abs{\sum_{N+1}^{M} a_n z^n } & \leq \sum_{N+1}^{M} \abs{a_{n}z^{n}} \\
+& = \sum_{N+1}^{M}\abs{a_{n}z_{0}^{n}}\abs{\frac{z}{z_{0}}}^{n} \\
+& \leq \sum_{N+1}^{M} k \left( \frac{r}{\abs{z_{0}}} \right)^{n} \\
+& < k \left( \frac{r}{\abs{z_{0}}}
+\right)^{N+1}\frac{1}{1-\frac{r}{\abs{z_{0}}}}
+\end{align*}
+which tends to zero as $  N \to \infty $.
+This shows that the power series is absolutely convergent, uniformly 
+in $ z $ for $ \abs{z} \leq r $.
+Whence, not only do power series
+$\sum a_{n}z^{n}$ have a radius of convergence $R \in [0, 
+\infty]$ but also if $ r < R $, then they converge uniformly in
+$\{z : \abs{z} \leq r \}$.
+
+Also, if $\sum a_{n}z_{0}^{n}$ converges, so that  
+$\abs{a_{n}z_{0}^{n}} < k$ say, we have the following for $ r < 
+\abs{z_{0}} $.
+Choose $ s $ with $ r<s<\abs{z_{0}} $.
+Then for $ \abs{z} \leq r $ and $ M \geq N $ we have
+\begin{align*}
+\abs{ \sum_{N+1}^{M}n a_{n}z^{n-1}} & \leq \sum_{N+1}^{M}\abs{n 
+a_{n}z^{n-1}} \\
+& \leq \sum_{N+1}^{M}\abs{a_{n}z_{0}^{n-1}}n\left( 
+\frac{\abs{z}}{s} \right)^{n-1} \left(\frac{s}{\abs{z_{0}}} 
+\right)^{n-1} \\
+& \leq \sum_{N+1}^{M}k'n \left( \frac{r}{s} \right)^{n-1} \left( 
+\frac{s}{\abs{z_{0}}} \right)^{n-1} \quad \text{where $ 
+\abs{a_{n}z_{0}^{n-1}} \leq k' $.}
+\end{align*}
+
+For $ n \geq N_{0} $, $n \left( \frac{r}{s} \right)^{n-1} \leq 1$ 
+and so for $ N \geq N_{0} $, 
+\begin{align*}
+\abs{\sum_{N+1}^{M}n a_{n}z^{n-1}} & \leq \sum_{N+1}^{M}k' \left( 
+\frac{s}{\abs{z_{0}}} \right)^{n-1} \\
+& \leq k \left( \frac{s}{\abs{z_{0}}} \right)^{N} 
+\frac{1}{1-\frac{s}{\abs{z_{0}}}} \to 0 \quad \text{ as } N \to \infty.
+\end{align*}
+
+This shows that the series $\sum_{n \geq 1}n a_{n}z^{n-1}$
+converges uniformly inside the radius of convergence.
+So what we've done, in the \emph{real} case%
+\footnote{And with more work, in the complex case.}
+is to deduce that \[ \sum_{n \geq 1}n a_{n}z^{n-1} \] is the 
+derivative of \[ \sum_{n \geq 1}a_{n}z^{n} \] within the radius of 
+convergence.
+
+\section{Application to Fourier Series}
+
+\begin{proposition}[Simplest Version]
+Suppose $ a_{n} $ is a sequence such that \[ \sum_{n \geq 1}n 
+\abs{a_{n}} \] converges.
+Then \[ \sum_{n \geq 1}a_{n} \cos n t \] converges uniformly and has 
+a derivative \[ \sum_{n \geq 1} - n a_{n} \sin n t \] which is 
+uniformly convergent to a continuous function.
+\end{proposition}
+
+\begin{proof}
+Let $ S_{N}(t) $ be the partial sum
+\[ S_{N}(t) = \sum_{n=1}^{N}a_{n}\cos n t. \quad \text{Then} \quad
+S_{N}'(t) = \sum_{n=1}^{N}-n 
+a_{n} \sin n t \]
+is a sequence of continuous functions.  Now for $ M \geq N $
+
+\begin{align*}
+\abs{S_{M}(t)-S_{N}(t)} & = \abs{ \sum_{N+1}^{M} a_{n} \cos n t} \\
+& \leq \sum_{N+1}^{M}\abs{a_{n} \cos n t} \\
+& \leq \sum_{N+1}^{M}\abs{a_{n}} \\
+& \leq \sum_{N+1}^{M}n \abs{a_{n}} \to 0 \quad \text{as } N \to
+\infty. \\
+\text{Also, }\abs{S_{M}'(t) - S_{N}'(t)} & = \abs{\sum_{N+1}^{M}-n a_{n} \sin n
+  t}\\
+&\leq \sum_{N+1}^{M}\abs{-n a_{n} \sin n t} \\
+ & \leq  \sum_{N+1}^{M}n \abs{a_{n}} \to 0 \quad \text{as } N \to \infty.
+\end{align*}
+
+So both $ S_{N}(t) $ and $ S_{N}'(t) $ are uniformly convergent 
+and we deduce that
+\[
+\diff{}{t} \sum_{n \geq 1} a_{n} \cos n t = \sum_{n \geq 1}-n 
+a_{n} \sin n t.
+ \]
+\end{proof}
+
+The right context for Fourier series is the $ L^{2} $ norm
+arising from the inner product
+\[ \langle f,g\rangle =
+\frac{1}{\pi} \int_{0}^{2 \pi}f(t)g(t)\,\ud t
+\]
+on functions on $ [0, 2 \pi] $.
+We take Fourier coefficients of a function $ f(x) $
+\begin{align*}
+a_{n} & = \frac{1}{\pi} \int_0^{2 \pi} f(t) \cos n t\, \ud t \quad n \geq 0 \\
+b_{n} & = \frac{1}{\pi}\int_0^{2 \pi} f(t) \sin n t\, \ud t \quad n \geq 1
+\end{align*}
+and hope that
+\[
+f(x) = \frac{1}{2} a_{0} + \sum_{n \geq 1}a_{n} \cos n x + b_{n} 
+\sin n x.
+\]
+
+This works for smooth functions; and much more 
+generally in the $ L^{2} $-sense; so that for example, for 
+continuous functions we have Parseval's Identity:
+\[
+\int_{0}^{2 \pi}\abs{f(x)}^{2}\,\ud x = \frac{a_{0}^{2}}{2} + \sum_{n 
+\geq 1}\left( a_{n}^{2}+b_{n}^{2} \right).
+\]
+
+\chapter{The Contraction Mapping Theorem}
+
+\section{Statement and Proof}
+
+\begin{definition}
+A map $ T\colon (X,d) \mapsto (X,d) $ on a metric space $ (X,d) $ is 
+a contraction if and only if for some $ k $, $ 0 \leq k < 1 $
+\[ \Forall{x, y \in X} d(Tx,Ty) \leq k d(x,y) \]
+\end{definition}
+
+\begin{theorem}[Contraction Mapping Theorem]
+Suppose that $ T\colon (X,d) \mapsto (X,d) $ is a contraction on a 
+(non-empty) complete metric space $ (X,d) $. Then $ T $ has a unique fixed 
+point.
+\end{theorem}
+
+That is, there is a unique $ a \in X $ with $ Ta =a $.\footnote{As 
+a preliminary remark, we see that as $ T $ is a contraction, it is 
+certainly uniformly continuous}
+
+\begin{proof}
+Pick a point $ x_{0} \in X $ and define inductively
+$x_{n+1} = Tx_{n}$ so that $x_{n}=T^{n}x_{0}$.
+For any $ n,p \geq 0 $ we have
+\begin{align*}
+d(x_{n},x_{n+p}) & = d(T^{n}x_{0}, T^{n}x_{p}) \\
+& \leq k^{n}d(x_{0},x_{p} \\
+& \leq k^{n}[ d(x_{0},x_{1}) + d(x_{1},x_{2}) + \ldots + 
+d(x_{p-1},x_{p})] \\
+& \leq k^{n} d(x_{0},x_{1})[1+k+k^{2}+\ldots+k^{p-1}] \\
+& \leq \frac{k^{n}}{1-k}d(x_{0},x_{1}).
+\end{align*}
+
+Now \[ \frac{k^{n}}{1-k}d(x_{0},x_{1}) \to 0 \quad \text{as }
+n \to \infty, \] 
+and so $ x_{n} $ is a Cauchy sequence.
+As $ (X,d) $ is complete, $ x_{n} \to a \in X $.
+We now claim that $ a $ is a fixed point of $ T $.
+
+We can either use continuity of distance:
+
+\begin{align*}
+d(Ta,a) & = d \left(Ta, \lim_{n \to \infty}x_{n} \right) \cr
+& = \lim_{n \to \infty}d(Ta,x_{n}) \cr
+& = \lim_{n \to \infty}d(Ta,Tx_{n-1}) \cr
+& \leq \lim_{n \to \infty} d(a,x_{n-1}) \cr
+& = d \left( a, \lim_{n \to \infty}x_{n-1} \right) \cr
+& = d(a,a) \cr
+& = 0,
+\end{align*}
+
+and so $ d(Ta,a)=0 $.
+Or we can use the (uniform) continuity of $ T $.
+\begin{align*}
+Ta & = T \left( \lim_{n \to \infty} x_{n} \right) \cr
+& = \lim_{n \to \infty}Tx_{n} \cr
+& = \lim_{n \to \infty}x_{n+1} \cr
+& = a.
+\end{align*}
+
+As for uniqueness, suppose $ a,b $ are fixed points of $ T $.
+Then \[ d(a,b) = d(Ta,Tb) \leq k d(a,b) \] and since $ 0 \leq k < 1 
+$, $ d(a,b)=0 $ and so $ a=b $.
+\end{proof}
+
+\begin{corollary}
+Suppose that $ T\colon (X,d) \mapsto (X,d) $ is a map on a complete 
+metric space $ (X,d) $ such that for some $ m \geq 1 $, $ T^{m} $ 
+is a contraction, ie \[ d(T^{m}x,T^{m}y) \leq k T(x,y). \] Then $ T 
+$ has a unique fixed point.
+\end{corollary}
+
+\begin{proof}
+By the contraction mapping theorem, $ T^{m} $ has a unique fixed 
+point $ a $.  Consider 
+\begin{align*}
+d(Ta,a) & = d(T^{m+1}a, T^{m}a) \cr
+& = d(T^{m}(Ta), T^{m}a) \cr
+& \leq k d(Ta,a).
+\end{align*}
+
+So $ d(Ta,a) =0 $ and thus $ a $ is a fixed point of $ T $.
+If $ a,b $ are fixed points of $ T $, they are fixed points of $ 
+T^{m} $ and so $ a=b $.
+\end{proof}
+
+\begin{example}
+Suppose we wish to solve $x^{2}+2x-1=0$. (The solutions are $ -1 
+\pm \sqrt{2} $.)
+
+We write this as \[ x = \frac{1}{2}(1-x^{2}) \] and seek a fixed 
+point of the map \[ T: x \mapsto \frac{1}{2}(1-x^{2}) \]
+
+So we seek an interval $ [a,b] $ with $ T\colon [a,b] \mapsto [a,b] 
+$ and $ T $ a contraction on $ [a,b] $.
+Now
+
+\begin{align*}
+\abs{Tx-Ty} & = \abs{ \frac{1}{2}x^{2}-\frac{1}{2}y^{2}} \cr
+& = \frac{1}{2} \abs{x+y} \, \abs{x-y}.
+\end{align*}
+
+So if $\abs{x}, \abs{y} \leq \frac{3}{4}$ then
+\[ \abs{Tx-Ty} \leq \frac{1}{2}(\abs{x}+\abs{y}) \abs{x-y} \leq 
+\frac{3}{4} \abs{x-y} \] and so $ T $ is a contraction on $ 
+[-3/4,3/4] $.
+Actually
+\[ T\colon  \left[ -\frac{3}{4}, \frac{3}{4} \right] \mapsto 
+\left[ 0, \frac{1}{2} \right] \] and so certainly
+\[ T\colon  \left[ -\frac{3}{4}, \frac{3}{4} \right]
+\mapsto \left[ -\frac{3}{4}, \frac{3}{4} \right] 
+\] is a contraction.
+
+So there is a unique fixed point of $ T $ in $ [-3/4,3/4] $.  The
+contraction mapping principle even gives a way of approximating it as
+closely as we want.
+\end{example}
+
+\section{Application to Differential Equations}\label{s7.2}
+
+Consider a differential equation
+\begin{equation}
+\label{diffeq}
+\diff{y}{x} = F(x,y)
+\end{equation}
+subject to $ y=y_{0} $ when $ x=x_{0} $.
+We assume
+\[ F\colon [a,b] \times \R \mapsto \R
+\] is continuous, $ x_{0} \in [a,b] $ and $ y_{0} \in \R $.
+
+\begin{observation}
+$ g\colon [a,b] \mapsto \R $ is a solution of (\ref{diffeq}) ie $ g 
+$ is continuous, $g'(x) = F(x,g(x))$ for $ x \in (a,b) $ and 
+$ g(x_{0})=y_{0} $, iff $ g $ satisfies the Volterra integral 
+equation
+\[ g(x) = y_{0} + \int_{x_{0}}^{x} F(t,g(t))\,\ud t \]
+on $ [a,b] $.
+\end{observation}
+
+\begin{proof}
+Essentially the FTC.\footnote{If $ g $ satisfies the differential 
+equation, as $ F(x,g(x)) $ will be continuous we can integrate to 
+get the integral equation and vice-versa.}
+\end{proof}
+
+\begin{theorem}
+Suppose $ x_{0} \in [a,b] $ closed interval, $ y_{0} \in \R $, \[ 
+F\colon [a,b] \times \R \mapsto \R \] is continuous and satisfies a 
+Lipschitz condition; ie there is $ K $ such that for all $ x \in 
+[a,b] $ \[ \abs{F(x,y_{1}) -F(x,y_{2})} \leq K \abs{y_{1}-y_{2}}. \]
+
+Then the differential equation (\ref{diffeq}) subject to the initial 
+condition $y(x_0) = y_0$ has a unique solution in $C[a,b]$.
+\end{theorem}
+
+\begin{proof}
+We consider the map $ T\colon C[a,b] \mapsto C[a,b] $ defined 
+by
+\[ Tf(x) = y_{0}+\int_{x_{0}}^{x}F(t,f(t))\,\ud t. \]
+
+We claim that for all $ n $, \[ \abs{T^{n}f_{1}(x) -T^{n}f_{2}(x)} 
+\leq \frac{K^{n} \abs{x-x_{0}}}{n!} d(f_{1},f_{2}) \]
+
+The proof is by induction on $ n $. The case $ n=0 $ is trivial 
+(and $ n=1 $ is already done).
+The induction step is as follows:
+
+\begin{align*}
+\abs{T^{n+1}f_{1}(x) - T^{n+1}f_{2}(x)} & =
+\abs{\int_{x_{0}}^{x}F(t,T^{n}f_{1}(t)) - F(t,T^{n}f_{2}(t)) \,\ud t} \cr
+& \leq \abs{\int_{x_{0}}^{x}K \abs{T^{n}f_{1}(t) - T^{n}f_{2}(t)} 
+\,\ud t} \cr
+& \leq \abs{\int_{x_{0}}^{x}\frac{K . K^{n} \abs{t-x_{0}}^{n}}{n!} 
+d(f_{1},f_{2})\,\ud t } \cr
+& = \frac{K^{n+1} \abs{x-x_{0}}^{n+1}}{(n+1)!} d(f_{1},f_{2})
+\end{align*}
+
+But \[ \frac{K^{n+1} \abs{x-x_{0}}^{n+1}}{(n+1)!} d(f_{1},f_{2}) \leq
+\frac{K^{n+1} \abs{b-a}^{n+1}}{(n+1)!} d(f_{1},f_{2}) \to 0\] 
+as $ n \to \infty $.
+So for $ n $ sufficiently large,
+\[
+\left(\frac{k^{n+1} \abs{b-a}^{n+1}}{(n+1)!}<1 \right)
+\]
+and so $ T^{n}$ is a contraction on $C[a,b]$.
+
+Thus $T$ has a unique fixed point in $C[a,b]$, which gives a unique
+solution to the differential equation.
+\end{proof}
+
+\begin{example}
+Solve $y' = y'$ with $ y=1 $ at $ x=0 $.
+Here $ F(x,y)=y $ and the Lipschitz condition is trivial.
+So we have a unique solution on any closed interval $ [a,b] $ with $ 
+0 \in [a,b] $.
+Thus we have a unique solution on $ (-\infty, \infty) $.
+
+In fact\footnote{This is not a general phenomenon!} we can do better
+than this and construct a solution by
+iterating $ T $ starting from $ f_{0}=0 $.
+
+\begin{align*}
+f_{0}(x)&=0,\\
+f_{1}(x)&=1 + \int_0^x 0\, \ud t,\cr
+f_{2}(x)&=1+\int_{0}^{x}\,\ud t = 1+x, \cr
+f_{3}(x)&=1+x+\frac{x^{2}}{2!} \cr
+&\vdots
+\end{align*}
+and so on.
+So (of course we knew this), the series for $ \exp(x) $ converges 
+uniformly on bounded closed intervals.
+\end{example}
+
+We can make a trivial generalization to higher dimensions.
+
+Suppose $ [a,b] $ is closed interval with $ x_{0} \in [a,b] $, $ 
+y_{0} \in \R^{n} $ and $F\colon [a,b] \times \R^{n} \mapsto \R^{n}$ 
+continuous and satisfying a Lipschitz condition:  $\exists K $ 
+such that
+\[
+\norm{F(x,y_{1}) -F(x,y_{2}) } \leq K \norm{y_{1}-y_{2}}.
+\]
+
+Then the differential equation \[ \diff{y}{x} = F(x,y) \] with $ 
+y(x_0)=y_{0}$ has a unique solution in $C([a,b],\R^n)$.
+The proof is the same, but with $\norm{\cdot}$s instead of 
+$\abs{\cdot}$s.
+
+This kind of generalization is good for higher order differential 
+equations. For example if we have
+\[ \diff{^2 y}{x^2} = F \left( x,y,  \diff{y}{x} \right) \] 
+with $ y=y_{0} $, $ dy/\ud x=v_{0} $ at $ x = x_{0} $ we can
+set $ v=\diff{y}{x}$ and rewrite the equation as
+
+\[ \diff{}{x} \begin{pmatrix} y \\ v \end{pmatrix} =
+\begin{pmatrix} v \\ F(x,y,v) \end{pmatrix} \]
+with
+\[ \begin{pmatrix} y \\ v \end{pmatrix} = 
+\begin{pmatrix} y_{0} \\ v_{0} \end{pmatrix} \] at $ x =x_{0} $.
+
+With a suitable Lipschitz condition we are home.
+
+\section{Differential Equations: pathologies}
+
+The problem is that the Lipschitz condition seldom holds outright.
+
+\begin{description}
+\item[Trivial way] Failure happens as $ x \to $ something. 
+The typical case is $ x \to \infty $ but we can always 
+consider bounded intervals and then expand them.
+
+\item[OK way] Failure happens as $ y \to \infty $.
+
+\begin{example}
+\[ \diff{y}{x} = 1+y^{2} \] with $y(0)=0$.
+Here $ F(x,y)=1+y^{2} $ and so
+\[
+\abs{F(x,y_{1})-F(x,y_{2})} = \abs{y_{1}+y_{2}} \, 
+\abs{y_{1}-y_{2}},
+\] which is large for $ y $ large.
+
+So $ F $ as a map $ [a,b] \times \R \mapsto \R $ does not 
+satisfy a Lipschitz condition.
+\end{example}
+
+\begin{theorem}
+Suppose $ x_{0} \in (a,b), y_{0} \in (c,d) $, and \[ F\colon [a,b] 
+\times [c,d] \mapsto \R \]
+is continuous and satisfies a 
+Lipschitz condition: there is $ k $ with
+\[ \abs{F(x,y_{1}) - F(x,y_{2})} \leq k\abs{y_{1}-y_{2}} \] in $ 
+[a,b] \times [c,d] $ then there is $ \delta>0$  such that  \[ 
+\diff{y}{x} = F(x,y) \] with $ y(0)=x_{0} $, has a unique 
+solution in $ [x_{0}-\delta, x_{0}+\delta] $.
+\end{theorem}
+
+\begin{proof}
+Suppose that $ L $ is a bound for $ F $ on $ [a,b] \times [c,d] 
+$.\footnote{
+We aim to find a closed and so complete subspace \[ C \subseteq
+C[x_{0}-\delta, x_{0}+\delta] \] of the form \[ C = \{ 
+f\colon C[x_{0}-\delta, x_{0}+\delta] : \abs{f(x)-y_{0}} \leq \eta \} \]
+for $ \eta>0 $ with $ T $ mapping $ C $ to $ C $.
+}
+
+Take $ \eta >0 $ such that \[ [y_{0}-\eta, y_{0} + \eta] \subseteq 
+[c,d] \]
+
+Observe that if $ \abs{x-x_{0}}< \delta  $ then
+\[ \abs{Tf-y_{0}} = \abs{\int_{x_{0}}^{x} F(t,f(t)) \,\ud t } \leq \delta L 
+\] so long as $ f \in C $. So set $\delta = L^{-1}$.
+
+Then $ C $ as above is complete, the map
+\[ T\colon f  \mapsto y_{0} + \int_{x_{0}}^{x} F(t,f(t) )\,\ud t \] maps $ C 
+$ to $ C $, and by the argument of \S \ref{s7.2}, $ T^{n} $ is a 
+contraction for $ n $ sufficiently large.
+
+Hence $ T $ has a unique fixed point and so the differential 
+equation has a unique solution on $[x_{0}-\delta, x_{0}+\delta]$.
+\end{proof}
+
+Now we have a value $ f(x_{0} + \delta) $ at $ x_{0} + \delta $, 
+so we can solve $\diff{y}{x} = F(x,y)$ with $y=f(x_{0}+ \delta)$ at
+$ x = x_{0} + \delta $, and so we extend the solution uniquely. 
+This goes on until the solution goes off to $ \pm \infty $.
+In this example we get $ y = \tan x $.
+
+\item[Really bad case] ``Lipschitz fails at finite values of $ y $.''
+For example, consider
+$\diff{y}{x} = 2 y^{\frac{1}{2}}$ with $ y(0)=0 $.
+
+Now $F(x,y) = 2y^{\frac{1}{2}}$ in $ ( -\infty, +\infty ) \times [0, \infty) 
+$ and 
+
+\[ \abs{F(x,y_{1}) - F(x,y_{2}) } = 
+\frac{\abs{y_{1}-y_{2}}}{y_{1}^{1/2}+y_{2}^{1/2}},
+ \]
+which has problems as $ y_{1},y_{2} \to 0 $.
+We lose uniqueness of solutions.
+\end{description}
+
+\section{Boundary Value Problems: Green's functions}
+Consider the second order linear ODE
+\[ \cL y = \diff{^2 y}{x^2} + p(x) \diff{y}{x} + q(x) y = r(x) \] 
+subject to $ y(a)=y(b) =0 $. (Here $ p,q,r \in C[a,b] $).
+
+The problem is that solutions are not always unique.
+
+\begin{example}
+\[ \diff{^2 y}{x^2} = - y \] with $ y(0)=y(\pi) =0 $ has 
+solutions $ A \sin x $ for all $ A $.
+\end{example}
+
+Write $ C^{2}[a,b] $ for the twice continuously differentiable 
+functions on $ [a,b] $, so that \[ \cL\colon C^{2}[a,b] \mapsto C[a,b]. \]
+
+Write \[ C_{0}^{2}[a,b] = \{ f \in C^{2}[a,b]:f(a)=f(b)=0 \} \] and \[ 
+\cL_{0}\colon  C_{0}^{2}[a,b] \mapsto C[a,b] \] for the restricted map.
+Either $\ker \cL_{0} = \{ 0 \} $ then a solution (if it exists) is 
+unique, or $ \ker \cL_{0} \neq \{ 0 \} $, when we lose uniqueness.
+Note that because $ p,q,r $ have no $ y $ or $ \diff{y}{x} $ dependence 
+the Lipschitz condition for 
+\[ \cL y = 
+\begin{cases}
+0 \\
+r
+\end{cases} \] in the 2-dimensional form
+\[ \diff{}{x} \begin{pmatrix} y \\ v \end{pmatrix} = \begin{pmatrix} 
+v \\ -pv-qy +r \end{pmatrix} \] is easy and so initial value problems
+always have unique solutions.
+
+Assume $ \ker \cL_{0} = \{ 0 \} $.
+Now take $ g_{a}(x) $, a solution to $ \cL y=0 $ with $ y(a)=1 $, $ 
+y'(a) =0 $.  $ g_{a}(x) \not \equiv 0 $ as $ g'_{a}(a)=1 $.
+If $ g_{a}(b) =0 $, $ g_{a}\in C_{0}^{2}[a,b] $, contradicting $ 
+\ker \cL_{0} = \{ 0 \} $ and so $ g_{a}(b) \neq 0 $.
+
+We can similarly take $ g_{b}(x) $, a solution to $ \cL y =0 $
+with $ y(b)=0, y'(b)=1 $ and we have $ g_{b}(a) \neq 0 $.
+Now if $ h $ is a solution of $ \cL y = r $, then
+\[
+f(x) = h(x) - \frac{h(a)}{g_{b}(a)} g_{b}(x) - 
+\frac{h(b)}{g_{a}(b)} g_{a}(x) \]
+is a solution to the boundary value problem.
+In fact this solution has an integral form:
+
+\[
+f(x) = \int_{a}^{b}G(x,t)r(t)\,\ud t.
+\]
+
+We take the Wronskian
+
+\[ \mathcal{W}(x) = \begin{vmatrix} g_{a}(x) & g_{b}(x) \\ 
+g_{a}'(x) & g_{b}'(x) \end{vmatrix} \] and note that
+\[ \mathcal{W}'(x) + p(x) \mathcal{W}(x) =0\] and so
+\[ \mathcal{W}(x) = C \exp \left[ - \int_{a}^{x} p(t) \,\ud t \right] \] 
+$ \mathcal{W}(a)  $ and $ \mathcal{W}(b) \neq 0  $ so $ C \neq 0 
+$, so $ \mathcal{W}(x) \neq 0 $.
+Then we define
+\[ G(x,t) =
+\begin{cases}
+\frac{1}{\mathcal{W}(t)} g_{b}(x) g_{a}(t) & t \leq x \\
+\frac{1}{\mathcal{W}(t)} g_{b}(t) g_{a}(x) & x \leq t
+\end{cases} \]
+
+and check directly that
+\[
+\int_{a}^{b}G(x,t)r(t)\,\ud t
+\] solves the initial value problem.
+
+\section[The Inverse Function Theorem]%
+{**The Inverse Function Theorem**}
+
+This is a theorem you should be aware of.  Proof is omitted.
+
+\begin{theorem}
+Suppose $ f\colon E \mapsto \R^{n}, E \subseteq \R^{n} $ is open and 
+continuously differentiable and that $ f'(a) $ is invertible at 
+some point $ a \in E $. Then there are open $ U,V $ with $ a \in U 
+$, $ b =f(a) \in V $ with $ f\colon U \mapsto V $ bijective and 
+the inverse of $ f $, $ g $ say, continuously differentiable.
+\end{theorem}
+
+\backmatter
+
+\begin{thebibliography}{9}
+
+\bibitem{Haggarty} R.~Haggarty, \emph{Fundamentals of Modern
+    Analysis}, Addison-Wesley, 1993.
+  
+  {\sffamily \small A new and well-presented book on the basics of
+    real analysis.  The exposition is excellent, but there's not
+    enough content and you will rapidly outgrow this book.  Worth a
+    read but probably not worth buying. }
+
+\bibitem{Rudin} W.~Rudin, \emph{Principles of Mathematical Analysis},
+  Third ed., McGraw-Hill, 1976.
+  
+  {\sffamily \small This is a good book for this course.  It is rather
+    hard though. }
+
+\bibitem{Sutherland} W.A. Sutherland, \emph{Introduction to Metric and
+    Topological Spaces}, OUP, 1975.
+
+  {\sffamily \small This book is good on the metric space part of the
+  course.  It's also good for Further Analysis. }
+
+\end{thebibliography}
+\end{document}

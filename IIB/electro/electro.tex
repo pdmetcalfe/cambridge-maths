@@ -1,0 +1,1763 @@
+\documentclass{notes}
+
+\newcommand{\cO}{\mathcal{O}}
+\newcommand{\cG}{\mathcal{G}}
+\newcommand{\B}{\vect{B}}
+\newcommand{\cL}{\mathcal{L}}
+\newcommand{\E}{\vect{E}}
+\newcommand{\jc}{\vect{j}}
+\newcommand{\rv}{\vect{r}}
+\newcommand{\rhat}{\vect{\Hat{r}}}
+\newcommand{\K}{\mathrm{K}}
+\renewcommand{\Box}{\square}
+\DeclareMathOperator{\curl}{curl}
+\DeclareMathOperator{\dive}{div}
+\DeclareMathOperator{\grad}{grad}
+
+\begin{document}
+
+\frontmatter
+
+\title{Electrodynamics}
+\lecturer{Dr.~M.~J.~Perry}
+\maintainer{Paul Metcalfe}
+\date{Mich\ae lmas 1997} \maketitle
+
+\thispagestyle{empty}
+\noindent\verb$Revision: 2.10 $\hfill\\
+\noindent\verb$Date: 2001/11/01 09:52:07 $\hfill
+
+\vspace{1.5in}
+
+The following people have maintained these notes.
+
+\begin{center}
+\begin{tabular}{ r  l}
+-- date & Paul Metcalfe
+\end{tabular}
+\end{center}
+
+\tableofcontents
+
+\chapter{Introduction}
+
+These notes are based on the course ``Electrodynamics'' given by
+Dr.~M.~J.~Perry in Cambridge in the Mich\ae lmas Term 1997.  The
+recommended books for this course are discussed in the bibliography.
+
+\alsoavailable
+\archimcopyright
+
+\mainmatter
+
+\chapter{Point of departure}
+
+This is a review of terminology and results from Special Relativity and
+Electromagnetism (possibly rewritten in a more grown-up way).
+
+\section{Maxwell's Equations}
+
+These are :
+
+\begin{align*}
+\dive \E &= \frac{\rho}{\epsilon_0} \\
+\curl \E &= - \dot{\B} \\
+\dive \B &= 0 \\
+\curl \B &= \mu_0 \jc + \mu_0 \epsilon_0 \dot{\E}.
+\end{align*}
+
+$\rho$ is the charge density.  $\epsilon_0$ is called the permittivity
+of free space.  It is not a fundamental constant but merely determines
+units.  Similarly, $\mu_0$ is the permeability of free space and
+merely determines units.  $\mu_0$ and $\epsilon_0$ satisfy $\mu_0
+\epsilon_0 = c^{-2}$, where $c$ is the speed of light (and a
+fundamental constant).  In familiar units $c \approx 2.997 \times
+10^8\ \mathrm{ms}^{-1}$, but we will choose units
+such that $c = 1$.%
+\footnote{Despite the fact that the Schedules mandate SI units.  Exam
+questions will be set such that $c=1$.}
+Dimensional analysis can replace $c$ in any derived formulae.
+
+\section{Electrostatics}
+
+This is the case where there is no current and a time independent
+charge distribution.  Then Maxwell's equations reduce to $\dive \E =
+\frac{\rho}{\epsilon_0}$ and $\curl \E = 0$.  We will assume $\B = 0$,
+but it does not affect the equations for the electric field.
+
+The electric field due to a point charge $q_1$ is $\E = \frac{q_1}{4 \pi
+\epsilon_0} \frac{1}{r^2} \rhat$.  To measure the electric field we
+can take a charge $q_2$ and measure the force $\vect{F} = q_2 \E$ on
+it.
+
+\subsection{Coulomb's Law}
+
+The force between two point charges is
+\[
+\vect{F} = \frac{q_1 q_2}{4 \pi \epsilon_0} \frac{1}{r^2}
+\]
+directed on the line between the centres.  It is repulsive for two like
+charges.
+
+A point charge can be regarded as a charge distribution which is a
+delta function: $\rho = q_1 \delta(\rv)$.  To find the electric field
+due to a distribution of charges we can use linear superposition to
+find $\E$ everywhere.  As $\curl \E = 0$ we can introduce the electrostatic
+potential $\phi$ such that $\E = - \nabla \phi$.  Then $\nabla^2 \phi
+= \frac{-\rho}{\epsilon_0}$.  We can solve this using a Green's function,
+that is a function $G(\rv,\rv')$ such that $\nabla^2_r G(\rv,\rv') =
+\delta(\rv,\rv')$. We can see that $G(\rv,\rv') = - \frac{1}{4 \pi}
+\frac{1}{\abs{\rv - \rv'}}$.  Then
+\[
+\phi(\rv) = - \frac{1}{\epsilon_0} \int \ud^3 r'\, G(\rv,\rv') \rho(\rv').
+\]
+
+\begin{proof}
+Firstly, we see that
+\begin{align*}
+\nabla^2_r \phi &= - \frac{1}{\epsilon_0} \int \ud^3 r'\, \nabla^2_r G(\rv,\rv')
+\rho(\rv') \\
+&= - \frac{1}{\epsilon_0} \int \ud^3 r'\, \delta(\rv,\rv') \rho(\rv') \\
+&= \frac{-\rho(\rv)}{\epsilon_0}.
+\end{align*}
+
+Then we merely note that solutions to Poisson's equation are unique.
+\end{proof}
+
+\subsection{Multipole expansion}
+
+Suppose we have a charge distribution in a region $B$ as shown.
+
+\vspace{1in}
+
+The multipole expansion of the potential is what happens to a general
+expression for $\phi$ if $\abs{\rv} \gg \abs{\rv'}$.  We expand
+$\frac{1}{\abs{\rv - \rv'}}$ using the binomial expansion.
+
+\begin{align*}
+\frac{1}{\abs{\rv - \rv'}} &= (r^2 - 2 r_i r_i' + r'{}^2)^{-\frac{1}{2}} \\
+&= \frac{1}{r} \left(1 - \frac{2 r_i r_i}{r^2} + \frac{r'{}^2}{r^2}
+\right)^{-\frac{1}{2}} \\
+&= \frac{1}{r} \left(
+1 + \frac{r_i r'_i}{r^2} - \frac{1}{2} \frac{r'{}^2}{r^2} + \frac{3}{2}
+\frac{ \left( r_i r'_i\right)^2}{r^4} + \dots \right).
+\end{align*}
+
+We substitute into the general expression for $\phi$ to obtain
+\begin{align*}
+\phi(\rv) &= \frac{1}{4 \pi \epsilon_0 r}
+\int_B \ud^3 r'\, \rho(\rv') \left(
+1 + \frac{r_i r'_i}{r^2} + \frac{1}{2 r^4} \left(
+3 r_i r_j r'_i r'_j - r^2 \delta_{ij} r'_i r'_j
+\right)+ \dots \right).
+\end{align*}
+
+This is an expansion of $\phi$ in inverse powers of $r$.  The term in
+$r^{-l}$ is referred to as the $2^l$-pole term.
+
+When $l=0$ we have a monopole.  If $Q = \int \ud^3 r'\, \rho(\rv')$
+then $\phi = \frac{Q}{4 \pi \epsilon_0 r}$, which is usually called the
+Coulomb term.
+
+When $l=1$ we have a dipole.  Let $d_i = \int d^3 r'\, \rho(\rv') r'_i$
+(the dipole moment).  Then $\phi = \frac{1}{4 \pi \epsilon_0 r^3} r_i d_i$.
+
+When $l=2$ we have a quadrupole and the contribution to $\phi$ is
+$\frac{1}{4 \pi \epsilon_0 r^5} r_i r_j Q_{ij}$, where $Q_{ij}$ is
+the quadrupole moment and $Q_{ij} = \frac{1}{2} \int \ud^3 r'\, \rho(\rv')
+\left( 3 r'_i r'_j - \delta_{ij} r'{}^2 \right)$.  $Q_{ij}$ is a
+symmetric tracefree tensor, as
+\[
+Q_{ij} \delta_{ij} = \frac{1}{2} \int \ud^3 r'\, \rho(\rv')
+\left( 3 r'_i r'_j \delta_{ij} - \delta_{ij} \delta_{ij} r'{}^2 \right) = 0.
+\]
+It has 5 independent components.  In general the $r^{-l}$ term has
+$2 l + 1$ independent components.  When $l=3$ we have the octopole moment
+and when $l=4$ the hexadecapole moment, but these become increasingly
+cumbersome.
+
+\section{Special Relativity}
+
+Special relativity has two postulates:
+
+\begin{enumerate}
+\item The laws of nature are the same in any inertial frame.
+\item The speed of light is independent of the speed of its source.
+\end{enumerate}
+
+This leads us to consider Minkowski space, viz.
+$x^\mu = (t,\vx) = (t,x^i)$.  $\mu$ runs from $0$ to $3$ and $i$ runs from
+$1$ to $3$.  These are inertial co-ordinates.  If a particle is at rest
+at $\vx = 0$ at $t=0$ then in remains at rest at $\vx = 0$ for all time.
+$t$ is then the proper time for that particle --- what a clock sitting on
+the particle would measure.
+
+We can relate the physics in one inertial frame to another by Lorentz
+transformations.  Suppose that one has a second frame moving with
+velocity $v$ in the $x$ direction relative to the first frame.  Then
+we have new inertial co-ordinates
+
+\begin{align*}
+t' &= \gamma(v) (t - v x) \\
+x' &= \gamma(v) (x - v t) \\
+y' &= y \\
+z' &= z,
+\end{align*}
+
+where $\gamma(v) = \frac{1}{\sqrt{1-v^2}}$.  This can be written
+$x'{}^\mu = \Lambda^\mu{}_\nu x^\nu$, where $\Lambda^\mu{}_\nu$ is the
+matrix form of the Lorentz transformation, in this case:
+
+\[
+\begin{pmatrix}
+\gamma & - \gamma v & 0 & 0 \\
+- \gamma v & \gamma & 0 & 0 \\
+0 & 0 & 1 & 0 \\
+0 & 0 & 0 & 1
+\end{pmatrix}
+\]
+
+To find the Lorentz transformation of arbitrary motion described by
+a unit vector $\vect{n}$ then we consider
+$R^{-1}(\vect{n}) \Lambda R(\vect{n})$, where $R(\vect{n})$ is a rotation
+to move $\vect{n}$ into the $x$ direction.
+\[
+R = \begin{pmatrix}
+1 & 0 & 0 & 0 \\
+0 &   &   &   \\
+0 &   & R_3 & \\
+0 &   &   &   \\
+\end{pmatrix}
+\]
+with $R_3$ an ordinary spatial rotation.  We can make Lorentz
+transformations look like rotations --- if we put $\gamma(v) = \cosh \phi$,
+then $v \gamma(v) = \sinh \phi$, which implies that $v = \tanh \phi$.  This
+is sometimes called a hyperbolic rotation.
+
+We define a distance $\ud s^2 = -\ud t^2 + \ud x^2 + \ud y^2 + \ud z^2$
+between two
+infinitesimally separated points.  This can be shown to be invariant under
+Lorentz transforms.  If $\ud t = 0$ then it reduces to the ordinary Euclidean
+metric on $\R^3$.
+
+If $\ud s^2 > 0$ we say the two points are spacelike separated, if $\ud s^2 < 0$
+they are timelike separated and if $\ud s^2 = 0$ they are null, or lightlike
+separated.  The interior of the light cone has $\ud s^2 < 0$ and the exterior
+$\ud s^2 > 0$.
+
+Proper distance is defined for spacelike separated events to be $\ud s$
+and proper time $\ud\tau$ for timelike separated events by $\ud\tau^2
+= -\ud s^2$.
+The invariance of $\ud\tau$ means that the time seen by a clock sitting on
+some object can be computed in any inertial frame.
+
+It is easier to write $\ud s^2 = \eta_{\mu \nu} \ud x^\mu \ud x^\nu$, where
+$\eta_{\mu \nu}$ is called the metric tensor and is
+\[
+\begin{pmatrix}
+-1 & 0 & 0 & 0 \\
+0  & 1 & 0 & 0 \\
+0  & 0 & 1 & 0 \\
+0  & 0 & 0 & 1
+\end{pmatrix}.
+\]
+
+We also have the inverse metric $\eta^{\mu \nu}$ defined by
+$\eta^{\mu \nu} \eta_{\nu \rho} = \delta^\mu_\rho$.  The matrix form
+of $\eta^{\mu \nu}$ is (obviously?)
+\[
+\begin{pmatrix}
+-1 & 0 & 0 & 0 \\
+0 & 1 & 0 & 0 \\
+0 & 0 & 1 & 0 \\
+0 & 0 & 0 & 1
+\end{pmatrix}.
+\]
+
+Given two vectors $x^\mu$ and $y^\mu$ we want a scalar product that should
+be invariant under Lorentz transformations, and $S = \eta_{\mu \nu}
+x^\mu y^\nu$ will do the trick.  This gives us the idea of defining covectors
+by $x_\nu = \eta_{\nu \mu} x^\mu$ and then $S = x_\nu y^\nu$.  Then
+there is the inverse operation
+$\eta^{\mu \nu} x_\nu = \eta^{\mu \nu} \eta_{\nu \rho} x^\rho = x^\mu$.
+
+We ask ourselves how a covector transforms, and we obtain
+$x_\nu \mapsto x'_\nu = \Lambda_\nu{}^\mu x_\mu$, where
+$\Lambda_\nu{}^\mu = \eta_{\nu \rho} \Lambda^\rho{}_\sigma \eta^{\sigma \mu}$,
+or in matrix form
+
+\[
+\begin{pmatrix}
+\gamma & \gamma v & 0 & 0 \\
+\gamma v & \gamma & 0 & 0 \\
+0 & 0 & 1 & 0 \\
+0 & 0 & 0 & 1
+\end{pmatrix}
+\]
+
+for the transform we looked at earlier.  We see that
+$(\Lambda^\mu{}_\nu)^{-1} = \Lambda_\nu{}^\mu$ and
+\begin{align*}
+x_\mu y^\mu \mapsto x'_\mu y'{}^\mu &= \Lambda_\mu{}^\rho
+x_\rho \Lambda^\mu{}_\sigma y^\sigma \\
+&= \Lambda_\mu{}^\rho \Lambda^\mu{}_\sigma x_\rho y^\sigma \\
+&= \delta^\rho_\sigma x_\rho y^\sigma \\
+&= x_\sigma y^\sigma,
+\end{align*}
+which is, on the whole, a good thing.  This is analogous to rotations in
+$\R^3$ preserving the metric, the rotations being classified by
+$R^T R = 1$ and $R_{ij} \delta_{jk} R_{kl} = \delta_{il}$ excluding
+reflections.  A Lorentz transform preserves the Minkowski space metric and
+$\Lambda_\sigma{}^\mu \Lambda_\tau{}^\nu \eta_{\mu \nu} = \eta_{\sigma \tau}$.
+To see the equivalence multiply both sides by $\eta^{\tau \lambda}$ to
+get (eventually) $\delta^\lambda_\sigma = \delta^\lambda_\sigma$.
+
+The Lorentz transforms are defined by $\Lambda_\mu{}^\nu
+\Lambda_\sigma{}^\tau \eta_{\nu \tau} = \eta_{\mu \sigma}$ (the group
+$SO(3,1)$) with no spatial reflections and preservation of time,
+giving the Lorentz group.
+
+\chapter[Relativistic Electromagnetism]%
+{The relativistic theory of electromagnetism}
+
+We start with the Lorentz force law, $\vect{F} = e \E + e \vect{v} \wedge
+\B$ and seek to generalise it.  Non-relativistically we have
+\[
+m \diff{^2x^i}{t^2} = e \left( \E + \vect{v} \wedge \B \right)^i,
+\]
+and we already know the equation of motion for a free relativistic particle,
+\[
+m \diff{^2x^\mu}{\tau^2} = 0.
+\]
+
+We also recall the non-relativistic velocity 4-vector,
+\[
+\diff{x^\mu}{t} = u^\mu = (1,\vect{u}),
+\]
+and we know that $\ud \tau^2$ is Lorentz invariant and hence
+$-1 = u^\mu u^\nu \eta_{\mu \nu}$.  We guess a force law
+\[
+m \diff{^2 x^\mu}{\tau^2} = e F^\mu{}_\nu \diff{x^\nu}{\tau}.
+\]
+
+We see immediately that by the quotient theorem, $F^\mu{}_\nu$ must be
+a tensor.  We also know that this equation must be true in any inertial
+frame, and so is always true.  We take the non-relativistic case,
+where $\diff{}{\tau} = \diff{}{t}$ to find what $F^\mu{}_\nu$ must be.
+\[
+e E_x + e ( v_y B_z - v_z B_y)
+= e F^1{}_0 \diff{t}{\tau} + e F^1{}_1 \diff{x}{\tau}
++ e F^1{}_2 \diff{y}{\tau} + e F^1{}_3 \diff{z}{\tau}
+\]
+We thus identify $F^1_{0} = E_x$, $F^1{}_1 = 0$, $F^1{}_2 = B_z$ and
+$F^1{}_3 = - B_y$.  We repeat this process with $y$ and $z$, and
+lower the index, giving us
+\[
+\eta_{\mu \lambda} F^\lambda{}_\nu
+= F_{\mu \nu}
+= \begin{pmatrix}
+ & & & \\
+E_x & 0 & B_z & -B_y \\
+E_y & -B_z & 0 & B_x \\
+E_z & B_y & - B_x & 0
+\end{pmatrix}.
+\]
+We note that the spatial part of this is antisymmetric, and since we
+treat space and time equivalently, we can finally define
+\[
+F_{\mu \nu}
+= \begin{pmatrix}
+0 & - E_x & - E_y & - E_z \\
+E_x & 0 & B_z & -B_y \\
+E_y & -B_z & 0 & B_x \\
+E_z & B_y & - B_x & 0
+\end{pmatrix}.
+\]
+This is the electromagnetic field (strength) tensor, or Maxwell tensor.
+The only puzzle is what the time component of the relativistic Lorentz
+equation represents.  It is $m \diff{^2 t}{\tau^2} = e F^0{}_i
+\diff{x^i}{\tau}$.  We note that $u^\mu = \gamma (1,\vect{v})$
+and that $\gamma$ is a kind of relativistic energy, giving
+$\diff{}{\tau} \left( m \gamma \right) = e \vect{v} . \E$, which we
+know as ``the rate of change of energy equals the rate of doing work
+by the electric field''.
+
+\subsection{Relativistic motion in constant electric field}
+
+We consider a constant electric field in the $x$ direction.  We
+have a particle with charge $e$ which starts at rest at the origin.  The
+non-relativistic case is $m \ddot{x} = e E$, which gives
+$x = \frac{e E}{2 m} t^2$ and $\dot{x} = \frac{e E}{m} t$, which eventually
+exceeds $1$!
+
+Relativistically $m \ddot{y} = m \ddot{z} = 0$, which are trivial.  We also
+have the equations $m \ddot{x} = e F^x{}_0 \dot{t} = e E \dot{t}$
+and $m \ddot{t} = e E \dot{x}$.
+
+\marginpar{\framebox{%
+\parbox{1in}{In the relativistic case, $\dot{f} \equiv \diff{f}{\tau}$.}}}
+
+We integrate these once and use the initial conditions to get
+$m \dot{t} = e E x + C_1$ and $m \dot{x} = e E t$.  (Note that we
+set $\tau = 0$ at $t = 0$.)  Integrating again we get
+\begin{gather*}
+x(\tau) = A \sinh \frac{e E \tau}{m} + B \cosh \frac{e E \tau}{m}
+- \frac{m C_1}{e E} \\
+t(\tau) = A \cosh \frac{e E \tau}{m} + B \sinh \frac{e E \tau}{m}
++ \Tilde{C}.
+\end{gather*}
+
+We have the boundary conditions $x = \dot{x} = 0$ at $\tau = 0$ and
+$t = 0$ at $\tau = 0$.  There is a temptation to put $\dot{t} = 0$
+at $\tau = 0$ --- but this is inconsistent, as
+$-1 = u^\mu u_\mu = (-\dot{t}^2 + \dot{x}^2)$.  Thus we put $\dot{t} = 1$
+at $\tau = 0$ --- which we could have guessed, we know that at rest,
+co-ordinate time is the same as proper time.  Finally, we get
+\begin{gather*}
+x(\tau) = \frac{m}{e E}\left( \cosh \frac{e E \tau}{m} - 1 \right) \\
+t(\tau) = \frac{m}{e E} \sinh \frac{e E \tau}{m}.
+\end{gather*}
+
+To find the velocity we can write $x(t)$ by eliminating $\tau$
+\[
+x(t) = \frac{m}{e E} \left( \left( 1 + \frac{e^2 E^2 t^2}{m^2}
+\right)^{\frac{1}{2}} - 1 \right).
+\]
+
+We can now find the velocity
+\[
+\diff{x}{t} = \frac{e E}{m}\frac{t}{\sqrt{1 + \frac{e^2 E^2 t^2}{m}}}.
+\]
+
+For small $t$ we have the reassuring $\diff{x}{t} = \frac{e E t}{m}$,
+but in the large $t$ case we find only that $v \to 1$ from below, and
+is always less than $1$.
+
+\section{Transformation of $F_{\mu \nu}$}
+
+We Lorentz transform (in the $x$ direction with velocity $v$) the
+tensor $F_{\mu \nu}$ to see how the electric and magnetic fields
+change under Lorentz transformations.
+
+We know that $F_{\mu \nu} \mapsto F'_{\mu \nu}
+= \Lambda_\mu{}^\rho \Lambda_\nu{}^\sigma F_{\rho \sigma}$, and
+we just perform these sums to get:
+\begin{align*}
+E_x' &= E_x \\
+E_y' &= \gamma ( E_y - v B_z ) \\
+E_z' &= \gamma ( E_z + v B_y ) \\
+B_x' &= B_x \\
+B_y' &= \gamma (B_y + v E_z) \\
+B_z' &= \gamma (B_z - v E_y).
+\end{align*}
+
+These are radically different from what we would expect if there were two
+electric and magnetic 4-vectors.
+
+\section{Lorentz invariant scalars}
+
+We know that $F_{\mu \nu}$ and $\eta_{\mu \nu}$ are Lorentz invariant, and
+we can derive some Lorentz scalars from them.  The most obvious one
+is $F_{\mu \nu} \eta^{\mu \nu}$, but as $F$ is antisymmetric and $\eta$
+symmetric this evaluates to zero.  A more useful Lorentz scalar
+is $F_{\mu \nu} F^{\mu \nu} = 2 \left(\B^2 -\E^2 \right)$.
+
+We can get another Lorentz scalar by introducing the \emph{alternating
+tensor}, which is defined as
+
+\[
+\varepsilon^{\mu \nu \rho \sigma}
+= \begin{cases} 1 & \text{if $\mu \nu \rho \sigma$ is an even permutation
+of $0 1 2 3$} \\
+-1 & \text{if $\mu \nu \rho \sigma$ is an odd permutation of $0 1 2 3$} \\
+0 & \text{otherwise.}
+ \end{cases}
+\]
+
+We can now define the dual field strength tensor, $G^{\mu \nu}
+= \frac{1}{2} \varepsilon^{\mu \nu \rho \sigma} F_{\rho \sigma}$.  We
+can evaluate this
+\[
+G_{\mu \nu} =
+\begin{pmatrix}
+0 & -B_x & - B_y & -B_z \\
+B_x & 0 & -E_z & E_y \\
+B_y & E_z & 0 & -E_x \\
+B_z & -E_y & E_x & 0
+\end{pmatrix}.
+\]
+
+The dual tensor $G$ can be found from $F$ by $\E \mapsto \B$ and
+$\B \mapsto - \E$, which is sometimes called a duality rotation.  We
+can now define a further Lorentz scalar $F_{\mu \nu} G^{\mu \nu}
+= - 4\, \E . \B$.
+
+\section{Tensorial form of Maxwell's equations}
+
+\marginpar{%
+\framebox{%
+$\partial_i \equiv \pd{}{x^i}$ and $\partial_\mu \equiv
+\pd{}{x^\mu}$}}
+We start from Maxwell's equations to see what they turn into in tensor
+notation.  We take them in an slightly unusual order, $\dive \E =
+\mu_0 \rho$ and $\curl \B = \mu_0 \jc + \dot{\E}$ and seek to write them
+as tensor equations.
+
+We note that $E_i = F_{i 0} = -F^{0 i}$ and $B_i = \frac{1}{2} \epsilon_{ijk}
+F^{jk}$.  The divergence equation becomes $\partial_i F_{i 0} = \mu_0 \rho$.
+The curl equation is
+\begin{align*}
+\frac{1}{2} \epsilon_{i j k} \partial_j \epsilon_{k l m} F^{l m}
+& = \frac{1}{2} \left( \partial_j F_{i j} - \partial_j F_{j i} \right)\\
+& = \partial_j F_{ij} = \mu_0 j_i + \partial_0 F_{i 0}.
+\end{align*}
+
+We hope that this is consistent with a tensor equation
+$\partial_\mu F^{\mu \nu} = X^\nu$.  If we study this we see that
+this works if $X^\mu= - \mu_0 ( \rho, \jc )$.  Thus two of the Maxwell
+equations become
+\[
+\partial_\mu F^{\mu \nu} = - \mu_0 j^\nu.
+\]
+where $j^\mu = (\rho,\jc)$ is the 4-vector (electric) current.  This
+illustrates that a moving charge and a current are just the same thing as
+$j^\nu$ is a four-vector and so is consistent with Lorentz transforms.
+
+Incidentally, we have not lost conservation of charge as
+$0 \equiv \partial_\nu \partial_\mu F^{\mu \nu} = - \mu_0 \partial_\nu
+j^\nu$.
+
+We now go after the next two Maxwell equations, $\dive \B = 0$
+and $\curl \E = - \dot{\B}$.  The first is easy; it gives
+$\partial_i \epsilon_{i j k} F_{j k} = 0$.  We guess that this is a
+component of $\varepsilon^{\mu \nu \rho \sigma} \partial_\nu
+F_{\rho \sigma} = 0$, and indeed if we evaluate the spatial components
+we reproduce the last Maxwell equation. 
+
+We can rewrite this in terms of the dual field-strength tensor to get
+$\partial_\mu G^{\mu \nu} = 0$ --- this says that there is no magnetic
+current.  It turns out to be more useful to explicitly antisymmetrize our
+equation to get
+\[
+\partial_\nu F_{\rho \sigma} + \partial_\rho F_{\sigma\nu}
++ \partial_\sigma F_{\nu \rho} = 0.
+\]
+
+\subsection{Potentials}
+
+In the non-relativistic case we know that $\E$ and $\B$ can be derived
+from potentials:
+
+\begin{align*}
+\E &= -\grad \phi - \dot{\vect{A}} \\
+\B &= \curl \vect{A}.
+\end{align*}
+
+It turns out that we can come up with an electromagnetic 4-vector potential,
+$A^\mu = (\phi, \vect{A})$ such that $F_{\mu \nu} = \partial_\mu A_\nu -
+\partial_\nu A_\mu$ (simply expand this to see).
+
+We know that $\vect{A}$ is not unique in non-relativistic electromagnetism;
+we can add on the gradient of any scalar function --- called a gauge
+transformation.  Similarly, we see that the 4-vector potential $A_\mu$ is
+unique up to $\partial_\mu \Lambda$ for any scalar function $\Lambda$.  This
+means we can try to impose extra conditions on $A_\mu$ which (partially)
+prevents gauge transformations (called gauge fixing).  The point is to ensure
+that a given $F_{\mu \nu}$ is the product of a moderately unique
+$A_\mu$.\footnote{What ``moderately unique'' means has yet to be defined.}
+
+A useful covariant gauge is to impose $\partial_\mu A^\mu = 0$.  Thus
+if we have $A^\mu$ such that $F_{\mu \nu} = \partial_\mu A_\nu
+- \partial_\nu A_\mu$ and we set $A'{}^\mu = A^\mu + \partial^\mu \Lambda$,
+then we can have $0 = \partial_\mu A'{}^\mu = \partial_\mu A^\mu
++ \partial_\mu \partial^\mu \Lambda$.  In principle we can solve
+$\partial_\mu \partial^\mu \Lambda = - \partial_\mu A^\mu$, so this
+gauge condition is possible.
+
+If we consider this a little more, we see that $A^\mu$ is still non-unique,
+but only up to a solution of the wave equation, $\partial_\mu \partial^\mu
+\Lambda = 0$.  Solutions of the wave equation are a combination of
+plane waves, $e^{\imath k_\mu x^\mu}$, where $k^\mu = (\omega,\vect{k})$
+and $\omega = \abs{\vect{k}}$.  $k^\mu$ is the wave 4-vector or the momentum
+4-vector.
+
+If we wish to find $F^{\mu \nu}$ given a collection of charges and
+currents we solve the equation $\partial_\mu \partial^\mu A^\nu -
+\partial_\mu \partial^\nu A^\mu = - \mu_0 j^\nu$.  This is where our
+gauge condition comes in useful, we get $\partial_\mu \partial^\mu
+A^\nu = - \mu_0 j^\nu$, or $\Box A^\nu = - \mu_0 j^\nu$, where
+$\partial_\mu \partial^\mu \equiv \Box$ (pronounced ``box'').  We can
+now see that $\partial_\nu A^\nu = 0$ is sensible --- it is compatible
+with current conservation.
+
+\section{Least action principles}
+
+\subsection{Particle motion}
+
+For a single free particle in special relativity we have the action
+\[
+I = \int \ud \tau\, m \sqrt{- \dot{x}^\mu \dot{x}^\nu \eta_{\mu \nu}}.
+\]
+
+The usual Euler-Lagrange equations
+$\diff{}{\tau} \left( \pd{\cL}{\dot{x}^\mu} \right) - \pd{\cL}{x^\mu} = 0$ give
+$- m \ddot{x}_\mu = 0$.
+
+For a particle with charge $e$ in a potential $A^\mu$ we can generalise
+this to
+\[
+I = \int \ud \tau\, m \sqrt{- \dot{x}^\mu \dot{x}^\nu \eta_{\mu \nu}}
+- e A_\mu \dot{x}^\mu.
+\]
+
+But can this possibly be gauge invariant --- the quantity $A_\mu$
+appears explicitly?  Suppose we make a small gauge transformation
+such that $\delta A_\mu = \partial_\mu \Lambda$.  Then
+\begin{align*}
+\cL &\to \cL - e \dot{x}^\mu \partial_\mu \Lambda \\
+&= \cL - \diff{}{\tau} e \Lambda.
+\end{align*}
+
+Therefore the Lagrangian only changes by a total derivative - which
+does not affect the equations of motion.
+
+This is all somewhat academic if varying $x^\mu$ does not give us the Lorentz
+force law.  Using the Euler-Lagrange equations we get
+\begin{align*}
+0 &= \diff{}{\tau} \left( \frac{- m \dot{x}^\nu \eta_{\mu \nu}}
+{\sqrt{- \dot{x}^\mu \dot{x}^\nu \eta_{\mu \nu}}} \right)
+- \diff{}{\tau} \left(e A_\mu \right) + e \dot{x}^\nu \partial_\mu A_\nu \\
+\intertext{$\tau$ is the proper time so $\dot{x}^\mu \dot{x}^\nu \eta_{\mu \nu}
+= -1$ on the worldline}
+&= \diff{}{\tau} \left(- m \dot{x}_\mu\right)  - e \dot{x}^\nu
+\partial_\nu A_\mu + e \dot{x}^\nu \partial_\mu A_\nu \\
+&= -m \ddot{x}_\mu + e \dot{x}^\nu F_{\mu \nu}.
+\end{align*}
+
+This is the Lorentz force law.  One can use the action as a quick way of
+finding the motion of a particle.  For a constant electric field in
+the $x$ direction we get $A^x = - E t$ and all other components of
+$A^\mu$ are zero.  To get the motion of the particle we vary the action
+\[
+I = \int \ud \tau\, m \sqrt{\dot{t}^2 - \dot{x}^2} + e E t \dot{x}.
+\]
+
+The Euler-Lagrange equations give the same differential equations for the
+motion of the particle as before, but more easily.
+
+\subsection{Field action}
+
+We also want to find a Lagrangian $\cL$ that reproduces Maxwell's equations,
+that is if we take
+\[
+I = \int \ud^4 x\, \cL,
+\]
+$\delta I = 0$ under variations of something or other must
+reproduce Maxwell's equations.
+
+$\cL$ must be a Lorentz scalar, built out of $F_{\mu \nu}$ (or $A_\mu$)
+and it must be gauge invariant.  The Maxwell equations involve first
+derivatives of $F_{\mu \nu}$ (or second derivatives of $A_\mu$).  So the
+only real possibilities are varying $A_\mu$ and $\cL$ must be quadratic
+in $F_{\mu \nu}$.  $\varepsilon^{\mu \nu \rho \sigma} F_{\rho \sigma}$
+gives nothing.  The usual choice is
+\[
+\cL = - \frac{1}{4 \mu_0} F^{\mu \nu} F_{\mu \nu} + j_{\mu} A^\mu.
+\]
+
+This is gauge invariant.  If $\delta A_\mu = \partial_\mu \Lambda$, then if
+we assume $F_{\mu \nu} = \partial_\mu A_\nu - \partial_\nu A_\mu$ we get
+$\delta F_{\mu \nu} = \partial_\mu \partial_\nu \Lambda - \partial_\nu
+\partial_\mu \Lambda = 0$.
+
+Now consider the $\int j_\nu A^\nu$ part, which is thus the only part
+of the action which can potentially cause problems.  When $A_\mu
+\mapsto A_\mu + \partial_\mu \Lambda$,
+\begin{align*}
+I &\mapsto I + \int \ud^4 x\, j_\nu \partial^\nu \Lambda \\
+&=I + \int \ud^4 x\, \left(\partial^\nu j_\nu\right) \Lambda \\
+&=I \qquad \text{using conservation of charge.}
+\end{align*}
+
+Thus the action is gauge invariant.
+
+\begin{align*}
+I &= - \int \ud^4 x \, \left(\frac{1}{4 \mu_0} F_{\mu \nu} F^{\mu \nu} -
+j_\mu A^\mu \right) \qquad \text{and} \\
+\delta I &= - \int \ud^4 x \, \left(\frac{1}{4 \mu_0}
+\left( \delta F_{\mu \nu} F^{\mu \nu} + F_{\mu \nu} \delta F^{\mu \nu}
+\right) - j^\mu \delta A_\mu \right) \\
+&= - \int \ud^4 x \, \left(\frac{1}{2 \mu_0} \delta F_{\mu \nu} F^{\mu \nu}
+- j^\nu \delta A_\nu \right)\\
+&= - \int \ud^4 x \, \left( \frac{1}{2 \mu_0} \left(
+\partial_\mu \delta A_\nu - \partial_\nu \delta A_\mu
+\right) F^{\mu \nu}
+- j^\nu \delta A_\nu \right) \\
+&= - \int \ud^4 x \, \left(
+\frac{1}{\mu_0} \left( \partial_\mu \delta A_\nu \right) F^{\mu \nu}
+- \delta A_\nu j^\nu \right) \\
+&= \int \ud^4 x \, \delta A_\nu \left( \tfrac{1}{\mu_0} \partial_\mu
+F^{\mu \nu} + j^\nu \right).
+\end{align*}
+
+We perform the last line by integrating by parts and assuming that
+boundary conditions are all zero.  As we can arbitrarily vary
+$A_\mu$ we must have $\tfrac{1}{\mu_0} \partial_\mu F^{\mu \nu} = - j^\nu$.
+The other Maxwell equation is automatic as we have assumed that
+$F_{\mu \nu}$ is derived from a potential $A_\mu$. This least action
+principle requires that there is no magnetic current.
+
+\chapter{Energy - Momentum Tensor}
+
+\section{Definition}
+
+We seek a relativistic form of the field energy.  We define the
+(stress-)energy tensor
+\[
+T^{\mu \nu} = \frac{1}{\mu_0} \left( F^{\mu \sigma} F^\nu{}_\sigma
+- \tfrac{1}{4} \eta^{\mu \nu} F^{\rho \sigma} F_{\rho \sigma}
+\right).
+\]
+
+We note in passing that this is a symmetric tensor. Note that the
+$T^{0 0}$ component is $\frac{1}{2 \mu_0} \left( E^2 + B^2 \right)$,
+which reproduces the non-relativistic energy density.  To interpret
+the rest of the components of $T^{\mu \nu}$ we recall Poynting's
+theorem.
+
+\textbf{Poynting's Theorem.}   Let $D$ be a region in space.  Then the
+rate of change of energy in $D$ is
+
+\begin{align*}
+\frac{1}{2 \mu_0} \pd{}{t} \int_D \E^2 + \B^2\, \ud V
+&= \frac{1}{\mu_0} \int_D \E.\dot{\E} + \B.\dot{\B}\, \ud V \\
+&= \frac{1}{\mu_0} \int_D \E.\left( \curl \B - \mu_0 \jc \right)
+- \B.\curl \E\, \ud V \\
+&= - \int_D \jc . \E\, \ud V
++ \frac{1}{\mu_0} \int_D \E.\curl \B  - \B.\curl \E\, \ud V \\
+&= - \int_D \jc . \E\, \ud V - \int_{\partial D} \vect{N}.\ud \vect{S},
+\end{align*}
+where we have introduced the Poynting vector $\vect{N} = \frac{1}{\mu_0}
+\E \wedge \B$.  The Poynting vector is the energy flux.
+
+By performing the sum we find that $T^{0 k} = N^k$.  We find that
+
+\[
+T^{\mu \nu}
+= \left( \text{\small\begin{tabular}{c | c}
+  Energy & Energy flux \\
+  density & \\ \hline
+  Energy & \\
+  flux   & ``Stress'' \\
+         &
+\end{tabular}}\right).
+\]
+
+We want to evaluate the ``stress'' part of this tensor.
+
+\begin{align*}
+T_{ij} &= \tfrac{1}{\mu_0} \left( F_{i \mu} F_j{}^\mu - \tfrac{1}{4}
+\eta_{ij} F^{\rho \sigma} F_{\rho \sigma}\right) \\
+&= \tfrac{1}{\mu_0} \left( F_{i 0} F_j{}^0 + F_{i k} F_j{}^k
+- \tfrac{1}{4} \delta_{i j} \left( -2 E^2 + 2 B^2\right) \right) \\
+&= \tfrac{1}{\mu_0} \left( -E_i E_j + \epsilon_{i k l} B_l \epsilon_{j k m}
+B_m + \tfrac{1}{2} \delta_{i j} E^2 - \tfrac{1}{2} \delta_{i j} B^2 \right)\\
+&= \tfrac{1}{\mu_0} \left( -E_i E_j + \tfrac{1}{2} \delta_{i j} E^2
+- B_i B_j + \tfrac{1}{2} \delta_{i j} B^2 \right).
+\end{align*}
+
+This is the Maxwell stress tensor, and can be thought of as the pressure
+of the electromagnetic field.
+
+\subsection{Conservation of energy-momentum}
+
+We compute the divergence of $T^{\mu \nu}$.
+
+\begin{align*}
+\partial_\nu T^{\mu \nu} &= \tfrac{1}{\mu_0}
+\partial_\nu \left( F^{\mu \sigma} F^\nu{}_\sigma
+- \tfrac{1}{4} \eta^{\mu \nu} F^{\rho \sigma} F_{\rho \sigma} \right) \\
+&= \tfrac{1}{\mu_0} \left(
+\left( \partial_\nu F^{\mu \sigma} \right) F^\nu{}_\sigma
++ F^{\mu\sigma} \left( \partial_\nu F^\nu{}_\sigma \right)
+- \tfrac{1}{2} \left(\partial^\mu F^{\rho \sigma} \right) F_{\rho \sigma}
+\right) \\
+&= -F^{\mu \sigma} j_\sigma  + \tfrac{1}{\mu_0} F_{\rho \sigma} \left(
+-\tfrac{1}{2} \partial^\mu F^{\rho \sigma} + \partial^\rho F^{\mu \sigma}
+\right) \\
+&= -F^{\mu \sigma} j_\sigma  - \tfrac{1}{2 \mu_0} F_{\rho \sigma} \left(
+\partial^\mu F^{\rho \sigma} + \partial^\sigma F^{\mu \rho}
++ \partial^\rho F^{\sigma \mu} \right)\\
+&= -F^{\mu \sigma} j_\sigma \qquad \text{by Maxwell's equations.}
+\end{align*}
+
+Thus in the absence of charges/currents, the energy-momentum tensor is
+conserved.  We can evaluate the right hand side of this equation to get
+\[
+\partial_\nu T^{\mu \nu} = \left( - \jc.\E, \rho \E + \jc \wedge \B \right).
+\]
+
+The time component of this is the work done by the electromagnetic field
+and the spatial components give the electric force on a current $\jc$
+due to $\B$ and on a charge density $\rho$ due to $\E$.
+
+\section{Plane waves}
+
+This has the equation $\Box A^\mu = 0$ in the gauge $\partial_\mu
+A^\mu = 0$, which has solutions
+\[
+A_\mu = A \epsilon_\mu \exp \left( \imath k_\sigma x^\sigma \right),
+\]
+
+Note that this is a complex solution, so when we work with $\E$ and $\B$
+we must take the real part of the \emph{field}, which corresponds to the
+imaginary part of $A_\mu$.
+
+$\epsilon_\mu$ is the polarisation vector, and $k_\sigma = \left( -\omega,
+\vect{k}\right)$ is the wave 4-vector.  $\omega$ is the angular frequency,
+$\vect{k}$ is the wave vector and $\abs{\vect{k}} = \omega$.  $A$ is
+the amplitude.  Imposing the gauge condition requires $\epsilon_\mu k^\mu =0$,
+so we have the transversality of the wave.
+
+This does not completely specify the gauge.  If we let $\delta A_\mu
+= \partial_\mu \Lambda$ with $\Lambda = - \imath C e^{\imath k.x}$ then
+$\epsilon_\mu \mapsto \epsilon_\mu + C k_\mu$. Since $k_\mu k^\mu = 0$ this
+preserves the gauge condition.  This freedom is usually exploited to put
+$A^0 = 0$.  In this case,
+\[
+A_\mu = (0,A \vect{\epsilon} e^{\imath k.x}) = (0,A \vect{\epsilon}
+e^{\imath ( \vect{k}.\vx - \omega t )}),
+\]
+where $\vect{\epsilon}$ is a spatial vector.  The gauge condition gives
+$\vect{k}.\vect{\epsilon} = 0$.
+
+Finding $\E$ and $\B$ from $A_\mu$ is easy:
+\[
+E_i = -F_{0 i} = -\partial_0 A_i + \partial_i A_0
+= \imath \omega A_i.
+\]
+and
+\[
+B_i = \tfrac{1}{2} \epsilon_{i j k} F_{j k}
+= \epsilon_{i j k} \partial_j A_k 
+= - \imath \vect{k} \wedge \vect{A}.
+\]
+
+The physical fields correspond to the real parts of these quantities.
+
+\section{Radiation pressure}
+
+\vspace{1in}
+
+Suppose that we have a situation as drawn above, with a plane wave
+propagating in the $z$ direction.  Then the electric and
+magnetic fields are in the $y$ and $x$ directions respectively, with
+$E_y = \omega A \sin \omega (t-z)$ and $B_x = \omega A \cos \omega (t-z)$.
+
+The rate of flow of momentum per unit area is $\abs{\vect{N}}$, where
+$\vect{N}$ is the Poynting vector and this has a time average
+$\tfrac{1}{2 \mu_0} \omega^2 A^2$.  This is coincidentally the same as the
+energy density.  We also evaluate the stress-energy tensor
+\[
+T_{i j} = \tfrac{1}{\mu_0} \left( \tfrac{1}{2} \delta_{i j} \left(E^2
++B^2 \right) - E_i E_j - B_i B_j\right).
+\]
+
+This is clearly symmetric, and evaluating the diagonal components we get
+$\langle T_{xx} \rangle = 0$, $\langle T_{yy} \rangle = 0$ and
+$\langle T_{zz} \rangle = \tfrac{1}{2 \mu_0} \omega^2 A^2$.  There is
+a pressure due to the wave, but importantly \emph{it is not isotropic}.
+
+\chapter{Solving Maxwell's Equations}
+
+\section{A Green's Function}
+
+We hope to find a general expression for $A_\mu$ given a
+time dependent distribution of charges and currents.  We will work
+in the $\partial_\mu A^\mu = 0$ gauge, and so we have to
+solve the equation $\Box A^\mu = - \mu_0 j^\mu$.  We proceed naively
+and see what happens.
+
+We hope to find a Green's function $G(x,x')$ such that
+$\Box G = \delta^{(4)} (x,x')$ and so
+\[
+A^\mu(x) = - \mu_0 \int \ud^4 x'\, G(x,x') j^\mu(x')
+\]
+is a solution of $\Box A^\mu = - \mu_0 j^\mu$.  One problem is
+that $\Box$ is a hyperbolic operator so there exist non-trivial solutions
+to $\Box \phi = 0$ with $\phi \not \to 0$ at infinity.
+
+The four dimension Fourier transform is defined by
+
+\[
+\Hat{f}(k) = \int \ud^4 x\, f(x) e^{-\imath k.x}.
+\]
+
+The minus sign in the exponential is not arbitrary.  If $f$ is a plane
+wave $f(x) \sim e^{\imath p.x}$ then
+$\Hat{f}(k) = (2 \pi)^4 \delta^{(4)}(p-k)$, which is what we want.
+
+We will solve $\Box G(x,x') = \delta^{(4)}(x,x')$ using the Fourier
+transform.  $\Hat{G}(k,x') = - k^{-2} e^{- \imath k.x}$ and so defining
+$z^\mu = x^\mu - x'{}^\mu = (z^0,\vect{z})$ we find
+\[
+G(x,x') = \frac{1}{(2 \pi)^4} \int \ud^3 k\ud k^0\,
+\frac{e^{\imath \vect{k}.\vect{z}} e^{- \imath k^0 z^0}}{k^{0^2} -\vect{k}^2}
+\]
+and note that if we perform the $k_0$ integral we see that the integrand
+is singular at $k_0 = \pm \abs{\vect{k}}$.  We thus need
+to choose on which contour to perform the integral.
+
+\vspace{1in}
+
+If we consider the retarded Green's function $G_{\text{ret}}$,
+which we get by integrating along $\Gamma_1$, we see that
+for $z^0 < 0$, $G(x,x') = 0$ as we can close the contour
+in the upper half plane and apply Cauchy's theorem.  For
+$z^0 > 0$ we have to close the contour in the lower half plane.  In doing
+this we pick up two poles at $\pm \abs{\vect{k}}$ and can apply the residue
+theorem.
+
+The advanced Green's function $G_{\text{adv}}$ is obtained by
+integrating along $\Gamma_2$.  In this case $G$ is only non-zero
+for $z^0 > 0$.
+
+The retarded Green's function agrees with intuitive
+ideas of causality so we use that.  All we have to do now is
+evaluate it.
+
+\begin{align*}
+G_{\text{ret}}(x,x') &= \theta(z^0) \frac{1}{(2 \pi)^4}
+\int \ud^3 k \ud k^0\, \frac{e^{\imath \vect{k}.\vect{z}}
+e^{- \imath k^0 z^0}}{k^{0^2} -\vect{k}^2 } \\
+\intertext{We close the contour clockwise so we get
+$\left\{- 2 \pi \imath \sum \text{residues}\right\}$ for the
+$k^0$ integral, thus}
+G_{\text{ret}}(x,x') &= - \frac{2 \pi \imath \theta(z^0)}{(2 \pi)^4}
+\int \ud^3 k\, e^{\imath \vect{k}.\vect{z}}
+\left( \frac{e^{- \imath \abs{\vect{k}} z^0}
+- e^{\imath \abs{\vect{k}} z^0}}{2 \abs{\vect{k}}} \right). \\
+\intertext{We convert this into spherical polars in $\vect{k}$-space:
+$k_x = k \sin \theta \cos \phi$, $k_y = k \sin \theta \sin \phi$
+and $k_z = k \cos \theta$ and so}
+G_{\text{ret}}(x,x') &= - \frac{ \imath \theta(z^0)}{16 \pi^3}
+\int k^2 \ud k\, \sin \theta \ud \theta\, \ud \phi\,
+\frac{e^{\imath k z \cos \theta}}{k} \left(
+e^{-\imath k z^0} - e^{\imath k z^0}
+\right) \\
+&= - \frac{\imath \theta(z^0)}{8 \pi^2}
+\int k \ud k\, \sin \theta \ud \theta\,
+e^{\imath k z \cos \theta} \left(e^{-\imath k z^0} - e^{\imath k z^0}
+\right) \\
+&= \frac{\theta(z^0)}{8 \pi^2 z}
+\int_0^\infty \ud k\, \left[e^{\imath k z \cos \theta}
+\right]_{\theta=0}^{\theta=\pi} \left(e^{-\imath k z^0} -
+e^{\imath k z^0}\right). \\
+\intertext{The integrand is even in $k$, so}
+G_{\text{ret}}(x,x') &=
+\frac{\theta(z^0)}{16 \pi^2 z}
+\int_{-\infty}^\infty \ud k\, \left(
+e^{-\imath k z} - e^{\imath k z}
+\right) \left( e^{-\imath k z^0} - e^{\imath k z^0}\right).\\
+\intertext{Recall that $\int_{-\infty}^\infty \ud k e^{\imath k x}
+= 2 \pi \delta(x)$.  Thus the integral is a combination of four
+delta functions, but the step function $\theta$ kills two of them off
+and we get}
+G_{\text{ret}}(x,x') &= - \frac{\theta(z^0)}{4 \pi z}
+\delta(z - z^0).
+\end{align*}
+
+For the record, $G_{\text{adv}} = \frac{\theta(-z^0)}{4 \pi z}
+\delta(z+z^0)$.  We can make our result for $G_{\text{ret}}$
+look more covariant by recalling that
+\[
+\delta(f(x)) = \sum_i \frac{\delta(x-a_i)}{\abs{f'(a_i)}}
+\]
+where $f(a_i) = 0$.  Then as
+$\delta^{(3)} (z^2) = \delta(\abs{\vect{z}}^2 - z^{0^2})$ ($z$
+is a four-vector) we have
+\[
+\delta^{(3)}(z^2) = \frac{1}{2 \abs{\vect{z}}}
+\left( \delta^{(3)}(\abs{\vect{z}} - z^0) + \delta^{(3)}(
+\abs{\vect{z}} + z^0) \right)
+\]
+and as the step function removes one of these delta functions we get
+\[
+G_{\text{ret}}(x,x') = - \frac{1}{2 \pi} \theta(z^0)
+\delta^{(3)}(z^2), \qquad z^\mu = x^\mu - x'{}^\mu.
+\]
+
+Now suppose we wish to evaluate $A^\mu(x)$ for some current
+distribution $j^\mu$ as shown.  We get
+
+\[
+A^\mu(x) = \frac{\mu_0}{2 \pi} \int \ud^4 x'
+j^\mu(x') \delta^{(3)}\!\left((x - x')^2\right) \theta(x^0 - x'{}^0).
+\]
+
+\vspace{1.5in}
+
+This comes about because we chose $G_{\text{ret}}$.  The advanced
+Green's function gives the reverse.  Thus $G_{\text{ret}}$ is
+consistent with our ideas of causality.  Other choices of $G$
+are not.  This choice goes beyond local physics.  It is presumably
+solved by appealing to cosmology or quantum theory.
+
+We also note that the only contributions to $A^\mu(x)$ come from
+points $x'$ such that $(x-x')^2 = 0$ --- that is only when
+$x$ and $x'$ can be joined by a light ray pointing towards the future of
+$x'$.
+
+\section{The field of a moving charge}
+
+Suppose we have a moving charge, with (non-relativistically)
+$\rho = e \delta^3(\vx - \vect{y}(t))$ and therefore
+$\jc = e \diff{\vect{y}}{t} \delta^3(\vx - \vect{y}(t))$.  In the relativistic
+case we replace $\vect{y}(t)$ with $y^\mu(\tau)$ and get
+$j^\mu = e u^\mu \delta^3(x^i - y^i(t))$.  We can use a trick to make this
+look more covariant,
+\[
+j^\mu = e \int \ud \tau\, u^\mu \delta^4(x^\nu - y^\nu(\tau)).
+\]
+
+Then
+\[
+A^\mu = \frac{e \mu_0}{2 \pi} \int \ud^4 x'\, \ud \tau \,
+\delta\!\left((x-x')^2\right) \theta(x^0 - x'{}^0) \diff{y^\mu}{\tau}
+\delta^4(x'{}^\nu - y^\nu(\tau)),
+\]
+which has the effect of integrating over the backward light cone.  This can
+be evaluated by carrying out the $x'$ integral first.  Note that
+\[
+\delta\!\left((x-y)^2\right) = \frac{\delta\!\left(\abs{\vect{x} - \vect{y}}
+- (x^0 - y^0)\right) + \delta\!\left(\abs{\vect{x} - \vect{y}}
++ (x^0 - y^0) \right)}{-2 (x-y)_\nu \diff{y^\nu}{\tau}}
+\]
+
+The second delta function does not contribute (because we are using the
+retarded Green's function) and so
+\begin{align*}
+A^\mu &= \frac{e \mu_0}{2 \pi} \int \ud \tau\, \diff{y^\mu}{\tau}
+\frac{\delta\!\left(\abs{\vect{x} - \vect{y}}
+- (x^0 - y^0) \right)}{-2 (x-y)^\nu \diff{y_\nu}{\tau}} \\
+&= \frac{e \mu_0}{4 \pi} \left. \frac{\diff{y^\mu}{\tau}}{\diff{y^\nu}{\tau}
+(x-y)_\nu}\right|_{\tau = \tau_0}
+\end{align*}
+where $\tau_0$ is the value of $\tau$ on the world-line where the past light
+cone of $x$ intersects the world line of the particle.  This is usually
+referred to as evaluating at some instant of retarded time.
+These are the Lienard-Wiechert potentials, and are painful to use in
+arbitrary relativistic motion.
+
+The result
+\[
+A^\mu = \frac{e \mu_0}{2 \pi} \int \ud \tau \,
+\delta\!\left((x-y)^2\right) \theta(x^0 - y^0) \diff{y^\mu}{\tau}
+\]
+\emph{is} useful for relativistic motion.  To evaluate the fields we
+need to calculate terms of the form
+\begin{align*}
+\partial^\nu A^\mu &= \frac{e \mu_0}{2 \pi}
+\int \ud \tau\, \theta(x^0 - y^0) \diff{y^\mu}{\tau} \partial^\nu
+\delta\!\left( (x-y)^2 \right) \\
+&= \frac{e \mu_0}{2 \pi} \int \ud \tau\,
+\theta(x^0 - y^0(\tau)) \diff{y^\mu}{\tau} \frac{x^\nu - y^\nu(\tau)}
+{\diff{y^\rho}{\tau} (x-y)_\rho} \diff{}{\tau} \delta\!\left( (x-y)^2 \right)
+\end{align*}
+
+To evaluate this we integrate by parts.  We take $x^0 \neq y^0$ and thus
+remove points on the world-line of the particle from consideration.  The
+field is not well defined there.  Thus
+\[
+F^{\mu \nu} = - \frac{e \mu_0}{2 \pi}
+\diff{}{\tau} \left[
+\frac{(x-y)^\mu \diff{y^\nu}{\tau} - (x-y)^\nu \diff{y^\mu}{\tau}
+}{\diff{y^\rho}{\tau} (x-y)_\rho}
+\right]_{\tau = \tau_0}.
+\]
+
+We write $(x-y)^\mu = (+R, R\vect{n})$ where $R$ is the spatial distance
+$\abs{\vect{x}-\vect{y}}$ and $\vect{n}$ is a unit vector.  The plus
+sign on $R$ comes from the retarded Green's function.  We also need
+the velocity $\vect{v} = (\gamma,\gamma \vect{v})$ where $\vect{v}
+= \diff{\vect{y}}{t}$.  After evaluating this we get
+\begin{align*}
+\E &= \frac{e \mu_0}{2 \pi} \left[
+\frac{\vect{n} - \vect{v}}{\gamma^2 (1-\vect{n}.\vect{v})^3 R^2}
++ \frac{\vect{n} \wedge \left\{(\vect{n} - \vect{v}) \wedge \dot{\vect{v}}
+\right\}} {(1-\vect{n}.\vect{v})^3 R}
+\right]_{\text{retarded time}} \\
+\B &= \vect{n} \wedge \E.
+\end{align*}
+
+The first term in the expression for $\E$ is just the Coulomb field
+(put $\vect{v} = 0$ to see this).  The second term only appears if
+$\dot{v} \neq 0$ --- it depends on the acceleration.  Then
+\[
+\E \sim \frac{\text{acceleration}}{R} \quad \text{and} \quad
+\B \sim \frac{\text{acceleration}}{R}
+\]
+and are perpendicular.  Thus the Poynting vector is $\vect{N} \sim
+\frac{\text{acceleration}^2}{R^2}$.  Thus the energy flux out of
+a large radius sphere $\sim \text{acceleration}^2$ --- accelerating particles
+radiate energy.
+
+For a non-relativistic particle it is somewhat easier.  We use the
+Lienard-Wiechert potentials
+\[
+A^\mu = \frac{e \mu_0}{4 \pi} \left. \frac{\diff{y^\mu}{\tau}}
+{\diff{y^\nu}{\tau}(x-y)_\nu} \right|_{\text{retarded time}}
+\]
+and put $x^\mu = (t,\vx)$, $y^\mu = (t',\vect{y})$ with $\vx - \vect{y}
+= R \vect{n}$ where $\vect{n}$ is a unit vector.  For non-relativistic
+motion $\diff{y^\mu}{\tau} = (1,\vect{v})$ and
+\[
+A^\mu = \frac{e \mu_0}{4 \pi} \left. \frac{(1,\vect{v})}{\abs{\vx - \vect{y}}}
+\right|_{\text{at $t' = t - R$}}.
+\]
+
+It is straightforward to calculate $\E$ and $\B$ from $\B = \curl \vect{A}$
+and $\E = -\grad A^0 - \dot{\vect{A}}$.  We first evaluate $\B$, and note that
+we are only interested in the $\cO(R^{-1})$ terms --- to get the radiation
+at infinity.  Thus
+\[
+\B \sim - \frac{e \mu_0}{4 \pi R} \vect{n} \wedge \dot{\vect{v}}
+\quad \text{and} \quad
+\E \sim - \frac{e \mu_0}{4 \pi R} \vect{n} \wedge \left[
+\vect{n} \dot{\vect{v}} \right].
+\]
+
+The Poynting vector $\vect{N} = \frac{1}{\mu_0} \E \wedge \B$ evaluates as
+$\vect{N} = \frac{e^2 \mu_0}{16 \pi^2 R^2} \left( \ddot{\vect{y}} \right)^2
+\sin^2\! \theta\ \vect{n}$.
+
+\vspace{1in}
+
+The radiation is mainly perpendicular to the direction of the acceleration
+and is axisymmetric about that axis.  $\dot{v}$ determines the time dependence
+of the radiation and thus the frequency can be found by Fourier transforming
+$\dot{v}$.
+
+The power radiated (or the total flux of radiation) is
+$\int \vect{N}.\vect{dS}$ over a sphere at infinity which we assume is at a
+large distance from the particle (the celestial sphere).
+Converting to polars we get
+\[
+\text{flux of radiation}
+= \frac{e^2 \mu_0}{16 \pi^2} \left( \ddot{\vect{y}} \right)^2
+\int \sin^3\! \theta\ \ud \theta \ud \phi = \frac{e^2 \mu_0}{6 \pi}
+\left( \ddot{\vect{y}} \right)^2.
+\]
+
+This is Larmor's formula.
+
+\subsection{Radiation reaction}
+
+We consider a particle with mass $m$ and charge $e$ moving under an
+external force $\vect{F}_{\text{ext}}$.  Assume (naively) Newton's Law
+$m \ddot{\vect{y}} = \vect{F}_{\text{ext}}$ and dot this with
+$\dot{\vect{y}}$ and integrate to get that the change in kinetic
+energy equals the work done by the applied force.  But we know that
+this is not true --- there are radiative losses at infinity.  We
+therefore guess another force $\vect{F}_R$ and propose $m
+\ddot{\vect{y}} = \vect{F}_{\text{ext}} + \vect{F}_R$.  Dotting this
+with $\dot{\vect{y}}$ and integrating we see that $\vect{F}_R.\dot{\vect{y}}
+$ is the radiative energy loss.  Using Larmor's formula and assuming
+that there is no acceleration at the endpoints of the motion we get
+$\vect{F}_R = \frac{e^2 \mu_0}{6 \pi} \dddot{\vect{y}}$ and derive the
+Abraham-Lorentz equation
+\[
+m\left(\ddot{\vect{y}} - \frac{e^2 \mu_0}{6 \pi m} \dddot{\vect{y}} \right)
+= \vect{F}_{\text{ext}}.
+\]
+
+This is very odd and leads to embarrassing difficulties.  To solve such
+an equation three initial conditions are needed, position, velocity and
+acceleration.  But if we take $\vect{F}_{\text{ext}} = \vect{0}$ we
+see that the solutions are $A + B t + Ce^{\frac{t}{\tau}}$, where
+$\tau$ is the timescale $\frac{e^2 \mu_0}{6 \pi \mu}$.  This exponential
+runaway solution is presumed to be unphysical.
+
+If $\vect{F}_{\text{ext}}$ is a delta function and we assume the
+initial conditions $x = \dot{x} = 0$ we have to adjust $\ddot{x}$ to
+suppress the runaway solution.  We see that the particle (if charged)
+must start accelerating \emph{before} the force is applied.  This
+acausal behaviour is called pre-acceleration and is governed by the
+timescale $\tau$, which for an electron is approximately $6 \times
+10^{-24} \mathrm{s}$, into the realm of quantum mechanical effects.
+
+\section{Oscillating Fields}
+
+Assume that $j^\mu(\vect{x},t) = j^\mu(\vect{x}) e^{\imath \omega t}$ with
+$j^\mu$ non-zero only in some domain $D$.
+
+\vspace{1.5in}
+
+Using our result for $A^\mu$ we get
+\[
+A^\mu(\vect{x},t) = \frac{\mu_0}{4 \pi} e^{\imath \omega t}
+\int \ud^3 x'\, j^\mu(\vect{x}') \frac{1}{\abs{\vect{x} - \vect{x}'}}
+e^{-\imath \omega \abs{\vect{x}-\vect{x}'}}.
+\]
+
+If $R \gg d$ we can expand $\frac{1}{\abs{\vect{x}-\vect{x}'}}$ in the
+usual way as
+\begin{align*}
+\frac{1}{\abs{\vect{x}-\vect{x}'}} &= \frac{1}{R}
+\left( 1 - \frac{2 \vect{x}.\vect{x}'}{R^2}
++ \frac{\abs{\vect{x}'}^2}{R^2} \right)^{-\frac{1}{2}} \\
+&= \frac{1}{R} \left( 1 + \frac{\vect{x}.\vect{x}'}{R^2} - \frac{1}{2}
+\frac{\abs{\vect{x}'}^2}{R^2}
++ \frac{3}{2} \frac{\left(\vect{x}.\vect{x}' \right)^2}{R^4} \dots \right).
+\end{align*}
+
+The $\cO(R^{-2})$ and lower terms do not contribute to the radiation and will
+be omitted.  We get
+\[
+A^\mu(\vect{x},t) = \frac{\mu_0}{4 \pi R} e^{\imath \omega t}
+\int \ud^3 x' j^\mu(\vect{x}') e^{-\imath \omega \abs{\vect{x}
+- \vect{x}'}}.
+\]
+We can perform a similar expansion on $e^{- \imath \omega \abs{\vect{x}
+- \vect{x}'}}$ and finally get
+\[
+A^\mu(\vect{x},t) = \frac{\mu_0}{4 \pi R} e^{\imath \omega
+\left(t - R\right)} \int \ud^3 x' j^\mu(\vect{x}') e^{\imath \omega
+\frac{\vect{x}.\vect{x}'}{R}}
+\]
+provided $R \gg \lambda$, the wavelength.  Thus the expansion we
+have derived is valid when $R \gg d, \lambda$.  This is called the radiation
+zone.
+
+Thus at large distances the system appears to be a source of spherical waves.
+To proceed further we can expand out the phase factor in powers
+of $\omega$.  We get
+\[
+A^\mu(\vect{x},t) = \frac{\mu_0}{4 \pi R} e^{\imath \omega \left( t - R
+\right)} \int \ud^3 x'\, j^\mu(\vect{x}')
+\left[
+1 + \imath \omega \frac{\vect{x}.\vect{x}'}{R} -
+\omega^2 \frac{\left( \vect{x}.\vect{x}'\right)^2}{2 R^2} + \dots
+\right].
+\]
+
+In the radiation zone when $\omega d \gg 1$ these terms are successively
+smaller.
+
+Recall that $j^\mu = (\rho,\jc)$.  Then
+
+\[
+A^0(\vect{x},t) = \frac{\mu_0}{4 \pi R} e^{\imath \omega \left(
+t - R \right)} \left[Q + \frac{\imath \omega}{R} \vect{x}.\vect{p} + \dots
+\right]
+\]
+where $\vect{p}$ is the electric dipole moment of the system.  Note that
+$Q = 0$ as the total charge cannot depend on time.  For the vector
+potential,
+\[
+A^i(\vect{x},t) = \frac{\mu_0}{4 \pi R} e^{\imath \omega \left(
+t - R\right)} \left[
+\int \ud^3 x'\, j_i(\vect{x}') + \frac{\imath \omega}{R} x_j
+\int \ud^3 x'\, x_j' j_i(\vect{x}') + \dots
+\right]
+\]
+We can simplify this by noting (integrate by parts)
+that
+\[
+\int \ud^3 x' \, j_i(\vect{x}') = - \int \ud^3 x'\, x_i' \partial_j
+j_j(\vect{x}')
+\]
+and applying the continuity equation, which in this case is $
+\imath \omega \rho + \dive \jc = 0$.  Thus
+\[
+\int \ud^3 x' \, j_i(\vect{x}') = \imath \omega \vect{p}
+\]
+and we get
+\[
+A^0 = \frac{\imath \omega \mu_0}{4 \pi R^2} e^{\imath \omega \left( t-R
+\right)} \frac{\vect{p}.\vect{x}}{R} \quad \text{and} \quad
+\vect{A} = \frac{\imath \omega \mu_0}{4 \pi R} e^{\imath \omega \left( t-R
+\right)} \vect{p}.
+\]
+
+We can now calculate $\E$ and $\B$ as
+\begin{align*}
+\E &= \frac{\omega^2 \mu_0}{4 \pi R^3} e^{\imath \omega \left( t-R \right)}
+\left(R^2 \vect{p} - (\vx . \vect{p}) \vx \right) \\
+&= \frac{\omega^2 \mu_0}{4 \pi R^3} e^{\imath \omega \left( t-R \right)}
+\vx \wedge \left( \vx \wedge \vect{p} \right) \quad \text{and}\\
+\B &= \frac{\omega^2 \mu_0}{4 \pi R^2} e^{\imath \omega \left( t-R \right)}
+\vx \wedge \vect{p}.
+\end{align*}
+
+The time averaged Poynting vector thus points radially outwards and has
+magnitude $N = \frac{\mu_0 \omega^4 \abs{\vect{p}}^2}{32 \pi^2 R^2}
+\sin^2 \theta$ and the average power radiated is therefore
+$\frac{\mu_0 \omega^4 \abs{\vect{p}}^2}{12 \pi}$.
+
+The scattered light has $\omega^4$ dependence times the spectrum of the
+light.  Thus blue light is scattered preferentially to red and the sky
+appears blue.  This also explains the red sun at sunset; since there is more
+scattering when the angle of the sun is low and the blue light is scattered
+more.
+
+\chapter{Quantum mechanical effects}
+
+\section{Minimal coupling}
+
+Consider a particle with charge $e$, worldline $x^\mu(\tau)$ in an
+electromagnetic field with potential $A^\mu$.  Recall we obtained an
+action
+\[
+I = - \int \ud \tau\, \left( m \sqrt{- \dot{x}^2} - e A_\mu \dot{x}^\mu
+\right) = \int \ud \tau\, \cL(x,\dot{x}), 
+\]
+
+where the minus sign is inessential; it just normalizes things nicely.  The
+momentum $\pi^\mu$ conjugate to $x^\mu$ is $\pd{\cL}{\dot{x}^\mu}
+= m \dot{x}^\mu + e A^\mu$, consisting of the mechanical momentum
+and a modification due to the electromagnetic field.  The Hamiltonian
+$H(x,\pi) = \pi^\mu \dot{x}_\mu - \cL = \frac{\left( \pi - e A\right)^2}{m}$.
+
+The replacement of $p$ with $\pi = p + e A$ is usually termed ``minimal
+coupling'' and corresponds to classical electrodynamics.
+
+In quantum mechanics the momentum $p$ is replaced with a momentum operator
+$\Hat{p}$, and we assume that the momentum operator for charged particles
+is modified ``like the classical momentum'', that is
+$p \mapsto \pi = \Hat{p} + e A \mapsto - \imath \hbar \nabla + e A$.
+
+The Schr\"odinger equation for a static field $(0,\vect{A})$ is
+$\frac{p^2}{2 m} \psi = E \psi$, which according to minimal coupling, and
+turning $p$ into an operator, is $\frac{\left( - \imath \hbar \nabla
++ e \vect{A} \right)^2}{2 m} \psi = E \psi$.
+
+Since gauge transformations are not supposed to have any physical effect
+solutions of the Schr\"odinger equation in one gauge must be solutions in
+another gauge.  If we start with the universal combination
+$\left( -\imath \hbar \nabla + e \vect{A} \right) \psi$, on sending
+$\vect{A} \mapsto \vect{A} + \nabla \Lambda$ the universal combination
+becomes $\left( - \imath \hbar \nabla + e \vect{A}
++ e \nabla \Lambda \right) \psi'$.  This must be invariant
+(up to a phase factor), and so if $\psi' = \psi e^{-\frac{\imath e \Lambda}
+{\hbar}}$ we get $\left( -\imath \hbar \nabla  + e \vect{A} + e
+\nabla \Lambda \right) \psi' = e^{-\frac{\imath e \Lambda}
+{\hbar}} \left( - \imath \hbar \nabla - e \nabla \Lambda + e \vect{A}
++ e \nabla \Lambda \right) \psi$ and the universal combination is invariant
+(up to a phase factor).  Phase should not be too disturbing; the matrix
+element
+\[
+\int \ud^3 x\, \psi_1^\ast \Hat{O} \psi_2 \mapsto
+\int \ud^3 x\, \psi_1^\ast e^{\frac{\imath e \Lambda}{\hbar}}
+\Hat{O} \psi_2 e^{-\frac{\imath e \Lambda}{\hbar}}
+\]
+
+and under all normal circumstances the phase factors cancel; the matrix
+element is invariant.
+
+This minimal coupling means that the vector potential can give rise
+to observable physical effects.  One which you may have met before is
+the Aharonov - Bohm effect.
+
+Consider the long, thin solenoid shown, with $\B \neq 0$ inside and
+$\B = 0$ outside.  In classical mechanics, charged particles with be
+unaffected since $\B = 0$ outside the solenoid.
+
+In quantum mechanics; consider eigenstates of $\pi$; states $\psi$
+with $\left( - \imath \hbar \nabla + e \vect{A} \right) \psi = \pi \psi$.
+If the phases of the waves on the two paths differ then there will be
+destructive interference.
+
+Now suppose that a neutral particle has a wavefunction $\psi_0(x)$.  For
+a charged particle the corresponding wavefunction is
+$\psi(x) = \psi_0(x) \exp \left( - \frac{\imath e}{\hbar}
+\int_{x_0}^x \vect{A}.\vect{\ud l} \right)$.  Thus the phase factor (the
+difference in phase) between the two paths is
+\begin{align*}
+e^{-\frac{\imath e}{\hbar} \oint \vect{A}.\vect{\ud l}} &=
+e^{-\frac{\imath e}{\hbar} \int \curl \vect{A}.\vect{\ud S}} \\
+&= e^{-\frac{\imath e}{\hbar} \int \B.\vect{\ud S}} \\
+&= e^{-\frac{\imath e}{\hbar} \left(\text{flux}\right)}.
+\end{align*}
+
+By appropriate choice of the flux $\Phi$ we can get as much or as little
+interference as we want.  If $\frac{e}{\hbar} \Phi = \pi$ then there is
+completely destructive interference; if $\frac{e}{\hbar} \Phi = 2 \pi$
+then the interference is completely constructive and the solenoid is
+undetectable.  In general if $\Phi = \frac{2 \pi n \hbar}{e}$ the
+solenoid is unobservable.  This is an inherently quantum mechanical effect.
+
+One might think that $\B = 0$ outside the solenoid implies that $\vect{A} = 0$
+outside the solenoid.  This is true only if the region is simply connected
+--- which it isn't.  We can make a gauge transformation to put $\vect{A} = 0$
+at a point but because the region is not simply connected we cannot do this
+everywhere.
+
+This was experimentally verified in the 1960's.
+
+\section{Conduction}
+
+An ordinary conductor looks something like a regular lattice of atoms, with
+the valence electrons forming an electron gas throughout the material.
+
+\vspace{1in}
+
+An applied $\E$ field moves the gas, but electrons collide with atoms
+and stop.  Suppose they move with an average velocity $\vect{v}$.  Then
+the current density is the charge on an electron $\times$ the number
+density $\times \vect{v}$.  The mean free path only depends on the geometry,
+so the current density is $\sigma \E$, with $\sigma$ the conductivity.
+
+Superconductivity is very different.  It was first discovered by
+Kammerlingh-Onnes in 1905; he noticed that when some metals are cooled
+to $\approx 4 \K$ the electric conductivity became infinite.  Nowadays
+superconductivity is observed in certain materials up to about liquid
+nitrogen temperatures, $\approx 100 \K$.
+
+The fundamental description of superconductivity is due to Bardeen,
+Cooper and Schreiffer and is in detail beyond this course.  The result
+is that the current is an inherently quantum mechanical effect in which
+bound states of pairs of electrons behave as bosons rather than as fermions.
+They have a charge $-2 e$ and an effective mass of $m$ (say).
+
+We will examine the Landau-Ginzburg theory. Suppose the charge
+carriers have a wavefunction $\chi = R e^{\imath \phi}$.  We can then
+interpret the probability current as the flux of these particles.  We
+can evaluate
+
+\[
+\jc_{\text{prob}} = \frac{\hbar}{2 \imath m} \left( \chi^\ast \nabla \chi
+- \left( \nabla \chi \right)^\ast \chi \right)
+= \frac{\hbar}{m} R^2 \nabla \phi.
+\]
+
+We interpret $R^2$ as a number density $n_s$ and so we guess an
+electric current $\jc = \frac{q \hbar}{m} \nabla \phi$.  However this
+is not gauge invariant and as the electric current must stay the same under
+gauge transformations we fix up the equation to get the result
+(which can be \emph{derived} from the BCS theory)
+\[
+\jc_s = \frac{q \hbar n_s}{m} \left( \nabla \phi - \frac{q}{\hbar} \vect{A}
+\right).
+\]
+
+\subsection{Meissner effect}
+
+Since $\dive \B = 0$ lines of $\B$ cannot end.  However if one
+takes a material in a magnetic field and cools it to its superconducting
+temperature one observes a change in the magnetic field.
+
+\vspace{1in}
+
+We are led to guess that $\B = 0$ inside a superconductor.  The above
+expression for $\jc_s$ and the Maxwell equations give $\curl \B =
+\frac{\mu_0 q \hbar n_s}{m} \left\{ \nabla \phi - \frac{q}{\hbar}
+  \vect{A} \right\}$.  Taking the curl of this we get a differential
+equation for $\B$:
+\[
+\nabla^2 \B = \frac{\mu_0 q^2 n_s}{m} \B.
+\]
+
+\vspace{1in}
+
+In the region shown this simplifies to $\pd{^2 \B}{z^2} = \frac{\mu_0
+  q^2 n_s}{m} \B$ and so we find that $\B = \B_0 \exp - \sqrt{
+  \frac{\mu_0 q^2 n_s}{m}} z$, taking the negative root since the
+energy must be bounded.
+
+$\B$ decays exponentially away from the surface on a distance scale
+$\sqrt{\frac{m}{n_s q^2 \mu_0}}$, which is of the order of atomic
+size.  Thus in practice we have $\B = 0$ inside a superconductor and
+this is a better definition of a superconductor than saying that it
+has infinite conductivity.
+
+$\vect{A}$ is not necessarily $0$, but in order to get a
+superconducting current we must have $n_s \neq 0$.  Landau and
+Ginzburg tried to construct an analog of the Schr\"odinger equation
+which gave this result.
+
+It is easier (as always) to start from an action:
+
+\begin{align*}
+I &= \int \ud^3 x\, \left[ \text{kinetic energy} - \text{potential energy}
+\right] \\
+&= \int \ud^3 x\, \left[- \frac{\hbar^2}{2m} \psi^\ast \nabla^2 \psi
+- V \psi^\ast \psi \right] \\
+&= \int \ud^3 x\, \left[\frac{1}{2m} \left( - \imath \hbar \nabla \psi
+\right)^\ast \left( - \imath \hbar \nabla \psi\right) + V \psi^\ast \psi
+ \right]\\
+\intertext{incorporating the magnetic field via minimal coupling}
+&= \int \ud^3 x\, \left[ \left( - \imath \hbar \nabla \psi
+- q \vect{A} \psi \right)^\ast
+\left( - \imath \hbar \nabla \psi - q \vect{A} \psi \right)
++ V \psi^\ast \psi \right].
+\end{align*}
+
+This is gauge invariant.
+
+It cannot depend on where we are in the superconductor and so $V$
+is constant.  We get the familiar Schr\"odinger equation which
+has the obvious solution $\psi = 0$ and no other solution independent of
+$\vect{x}$.
+
+Landau and Ginzburg proposed the addition of a term
+$\frac{1}{2} b \abs{\psi}^4$ to this action to get
+\[
+I = \int \ud^3 x\, \frac{\hbar^2}{4 m} \abs{\left(
+\nabla - \frac{\imath q}{\hbar} \vect{A}
+\right) \psi}^2 +
+V \abs{\psi}^2 + \frac{1}{2} b \abs{\psi}^4.
+\]
+
+This action can be derived from BCS theory and gives a nonlinear
+analog of the Schr\"odinger equation:
+\[
+- \frac{1}{4 m} \left( - \imath \hbar - q \vect{A}\right)^2  \psi
++ V \psi + b \abs{\psi}^2 \psi = 0.
+\]
+
+The current $\jc_s = \frac{q \hbar}{2 \imath m} \left(
+\psi^\ast \nabla \psi - \psi \left( \nabla \psi \right)^\ast
+\right) - \frac{2 q^2}{m} \vect{A} \abs{\psi}^2$.
+
+We get a non-vanishing spatially independent solution of this
+``Schr\"odinger equation'' when $V < 0$ and $b > 0$.  This
+occurs when the temperature $T$ is less than some critical temperature
+$T_c$; normal matter has $V > 0$.
+
+BCS theory gives $b > 0$ and $V = V_0 \left( T - T_c \right)$.
+
+\section{Superconducting flux quantisation}
+
+Consider a ring of superconducting material as shown.
+
+\vspace{1in}
+
+In the material $\B = 0$ and $\jc = 0$.  Since $\jc \propto
+\left( \nabla \psi - \frac{q}{\hbar} \vect{A}\right)$ we must have
+$\vect{A} = \frac{\hbar}{q} \nabla \phi$ inside the ring.
+
+The magnetic flux through the loop is
+
+\[
+\int_{\text{shaded surface}} \B.\vect{\ud S}
+= \oint_{\text{boundary loop}} \vect{A}.\vect{\ud l}.
+\]
+
+Evaluating this inside the superconductor we get
+$\frac{\hbar}{q} \left[ \phi \right]$.  As the wavefunction must
+be single valued this must be $n \frac{2 \pi \hbar}{q}$ and since
+the charge carriers are electron pairs then the flux is quantised in
+units of $\frac{\pi \hbar}{\abs{e}}$.
+
+If we make a current $I$ flow on the surface of the superconductor then
+as the flux through the loop is the inductance times the current, and so
+the flux is quantised we see that the current is quantised.
+
+\section{Magnetic monopoles}
+
+Suppose that a $\B$ field $\frac{\mu_0}{4 \pi} P
+\frac{\Hat{\vect{r}}}{r^2}$ is possible, by analogy with the Coulomb
+field in electrostatics.
+
+Using Gauss' Law we have
+\[
+P = \frac{1}{\mu_0} \int_{\text{closed surface}}
+\B.\vect{\ud S} = \frac{1}{\mu_0} \int \dive \B\, \ud V.
+\]
+
+Thus if $\dive \B = 0$ everywhere then $P = 0$ and magnetic charges
+cannot arise.  Thus Maxwell's equations must be modified in order to
+get this field.
+
+A suitable vector potential $\vect{A}$ is $A_\phi = \frac{\mu_0 P}{4
+  \pi} \left( 1 + \cos \theta \right)$ (in spherical polars).  We have
+$\abs{A} = \frac{\mu_0}{4 \pi} \frac{\left(1 + \cos \theta\right)}{r
+  \sin \theta}$.  There is a difficulty at $\theta = 0$ for all $r$.
+
+This singularity on the North axis is called the Dirac string.  It can
+be moved about by gauge transformations; if we have $\vect{A} \mapsto
+\vect{A} + \nabla \frac{- \mu_0 P}{2 \pi} \phi$ we can put the Dirac
+string onto the South axis.
+
+Since (by axiom) the observable physics should not depend on the gauge
+used the string singularity should be unobservable.
+
+We showed earlier that the phase difference between two paths going in
+front of / behind the string is $\frac{e}{\hbar} \oint
+\vect{A}.\vect{\ud l}$ and this must be an integer multiple of $2
+\pi$.  Evaluating the integral gives the Dirac quantisation condition
+$P = n \frac{2 \pi \hbar}{\mu_0 e}$.
+
+\chapter{Born-Infeld Theory}
+
+\marginpar{%
+This material is starred and was included as a fill-in lecture.}
+
+Recall that Maxwell's theory is (in the absence of currents) governed
+by an action
+\[
+I = \frac{1}{\mu_0} \int \ud^4 x - \frac{1}{4} F_{\mu \nu} F^{\mu \nu},
+\]
+
+giving the two Maxwell equations $\partial_\mu F_{\rho \sigma} +
+\partial_\rho F_{\sigma \mu} + \partial_\sigma F_{\mu \rho} = 0$ and
+$\partial_\mu F^{\mu \nu} = 0$.  There is a hidden duality symmetry
+under $F_{\mu \nu} \mapsto \frac{1}{2} \varepsilon_{\mu \nu \rho
+  \sigma} F^{\rho \sigma}$ of both the action and the equations of
+motion.
+
+Recall also that electric charges have a radial component
+$E_r = \frac{Q}{4 \pi \epsilon_0} \frac{1}{r^2}$ and that the energy
+density in the electric field is $\frac{1}{2} \epsilon_0 \abs{\E}^2$.
+We can see that the energy density blows up at the origin and also that
+the total energy in the electric field is infinite.
+
+We also propose a similar magnetic monopole field $B_r = \frac{P \mu_0}{4
+\pi} \frac{1}{r^2}$; the energy in this magnetic field is also infinite.
+
+The Born-Infeld theory emerges from string theory.  It depends on
+a parameter $b$ with the dimensions of length.  We take a new action;
+\[
+\frac{1}{\mu_0 b^2} \int \ud^4 x\,\left\{ 1 - \sqrt{\abs{\det{\eta_{\mu \nu}
++ b F_{\mu\nu}}}} \right\}
+\]
+and we suppose that $F_{\mu \nu} = \partial_\mu A_\nu - \partial_\nu A_\mu$.
+
+Since we have that, up to a Lorentz transform,
+\[
+F_{\mu \nu} = \Tilde{F}_{\mu \nu} = \begin{pmatrix} 0 & \lambda_1 & 0 & 0 \\
+-\lambda_1 & 0 & 0 & 0 \\
+0 & 0 & 0 & \lambda_2 \\
+0 & 0 & -\lambda_2 & 0
+\end{pmatrix}
+\]
+we can see that $\det \eta_{\mu \nu} + b \Tilde{F}_{\mu \nu} = \det
+\eta_{\mu \nu} + b F_{\mu \nu}$ and so we can evaluate the action as
+\[
+\frac{1}{\mu_0 b^2} \int \ud^4 x  \left\{
+1 - \sqrt{1 - \frac{1}{2} b^2 F_{\mu \nu} F^{\mu \nu} - \frac{1}{16}
+b^4 \left( \varepsilon^{\mu \nu \rho \sigma} F_{\mu \nu} F_{\rho \sigma}
+\right)^2 } \right\}.
+\]
+
+The limit $b \to 0$ (clearly) gives the Maxwell action.  Since we
+are assuming that $F_{\mu \nu}$ is derived from a potential we still have
+the equation $\partial_\mu F_{\nu \rho} + \partial_\nu F_{\rho \mu}
++ \partial_\rho F_{\mu \nu} = 0$ and the other equation is
+$\partial_\mu \cG^{\mu \nu} = 0$, the difference being that
+the equation for $\cG^{\mu \nu}$ is a horrible mess:
+\[
+\cG^{\mu \nu} = \frac{F^{\mu \nu} - \tfrac{b^2}{4} F^{\lambda \tau}
+\varepsilon_{\mu \nu \lambda \tau} F_{\alpha \beta} F_{\gamma \delta}
+\varepsilon^{\alpha \beta \gamma \delta}}{
+\sqrt{1 - \frac{b^2}{2} F_{\xi \zeta} F^{\xi \zeta} - \frac{b^4}{16}
+\left( \varepsilon_{\xi \zeta \chi \varpi} F^{\xi \zeta} F^{\chi
+\varpi} \right)^2}}
+\]
+
+(you have no idea how difficult it was to find that many different Greek
+letters).
+
+We obtain
+\[
+T_{\mu \nu} = \frac{1}{\mu_0} \left\{ \cG_\mu{}^\lambda F_{\nu \lambda}
+ + \frac{1}{4} \eta_{\mu \nu} \cL \right\}
+\]
+where $\cL$ is the Lagrangian; $\cL = \frac{1}{b^2} \left\{
+1- \sqrt{\abs{\det \eta_{\mu \nu} + b F_{\mu \nu}}} \right\}$.
+
+There is a symmetry in these equations under $F_{\mu \nu}
+\mapsto \frac{1}{2} \varepsilon_{\mu \nu \rho \sigma} \cG^{\rho \sigma}$
+and $\cG_{\mu \nu} \mapsto - \frac{1}{2} \varepsilon_{\mu \nu \rho \sigma}
+F^{\rho \sigma}$:
+the Lagrangian and equations of motions are invariant.  This has the effect
+of swapping $\E$ and $\B$.
+
+The analog of the electric field of a point charge is an $\E$ field
+which is purely radial, defined by $A_0 = \phi$ and
+$E_r = - \nabla_r \phi$.  In this case the action reduces to
+\[
+\frac{1}{\mu_0 b^2} \int r^2 \ud r \sin \theta \ud \theta \ud \phi
+\left[ 1 - \sqrt{1 - b^2 \phi_r^2} \right]
+\]
+and variation of this yields
+\[
+\frac{r^2 \phi_r}{\sqrt{1 - b^2 \phi_r^2}} = \text{const} = a.
+\]
+
+Solving this for $\phi_r = -E_r$ yields
+\[
+E_r = - \frac{a}{\sqrt{r^4 + a^2 b^2}}
+\]
+and so as $r \to \infty$, $E_r \sim -\frac{a}{r^2}$.  Thus if we wish
+to reproduce the Maxwell field for large distances $a = -\frac{Q}{4
+  \pi \epsilon_0}$.  Thus as $r \to 0$ we see that $E_r \to \frac{1}{b}$.
+
+The energy density in the electric field is
+\[
+\frac{1}{\mu_0 b^2} \left\{\frac{1}{\sqrt{1 - b^2 \E^2}} - 1\right\}
+= \frac{1}{\mu_0 b^2} \left\{\sqrt{1 + \frac{b^2 Q^2}{16 \pi^2
+\epsilon_0 r^4}} - 1 \right\}
+\]
+
+which is singular (but integrably so) at $r=0$.  Performing the integral
+to find the total energy in the electric field we obtain
+\[
+\frac{4 \pi}{3 \sqrt{b}} \frac{1}{\Gamma(\tfrac{3}{4})^2} \left( \frac{Q}{4}
+\right)^{\frac{3}{2}} \frac{1}{\epsilon_0^{\frac{1}{2}}},
+\]
+which is noticably finite.
+
+This theory also has magnetic monopoles; an easy way is to see that the
+theory is invariant under swapping $\E$ and $\B$.  The energy in
+a magnetic monopole field is
+\[
+\frac{4 \pi}{3 \sqrt{b}} \frac{1}{\Gamma(\tfrac{3}{4})^2}
+\left( \frac{P}{4}\right)^{\frac{3}{2}} \sqrt{\mu_0}
+\]
+if $\B_r \sim \frac{\mu_0 P}{4 \pi r^2}$ as $r \to \infty$.
+
+In fact $B_r = \frac{\mu_0 P}{4 \pi r^2}$ which although it looks singular
+is perfectly reasonable.
+
+\backmatter
+
+\begin{thebibliography}{9}
+\bibitem{Jackson} J.D.~Jackson, \emph{Classical Electrodynamics},
+  Second ed., Wiley, 1975.
+  
+  {\sffamily \small This is probably the best book for the course.  It
+    is very complete and reasonably easy to read.  It has two major
+    flaws; its price and its use of CGS units.  Every college library
+    should have at least one copy. }
+
+\bibitem{Feynman} Feynman, Leighton, Sands, \emph{The Feynman Lectures
+    on Physics Vol. 2}, Addison-Wesley, 1964.
+  
+  {\sffamily \small The Feynman lectures are always good reading.
+    However Feynman II, the book on electromagnetism, is not really
+    suitable as a textbook for this course.  It is not complete
+    enough although it is good for introductory reading and revision
+    of earlier work. It's also fun... }
+
+\bibitem{LandL} Landau and Lifschitz, \emph{The Classical Theory of
+    Fields}, Fourth ed., Butterworth-Heinemann, 1975.
+  
+  {\sffamily \small This is a good reference but isn't so good to
+    learn by.  It also uses CGS units.}
+\end{thebibliography}
+
+\begin{center}
+\fbox{\parbox{3.5in}{
+The sign conventions for the tensor $F_{\mu \nu}$ are variable and it
+is essential to check which convention any given book is using.}}
+\end{center}
+
+There appears to be a gap in the market at about the level of this
+course.  Most books on electromagnetism seem to be written either for
+a first course or for a postgraduate course.  If you find a good one I
+haven't mentioned please send me a \emph{brief} review and I will
+append it to this bibliography if I think it is suitable.
+
+\end{document}

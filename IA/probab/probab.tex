@@ -1,0 +1,3222 @@
+\documentclass{notes}
+
+\theoremstyle{plain}
+
+\newtheorem{theorem}{Theorem}[chapter]
+\newtheorem*{example}{Example}
+\newtheorem*{corollary}{Corollary}
+\newtheorem{definition}{Definition}[chapter]
+
+\newcommand{\bP}{\mathbb{P}}
+\newcommand{\bN}{\mathbb{N}}
+\newcommand{\bR}{\mathbb{R}}
+\newcommand{\bE}{\mathbb{E}}
+\newcommand{\prob}[1]{\bP \negthinspace\left(#1\right)}
+\newcommand{\rv}{random variable\ }
+\newcommand{\expect}[1]{\bE\!\left[#1\right]}
+\DeclareMathOperator{\var}{Var}
+\newcommand{\vari}[1]{\var\negthinspace\left[#1\right]}
+
+\begin{document}
+
+\frontmatter
+\title{Probability}
+\lecturer{Prof.~F.P.~Kelly}
+\maintainer{Andrew Rogers}
+\date{Lent 1996}
+\maketitle
+
+\thispagestyle{empty}
+\noindent\verb$Revision: 1.1 $\hfill\\
+\noindent\verb$Date: 2002/09/20 14:45:43 $\hfill
+
+\vspace{1.5in}
+
+The following people have maintained these notes.
+
+\begin{center}
+\begin{tabular}{ r  l}
+-- June 2000 & Kate Metcalfe \\
+June 2000 -- date & Andrew Rogers
+\end{tabular}
+\end{center}
+
+\tableofcontents
+
+\chapter{Introduction}
+
+These notes are based on the course ``Probability''
+given by Prof.~F.P.~Kelly in Cambridge in the Lent Term 1996.  This
+typed version of the notes is totally unconnected with Prof.~Kelly.
+
+\alsoavailable
+\archimcopyright
+
+\mainmatter
+
+\chapter{Basic Concepts}
+
+\section{Sample Space}
+
+Suppose we have an experiment with a set $\Omega$ of outcomes.  Then
+$\Omega$ is called the sample space.  A potential outcome $\omega \in \Omega$
+is called a sample point.
+
+For instance, if the experiment is tossing coins, then $\Omega = \{ H, T \}$,
+or if the experiment was tossing two dice, then $\Omega = \{ (i,j)
+: i,j \in \{ 1,\dots, 6 \} \}$.
+
+A subset $A$ of $\Omega$ is called an event.  An event $A$ occurs is when
+the experiment is performed, the outcome $\omega \in \Omega$ satisfies
+$\omega \in A$.  For the coin-tossing experiment, then the event of a 
+head appearing is $A = \{ H \}$ and for the two dice, the event ``rolling
+a four'' would be $A = \{ (1,3), (2,2), (3,1) \}$.
+
+\section{Classical Probability}
+
+If $\Omega$ is finite, $\Omega = \{ \omega_1, \dots, \omega_n \}$, and each
+of the $n$ sample points is ``equally likely'' then the probability of event
+$A$ occurring is
+
+\[
+\prob{A} = \frac{\abs{A}}{\abs{\Omega}}
+\]
+
+\begin{example}
+Choose $r$ digits from a table of random numbers.  Find the probability that
+for $0 \le k \le 9$,
+\begin{enumerate}
+\item no digit exceeds $k$,
+\item $k$ is the greatest digit drawn.
+\end{enumerate}
+\end{example}
+
+\begin{proof}[Solution]
+The event that no digit exceeds $k$ is
+\[
+A_k = \left\{
+(a_1, \dots, a_r) : 0 \le a_i \le k, i=1 \dots r
+\right\}.
+\]
+Now $\abs{A_k} = (k+1)^r$, so that $\prob{A_k} = \left( \tfrac{k+1}{10}
+\right)^r$.
+
+Let $B_k$ be the event that $k$ is the greatest digit drawn.  Then
+$B_k = A_k \setminus A_{k-1}$.  Also $A_{k-1} \subset A_k$, so that
+$\abs{B_k} = (k+1)^r - k^r$.  Thus $\prob{B_k} = \tfrac{(k+1)^r - k^r}{10^r}$
+\end{proof}
+
+\subsection*{The problem of the points}
+
+Players A and B play a series of games.  The winner of a game wins a point.
+The two players are equally skillful and the stake will be won by the first
+player to reach a target.  They are forced to stop when A is within 2 points
+and B within 3 points.  How should the stake be divided?
+
+Pascal suggested that the following continuations were equally likely
+
+\begin{center}
+\ttfamily
+\begin{tabular}{c c c c c}
+AAAA & AAAB & AABB & ABBB & BBBB \\
+     & AABA & ABBA & BABB &      \\
+     & ABAA & ABAB & BBAB &      \\
+     & BAAA & BABA & BBBA &      \\
+     &      & BAAB &      &      \\
+     &      & BBAA &      &      
+\end{tabular}
+\end{center}
+
+This makes the ratio $11:5$.  It was previously thought that the ratio should
+be $6:4$ on considering termination, but these results are not equally likely.
+
+\section{Combinatorial Analysis}
+
+The fundamental rule is:
+
+Suppose $r$ experiments are such that the first may result in any of $n_1$
+possible outcomes and such that for each of the possible outcomes of the
+first $i-1$ experiments there are $n_i$ possible outcomes to experiment $i$.
+Let $a_i$ be the outcome of experiment $i$.  Then there are a total
+of $\prod_{i=1}^r n_i$ distinct $r$-tuples $( a_1, \dots, a_r)$ describing
+the possible outcomes of the $r$ experiments.
+
+\begin{proof}
+Induction.
+\end{proof}
+
+\section{Stirling's Formula}
+
+For functions $g(n)$ and $h(n)$, we say that $g$ is asymptotically equivalent
+to $h$ and write $g(n) \sim h(n)$ if $\tfrac{g(n)}{h(n)} \rightarrow 1$ as
+$n \rightarrow \infty$.
+
+\begin{theorem}[Stirling's Formula]
+As $n \rightarrow \infty$, 
+\[
+\log \frac{n!}{\sqrt{2 \pi n} n^n e^{-n}} \rightarrow 0
+\]
+and thus $n! \sim \sqrt{2 \pi n} n^n e^{-n}$.
+\end{theorem}
+
+We first prove the weak form of Stirling's formula, that $\log(n!) \sim n \log n$.
+
+\begin{proof}
+$\log n! = \sum_{1}^n \log k$.  Now
+\[
+\int_1^n \log x dx \le \sum_{1}^n \log k \le \int_1^{n+1} \log x dx,
+\]
+and $\int_1^z log x\ dx = z \log z - z + 1$, and so
+\[
+n \log n - n + 1 \le \log n! \le (n+1) \log (n+1) - n.
+\]
+Divide by $n \log n$ and let $n \rightarrow \infty$ to sandwich
+$\tfrac{\log n!}{n \log n}$ between terms that tend to $1$.  Therefore
+$\log n! \sim n \log n$.
+\end{proof}
+
+Now we prove the strong form.
+
+\begin{proof}
+For $x > 0$, we have
+\[
+1 - x + x^2 - x^3 < \frac{1}{1+x} < 1 - x + x^2.
+\]
+Now integrate from $0$ to $y$ to obtain
+\[
+y - y^2/2 + y^3/3 - y^4/4 < \log(1+y) < y - y^2/2 + y^3/3.
+\]
+Let $h_n = \log \frac{n! e^n}{n^{n+1/2}}$.  Then\footnote{by playing silly
+buggers with $\log 1+\tfrac{1}{n}$} we obtain
+\[
+\frac{1}{12 n^2} - \frac{1}{12 n^3} \le h_n - h_{n+1} \le \frac{1}{12 n^2}
++ \frac{1}{6 n^3}.
+\]
+For $n \ge 2$, $0 \le h_n - h_{n+1} \le \frac{1}{n^2}$.  Thus $h_n$ is a
+decreasing sequence, and $0 \le h_2 - h_{n+1} \le \sum_{r=2}^n (h_r - h_{r+1})
+\le \sum_1^\infty \tfrac{1}{r^2}$.  Therefore $h_n$ is bounded below,
+decreasing so is convergent.  Let the limit be $A$.  We have obtained
+\[
+n! \sim e^A n^{n+1/2} e^{-n}.
+\]
+
+We need a trick to find $A$.  Let $I_r = \int_0^{\pi/2} \sin^r \theta\, d\theta$.
+We obtain the recurrence $I_r = \tfrac{r-1}{r}I_{r-2}$ by integrating by parts.
+Therefore $I_{2 n} = \tfrac{(2 n)!}{(2^n n!)^2} \pi/2$ and
+$I_{2n + 1} = \tfrac{(2^n n!)^2}{(2n+1)!}$.
+Now $I_n$ is decreasing, so
+\[
+1 \le \frac{I_{2 n}}{I_{2 n +1}} \le \frac{I_{2 n - 1}}{I_{2 n + 1}}
+= 1 + \frac{1}{2 n} \rightarrow 1.
+\]
+But by substituting our formula in, we get that
+\[
+\frac{I_{2 n}}{I_{2 n + 1}} \sim \frac{\pi}{2} \frac{2 n + 1}{n}
+\frac{2}{e^{2 A}} \rightarrow \frac{2 \pi}{e^{2 A}}.
+\]
+
+Therefore $e^{2 A} = 2 \pi$ as required.
+\end{proof}
+
+\chapter{The Axiomatic Approach}
+
+\section{The Axioms}
+
+Let $\Omega$ be a sample space.  Then probability $\bP$ is a real valued
+function defined on subsets of $\Omega$ satisfying :-
+
+\begin{enumerate}
+\item $0 \le \prob{A} \le 1$ for $A \subset \Omega$,
+\item $\prob{\Omega} = 1$,
+\item for a finite or infinite sequence $A_1, A_2, \dots \subset \Omega$ of
+disjoint events, $\prob{\cup A_i} = \sum_i \prob{A_u}$.
+\end{enumerate}
+
+The number $\prob{A}$ is called the probability of event $A$.
+
+We can look at some distributions here.  Consider an arbitrary finite or
+countable $\Omega = \{ \omega_1, \omega_2, \dots \}$ and an arbitrary
+collection $\{ p_1, p_2, \dots \}$ of non-negative numbers with sum $1$.
+If we define
+\[
+\prob{A} = \sum_{i : \omega_i \in A} p_i,
+\]
+it is easy to see that this function satisfies the axioms.  The numbers
+$p_1, p_2, \dots$ are called a probability distribution.  If $\Omega$ is finite
+with $n$ elements, and if $p_1 = p_2 = \dots = p_n = \tfrac{1}{n}$ we recover
+the classical definition of probability.
+
+Another example would be to let $\Omega = \{ 0, 1, \dots \}$ and attach
+to outcome $r$ the probability $p_r = e^{-\lambda} \tfrac{\lambda^r}{r!}$
+for some $\lambda > 0$.  This is a distribution (as may be easily verified),
+and is called the Poisson distribution with parameter $\lambda$.
+
+\begin{theorem}[Properties of $\bP$]
+A probability $\bP$ satisfies
+\begin{enumerate}
+\item $\prob{A^c} = 1 - \prob{A}$,
+\item $\prob{\emptyset} = 0$,
+\item if $A \subset B$ then $\prob{A} \le \prob{B}$,
+\item $\prob{A \cup B} = \prob{A} + \prob{B} - \prob{A \cap B}$.
+\end{enumerate}
+\end{theorem}
+
+\begin{proof}
+Note that $\Omega = A \cup A^c$, and $A \cap A^c = \emptyset$.  Thus
+$1 = \prob{\Omega} = \prob{A} + \prob{A^c}$.  Now we can use this to obtain
+$\prob{\emptyset} = 1 - \prob{\emptyset^c} = 0$.  If $A \subset B$, write
+$B = A \cup ( B \cap A^c )$, so that $\prob{B} = \prob{A} + \prob{B \cap A^c}
+\ge \prob{A}$.  Finally, write $A \cup B = A \cup (B \cap A^c)$ and
+$B = (B \cap A) \cup (B \cap A^c)$.  Then $\prob{A \cup B}
+= \prob{A} + \prob{B \cap A^c}$ and $\prob{B} = \prob{B \cap A}
++ \prob{B \cap A^c}$, which gives the result.
+\end{proof}
+
+\begin{theorem}[Boole's Inequality]
+For any $A_1, A_2, \dots \subset \Omega$,
+\begin{gather*}
+\prob{\bigcup_1^n A_i} \le \sum_i^n \prob{A_i} \\
+\prob{\bigcup_1^\infty A_i} \le \sum_i^\infty \prob{A_i}
+\end{gather*}
+\end{theorem}
+
+\begin{proof}
+Let $B_1 = A_1$ and then inductively let $B_i = A_i \setminus 
+\bigcup_1^{i-1} B_k$.  Thus the $B_i$'s are disjoint and
+$\bigcup_i B_i = \bigcup_i A_i$.  Therefore
+\begin{align*}
+\prob{\bigcup_i A_i} &= \prob{\bigcup_i B_i} \\
+&=\sum_i \prob{B_i} \\
+&\le \sum_i \prob{A_i} \qquad \text{ as } B_i \subset A_i.
+\end{align*}
+\end{proof}
+
+\begin{theorem}[Inclusion-Exclusion Formula]
+\[
+\prob{\bigcup_1^n A_i} = \sum_{\substack{S \subset \{1, \dots, n\} \\
+S \neq \emptyset}}
+ (-1)^{\abs{S} - 1} \prob{\bigcap_{j \in S} A_j}.
+\]
+\end{theorem}
+
+\begin{proof}
+We know that $\prob{A_1 \cup A_2} = \prob{A_1} + \prob{A_2} - 
+\prob{A_1 \cap A_2}$.  Thus the result is true for $n=2$.  We also have that
+\[
+\prob{A_1 \cup \dots \cup A_n} = \prob{A_1 \cup \dots 
+\cup A_{n-1}} + \prob{A_n} - \prob{(A_1 \cup \dots \cup A_{n-1}) \cap A_n}.
+\]
+But by distributivity, we have
+\[
+\prob{\bigcup_i^n A_i} = \prob{\bigcup_1^{n-1} A_i} + \prob{A_n}
+- \prob{\bigcup_1^{n-1} (A_i \cap A_n)}.
+\]
+Application of the inductive hypothesis yields the result.
+\end{proof}
+
+\begin{corollary}[Bonferroni Inequalities]
+\[
+\sum_{\substack{S \subset \{1, \dots, r\} \\
+S \neq \emptyset}} (-1)^{\abs{S} - 1} \prob{\bigcap_{j \in S} A_j}
+\begin{matrix} \le \\ \text{or} \\ \ge \end{matrix} \ 
+\prob{\bigcup_1^n A_i}
+\]
+according as $r$ is even or odd.  Or in other words, if the 
+inclusion-exclusion formula is truncated, the error has the sign of the
+omitted term and is smaller in absolute value.  Note that the case $r=1$
+is Boole's inequality.
+\end{corollary}
+
+\begin{proof}
+The result is true for $n=2$.  If true for $n-1$, then it is true for $n$
+and $1 \le r \le n-1$ by the inductive step above, which expresses a
+$n$-union in terms of two $n-1$ unions.  It is true for $r=n$ by the 
+inclusion-exclusion formula.
+\end{proof}
+
+\begin{example}[Derangements]
+After a dinner, the $n$ guests take coats at random from a pile.  Find the
+probability that at least one guest has the right coat.
+\end{example}
+
+\begin{proof}[Solution]
+Let $A_k$ be the event that guest $k$ has his\footnote{I'm not being
+sexist, merely a lazy typist.  Sex will be assigned at random...} own coat.
+
+We want $\prob{\bigcup_{i=1}^n A_i}$.  Now,
+\[
+\prob{A_{i_1} \cap \dots \cap A_{i_r}} = \frac{(n-r)!}{n!},
+\]
+by counting the number of ways of matching guests and coats after
+$i_1, \dots, i_r$ have taken theirs.  Thus
+\[
+\sum_{i_1 < \dots < i_r} \prob{A_{i_1} \cap \dots \cap A_{i_r}} = 
+\binom{n}{r} \frac{(n-r)!}{n!} = \frac{1}{r!},
+\]
+and the required probability is
+\[
+\prob{\bigcup_{i=1}^n A_i} = 1 - \frac{1}{2!} + \frac{1}{3!}
++ \dots + \frac{(-1)^{n-1}}{n!},
+\]
+which tends to $1 - e^{-1}$ as $n \rightarrow \infty$.
+\end{proof}
+
+Furthermore, let $\bP_m(n)$ be the probability that exactly $m$ guests
+take the right coat.  Then $\bP_0(n) \rightarrow e^{-1}$ and
+$n!\, \bP_0(n)$ is the number of derangements of $n$ objects.  Therefore
+\begin{align*}
+\bP_m(n) &= \binom{n}{m} \frac{1 \times \bP_0(n-m) \times (n-m)!}{n!}\\
+& = \frac{\bP_0(n-m)}{m!} \rightarrow \frac{e^{-1}}{m!} \text{ as }
+n \rightarrow \infty.
+\end{align*}
+
+\section{Independence}
+
+\begin{definition}
+Two events $A$ and $B$ are said to be independent if
+\[
+\prob{A \cap B} = \prob{A} \prob{B}.
+\]  More generally, a collection of events $A_i$,
+$i \in I$ are independent if
+\[
+\prob{\bigcap_{i \in J} A_i} = \prod_{i \in J} \prob{A_i}
+\]
+for all finite subsets $J \subset I$.
+\end{definition}
+
+\begin{example}
+Two fair dice are thrown.  Let $A_1$ be the event that the first die shows
+an odd number.  Let $A_2$ be the event that the second die shows an odd
+number and finally let $A_3$ be the event that the sum of the two numbers
+is odd.  Are $A_1$ and $A_2$ independent?  Are $A_1$ and $A_3$ independent?
+Are $A_1$, $A_2$ and $A_3$ independent?
+\end{example}
+
+\begin{proof}[Solution]
+We first calculate the probabilities of the events $A_1$, $A_2$, $A_3$,
+$A_1 \cap A_2$, $A_1 \cap A_3$ and $A_1 \cap A_2 \cap A_3$.
+\begin{center}
+\begin{tabular}{c | c }
+Event & Probability\\ \hline \\
+$A_1$ & $\tfrac{18}{36} = \tfrac{1}{2}$ \\ \\
+$A_2$ & As above, $\tfrac{1}{2}$ \\ \\
+$A_3$ & $\tfrac{6 \times 3}{36} = \tfrac{1}{2}$ \\ \\
+$A_1 \cap A_2$ & $\tfrac{3 \times 3}{36} = \tfrac{1}{4}$ \\ \\
+$A_1 \cap A_3$ & $\tfrac{3 \times 3}{36} = \tfrac{1}{4}$ \\ \\
+$A_1 \cap A_2 \cap A_3$ & $0$
+\end{tabular}
+\end{center}
+
+Thus by a series of multiplications, we can see that $A_1$ and $A_2$ are
+independent, $A_1$ and $A_3$ are independent (also $A_2$ and $A_3$),
+but that $A_1$, $A_2$ and $A_3$ are \emph{not} independent.
+\end{proof}
+
+Now we wish to state what we mean by ``2 independent experiments''\footnote{or
+more generally, $n$.}.  Consider $\Omega_1 = \{ \alpha_1, \dots \}$ and
+$\Omega_2 = \{ \beta_1, \dots \}$ with associated probability distributions
+$\{ p_1, \dots \}$ and $\{ q_1, \dots \}$.  Then, by ``2 independent
+experiments'', we mean the sample space $\Omega_1 \times \Omega_2$ with
+probability distribution $\prob{ (\alpha_i, \beta_j) } = p_i q_j$.
+
+Now, suppose $A \subset \Omega_1$ and $B \subset \Omega_2$.  The event $A$
+can be interpreted as an event in $\Omega_1 \times \Omega_2$, namely
+$A \times \Omega_2$, and similarly for $B$.  Then
+\[
+\prob{A \cap B} = \sum_{\substack{\alpha_i \in A \\ \beta_j \in B}}
+p_i q_j = \sum_{\alpha_i \in A} p_i \sum_{\beta_j \in B} q_j =
+\prob{A} \prob{B},
+\]
+which is why they are called ``independent'' experiments.  The obvious
+generalisation to $n$ experiments can be made, but for an infinite sequence
+of experiments we mean a sample space $\Omega_1 \times \Omega_2 \times \dots$
+satisfying the appropriate formula $\forall n \in \bN$.
+
+You might like to find the probability that $n$ independent tosses of a biased
+coin with the probability of heads $p$ results in a total of $r$ heads.
+
+\section{Distributions}
+
+The binomial distribution with parameters $n$ and $p$, $0 \le p \le 1$ has 
+$\Omega = \{ 0, \dots, n \}$ and probabilities
+$p_i = \binom{n}{i} p^i (1-p)^{n-i}$.
+
+\begin{theorem}[Poisson approximation to binomial]
+If $n \rightarrow \infty$, $p \rightarrow 0$ with $n p = \lambda$ held fixed,
+then
+\[
+\binom{n}{r} p^r (1-p)^{n-r} \rightarrow e^{- \lambda} \frac{\lambda^r}{r!}.
+\]
+\end{theorem}
+
+\begin{proof}
+\begin{align*}
+\binom{n}{r} p^r (1-p)^{n-r} &= \frac{n (n-1) \dots (n-r+1)}{r!}
+p^r (1-p)^{n-r} \\
+&= \frac{n}{n} \frac{n-1}{n} \dots \frac{n-r+1}{n} \frac{ (np)^r}{r!}
+ (1-p)^{n-r} \\
+&= \prod_{i=1}^r \left( \frac{n - i + 1}{n} \right)
+\frac{\lambda^r}{r!} \left(1 - \frac{\lambda}{n} \right)^n
+\left(1 - \frac{\lambda}{n} \right)^{-r} \\
+& \rightarrow 1 \times \frac{\lambda^r}{r!} \times e^{-\lambda} \times 1 \\
+& = e^{-\lambda} \frac{\lambda^r}{r!}.
+\end{align*}
+\end{proof}
+
+Suppose an infinite sequence of independent trials is to be performed.  Each
+trial results in a success with probability $p \in (0,1)$ or a failure with
+probability $1-p$.  Such a sequence is called a sequence of Bernoulli trials.
+The probability that the first success occurs after exactly $r$ failures is
+$p_r = p (1-p)^r$.  This is the \emph{geometric distribution} with parameter
+$p$.  Since $\sum_0^\infty p_r = 1$, the probability that all
+trials result in failure is zero.
+
+\section{Conditional Probability}
+
+\begin{definition}
+Provided $\prob{B} > 0$, we define the conditional probability of
+$A | B$\footnote{read ``$A$ given $B$''.} to be
+\[
+\prob{A | B} = \frac{\prob{A \cap B}}{\prob{B}}.
+\]
+Whenever we write $\prob{A | B}$, we assume that $\prob{B} > 0$.
+\end{definition}
+
+Note that if $A$ and $B$ are independent then $\prob{A | B} = \prob{A}$.
+
+\begin{theorem}
+\begin{enumerate}
+\item $\prob{A \cap B} = \prob{A | B} \prob{B}$,
+\item $\prob{A \cap B \cap C} = \prob{A | B \cap C} \prob{B | C} \prob{C}$,
+\item $\prob{A | B \cap C} = \tfrac{\prob{A \cap B | C}}{\prob{B | C}}$,
+\item the function $\prob{ \circ | B}$ restricted to subsets of $B$ is a
+probability function on $B$.
+\end{enumerate}
+\end{theorem}
+
+\begin{proof}
+Results 1 to 3 are immediate from the definition of conditional probability.
+For result 4, note that $A \cap B \subset B$, so $\prob{A \cap B} \le \prob{B}$
+and thus $\prob{A | B} \le 1$.  $\prob{B | B} = 1$ (obviously), so it just
+remains to show the last axiom. For disjoint $A_i$'s,
+\begin{align*}
+\prob{\bigcup_i A_i \bigg| B} & = \frac{\prob{\bigcup_i (A_i \cap B)}}{\prob{B}} \\
+& = \frac{\sum_i \prob{A_i \cap B}}{\prob{B}} \\
+&= \sum_i \prob{A_i | B}, \text{ as required.}
+\end{align*}
+\end{proof}
+
+\begin{theorem}[Law of total probability]
+Let $B_1, B_2, \dots$ be a partition of $\Omega$.  Then 
+\[
+\prob{A} = \sum_i \prob{A | B_i} \prob{B_i}.
+\]
+\end{theorem}
+
+\begin{proof}
+\begin{align*}
+\sum \prob{A | B_i} \prob{B_i} & = \sum \prob{A \cap B_i} \\
+& = \prob{\bigcup_i A \cap B_i} \\
+& = \prob{A}, \text{ as required.}
+\end{align*}
+\end{proof}
+
+\begin{example}[Gambler's Ruin]
+A fair coin is tossed repeatedly.  At each toss a gambler wins $\pounds 1$
+if a head shows and loses $\pounds 1$ if tails.  He continues playing until
+his capital reaches $m$ or he goes broke.  Find $p_x$, the probability that
+he goes broke if his initial capital is $\pounds x$.
+\end{example}
+
+\begin{proof}[Solution]
+Let $A$ be the event that he goes broke before reaching $\pounds m$, and
+let $H$ or $T$ be the outcome of the first toss.  We condition on the first
+toss to get $\prob{A} = \prob{A | H} \prob{H} + \prob{A | T} \prob{T}$.  But
+$\prob{A | H} = p_{x+1}$ and $\prob{A | T} = p_{x-1}$.  Thus we obtain the
+recurrence
+\[
+p_{x+1} - p_x = p_x - p_{x-1}.
+\]
+Note that $p_x$ is linear in $x$, with $p_0 = 1$, $p_m = 0$.  Thus
+$p_x = 1 - \tfrac{x}{m}$.
+\end{proof}
+
+\begin{theorem}[Bayes' Formula]
+Let $B_1, B_2, \dots$ be a partition of $\Omega$.  Then
+\[
+\prob{B_i | A} = \frac{\prob{A | B_i} \prob{B_i}}{\sum_j \prob{A | B_j} 
+\prob{B_j}}.
+\]
+\end{theorem}
+
+\begin{proof}
+\[
+\prob{B_i | A} = \frac{\prob{A \cap B_i}}{\prob{A}}
+= \frac{\prob{A | B_i} \prob{B_i}}{\sum_j \prob{A | B_j} \prob{B_j}},
+\]
+by the law of total probability.
+\end{proof}
+
+\chapter{Random Variables}
+
+Let $\Omega$ be finite or countable, and let $p_\omega = \prob{\{ \omega \}}$
+for $\omega \in \Omega$.
+
+\begin{definition}
+A random variable $X$ is a function $X : \Omega \mapsto \bR$.
+\end{definition}
+
+Note that ``random variable'' is a somewhat inaccurate term, a random
+variable is neither random nor a variable.
+
+\begin{example}
+If $\Omega = \{ (i,j), 1 \le i,j \le t \}$, then we can define random
+variables $X$ and $Y$ by $X(i,j) = i+j$ and $Y(i,j) = \max \{ i,j \}$
+\end{example}
+
+Let $R_X$ be the image of $\Omega$ under $X$.  When the range is finite
+or countable then the \rv is said to be discrete.
+
+We write $\prob{X = x_i}$ for $\sum_{\omega : X(\omega) = x_i} p_\omega$,
+and for $B \subset \bR$
+\[
+\prob{X \in B} = \sum_{x \in B}  \prob{X = x}.
+\]
+Then
+\[
+(\prob{X = x}, x \in R_X)
+\]
+is the distribution of the \rv $X$.  Note that it is a probability
+distribution over $R_X$.
+
+
+\section{Expectation}
+\begin{definition}
+The expectation of a \rv $X$ is the number
+\[
+\expect{X} = \sum_{\omega \in \Omega} p_w X(\omega)
+\]
+provided that this sum converges absolutely.
+\end{definition}
+
+Note that
+\begin{align*}
+\expect{X} &= \sum_{\omega \in \Omega} p_w X(\omega) \\
+&= \sum_{x \in R_X} \sum_{\omega : X(\omega) = x} p_\omega X(\omega) \\
+&= \sum_{x \in R_X} x \sum_{\omega : X(\omega) = x} p_\omega \\
+&= \sum_{x \in R_X} x \prob{X = x}.
+\end{align*}
+
+Absolute convergence allows the sum to be taken in any order.
+
+If $X$ is a positive \rv and if $\sum_{\omega \in \Omega} p_\omega X(\omega)
+= \infty$ we write $\expect{X} = + \infty$.  If 
+\begin{gather*}
+\sum_{\substack{x \in R_X \\ x \ge 0}} x \prob{X = x} = \infty \text{ and} \\
+\sum_{\substack{x \in R_X \\ x < 0}} x \prob{X = x} = - \infty
+\end{gather*}
+then $\expect{X}$ is undefined.
+
+\begin{example}
+If $\prob{X = r} = e^{-\lambda} \tfrac{\lambda^r}{r!}$, then
+$\expect{X} = \lambda$.
+\end{example}
+
+\begin{proof}[Solution]
+\begin{align*}
+\expect{X} &= \sum_{r = 0}^\infty r e^{-\lambda} \tfrac{\lambda^r}{r!} \\
+& = \lambda e^{-\lambda} \sum_{r=1}^\infty \frac{\lambda^{r-1}}{(r-1)!} = \lambda e^{-\lambda}
+e^{\lambda} = \lambda
+\end{align*}
+\end{proof}
+
+\begin{example}
+If $\prob{X=r} = \binom{n}{r} p^r (1-p)^{n-r}$ then $\expect{X}=n p$.
+\end{example}
+
+\begin{proof}[Solution]
+\begin{align*}
+\expect{X} &= \sum_{r=0}^n r p^r (1-p)^{n-r} \binom{n}{r}\\
+&= \sum_{r=0}^n r \frac{n!}{r!(n-r)!} p^r (1-p)^{n-r}\\
+&=n \sum_{r=1}^n  \frac{(n-1)!}{(r-1)!(n-r)!} p^r (1-p)^{n-r}\\
+&=np \sum_{r=1}^n  \frac{(n-1)!}{(r-1)!(n-r)!} p^{r-1} (1-p)^{n-r}\\
+&=np \sum_{r=1}^{n-1}  \frac{(n-1)!}{(r)!(n-r)!} p^r (1-p)^{n-1-r}\\
+&=np \sum_{r=1}^{n-1} \binom{n-1}{r} p^r (1-p)^{n-1-r}\\
+&=np
+\end{align*}
+\end{proof}
+
+For any function $f \colon \bR \mapsto \bR$ the composition of $f$ and $X$
+defines a new \rv $f$ and $X$ defines the new \rv $f(X)$ given by
+\[
+f(X)(w) = f(X(w)).
+\]
+
+\begin{example}
+If $a$, $b$ and $c$ are constants, then
+$a+bX$ and $(X-c)^2$ are random variables
+defined by
+\begin{align*}
+(a+bX)(w) &= a+bX(w) \qquad \text{and} \\
+(X-c)^2(w) &= (X(w)-c)^2.
+\end{align*}
+\end{example}
+
+Note that $\expect{X}$ is a constant.
+
+\begin{theorem}\hfill
+\begin{enumerate}
+\item If $X \geq 0$ then $\expect{X} \geq 0$.
+\item If $X \geq 0$ and $\expect{X} =0$ then $\prob{X=0} = 1$.
+\item If $a$ and $b$ are constants then
+$\expect{a + b X} = a + b \expect{X}$.
+\item For any random variables $X$, $Y$ then
+$\expect{X+Y} = \expect{X} + \expect{Y}$.
+\item $\expect{X}$ is the constant which
+minimises $\expect{\left( X - c \right)^2}$.
+\end{enumerate}
+\end{theorem}
+\begin{proof}
+
+\begin{enumerate}
+\item $X \geq 0$ means $X_w \geq 0$ $\forall$ $w\in \Omega$
+\[
+\text{So }  \expect{X} = \sum_{\omega\in\Omega} p_{\omega}X{(\omega)}\geq 0
+\]
+\item If $\exists \omega \in \Omega$ with $p_{\omega}>0$ and $X{(\omega)}> 0$
+then  $\expect{X} > 0$, therefore   $\prob{X=0} = 1$.
+\item
+\begin{align*}
+\expect{a+bX}  &= \sum_{\omega\in\Omega} \left(a+ b X(\omega)\right)
+p_\omega \\
+&= a \sum_{\omega\in\Omega} p_\omega + b \sum_{\omega\in\Omega}
+p_\omega X(\omega) \\
+&= a + \expect{X}.
+\end{align*}
+\item Trivial.
+\item Now
+\begin{align*}
+\expect{(X-c)^2} &= \expect{(X - \expect{X} + \expect{X} - c)^2}\\
+&=\expect{[(X-\expect{X})^2} + 2(X-\expect{X})(\expect{X}-c) + 
+[(\expect{X}-c)]^2]\\
+&= \expect{(X - \expect{X})^2} + 2(\expect{X}-c)\expect{(X-\expect{X})}
++ (\expect{X} - c)^2\\
+&=  \expect{(X - \expect{X})^2} + (\expect{X} - c)^2. 
+\end{align*}
+This is clearly minimised when $c = \expect{X}$.
+\end{enumerate}
+\end{proof}
+
+\begin{theorem}
+For any random variables $X_1, X_2,...., X_n$
+\[
+\expect{\sum_{i=1}^n X_i} = \sum_{i=1}^n\expect{X_i}
+\]
+\end{theorem}
+
+\begin{proof}
+\begin{align*}
+\expect{\sum_{i=1}^n X_i} &=\expect{\sum_{i=1}^{n-1} X_i + X_n}\\
+&=\expect{\sum_{i=1}^{n-1} X_i} +\expect{X}
+\end{align*}
+Result follows by induction.
+\end{proof}
+
+\section{Variance}
+
+\begin{align*}
+\var{X} &= \expect{X^2}-\expect{X}^2 \qquad \text{ for Random Variable $X$}\\
+&=\expect{X - \expect{X}}^2 = \sigma^2\\
+\text{Standard Deviation} &=\sqrt{\var{X}}
+\end{align*}
+
+\begin{theorem}
+Properties of Variance \hfill
+\end{theorem}
+(i) $\var{X} \geq 0 $ if $\var{X} = 0$, then $\prob{X=\expect{X}} = 1$
+
+Proof - from property 1 of expectation \hfill
+
+(ii) If $a,b$ constants, $\var{(a + bX)} = b^2 \var{X}$
+
+\begin{proof}
+\begin{align*}
+\var{a + bX}& = \expect{ a + bX -a -b\expect{X}}\\
+&=b^2\expect{X -\expect{X}}\\
+&= b^2 \var{X}
+\end{align*}
+\end{proof}
+
+(iii) $\var{X} = \expect{X^2}- {\expect{X}}^2$
+
+\begin{proof}
+
+\begin{align*}
+\expect{X - \expect{X}}^2 &= \expect{ X^2-2X\expect{X} + (\expect{X})^2}\\
+&=\expect{X^2} - 2\expect{X}\expect{X} + {\expect{X}}^2\\
+&=\expect{X^2} -(\expect{X})^2
+\end{align*}
+\end{proof}
+
+\begin{example}
+Let X have the geometric distribution $\prob{X=r} = pq^r$ with $r =
+0,1,2...$ and $ p+q=1$.  Then $\expect{X} = \tfrac{q}{p}$
+and $\var{X} = \tfrac{q}{p^2}$.
+\end{example}
+
+\begin{proof}[Solution]
+\begin{align*}
+\expect{X}& = \sum_{r=0}^\infty rpq^r 
+= pq \sum_{r=0}^\infty rq^{r-1}\\
+&= \frac{1}{pq}  \sum_{r=0}^\infty \frac{d}{dq} (q^r)
+= pq  \frac{d}{dq} \Bigl(\frac{1}{1-q}\Bigl)\\
+&= pq (1-q)^{-2} = \frac{q}{p}\\
+\expect{X^2} &= \sum_{r=0}^\infty r^2p^2q^{2r}\\
+&= pq \biggl(\sum_{r=1}^\infty r(r+1)q^{r-1} - \sum_{r=1}^\infty rq^{r-1}\biggl)\\
+&= pq (\frac{2}{(1-q)^3} - \frac{1}{(1-q)^2}
+= \frac{2q}{p^2} - \frac{q}{p}\\
+\var{X} &= \expect{X^2}- {\expect{X}}^2\\
+&= \frac{2q}{p^2} - \frac{q}{p} - \frac{q^2}{p}\\
+&= \frac{q}{p^2}
+\end{align*}
+\end{proof}
+
+\begin{definition}
+The co-variance of random variables $X$ and $Y$ is:
+\[
+Cov(X,Y) = \expect{(X - \expect{X})(Y - \expect{Y})}
+\]
+The correlation of $X$ and $Y$ is:
+\[
+Corr(X,Y) = \frac{Cov(X,Y)}{\sqrt{\var{X}\var{Y}}}
+\]
+\end{definition}
+Linear Regression
+\begin{theorem}
+$\var{(X+Y)} = \var{X} +\var{Y} + 2Cov(X,Y)$
+\end{theorem}
+
+\begin{proof}
+\begin{align*}
+\var{(X+Y)} &= \expect{(X+Y)^2 - \expect{X} - \expect{Y}}^2\\
+& = \expect{(X- \expect{X})^2 
++(Y- \expect{Y})^2 +2 (X- \expect{X})(Y- \expect{Y})}\\
+&= \var{X} +\var{Y} + 2Cov(X,Y)
+\end{align*}
+\end{proof}
+
+\section{Indicator Function}
+\begin{definition}
+The Indicator Function $I[A]$ of an event $A \subset \Omega$ is the function
+
+\begin{equation}
+I[A](w) =  
+\begin{cases}
+1, &\text{ if $\omega \in A$};\\
+0, &\text{ if $\omega \notin A$}.
+\end{cases}
+\end{equation}
+
+\end{definition}
+NB that $I[A]$ is a random variable
+
+\begin{enumerate}
+\item \begin{align*}
+\expect{I[A]} &= \prob{A}\\
+\expect{I[A]} &= \sum_{\omega \in \Omega} p_{\omega}I[A](w)\\
+&=  \prob{A}
+\end{align*}
+\item $I[A^c] = 1 - I[A]$
+\item $I[A \cap B] = I[A]I[B]$
+\item \begin{align*}
+I[A \cup B] &= I[A] + I[B] - I[A]I[B]\\
+I[A \cup B](\omega) &= 1 \text{ if } \omega \in A \text{ or } \omega \in B\\
+I[A \cup B](\omega) &= I[A](\omega) + I[B](\omega) - I[A]I[B](\omega) \text{ WORKS!}
+\end{align*}
+\end{enumerate}
+
+\begin{example}
+$n\geq$ couples are arranged randomly around a table such that males 
+and females alternate.
+Let $N$ = The number of husbands sitting next to their wives. 
+Calculate the $\expect{N}$ and the $\var{N}$. 
+\begin{align*}
+N &= \sum_{i=1}^n I[A_i] \qquad A_i = \text{ event couple i are together}\\
+\expect{N} &= \expect{\sum_{i=1}^nI[A_i]}\\
+&= \sum_{i=1}^n \expect{I[A_i]}\\
+&= \sum_{i=1}^n \frac{2}{n}\\
+\text{Thus } \expect{N} &= n \frac{2}{n} = 2\\
+\expect{N^2} &=  \expect{\left(\sum_{i=1}^nI[A_i]\right)^2}\\
+&=\expect{\left({\sum_{i=1}^nI[A_i]}^2 + 2\sum_{i\le j}I[A_i]I[A_j]\right)}\\
+&= n \expect{I[A_i]^2} + n(n-1) \expect{\left(I[A_1]I[A_2]\right)}\\
+\expect{I[A_i]^2} &= \expect{I[A_i]} = \frac{2}{n}\\
+ \expect{\left(I[A_1]I[A_2]\right)} &= I\expect{[A_1 \cap B_2]} 
+= \prob{A_1 \cap A_2}\\
+&=\prob{A_1}\prob{A_2|A_1}\\
+&= \frac{2}{n}\left( \frac{1}{n-1}\frac{1}{n-1} - \frac{n-2}{n-1}\frac{2}{n-1}\right)\\
+\var{N} &= \expect{N^2} - {\expect{N}}^2\\
+&= \frac{2}{n-1}\left(1 + 2(n-2)\right) - 2\\
+&= \frac{2(n-2)}{n-1}
+\end{align*}
+\end{example}
+
+\section{Inclusion - Exclusion Formula}
+\begin{align*}
+\bigcup_{1}^{N} A_i &= \left(\bigcap_{1}^{N} A_i^c\right)^c\\
+I\left[\bigcup_{1}^{N} A_i\right] 
+&=I\left[\left(\bigcap_{1}^{N} A_i^c\right)^c\right]\\
+&= 1 - I\left[\bigcap_{1}^{N} A_i^c\right]\\
+&= 1 - \prod_1^N I[A_i^c]\\
+&= 1 - \prod_1^N\left(1 - I[A_i]\right)\\
+&=\sum_1^NI[A_i] - \sum{i_1\le i_2} I[A_1]I[A_2]\\
+&+...+ (-1)^{j+1} \sum_{i_1\le i_2 ...\le i_j}I[A_1]I[A_2]...I[A_j] +...
+\end{align*}
+Take Expectation
+\begin{align*}
+\expect{\bigcup_{1}^{N} A_i} &= \prob{\bigcup_{1}^{N} A_i}\\
+&= \sum_1^N \prob{A_i} - \sum{i_1\le i_2} \prob{A_1 \cap A_2}\\
+&+...+(-1)^{j+1}  \sum_{i_1\le i_2 ...\le i_j}
+\prob{A_{i_1} \cap A_{i_2}\cap ....\cap A_{i_j}} +...
+\end{align*}
+\section{Independence}
+
+\begin{definition}
+Discrete random variables $X_1,...,X_n$ are independent if and only if for any
+$x_1...x_n$ :
+\[
+\prob{X_1 = x_1, X_2 = x_2.......X_n = x_n} = \prod_1^N \prob{X_i = x_i}
+\]
+\end{definition}
+
+\begin{theorem}[Preservation of Independence]\hfill
+If  $X_1,...,X_n$ are independent random variables and $f_1,f_2...f_n$ are 
+functions $\bR \to \bR$ then $ f_1(X_1)...f_n(X_n)$ are independent random
+variables
+
+\end{theorem}
+
+\begin{proof}
+\begin{align*}
+\prob{f_1(X_1) = y_1,\dots, f_n(X_n) = y_n} &=
+\sum_{\substack{x_1:f_1(X_1) = y_1, \dots\\ x_n:f_n(X_n) = y_n}}
+\prob{X_1 = x_1,\dots,X_n = x_n}\\
+&= \prod_1^N \sum_{x_i:f_i(X_i) = y_i} \prob{X_i = x_i}\\
+&= \prod_1^N \prob {f_i(X_i) = y_i}
+\end{align*}
+\end{proof}
+
+\begin{theorem}
+If $X_1.....X_n$ are independent random variables then:
+\[
+\expect{\prod_1^N X_i} =\prod_1^N \expect{X_i}
+\]
+\end{theorem}
+\emph{NOTE} that $\expect{\sum X_i} = \sum\expect{X_i}$ without 
+requiring independence.
+\begin{proof}
+Write $R_i$ for $R_{X_i}$ the range of $X_i$
+\begin{align*}
+\expect{\prod_1^N X_i} &= \sum_{x_1 \in R_1}.... \sum_{x_n \in R_n}x_1..x_n 
+\prob{X_1 = x_1, X_2 = x_2.......,X_n = x_n}\\
+&= \prod_1^N \left(\sum_{x_i \in R_i} \prob{X_i = x_i}\right)\\
+&= \prod_1^N \expect{X_i}
+\end{align*}
+\end{proof}
+\begin{theorem}
+If $X_1,...,X_n$ are independent random variables and $f_1....f_n$ are function
+$\bR \to \bR$ then:
+\[
+\expect{\prod_1^N f_i(X_i)} =\prod_1^N \expect{ f_i(X_i)}
+\]
+\end{theorem}
+
+\begin{proof}
+Obvious from last two theorems!
+\end{proof}
+\begin{theorem}
+If $X_1,...,X_n$ are independent random variables then:
+\[
+\var \left( \sum_{i=1}^n X_i \right) =  \sum_{i=1}^n \var X_i
+\]
+\end{theorem}
+\begin{proof}
+\begin{align*}
+\var{ \left(\sum_{i=1}^n X_i \right)} &=\expect{\left(\sum_{i=1}^n X_i\right)^2} - \expect{\sum_{i=1}^n X_i}^2 \\
+&= \expect{ \sum_i X_i^2 + \sum_{i \neq j} X_iX_j} - 
+\expect{\sum_{i=1}^n X_i}^2\\
+&= \sum_i \expect{X_i^2} + \sum_{i \neq j} \expect{X_i X_j} -
+\sum_i \expect{X_i}^2 - \sum_{i \neq j} \expect{X_i}\expect{X_j}\\
+&= \sum_i\left( \expect{X_i^2} - \expect{X_i}^2 \right)\\
+&= \sum_i \var X_i
+\end{align*}
+\end{proof}
+\begin{theorem}
+If $X_1,...,X_n$ are independent identically distributed random variables then
+
+\[
+\var \left( \frac{1}{n} \sum_{i=1}^n X_i\right) = \frac{1}{n} \var X_i
+\]
+\end{theorem}
+\begin{proof}
+\begin{align*}
+\var \left( \frac{1}{n} \sum_{i=1}^n X_i\right) &= \frac{1}{n^2} \var X_i\\
+&= \frac{1}{n^2}\sum_{i=1}^n \var X_i\\
+&= \frac{1}{n} \var X_i
+\end{align*}
+\end{proof}
+\begin{example} Experimental Design. \hfill
+Two rods of unknown lengths $a,b$. A rule can measure the length but with 
+but with error having 0 mean (unbiased) and variance $\sigma^2$.  Errors 
+independent from measurement to measurement.  To estimate $a,b$ we could take
+separate measurements $A,B$ of each rod.
+\begin{align*}
+\expect{A} = a & \qquad \var A = \sigma^2\\
+\expect{B} = b & \qquad \var B = \sigma^2
+\end{align*}
+Can we do better? YEP! Measure $a+b$ as $X$ and $a-b$ as $Y$
+\begin{align*}
+\expect{X} = a+b & \qquad \var X = \sigma^2\\
+\expect{Y} = a-b & \qquad \var Y = \sigma^2\\
+\expect{\frac{X+Y}{2}} &= a \\
+\var {\frac{X+Y}{2}} &= \frac{1}{2}\sigma^2\\
+\expect{\frac{X-Y}{2}} &= b \\
+\var {\frac{X-Y}{2}} &= \frac{1}{2}\sigma^2\\
+\end{align*}
+So this is better.
+\end{example}
+
+\begin{example} Non standard dice. \hfill
+You choose 1 then I choose one.
+\vspace{3in}
+Around this cycle $a \to B$ $\prob{A \ge B} =\frac{2}{3}$.\hfill
+  So the relation  'A better that B' is not transitive.
+\end{example}
+\chapter{Inequalities}
+\section{Jensen's Inequality}
+A function $ f;(a,b) \to \bR$ is convex if
+\[
+f(px + qy) \leq pf(x) + (1-p)f(y) \text{ - } \forall x,y \in (a,b) 
+\text{ - } \forall p \in(0,1)
+\]
+
+Strictly convex if strict inequality holds when $x \neq y$
+
+\vspace{3in}
+
+f is concave if $-f$ is convex.  f is strictly concave if $-f$ is strictly
+convex
+
+\vspace{3in}
+
+Concave
+
+\vspace{3in}
+
+neither concave or convex.\hfill
+
+We know that if f is twice differentiable and $f^{''}(x) \geq 0$ for $x \in 
+(a,b)$ the if f is convex and strictly convex if $f^{''}(x) \ge 0$ for$x \in 
+(a,b)$.
+\begin{example}
+\begin{align*}
+f(x) &= - \log x\\
+f^{'}(x) &= \frac{-1}{x}\\
+f^{''}(x) &= \frac{1}{x^2} \ge 0
+\end{align*}
+$f(x)$ is strictly convex on $(0,\infty)$
+\end{example}
+
+\begin{example}
+\begin{align*}
+f(x) &= - x\log x\\
+f^{'}(x) &= -(1 + logx)\\
+f^{''}(x) &= \frac{-1}{x} \le 0
+\end{align*}
+Strictly concave.
+\end{example}
+\begin{example}
+$f(x =x^3$ is strictly convex on $(0,\infty)$ but not on $(-\infty, \infty)$
+\end{example}
+\begin{theorem}
+Let $f:(a,b) \to \bR$ be a convex function.  Then:
+\[
+\sum_{i=1}^n p_i f(x_i) \geq f\left( \sum_{i=1}^n  p_i x_i\right)
+\]
+$x_1,\dots,X_n \in (a,b)$, $p_1,\dots,p_n \in (0,1)$ and $\sum p_i = 1$.  Further 
+more if f is strictly convex then equality holds if and only if all x's are 
+equal.
+\[
+\expect{f(X)} \geq f(\expect{X})
+\]
+\end{theorem}
+\begin{proof} By induction on n $n=1$ nothing to prove $n=2$ definition of convexity.  Assume results holds up to n-1. Consider
+$x_1,...,x_n \in (a,b)$, $p_1,...,p_n \in (0,1)$ and $\sum p_i = 1$
+\[
+\text{For } i=2...n,\text{ set } p_{i}^{'} = \frac{p_i}{1-p_i}, \text{ such that }
+\sum_{i=2}^n p_{i}^{'} =1
+\]
+Then by the inductive hypothesis twice, first for n-1, then for 2
+\begin{align*}
+\sum_1^n p_i f_i(x_i) &= p_1f(x_1) + (1-p_1)\sum_{i=2}^n p_{i}^{'}f(x_i)\\
+&\geq  p_1f(x_1) + (1-p_1)f\left( \sum_{i=2}^n p_{i}^{'}x_i\right)\\
+&\geq f \left(p_1x_1 + (1-p_1)\sum_{i=2}^n p_{i}^{'}x_i \right)\\
+= f\left( \sum_{i=1}^n p_ix_i \right)
+\end{align*}
+f is strictly convex $n\geq 3$ and not all the $x_i's$ equal then we assume
+not all of $x_2...x_n$ are equal.  But then
+\[
+(1-p_j)\sum_{i=2}^n p_{i}^{'}f(x_i) \ge (1-p_j)f\left(\sum_{i=2}^n p_{i}^{'}x_i \right)
+\]
+So the inequality is strict.
+\end{proof}
+\begin{corollary}[AM/GM Inequality]
+Positive real numbers $ x_1,\dots,x_n$
+\[
+\left(\prod_{i=1}^n x_i\right)^{\frac{1}{n}} \leq \frac{1}{n} \sum_{i=1}^n x_i
+\]
+\end{corollary}
+Equality holds if and only if $x_1=x_2=\dots=x_n$
+\begin{proof}
+Let 
+\[
+\prob{X=x_i} = \frac{1}{n}
+\]
+then $f(x) = - \log x$ is a convex function on $(0,\infty)$.
+
+So
+\begin{align*}
+\expect{f(x)} &\geq f\left(\expect{x}\right) \text{ (Jensen's Inequality)}\\
+-\expect{\log {x}} &\geq \log{\expect{x}} \qquad [1]\\
+\text{Therefore } -\frac{1}{n} \sum_1^n \log{x_i} &\leq - \log{\frac{1}{n}\sum_1^nx}\\
+\left(\prod_{i=1}^n x_i\right)^{\frac{1}{n}} &\leq \frac{1}{n}\sum_{i=1}^n x_i
+\qquad [2]
+\end{align*}
+For strictness since f strictly convex equation holds in [1] and hence [2] if 
+and only if $x_1=x_2=\dots=x_n$
+\end{proof}
+If $f:(a,b) \to \bR$ is a convex function then it can be shown that at each
+point $y \in (a,b) \exists$ a linear function $\alpha_y + \beta_y x$ such that
+\begin{align*}
+f(x) &\leq \alpha_y + \beta_y x \qquad x \in (a,b)\\
+f(y) &= \alpha_y  + \beta_y y
+\end{align*}
+If f is differentiable at y then the linear function is the tangent 
+$f(y) + (x - y)f^{'}(y)$
+
+\vspace{3in}
+
+Let $y = \expect{X}$, $ \alpha = \alpha_y$ and $\beta = \beta_y$
+
+\[
+f\left(\expect{X}\right) = \alpha + \beta \expect{X}
+\]
+
+So for any random variable X taking values in $(a,b)$
+
+\begin{align*}
+\expect{f(X)} &\geq \expect{\alpha +\beta X}\\
+&= \alpha +\beta\expect{X}\\
+&= f\left(\expect{X}\right)
+\end{align*}
+
+\section{Cauchy-Schwarz Inequality}
+
+\begin{theorem}
+For any random variables $X,Y$,
+\[
+\expect{XY}^2 \leq \expect{X^2}\expect{Y^2}
+\]
+\end{theorem}
+\begin{proof}
+For $ a,b \in \bR$ Let 
+\begin{align*}
+Let Z &= aX -bY\\
+\text{Then} 0 \leq \expect{Z^2} &= \expect{(aX - bY)^2}\\
+&= a^2\expect{X^2} - 2ab\expect{XY} + b^2\expect{Y^2}
+\end{align*}
+
+quadratic in a with at most one real root and therefore has
+discriminant $\leq 0$.
+
+Take $b\neq0$
+\[
+\expect{XY}^2 \leq \expect{X^2}\expect{Y^2}
+\]
+\end{proof}
+\begin{corollary}
+\[
+\abs{Corr(X,Y)} \leq 1
+\]
+\end{corollary}
+\begin{proof}
+Apply Cauchy-Schwarz to the random variables $X-\expect{X}$ and $Y- \expect{Y}$
+\end{proof}
+\section{Markov's Inequality}
+\begin{theorem}
+If X is any random variable with finite mean then,
+\[
+\prob{\abs{X}\geq a} \leq \frac{\expect{\abs{X}}}{a} \text{ for any a $ \ge 0$}
+\]
+\end{theorem}
+
+\begin{proof}
+Let 
+\begin{align*}
+A &= {\abs{X} \geq a}\\
+Then \abs{X} &\geq a I[A]
+\end{align*}
+Take expectation
+\begin{align*}
+\expect{\abs{X}} &\geq a \prob{A}\\
+\expect{\abs{X}} &\geq a \prob{\abs{X} \geq a}
+\end{align*}
+\end{proof}
+\section{Chebyshev's Inequality}
+\begin{theorem}
+Let X be a random variable with $\expect{X^2} \le \infty$. Then $\forall \epsilon \ge 0 $
+\[
+\prob{\abs{X}\geq \epsilon} \leq \frac{\expect{X^2}}{\epsilon^2}
+\]
+\end{theorem}
+\begin{proof}
+\[
+I[\abs{X} \geq \epsilon] \leq \frac{x^2}{\epsilon^2}\text{ } \forall x
+\]
+
+\vspace{3in}
+Then
+\[
+I[\abs{X} \geq \epsilon] \leq \frac{x^2}{\epsilon^2}
+\]
+Take Expectation
+\[
+\prob{\abs{X} \geq \epsilon} \leq \expect{\frac{x^2}{\epsilon^2}} = 
+\frac{\expect{X^2}}{\epsilon^2}
+\]
+\end{proof}
+\emph{Note}
+\begin{enumerate}
+\item The result is  ``distribution free'' - no assumption about the distribution of X (other than $\expect{X^2} \le \infty$).
+\item It is the ``best possible'' inequality, in the following sense
+\begin{align*}
+X&= +\epsilon \text{ with probability } \frac{c}{2\epsilon^2}\\
+&= -\epsilon \text{ with probability } \frac{c}{2\epsilon^2}\\
+&= 0 \text{ with probability } 1 - \frac{c}{\epsilon^2}\\
+\text{Then } \prob{\abs{X} \geq \epsilon} &= \frac{c}{\epsilon^2}\\
+\expect{X^2} &= c\\
+\prob{\abs{X} \geq \epsilon} &= \frac{c}{\epsilon^2} = \frac{\expect{X^2}}{\epsilon^2}
+\end{align*}
+\item If $\mu=\expect{X}$ then applying the inequality to $X - \mu$ gives
+\[
+\prob{X-\mu \geq \epsilon} \leq \frac{\var X}{\epsilon^2}
+\]
+Often the most useful form.
+\end{enumerate}
+\section{Law of Large Numbers}
+\begin{theorem}[Weak law of large numbers]
+Let $X_1,X_2.....$ be a sequences of independent identically distributed random
+variables with Variance $\sigma^2 \le \infty$ Let
+\[
+S_n = \sum_{i=1}^n X_i
+\]
+Then
+\[
+\forall \epsilon \ge 0\text{, }\prob{\abs{\frac{S_n}{n} - \mu} \geq \epsilon}
+\to 0 \text{ as } n \to \infty
+\]
+\end{theorem}
+\begin{proof}
+By Chebyshev's Inequality
+\begin{align*}
+\prob{\abs{\frac{S_n}{n} - \mu}\geq \epsilon} &\leq 
+\frac{\expect{(\frac{S_n}{n} - \mu)^2}}{\epsilon^2}\\
+&= \frac{\expect{(S_n - n\mu)^2}}{n^2\epsilon^2}
+ \text{ properties of expectation}\\
+&= \frac {\var S_n}{n^2\epsilon^2} \text{ Since $ \expect{S_n}=n\mu$}\\
+\text{But } \var S_n &= n\sigma^2\\
+\text{Thus } \prob{\abs{\frac{S_n}{n} - \mu}\geq \epsilon}&\leq 
+\frac{ n\sigma^2}{n^2\epsilon^2} = \frac{\sigma^2}{n\epsilon^2} \to 0
+\end{align*}
+\end{proof}
+\begin{example}
+$A_1,A_2...$ are independent events, each with probability p. Let $X_i=I[A_i]$.
+Then
+\[
+\frac{S_n}{n} = \frac{nA}{n} = 
+\frac{\text{number of times A occurs}}{\text{number of trials}}
+\]
+\[
+\mu = \expect{I[A_i]} = \prob{A_i} = p
+\]
+Theorem states that 
+\[
+\prob{\abs{\frac{S_n}{n} - p} \geq \epsilon} \to 0 \text{ as } n \to \infty
+\]
+Which recovers the intuitive definition of probability.
+\end{example}
+\begin{example}
+A Random Sample of size n is a sequence $X_1,X_2,\dots,X_n$ of independent 
+identically distributed random variables ('n observations')
+\[
+\bar{X} = \frac{\sum_{i=1}^n X_i}{n} \text{ is called the SAMPLE MEAN}
+\] 
+Theorem states that provided the variance of $X_i$ is finite, the probability 
+that the sample mean differs from the mean of the distribution by more than
+ $\epsilon$ approaches 0 as $n \to \infty$.
+\end{example}
+We have shown the weak law of large numbers. Why weak?\hfill
+$\exists$ a strong form of larger numbers.
+\[
+\prob{\frac{S_n}{n} \to \mu \text{ as } n\to\infty} = 1
+\]
+This is NOT the same as the weak form. What does this mean?
+
+$\omega \in \Omega$ determines 
+\[
+\frac{S_n}{n}, \qquad n=1,2,\dots
+\]
+as a sequence of real numbers. Hence it either tends to $\mu$ or it doesn't.
+\[
+\prob{\omega :\frac{S_n(\omega)}{n} \to \mu \text{ as } n\to\infty} = 1
+\]
+\chapter{Generating Functions}
+In this chapter, assume that X is a random variable taking values in the 
+range ${0,1,2,\dots}$. Let $p_r = \prob{X=r} r = 0,1,2,\dots$
+\begin{definition}
+The \emph{Probability Generating Function} (p.g.f) of the random variable
+X,or of the distribution $p_r=0,1,2,\dots$, is
+\[
+p(z) = \expect{z^X} = \sum_{r=0}^\infty z^r\prob{X=r} 
+= \sum_{r=0}^\infty p_r z^r
+\]
+This $p(z)$ is a polynomial or a power series. If a power series then it is
+convergent for $\abs{z} \leq 1$ by comparison with a geometric series.
+\[
+\abs{p(z)} \leq \sum_r p_r \abs{z}^r \leq\sum_r p_r = 1
+\]
+\end{definition}
+\begin{example}
+\begin{align*}
+p_r &= \frac{1}{6} \text{ } r= 1,\dots,6\\
+p(z) &= \expect{z^X} = \frac{1}{6}\left(1 + z + \dots z^6 \right)\\
+&= \frac{z}{6}\frac{1-z^6}{1-z} 
+\end{align*}
+\end{example}
+\begin{theorem}
+The distribution of X is uniquely determined by the p.g.f $p(z)$.
+\end{theorem}
+\begin{proof}
+We know that we can differential p(z) term by term for $\abs{z} \le 1$
+\begin{align*}
+p^{'}(z) &= p_1 + 2p_2z + \dots \\
+\text{and so } p^{'}(0) &= p_1 \qquad ( p(0) = p_0)
+\end{align*}
+Repeated differentiation gives
+\[
+p^{(i)}(z) = \sum_{r=i}^\infty \frac{r!}{(r-i)!}p_rz^{r-i}
+\]
+and has $p^{(i)} = 0 = i!p_i$ Thus we can recover $p_0,p_1,\dots$ from p(z)
+\end{proof}
+\begin{theorem}[Abel's Lemma]
+\[
+\expect{X} = \lim_{z\to 1} p'(z)
+\]
+\end{theorem}
+\begin{proof}
+\[
+ p'(z) =  \sum_{r=i}^\infty r p_r z^{r-1} \qquad \abs{z} \le 1
+\]
+For $z \in(0,1)$, $ p'(z)$ is a non decreasing function of z and is 
+bounded above by
+\[
+\expect{X} =  \sum_{r=i}^\infty r p_r
+\] 
+Choose $\epsilon \ge 0$, N large enough that
+\[
+\sum_{r=i}^N r p_r \geq \expect{X} - \epsilon
+\]
+Then
+\[
+\lim_{z\to 1}\sum_{r=i}^\infty r p_rz^{r-1} \geq 
+\lim_{z\to 1}\sum_{r=i}^N r p_r z^{r-1} = \sum_{r=i}^N r p_r
+\]
+True $\forall \epsilon \ge 0 $ and so 
+\[
+\expect{X} = \lim_{z\to 1} p'(z)
+\] 
+\end{proof}
+
+Usually $ p'(z)$ is continuous at z=1, then $\expect{X}
+=p'(1)$.
+
+\[
+\left(\text{Recall } p(z) = \frac{z}{6}\frac{1-z^6}{1-z} \right)
+\] 
+
+\begin{theorem}
+
+\[
+\expect{X(X-1)} = \lim_{z\to1} p''(z)
+\]
+
+\end{theorem}
+
+\begin{proof}
+\[
+p''(z) = \sum_{r=2}^\infty r(r-1)p z^{r-2}
+\]
+Proof now the same as Abel's Lemma
+\end{proof}
+
+\begin{theorem}
+  Suppose that $X_1, X_2,\dots ,X_n$ are independent random variables
+  with p.g.f's $p_1(z),p_2(z),\dots,p_n(z)$.  Then the p.g.f of
+\[
+X_1+X_2+\dots X_n
+\]
+is
+\[
+p_1(z)p_2(z)\dots p_n(z)
+\]
+\end{theorem}
+\begin{proof}
+\begin{align*}
+\expect{z^{X_1+X_2 +\dots X_n}} 
+&= \expect{z^{X_1}.z^{X_2}\dots .z^{X_n}}\\
+&= \expect{z^{X_1}}\expect{z^{X_2}}\dots\expect{z^{X_n}}\\
+&=p_1(z)p_2(z)\dots p_n(z)
+\end{align*}
+\end{proof}
+\begin{example}
+Suppose X has Poisson Distribution
+\[
+\prob{X=r} = e^{-\lambda}\frac{\lambda^r}{r!} \qquad r=0,1,\dots
+\]
+Then
+\begin{align*}
+\expect{z^X} &= \sum_{r=0}^\infty z^r e^{-\lambda} \frac{\lambda^r}{r!}\\
+&=  e^{-\lambda}e^{-\lambda z}\\
+&= e^{-\lambda(1-z)}
+\end{align*}
+Let's calculate the variance of X
+\[
+p^{'}= \lambda e^{-\lambda(1-z)} \qquad p^{''}= \lambda^2 e^{-\lambda(1-z)}
+\]
+Then
+\[
+\expect{X}= \lim_{z\to1} p^{'}(z) = p^{'}(1) (\text{ Since $p^{'}(z)$ 
+continuous at $z=1$ }) \newline
+\expect{X} = \lambda
+\]
+\begin{align*}
+\expect{X(X-1)} &= p^{''}(1) = \lambda^2\\
+\var X &= \expect{X^2}- \expect{X}^2\\
+&= \expect{X(X-1)} + \expect{X} -\expect{X}^2\\
+&=\lambda^2 + \lambda - \lambda^2\\
+&=\lambda
+\end{align*}
+\end{example}
+\begin{example}
+Suppose that Y has a Poisson Distribution with parameter $\mu$. If X and Y are
+independent then:
+\begin{align*}
+\expect{z^{X+Y}} &= \expect{z^X}\expect{z^Y}\\
+&=e^{-\lambda(1-z)}e^{-\mu(1-z)}\\
+&= e^{-(\lambda+\mu)(1-z)}
+\end{align*}
+But this is the p.g.f of a Poisson random variable with parameter $\lambda+\mu$.
+By uniqueness (first theorem of the p.g.f) this must be the distribution for
+$X+Y$
+\end{example}
+\begin{example}
+X has a binomial Distribution,
+\begin{align*}
+\prob{X=r} &= \binom{n}{r}p^r(1-p)^{n-r}\qquad r=0,1,\dots\\
+\expect{z^X} &= \sum_{r=0}^n \binom{n}{r}p^r(1-p)^{n-r}z^r\\
+&= (pz + 1-p)^n\\
+\end{align*}
+This shows that $X = Y_1 +Y_2 +\dots + Y_n$. Where $Y_1 +Y_2 +\dots + Y_n$
+are independent random variables each with
+\[
+\prob{Y_i=1} = p \qquad\prob{Y_i=0} = 1-p
+\]
+\emph{Note} if the p.g.f factorizes look to see if the random variable can 
+be written as a sum.
+\end{example}
+
+\section{Combinatorial Applications}
+Tile a  $(2\times n)$ bathroom with  $(2\times 1)$ tiles. How many ways can 
+this be done? Say $f_n$
+\[
+f_n = f_{n-1} + f_{n-2} \qquad f_0 = f_1 = 1
+\]
+Let
+\[
+F(z) = \sum_{n=0}^\infty f_n z^n
+\]
+\begin{align*}
+f_n z^n &= f_{n-1} z^n + f_{n-2} z^n\\
+\sum_{n=2}^\infty f_n z^n &= \sum_{n=2}^\infty f_{n-1} z^n
+ + \sum_{n=0}^\infty f_{n-2} z^n\\
+F(z) - f_0 - z f_1 &= z(F(z)-f_0) + z^2F(z)\\
+F(z)(1-z-z^2) &= f_0(1-z) +z f_1\\
+&= 1-z+z=1.
+\end{align*}
+
+Since $f_0 = f_1 = 1$, then $F(z) = \tfrac{1}{1-z-z^2}$
+
+Let 
+\[
+\alpha_1 = \frac{1 + \sqrt{5}}{2} \qquad \alpha_2 = \frac{1- \sqrt{5}}{2}
+\]
+\begin{align*}
+F(z) &= \frac{1}{(1-\alpha_1z)(1- \alpha_2z)}\\
+&=\frac{\alpha_1}{(1-\alpha_1z)} - \frac{\alpha_2}{(1-\alpha_2z)}\\
+&= \frac{1}{\alpha_1 - \alpha_2}
+\left(\alpha_1\sum_{n=0}^\infty\alpha_1^nz^n  - 
+\alpha_2\sum_{n=0}^\infty\alpha_2^n z^n\right)
+\end{align*}
+The coefficient of $z_{1}^{n}$, that is $f_n$, is
+\[
+f_n = \frac{1}{\alpha_1 - \alpha_2}(\alpha_1^{n+1} - \alpha_2^{n+1})
+\]
+\section{Conditional Expectation}
+Let $ X$ and $Y$ be random variables with joint distribution
+\[
+\prob{X=x,Y=y}
+\]
+Then the distribution of X is
+\[
+\prob{X=x} = \sum_{y\in R_y} \prob{X=x,Y=y}
+\]
+This is often called the Marginal distribution for $X$. The conditional
+distribution for $ X $ given by $Y=y$ is
+\[
+\prob{X=x|Y=y} = \frac{\prob{X=x,Y=y}}{\prob{Y=y}}
+\]
+\begin{definition}
+The conditional expectation of X given $Y=y$ is,
+\[
+\expect{X=x|Y=y} = \sum_{x\in R_x} x\prob{X=x|Y=y}
+\]
+The conditional Expectation of X given Y is the random variable
+$\expect{X|Y}$ defined by 
+\[
+\expect{X|Y}(\omega) = \expect{X|Y=Y(\omega)}
+\]
+Thus $\expect{X|Y} : \Omega \to \bR$
+\end{definition}
+\begin{example}
+Let $X_1,X_2,\dots,X_n$ be independent identically distributed random variables
+with $\prob{X_1=1}=p$ and  $\prob{X_1=0}=1-p$. Let
+\[
+Y = X_1+X_2+\dots+X_n
+\]
+Then
+\begin{align*}
+\prob{X_1=1|Y=r} &= \frac{\prob{X_1=1,Y=r}}{\prob{Y=r}}\\
+&= \frac{\prob{X_1 = 1,X_2+\dots+X_n = r-1}}{\prob{Y=r}}\\
+&= \frac{\prob{X_1}\prob{X_2+\dots+X_n = r-1}}{\prob{Y=r}}\\
+&= \frac{p \binom{n-1}{r-1}p^{r-1}(1-p)^{n-r}}{\binom{n}{r}p^r(1-p)^{n-r}}\\
+&= \frac{\binom{n-1}{r-1}}{\binom{n}{r}}\\
+&= \frac{r}{n}
+\end{align*}
+Then
+\begin{align*}
+\expect{X_1|Y=r} &= 0 \times \prob{X_1=0|Y=r} +1 \times \prob{X_1=1|Y=r}\\
+&=\frac{r}{n}\\
+\expect{ X_1|Y=Y(\omega)} = \frac{1}{n}Y(\omega)\\
+\text{Therefore } \expect{X_1|Y} =\frac{1}{n}Y
+\end{align*}
+\emph{Note} a random variable - a function of $Y$.
+\end{example}
+\section{Properties of Conditional Expectation}
+
+\begin{theorem}
+\[
+\expect{\expect{X|Y}} = \expect{X} 
+\]
+\end{theorem}
+\begin{proof}
+\begin{align*}
+\expect{\expect{X|Y}} &= \sum_{y\in R_y}\prob{Y=y}\expect{X|Y=y}\\
+&=\sum_y\prob{Y=y}\sum_{x\in R_x}\prob{X=x|Y=y}\\
+&= \sum_y\sum_x x \prob{X=x|Y=y}\\
+&=\expect{X}
+\end{align*}
+\end{proof}
+\begin{theorem}
+If $X$ and $Y$ are independent then
+\[
+\expect{X|Y} = \expect{X}
+\]
+\end{theorem}
+\begin{proof}
+If $X$ and $Y$ are independent then for any $y\in R_y$ 
+\[
+\expect{X|Y=y} = \sum_{x\in R_x}x \prob{X=x|Y=y} = \sum_x x \prob{X=x} = 
+\expect{X}
+\]
+\end{proof}
+\begin{example}
+Let $X_1,X_2,\dots$ be i.i.d.r.v's with p.g.f $p(z)$.  Let N be a random 
+variable independent of $X_1,X_2,\dots$ with p.g.f $h(z)$. What is the p.g.f of:
+\[
+X_1+X_2+\dots+X_N
+\]
+\begin{align*}
+\expect{z^{X_1+,\dots,X_n}} &= \expect{\expect{z^{X_1+,\dots,X_n}|N}}\\
+&= \sum_{n=0}^\infty \prob{N=n}\expect{z^{X_1+,\dots,X_n}|N=n}\\
+&=\sum_{n=0}^\infty \prob{N=n}(p(z))^n\\
+&=h(p(z))
+\end{align*}
+Then for example
+\[
+\expect{X_1+,\dots,X_n} = \left.\frac{d}{dz}h(p(z))\right|_{z=1} 
+\]
+\[
+=h^{'}(1)p^{'}(1) = \expect{N}\expect{X_1}
+\]
+\end{example}
+\emph{Exercise} Calculate $\frac{d^2}{dz^2}h(p(z))$ and hence
+\[
+\var X_1+,\dots,X_n
+\]
+In terms of $\var N$ and $\var X_1$
+\section{Branching Processes}
+\vspace{3in}
+$X_0,X_1\dots$ sequence of random variables. $X_n$ number of
+individuals in the  $n^{th}$ generation of population.
+Assume.
+\begin{enumerate}
+\item $X_0 = 1$
+\item Each individual lives for unit time then on death produces $k$ offspring, 
+probability $f_k$. $\sum f_k = 1$
+\item All offspring behave independently.
+\[
+X_{n+1} = Y_1^n +Y_2^n+ \dots+ Y_n^n
+\]
+Where $Y_i^n$ are i.i.d.r.v's. $ Y_i^n$ number of offspring of
+individual $i$  in generation $n$.
+\end{enumerate}
+Assume
+\begin{enumerate}
+\item $f_0 \ge 0$
+\item $f_0+f_1 \le 1$
+\end{enumerate}
+Let F(z) be the probability generating function of$ Y_i^n$.
+\[
+F(z) = \sum_{n=0}^\infty f_k z^k = \expect{z^{X_i}} = \expect{z^{ Y_i^n}}
+\]
+Let 
+\[
+F_n(z) = \expect{z^{X_n}}
+\]
+Then $F_1(z) = F(z)$ the probability generating function of the offspring 
+distribution.
+\begin{theorem}
+\[
+F_{n+1}(z) = F_n(F(z)) = F(F(\dots(F(z))\dots))
+\]
+$F_n(z)$ is an n-fold iterative formula.
+\end{theorem}
+\begin{proof}
+\begin{align*}
+F_{n+1}(z) &= \expect{z^{X_{n+1}}}\\
+&= \expect{\expect{z^{X_{n+1}}|X_n}}\\
+&=\sum_{n=0}^\infty \prob{X_n = k}\expect{z^{X_{n+1}}|X_n=k}\\
+&=\sum_{n=0}^\infty \prob{X_n = k}\expect{z^{Y_1^n + Y_2^n+\dots+ Y_n^n}}\\
+&= \sum_{n=0}^\infty \prob{X_n = k}\expect{z^{Y_1^n}}\dots\expect{z^{Y_n^n}}\\
+&= \sum_{n=0}^\infty \prob{X_n = k} \left(F(z)\right)^k\\
+&=F_n(F(z))
+\end{align*}
+\end{proof}
+\begin{theorem} Mean and Variance of population size
+\begin{align*}
+\text{If } m &= \sum_{k=0}^\infty kf_k \le \infty\\
+\text{and } \sigma^2 &=   \sum_{k=0}^\infty (k-m)^2 f_k  \le \infty
+\end{align*}
+Mean and Variance of offspring distribution.
+
+Then  $\expect{X_n} = m^n$
+\begin{equation}
+\var X_n = 
+\begin{cases}
+\frac{\sigma^2m^{n-1}(m^n-1)}{m-1},  &\text{$m\neq1$}\\
+n\sigma^2, &\text{$m=1$}
+\end{cases}
+\end{equation}
+\end{theorem}
+\begin{proof}
+Prove by calculating $F^{'}(z)$, $F^{''}(z)$
+\emph{Alternatively}
+\begin{align*}
+\expect{X_n} &=\expect{\expect{X_n|X_{n-1}}}\\
+&= \expect{m|X_{n-1}}\\
+&=m\expect{X_{n-1}} \\
+&=m^n \text{ by induction} \\
+\expect{(X_n - mX_{n-1})^2} &= \expect{\expect{(X_n - mX_{n-1})^2|X_n}}\\
+&= \expect{\var{(X_n|X_{n-1})}}\\
+&= \expect{\sigma^2X_{n-1}}\\
+&= \sigma^2m^{n-1}
+\end{align*}
+Thus
+\[
+\expect{X_n^2} - 2m\expect{X_nX_{n-1}} + m^2\expect{X_{n-1}^2}^2 
+= \sigma^2m^{n-1}
+\]
+Now calculate
+\begin{align*}
+\expect{X_nX_{n-1}} &= \expect{\expect{X_nX_{n-1}|X_{n-1}}}\\
+&=\expect{X_{n-1}\expect{X_n|X_{n-1}}}\\
+&=\expect{X_{n-1}mX_{n-1}}\\
+&=m\expect{X_{n-1}^2}\\
+\text{Then }\expect{X_{n}^2} &= \sigma^2m^{n-1} + m^2\expect{X_{n-1}}^2\\
+\var{X_n} &= \expect{X_n^2} - \expect{X_n}^2\\
+&= m^2\expect{X_{n-1}^2} + \sigma^2m^{n-1} - m^2 \expect{X_{n-1}}^2\\
+&= m^2\var{X_{n-1}} +  \sigma^2m^{n-1}\\
+&= m^4\var{X_{n-2}} + \sigma^2(m^{n-1} + m^n)\\
+&= m^{2(n-1)}\var{X_1} + \sigma^2(m^{n-1} + m^n +\dots + m^{2n-3})\\
+&=\sigma^2m^{n-1}(1 + m + \dots + m^n)
+\end{align*}
+\end{proof}
+To deal with extinction we need to be careful with limits as
+ $n \to \infty$. Let
+\begin{align*}
+A_n &= {X_n = 0}\\
+&={\text{Extinction occurs by generation $n$}}\\
+\text{and let } A &= \bigcup_{1}^{\infty}A_n\\
+&= \text{the event that extinction ever occurs}
+\end{align*}
+
+Can we calculate $\prob{A}$ from $\prob{A_n}$?
+
+More generally let $A_n$ be an increasing sequence
+\[
+A_1 \subset A_2 \subset \dots 
+\]
+and define
+\[
+A= \lim_{n\to\infty}A_n = \bigcup_{1}^{\infty}A_n
+\]
+Define $B_n$ for $n \geq 1$
+\begin{align*}
+B_1 &= A_1\\
+B_n &= A_n\cap\left(\bigcup_{i=1}^{n-1}A_i \right)^c\\
+&= A_n \cap A_{n-1}^c\\
+\end{align*}
+$B_n$ for $n \geq 1$ are disjoint events and
+\begin{align*}
+\bigcup_{i=1}^{\infty}A_i &=\bigcup_{i=1}^{\infty}B_i\\
+\bigcup_{i=1}^{n}A_i &=\bigcup_{i=1}^{n}B_i\\
+\prob{\bigcup_{i=1}^{\infty}A_i}  &=\prob{\bigcup_{i=1}^{\infty}B_i}\\
+&= \sum_{1}^\infty\prob{B_i}\\
+&=\lim_{n\to\infty}\sum_1^n\prob{B_i}\\
+&=\lim_{n\to\infty}\bigcup_{i=1}^{n}B_i\\
+&=\lim_{n\to\infty}\bigcup_{i=1}^{n}A_i\\
+&=\lim_{n\to\infty}\prob{A_n}
+\end{align*}
+Thus
+\[
+\prob{\lim_{n\to\infty}A_n} = \lim_{n\to\infty}\prob{A_n}
+\]
+Probability is a continuous set function.
+ Thus
+\begin{align*}
+\prob{\text{extinction ever occurs}} &=  \lim_{n\to\infty}\prob{A_n}\\
+&=\lim_{n\to\infty}\prob{X_n = 0}\\
+&=q,\qquad \text{ Say}
+\end{align*}
+\emph{Note} $\prob{X_n = 0}$, $n=1,2,3,\dots$ is an increasing sequence
+so limit exists. But
+\[
+\prob{X_n = 0} = F_n(0) \qquad \text{ $F_n$ is the p.g.f of $X_n$}
+\]
+So
+\[
+q = \lim_{n\to\infty}F_n(0)
+\]
+Also
+\begin{align*}
+F(q) &= F\left( \lim_{n\to\infty}F_n(0) \right)\\
+&= \lim_{n\to\infty}F\left(F_n(0)\right) \qquad \text{Since F is
+  continuous}\\
+&=\lim_{n\to\infty}F_{n+1}(0)\\
+\text{Thus } F(q) & = q  
+\end{align*}
+``q'' is called the \emph{Extinction Probability}.
+
+\emph{Alternative Derivation}
+\begin{align*}
+q &= \sum_k \prob{X_1 = k}\prob{extinction|X_1=k}\\
+&= \sum \prob{X_1 = k}q^k\\
+&= F(q)
+\end{align*}
+\begin{theorem}
+ The probability of extinction, $q$, is the smallest positive root of the
+ equation $ F(q)  = q $. $m$ is the mean of the offspring distribution.
+\[
+\text{If } m\leq 1 \text{ then } q=1,\text{ while if }m\ge 1\text{then}q\le1 
+\]
+\end{theorem}
+\begin{proof}
+\[
+F(1)=1 \qquad m=\sum_0^\infty k f^{'}_k = \lim_{z\to1}F^{'}(z)
+\]
+\[
+F^{''}(z) = \sum_{j=z}^\infty j(j-1)z^{j-2} \text{ in } 0\le z\le1
+\text{ Since } f_0+f_1 \le 1\text{ Also } F(0) =f_0 \ge 0
+\]
+\vspace{3in}
+Thus if $m\leq 1$, there does not exists a $q \in(0,1)$ with $ F(q)  = q $. If
+$m\ge1$ then let $\alpha$ be the smallest positive root of $ F(z)=z$
+then $\alpha \le 1$. Further,
+\begin{align*}
+F(0)\le F(\alpha) &= \alpha\\
+F(F(0)) \le F(\alpha) &= \alpha\\
+F_n(0) &\leq \alpha \qquad \forall n \geq 1\\
+q &= \lim_{n\to\infty}F_n(0) \leq 0\\
+q &= \alpha \qquad \text{ Since $q$ is a root of $F(z)=z$}
+\end{align*}
+\end{proof}
+\section{Random Walks}
+Let $X_1,X_2,\dots$ be i.i.d.r.vs. Let 
+\[
+S_n = S_0 +X_1+X_2+\dots +X_n \qquad \text{Where, usually $S_0 =0$}
+\]
+Then $S_n$ $(n=0,1,2,\dots$ is a 1 dimensional \emph{Random Walk}.
+
+\vspace{3in}
+We shall assume
+\begin{equation}
+X_n = 
+\begin{cases}
+1,  &\text{with probability $p$}\\
+-1, &\text{with probability $q$}
+\end{cases}
+\end{equation}
+This is a simple random walk. If $p=q=\frac{1}{2}$ then the random
+walk is called \emph{symmetric}
+\begin{example}[Gambler's Ruin]
+You have an initial fortune of $A$ and I have an initial fortune of $B$.  We
+toss coins repeatedly I win with probability $p$ and you win with
+probability $q$. What is the probability that I bankrupt you before you
+bankrupt me?
+
+\vspace{3in}
+
+Set $a = A+B$ and $z=B$ Stop a random walk starting at $z$ when it hits
+$0$ or $a$.
+
+\vspace{3in}
+Let $p_z$ be the probability that the random walk hits $a$ before it
+hits $0$, starting from $z$. Let $q_z$ be the probability that the
+random walk hits $0$ before it hits $a$, starting from $z$. After the
+first step the gambler's fortune is either $z-1$ or $z+1$ with prob
+$p$ and $q$ respectively. From the law of total probability.
+\[
+p_z = qp_{z-1} +pp_{z+1} \qquad 0\le z \le a
+\]
+Also $p_0 = 0$ and $p_a = 1$.  Must solve $pt^2 -t+q =0$.
+\[
+t = \frac{1 \pm \sqrt{1-4pq}}{2p} = \frac{1\pm \sqrt{1-2p}}{2p} = 1
+\text{ or } \frac{q}{p}
+\]
+General Solution for $p\neq q$ is
+\[
+p_z =  A + B\left(\frac{q}{p}\right)^z \qquad A+B = 0  
+A= \frac{1}{1-\left(\frac{q}{p}\right)^a}
+\]
+and so
+\[
+p_z = \frac{1 - \left(\frac{q}{p}\right)^z}{1-\left(\frac{q}{p}\right)^a}
+\]
+If $p = q$, the general solution is $A + B z$
+\[
+p_z = \frac{z}{a}
+\]
+To calculate $q_z$, observe that this is the same problem with $p,q,z$
+replaced by $p,q,a-z$ respectively. Thus
+\[
+q_z = \frac{\left(\frac{q}{p}\right)^a- \left(\frac{q}{p}\right)^z}
+{\left(\frac{q}{p}\right)^a - 1}\text{ if $p\neq q$}
+\] 
+or
+\[
+q_z = \frac{a-z}{z} \text{ if $p=q$}
+\]
+Thus $q_z+p_z=1$ and so on, as we expected, the game ends with
+probability one.
+\begin{align*}
+\prob{\text{hits $0$ before $a$}} &= q_z\\
+q_z &= \frac{\left(\frac{q}{p}\right)^a- (\frac{q}{p})^z}{\left(
+\frac{q}{p}\right)^a - 1}\text{ if $p\neq q$}\\
+\text{Or } &= \frac{a-z}{z} \text{ if $p=q$}
+\end{align*}
+What happens as $a \to \infty$? 
+\begin{align*}
+\prob{\text{ paths hit $0$ ever}}&=
+\bigcup_{a=z+1}^{\infty}{\text{path hits $0$ before it hits $a$}}\\
+\prob{\text{hits $0$ ever}} &= \lim_{a\to \infty}\prob{\text{hits $0$
+    before $a$}}\\
+&= \lim_{a\to\infty}q_z\\
+&= \left(\frac{q}{p}\right) \qquad  p\ge q\\
+&= 1 \qquad p=q
+\end{align*}
+Let $G$ be the ultimate gain or loss.
+\begin{equation}
+G=
+\begin{cases}
+a-z, &\text{with probability $p_z$}\\
+-z, &\text{with probability $q_z$}
+\end{cases}
+\end{equation}
+\begin{equation}
+\expect{G} = 
+\begin{cases}
+ap_z -z, &\text{ if $p\neq q$}\\
+0, &\text{ if $p=q$}
+\end{cases}
+\end{equation}
+\emph{Fair game remains fair} if the coin is fair then then games
+based on it have expected reward $0$.
+\end{example}
+\emph{Duration of a Game} \qquad Let $ D_z$ be the expected time until
+the random walk hits $0$ or $a$, starting from $z$.  Is $D_z$ finite?
+$D_z$ is bounded above by $x$ the mean of geometric random variables
+(number of window's of size a before a window with all $+1's$ or
+$-1's$). Hence $D_z$ is finite.  Consider the first step. Then
+\begin{align*}
+D_z &= 1 +pD_{z+1} + qD_{z-1}\\
+\expect{\text{duration}}&=\expect{\expect{\text{duration $|$ first step}}}\\
+&= p\left(\expect{\text{duration $|$ first step up}} \right) + 
+q\left(\expect{\text{duration $|$ first step down}} \right)\\
+&= p(1+D_{z+1}) + q (1+D_{z-1})
+\end{align*}
+Equation holds for $0\le z\le a$ with $D_0=D_a=0$. Let's try for a
+particular solution $D_z=C_z$
+\begin{align*}
+C_z &= C_p(z+1) + C_q(z-1) +1 \\
+C= \frac{1}{q-p} \qquad \text{for } p\neq q
+\end{align*}
+Consider the homogeneous relation
+\[
+pt^2 -t + q = 0 \qquad t_1=1 \qquad t_2=\frac{q}{p}
+\]
+General Solution for $ p\neq q$ is
+\[
+D_z = A + B\left(\frac{q}{p}\right)^z +\frac{z}{q=p}
+\]
+Substitute $z=0,a$ to get $A$ and $B$
+\[
+D_z = \frac{z}{q-p} - \frac{a}{q-p}
+\frac{1 - \left(\frac{q}{p}\right)^z}{1- \left(\frac{q}{p}\right)^a}
+\qquad p\neq q
+\]
+If $p=q$ then a particular solution is $-z^2$. General solution
+\[
+D_z - z^2 +A +Bz
+\]
+Substituting the boundary conditions given.,
+\[
+D_z = z(a-z) \qquad p=q
+\]
+\begin{example} Initial Capital.
+
+\begin{center}
+\begin{tabular}{|c|c|c|c|c|c|c|}
+\hline
+p& q &z &a &$\prob{ruin}$ &$\expect{\text{gain}}$ &
+$\expect{\text{duration}}$\\ \hline
+0.5 & 0.5 &  90 & 100 & 0.1 & 0 & 900 \\ \hline
+0.45 & 0.55 & 9 & 10 & 0.21 & -1.1 & 11 \\ \hline
+  0.45 & 0.55 & 90 & 100 & 0.87 & -77 & 766  \\ \hline
+\end{tabular}
+\end{center}
+
+Stop the random walk when it hits $0$ or $a$. 
+
+We have \emph{absorption} at $0$ or $a$.  Let
+\[
+U_{z,n} = \prob{\text{r.w. hits 0 at time n|starts at z}}
+\]
+\begin{align*}
+U_{z,n+1} &= pU_{z+1,n} + qU_{z-1,n}\qquad 0\le z\le a \qquad n\geq0\\ 
+U_{0,n} = U_{a,n} &= 0 \qquad n\geq 0 \\
+ U_{a,0} = 1  U_{z,0} &= 0\qquad  0\le z\le a \\
+\text{Let } U_z &= \sum_{n=0}^\infty U_{z,n}s^n.\\
+\intertext{Now multiply by
+  $s^{n+1}$ and add for $n=0,1,2\dots$}\\
+ U_z(s)&= psU_{z+1}(s) + qsU_{z-1}(s)\\
+\text{Where } U_0(s) = 1 \text{ and } U_a(s) = 0\\
+\end{align*}
+Look for a solution 
+\[
+U_x(s) = \left(\lambda(s)\right)^z\lambda(s)
+\]
+Must satisfy
+\[
+\lambda(s) = ps\left((\lambda(s)\right)^2 +qs
+\]
+Two Roots,
+\[
+\lambda_1(s),\text{ }\lambda_2(s) = \frac{1\pm\sqrt{1-4pqs^2}}{2ps}
+\]
+Every Solution of the form
+\[
+U_z(s) =A(s)\left(\lambda_1(s)\right)^z + B(s)\left(\lambda_2(s)\right)^z
+\]
+Substitute $ U_0(s) = 1 $ and  $ U_a(s) = 0$.$A(s)+B(s)=1$ and
+\[
+A(s)\left(\lambda_1(s)\right)^a +B(s)\left(\lambda_2(s)\right)^a=0
+\]
+\begin{align*}
+U_z(s) &=  \frac{\left(\lambda_1(s)\right)^a\left(\lambda_2(s)\right)^z -
+\left(\lambda_1(s)\right)^z\left(\lambda_2(s)\right)^a}
+{\left(\lambda_1(s)\right)^a -\left(\lambda_2(s)\right)^a}\\
+\text{But } \lambda_1(s)\lambda_2(s) &=\frac{q}{p} \text{ recall quadratic}\\
+U_z(s)
+&=\left(\frac{q}{p}\right)\frac{\left(\lambda_1(s)\right)^{a-z}-
+\left(\lambda_2(s)\right)^{a-z}}
+{\left(\lambda_1(s)\right)^a -\left(\lambda_2(s)\right)^a}
+\end{align*}
+Same method give generating function for absorption probabilities at
+the other barrier. Generating function for the duration of the game is
+the sum of these two generating functions.
+\end{example}
+\chapter{Continuous Random Variables}
+In this chapter we drop the assumption that $\Omega$ id finite or
+countable. Assume we are given a probability $p$ on some subset of 
+$\Omega$.
+
+For example, spin a pointer, and let $\omega \in \Omega$ give the
+position at which it stops, with 
+$\Omega = {\omega:0\leq\omega\leq  2\pi}$. Let
+\[
+\prob{\omega \in[0,\theta]} = \frac{\theta}{2\pi} \qquad (0\le \theta\le2\pi)
+\]
+\begin{definition}
+A continuous random variable $X$ is a function $X:\Omega \to \bR$ for
+which 
+\[
+\prob{a\leq X(\omega)\leq b} = \int_a^b f(x)dx
+\]
+Where $f(x)$ is a function satisfying
+\begin{enumerate}
+\item $f(x) \geq 0$
+\item $\int_{-\infty}^{+\infty} f(x)dx=1$
+\end{enumerate}
+The function f is called the \emph{Probability Density
+  Function}.
+\end{definition}
+For example, if $X(\omega) = \omega$ given position of the pointer
+then x is a continuous random variable with p.d.f
+\begin{equation}
+f(x)=
+\begin{cases}
+\frac{1}{2\pi}, & (0\le x\le 2\pi)\\
+0, &\text{otherwise}
+\end{cases}
+\end{equation}
+\vspace{2in}
+This is an example of a uniformly distributed random variable. On the
+interval $[0,2\pi]$ in this case. Intuition about probability density functions
+ is based on the approximate relation.
+\[
+\prob{X\in[x,x+x\delta x]} = \int_x^{x+x\delta x} f(z)dz
+\]
+Proofs however more often use the distribution function
+\[
+F(x) = \prob{X \leq x}
+\]
+$F(x)$ is increasing in $x$.
+
+\vspace{2in}
+
+If $X$ is a continuous random variable then
+\[
+F(x) = \int_{-\infty}^x f(z) dz
+\]
+and so $F$ is continuous and differentiable.
+\[
+F^{'}(x) = f(x)
+\]
+(At any point x where then fundamental theorem of calculus
+applies).
+
+The distribution function is also defined for a discrete random
+variable,
+\[
+F(x) = \sum_{\omega:X(\omega) \leq x} p_{\omega}
+\]
+and so F is a step function.
+
+\vspace{2in}
+
+In either case
+\[
+\prob{a\le X\leq b} = \prob{X \leq b} - \prob{X\leq a} = F(b) - F(a)
+\]
+\begin{example} The exponential distribution. Let
+\begin{equation}
+F(x) = 
+\begin{cases}
+1-e^{-\lambda x}, &0\leq x \leq \infty\\
+0, &x \le 0
+\end{cases}
+\end{equation}
+The corresponding pdf is
+\[
+f(x) = \lambda e^{-\lambda x} \qquad 0\leq x \leq \infty
+\]
+this is known as the exponential distribution with parameter
+$\lambda$. If $X$ has this distribution then
+\begin{align*}
+\prob{X\le x+z|X\le z} &= \frac{\prob{X\le x+z}}{\prob{X\le z}}\\
+&=\frac{e^{-\lambda (x+z)}}{e^{-\lambda z}}\\
+&= e^{-\lambda x}\\
+&= \prob{X\le x}
+\end{align*}
+This is known as the memoryless property of the exponential distribution.
+\end{example}
+\begin{theorem}
+If $X$ is a continuous random variable with pdf $f(x)$ and $h(x)$ is a 
+continuous strictly increasing function with $h^{-1}(x)$
+differentiable then $h(x)$ is a continuous random variable with pdf 
+\[
+f_h(x) = f\left(h^{-1}(x)\right)\frac{d}{dx}h^{-1}(x)
+\]
+ \end{theorem}
+\begin{proof}
+\vspace{2in}
+
+The distribution function of $h(X)$ is
+\[
+\prob{h(X) \leq x} = \prob{X \leq h^{-1}(x)} = F\left(h^{-1}(x) \right)
+\]
+Since $h$ is strictly increasing and $F$ is the distribution function of
+X Then.
+\[
+\frac{d}{dx} \prob{h(X) \leq x} 
+\]
+is a continuous random variable with pdf as claimed $f_h$. \emph{Note} 
+usually need to repeat proof than remember the result.
+\end{proof}
+\begin{example}
+Suppose $X \sim U[0,1]$ that is it is uniformly distributed on
+$[0,1]$ Consider $Y=-\log x$ 
+\begin{align*}
+\prob{Y\leq y} &= \prob{-\log X \leq y}\\
+&= \prob{X \geq e^{-Y}}\\
+&= \int_{ e^{-Y}}^1 1 dx\\
+&= 1- e^{-Y}
+\end{align*}
+Thus Y is exponentially distributed.
+\end{example}
+More generally
+\begin{theorem}
+Let $U \sim U[0,1]$.  For any continuous distribution function F,
+the random variable $X$ defined by $X=F^{-1}(u)$ has distribution
+function $F$.
+\end{theorem}
+\begin{proof}
+\begin{align*}
+  \prob{X \leq x} &= \prob{ F^{-1}(u) \leq x}\\
+&= \prob{U\leq F(x)}\\
+&=F(x)\sim U[0,1]
+\end{align*}
+\end{proof}
+\emph{Remark } 
+\begin{enumerate}
+\item a bit more messy for discrete random variables
+\[
+\prob{X=X_i} =  p_i \qquad i=0,1,\dots
+\]
+Let 
+\[
+ X = x_j \text{ if } \sum_{i=0}^{j-1} p_i \leq U \le \sum_{i=0}^{j}p_i
+\qquad U \sim U[0,1]
+\]
+\item useful for simulations
+\end{enumerate}
+
+\section{Jointly Distributed Random Variables}
+For two random variables $X$ and $Y$ the joint distribution function
+is
+\[
+F(x,y) = \prob{X \leq x, Y \leq y} \qquad F: \bR^2 \to[0,1]
+\]
+Let
+\begin{align*}
+F_X(x)&= \prob{X z\leq x}\\
+&= \prob{X \leq x, Y \leq \infty}\\
+&=F(x,\infty) \\
+&=\lim_{y\to\infty} F(x,y)
+\end{align*}
+This is called the marginal distribution of X. Similarly
+\[
+F_Y(x)=F(\infty,y)
+\]
+$X_1,X_2,\dots,X_n$ are jointly distributed continuous random
+variables if for a set $c\in \bR^b$
+\[
+\prob{(X_1,X_2,\dots,X_n)\in c} = {\iint\dots\int}_{(x_1,\dots,x_n) \in c}
+f(x_1,\dots,x_n)dx_1\dots dx_n
+\]
+For some function f called the joint probability density function
+satisfying the obvious conditions.
+\begin{enumerate}
+\item
+\[
+f(x_1,\dots,x_n)dx_1 \geq 0
+\]
+\item 
+\[
+{\iint\dots\int}_{\bR^n} f(x_1,\dots,x_n)dx_1\dots dx_n = 1
+\]
+\end{enumerate}
+\begin{example} $(n=2)$
+\begin{align*}
+F(x,y) &= \prob{X\leq x, Y\leq y}\\
+&=\int_{-\infty}^{x}\int_{-\infty}^{y} f(u,v) du dv\\
+\text{and so }
+ f(x,y) = \frac{\partial^2 F(x,y)}{\partial x \partial y}
+\end{align*}
+\end{example}
+\begin{theorem}
+provided defined at $(x,y)$. If $X$ and $y$ are jointly continuous
+random variables then they are individually continuous.
+\end{theorem}
+\begin{proof} Since X and Y are
+  jointly continuous random variables
+\begin{align*}
+\prob{X\in A} = \prob{X\in A,Y\in (-\infty, +\infty)}\\
+&= \int_A\int_{-\infty}^{\infty} f(x,y)dxdy \\
+&=f_Af_X(x)dx\\
+\text{where } f_X(x) = \int_{-\infty}^{\infty}f(x,y) dy
+\end{align*}
+is the pdf of $X$.
+\end{proof}
+
+Jointly continuous random variables $X$ and $Y$ are \emph{Independent}
+if
+\begin{align*}
+f(x,y) &= f_X(x)f_Y(y)\\
+\text{Then } \prob{X \in A, Y \in B} &= \prob{X \in A} \prob{Y \in B}\\
+\end{align*}
+Similarly jointly continuous random variables $X_1,\dots, X_n$
+are independent if
+\[
+f(x_1,\dots,x_n) = \prod_{i=1}^n f_{X_i}(x_i)
+\]
+Where $ f_{X_i}(x_i)$ are the pdf's of the individual random
+variables.
+
+\vspace{3in}
+
+\begin{example}
+Two points $X$ and $Y$ are tossed at random and independently onto a
+line segment of length L. What is the probability that:
+\[
+\abs{X-Y} \leq l \text{?}
+\]
+Suppose that ``at random'' means uniformly so that
+\[
+f(x,y) = \frac{1}{L^2} \qquad x,y  \in [0,L]^2
+\]
+
+\vspace{3in}
+
+Desired probability 
+\begin{align*}
+&= \iint_{A}f(x,y)dxdy\\
+&= \frac {\text{area of A}}{L^2}\\
+&= \frac{L^2-2\frac{1}{2}(L-l)^2}{L^2}\\
+&= \frac{2Ll - l^2}{L^2}
+\end{align*}
+\end{example}
+
+\begin{example}[Buffon's Needle Problem]
+A needle of length l is tossed at random onto a floor marked with
+parallel lines a distance L apart $l \le L$. What is the probability
+that the needle intersects one of the parallel lines.
+
+\vspace{3in}
+
+Let $ \theta \in[0,2\pi]$ be the angle between the needle and the
+parallel lines and let $x$ be the distance from the bottom of the
+needle  to the line closest to it.  It is reasonable to suppose that X
+is distributed \emph{Uniformly}.
+\[
+X \sim U[0,L]\qquad \Theta \sim U[0,\pi)
+\]
+and $X$ and $\Theta$ are independent. Thus
+\[
+f(x,\theta) = \frac{1}{l\pi} 0\leq x \le L \text{ and } 0\leq \theta \le \pi
+\] 
+
+\vspace{3in}
+
+The needle intersects the line if and only if $X \leq \sin \theta$
+The event A
+\begin{align*}
+&=\iint_{A}f(x,\theta)dxd\theta\\
+&=l\int_0^\pi\frac{\sin\theta}{\pi L} d\theta\\
+&=\frac{2l}{\pi L}
+\end{align*}
+\end{example}
+\begin{definition}
+The \emph{expectation } or mean of a continuous random variable $X$ is
+\[
+\expect{X} = \int_{-\infty}^{\infty}xf(x)dx
+\]
+provided not both of $\int_{-\infty}^{\infty}xf(x)dx$ and 
+$\int_{-\infty}^{0}xf(x)dx$ are infinite
+\end{definition}
+\begin{example}[Normal Distribution]
+Let
+\[
+f(x) = \frac{1}{\sqrt{2\pi}\sigma} e^\frac{-(x-\mu)^2}{2\sigma^2}
+\qquad -\infty \le x\le \infty
+\]
+This is non-negative for it to be a pdf we also need to check that
+\[
+\int_{-\infty}^{\infty} f(x) dx =1
+\]
+Make the substitution $ z = \frac{ x-\mu}{\sigma}$. Then
+\begin{align*}
+I &= \frac{1}{\sqrt{2\pi}\sigma} \int_{-\infty}^{\infty}
+e^\frac{-(x-\mu)^2}{2\sigma^2}dx\\
+&= \frac{1}{\sqrt{2\pi}}\int\int _{-\infty}^{\infty}e^\frac{-z^2}{2}dz\\
+\text{Thus } I^2 =
+\frac{1}{2\pi}\left[\int_{-\infty}^{\infty}e^\frac{-x^2}{2}dx
+\right]\left[\int_{-\infty}^{\infty}e^\frac{-y^2}{2}dy \right]\\
+&= \frac{1}{2\pi}\int_{-\infty}^{\infty}\int_{-\infty}^{\infty}
+e^\frac{-(y^2+x^2)}{2}dxdy\\
+&=\frac{1}{2\pi}\int_0^{2\pi}\int_0^{\infty}
+  re^\frac{-\theta^2}{2}drd\theta\\
+&= \int_0^{2\pi}d\theta = 1
+\end{align*}
+Therefore $I=1$. A random variable with the pdf f(x) given above has a
+\emph{Normal distribution} with parameters $\mu$ and $\sigma^2$ we
+write this as
+\[
+X\sim N[\mu,\sigma^2]
+\]
+The Expectation is
+\begin{align*}
+\expect{X} &=
+\frac{1}{\sqrt{2\pi}\sigma}\int_{-\infty}^{\infty}xe^\frac{-(x-\mu)^2}{2\sigma^2}dx\\
+&= \frac{1}{\sqrt{2\pi}\sigma}\int_{-\infty}^{\infty}
+(x-\mu)e^\frac{-(x-\mu)^2}{2\sigma^2}dx +
+\frac{1}{\sqrt{2\pi}\sigma}\int_{-\infty}^{\infty}\mu
+e^\frac{-(x-\mu)^2}{2\sigma^2}dx. \\
+\intertext{The first term is convergent and equals zero by symmetry, so that}
+\expect{X} &= 0 + \mu\\
+&= \mu
+\end{align*}
+\end{example}
+
+\begin{theorem}
+If $X$ is a continuous random variable then,
+\[
+\expect{X}= \int_{0}^{\infty} \prob{X \ge x} dx - 
+\int_{0}^{\infty} \prob{X \le -x} dx
+\]
+\end{theorem}
+
+\begin{proof}
+\begin{align*}
+\int_{0}^{\infty} \prob{X \ge x} dx  &= 
+\int_{0}^{\infty}\left[\int_{x}^{\infty}f(y)dy \right]dx\\
+&= \int_{0}^{\infty}\int_{0}^{\infty}I[y\ge x]f(y)dydx\\
+&=\int_{0}^{\infty}\int_{0}^{y}dx f(y)dy\\
+&= \int_{0}^{\infty}yf(y)dy\\
+\text{Similarly } \int_{0}^{\infty} \prob{X \le -x} dx & =
+\int_{-\infty}^{0} yf(y)dy
+\end{align*}
+result follows.
+\end{proof}
+
+\emph{Note} This holds for discrete random variables and is useful as
+a general way of finding the expectation whether the random variable
+is discrete or continuous.
+
+If $X$ takes values in the set $[0,1,\dots,]$ Theorem states
+\[
+\expect{X} = \sum_{n=0}^\infty\prob{X \ge n}
+\]
+and a direct proof follows
+
+\begin{align*}
+\sum_{n=0}^\infty\prob{X \ge n} &=\sum_{n=0}^{\infty} \sum_{m=0}^{\infty}
+I[m\ge n] \prob{X=m}\\
+&= \sum_{m=0}^{\infty}\left(\sum_{n=0}^\infty I[m\ge n]\right)
+\prob{X=m}\\
+&=\sum_{m=0}^{\infty} m\prob{X=m}
+\end{align*}
+
+\begin{theorem}
+Let $X$ be a continuous random variable with pdf $f(x)$ and let $h(x)$
+be a continuous real-valued function. Then provided
+
+\begin{align*}
+\int_{-\infty}^{\infty}\abs{h(x)}f(x)dx & \le \infty\\
+\expect{h(x)} &= \int_{-\infty}^{\infty}h(x)f(x)dx
+\end{align*}
+\end{theorem}
+
+\begin{proof}
+\begin{align*}
+\int_{0}^{\infty}\prob{h(X) \ge y}dy\\
+&=\int_{0}^{\infty}\left[\int_{x:h(x)\ge 0}f(x)dx \right]dy\\
+&=\int_{0}^{\infty}\int_{x:h(x) \ge 0}I[h(x) \ge y] f(x)dxdy\\
+&= \int_{x:h(x)}\left[\int_{0}^{h(x)\ge 0} dy\right] f(x) dx\\
+&= \int_{x:h(x)\ge 0} h(x)f(x)dy\\
+\text{Similarly } \int_{0}^{\infty}\prob{h(X) \le -y} &=
+ -  \int_{x:h(x)\le 0} h(x)f(x)dy
+\end{align*} 
+So the result follows from the last theorem.
+\end{proof}
+
+\begin{definition}
+The variance of a continuous random variable $X$ is
+\[
+\var{X} = \expect{(X-\expect{X})^2}
+\]
+\emph{Note} The properties of expectation and variance are the same
+for discrete and continuous random variables just replace $\sum$ with
+$\int$ in the proofs.
+\end{definition}
+
+\begin{example}
+\begin{align*}
+\var{X} &= \expect{X^2} - \expect{X}^2\\
+&= \int_{-\infty}^{\infty} x^2f(x)dx -
+\left(\int_{-\infty}^{\infty} xf(x)dx\right)^2
+\end{align*}
+\end{example}
+
+\begin{example}
+Suppose $ X \sim N[\mu,\sigma^2]$ Let $z=\frac{X-\mu}{\sigma}$ then
+\begin{align*}
+\prob{Z\le z} &= \prob{\frac{X-\mu}{\sigma} \le z}\\
+&= \prob{X \le \mu + \sigma z}\\
+&= \int_{-\infty}^{\mu + \sigma z} 
+\frac{1}{\sqrt{2\pi}\sigma}e^\frac{-(x-\mu)^2}{2\sigma^2} dx\\
+\text{Let } \left(u=\frac{x-\mu}{\sigma}\right) &= \int_{-\infty}^z 
+\frac{1}{\sqrt{2\pi}}e^\frac{-u^2}{2}du\\
+&=\Phi(z) \text{ The distribution function of a $N(0,1)$ random
+  variable}\\
+Z &\sim N(0,1)
+\end{align*}
+What is the variance of $Z$?
+\begin{align*}
+\var{X} &= \expect{Z^2} - \expect{Z}^2 \text{ Last term is zero}\\
+&=\frac{1}{\sqrt{2\pi}} \int_{-\infty}^{\infty}z^2 e^\frac{-z^2}{2}dz\\
+&=\left[-\frac{1}{\sqrt{2\pi}}ze^\frac{-z^2}{2}\right]_{-\infty}^{\infty}
++ \int_{-\infty}^{\infty} e^\frac{-z^2}{2}dz\\
+&= 0+1 =1\\
+\var{X} &= 1
+\end{align*}
+\end{example}
+
+Variance of $X$?
+\begin{align*}
+X&= \mu + \sigma z\\
+\text{Thus } \expect{X} &= \mu \text{ we know that already}\\
+\var{X} &= \sigma^2 \var{Z}\\
+\var{X} &= \sigma^2\\
+X&\sim (\mu,\sigma^2)
+\end{align*} 
+
+\section{Transformation of Random Variables}
+
+Suppose $ X_1,X_2,\dots, X_n$ have joint pdf $f(x_1,\dots,x_n)$ let
+
+\begin{align*}
+Y_1 &= r_1 (X_1,X_2,\dots, X_n)\\
+Y_2 &= r_2 (X_1,X_2,\dots, X_n)\\
+&\vdots \\
+Y_n &= r_n (X_1,X_2,\dots, X_n)
+\end{align*}
+
+Let $ R \in \bR^n$ be such that
+\[
+\prob{(X_1,X_2,\dots, X_n) \in R} = 1
+\]
+Let $S$ be the image of $R$ under the above transformation suppose the
+transformation from $R$ to $S$ is 1-1 (bijective).
+
+\vspace{3in}
+
+Then $\exists$ inverse functions
+\begin{align*}
+x_1 &= s_1 (y_1,y_2,\dots, y_n)\\
+x_2 &= s_2 (y_1,y_2,\dots, y_n)\dots\\
+x_n &= s_n (y_1,y_2,\dots, y_n)
+\end{align*} 
+Assume that $\pd{s_i}{y_j} $ exists and is continuous
+at every point $(y_1,y_2,\dots, y_n)$ in $S$
+
+\begin{equation}
+J=
+\begin{vmatrix}
+\pd{s_1}{y_1} &\dots & \frac{\partial s_1}{\partial y_n}\\
+\vdots & \ddots & \vdots\\
+\frac{\partial s_n}{\partial y_1}&\dots & \frac{\partial s_n}{\partial y_n}
+\end{vmatrix}
+\end{equation}
+
+If $ A \subset R $
+
+\begin{align*}
+\prob{(X_1,\dots ,X_n) \in A}[1] &= \idotsint\limits_A
+f(x_1,\dots,x_n)dx_1\dots dx_n\\
+&= \idotsint\limits_B f\left(s_1,\dots,s_n\right)\abs{J}dy_1\dots dy_n\\
+\intertext{Where B is the image of A}
+&=\prob{(Y_1,\dots,Y_n) \in B}[2]\\
+\end{align*}
+Since transformation is 1-1 then [1],[2] are the same
+
+Thus the density for  $Y_1,\dots,Y_n$ is
+\begin{align*} 
+g((y_1,y_2,\dots, y_n) &= f\left(s_1(y_1,y_2,\dots,
+  y_n),\dots,s_n(y_1,y_2,\dots, y_n)\right)\abs{J}\\
+y_1,y_2,\dots, y_n &\in S\\
+&= 0 \text{ otherwise.}
+\end{align*}
+\begin{example}[density of products and quotients]
+
+Suppose that $(X,Y)$ has density 
+\begin{equation}
+f(x,y) = 
+\begin{cases}
+4xy, & \text{for } 0 \leq x \leq 1, 0 \leq y \leq 1\\
+0, & \text{Otherwise.}
+\end{cases}
+\end{equation}
+Let $U=\frac{X}{Y}$ and $V= XY$
+
+\vspace{3in}
+
+\begin{align*}
+X&=\sqrt{UV} & Y&= \sqrt{\frac{V}{U}}\\
+x&=\sqrt{uv} & y&= \sqrt{\frac{v}{u}}\\
+\pd{x}{u}&= \frac{1}{2}\sqrt{\frac{v}{u}} & \pd{x}{v} &=
+ \frac{1}{2}\sqrt{\frac{u}{v}}\\
+\pd{y}{u}& = \frac{-1}{2}\frac{v^\frac{1}{2}}{u^\frac{3}{2}} &
+\pd{y}{v} &= \frac{1}{2\sqrt{uv}}.
+\end{align*}
+
+Therefore $\abs{J} = \frac{1}{2u}$ and so
+
+\begin{align*}
+g(u,v) &= \frac{1}{2u}(4xy)\\
+&= \frac{1}{2u} \times 4\sqrt{uv}\sqrt{\frac{v}{u}}\\
+&=2\frac{u}{v} \qquad \text{if } (u,v) \in D\\
+&= 0 \qquad \text{Otherwise}.
+\end{align*}
+\end{example}
+
+\emph{Note} $U$ and $V$ are NOT independent
+\[
+g(u,v) = 2 \frac{u}{v}I[(u,v) \in D]
+\]
+not product of the two identities.
+
+When the transformations are linear things are simpler still.  Let $A$
+be the $n\times n$ invertible matrix.
+
+\[
+\begin{pmatrix}
+Y_1 \\ \vdots \\ Y_n
+\end{pmatrix}
+= A \begin{pmatrix}
+X_1 \\ \vdots \\ X_n
+\end{pmatrix}.
+\]
+\[
+\abs{J} = \det{A^{-1}} = \det{A}^{-1}
+\]
+Then the pdf of $(Y_1,\dots,Y_n)$ is 
+\[
+g(y_1,\dots,_n) = \frac{1}{\det{A}}f(A^{-1}g)
+\]
+
+\begin{example}
+Suppose $X_1,X_2$ have the pdf $f(x_1,x_2)$. Calculate the pdf of $X_1
++X_2$.
+
+Let $ Y= X_1 + X_2$ and $Z=X_2$. Then $X_1= Y-Z$ and $X_2 =Z$.
+
+\begin{equation}
+A^{-1} = 
+\begin{pmatrix}
+1&-1\\
+0&1
+\end{pmatrix}
+\end{equation}
+\[
+\det{A^{-1}} =1 \frac{1}{\det{A}}
+\]
+Then
+\[
+g(y,z) = f(x_1,x_2) = f(y-z,z)
+\]
+joint distributions of $Y$ and $X$.
+
+Marginal density of Y is
+\begin{align*}
+g(y) &=\int_{-\infty}^{\infty} f(y-z,z)dz \qquad -\infty \le y \le
+\infty\\
+\text{or }g(y) &=\int_{-\infty}^{\infty} f(z,y-z)dz\text{ By change of variable}
+\end{align*}
+If $X_1$ and $X_2$ are independent, with pgf's $f_1$ and $f_2$ then
+\begin{align*}
+f(x_1,x_2) &= f(x_1)f(x_2)\\
+\text{ and then } g(y) &= \int_{-\infty}^{\infty}f(y-z)f(z)dz\\
+\end{align*}
+- the convolution of  $f_1$ and $f_2$
+
+\vspace{2in}
+
+For the pdf f(x) $\hat{x}$ is a mode if $f(\hat{x}) \ge f(x) \forall
+x$
+
+$\hat{x}$  is a median if
+\[
+\int_{-\infty}^{\hat{x}}f(x)dx - \int_{\hat{x}}^{\infty}f(x)dx =\frac{1}{2}
+\]
+For a discrete random variable, $\hat{x}$ is a median if
+\[
+\prob{X \leq \hat{x}} \geq \frac{1}{2} \text{ or }
+\prob{X \geq \hat{x}} \geq \frac{1}{2}
+\]
+
+If $X_1,\dots,X_n$ is a sample from the distribution then recall that
+the sample mean is
+\[
+\frac{1}{n} \sum_1^nX_i
+\]
+
+Let $Y_1,\dots,Y_n$ (the \emph{statistics}) be the values of
+$X_1,\dots,X_n$ arranged in increasing order. Then the sample median
+is $Y_{\frac{n+1}{2}}$ if $n$ is odd or any value in
+\[
+\left[Y_{\frac{n}{2}}, Y_{\frac{n+1}{2}} \right] \text{ if n is even}
+\]
+
+If $Y_n = \text{max}{X_1,\dots,X_n}$ and $X_1,\dots,X_n$ are iidrv's
+with distribution $F$ and density $f$ then,
+\begin{align*}
+\prob{Y_n \leq y} &= \prob{X_1 \leq y,\dots, X_n \leq y}\\
+&= \left(F(y)\right)^n\\
+\intertext{Thus the density of $Y_n$ is}
+g(y) &= \frac{d}{dy} \left(F(y)\right)^n\\
+&= n\left(F(y)\right)^{n-1}f(y)
+\end{align*}
+
+Similarly $Y_1 = \text{min}{X_1,\dots,X_n}$ and is 
+\begin{align*}
+\prob{Y_1 \leq y} &= 1- \prob{ X_1 \ge y,\dots, X_n \ge y}\\
+&= 1 - \left( 1- F(y) \right)^n\\
+\intertext{ Then the density of $Y_1$ is}
+&= n \left( 1- F(y) \right)^{n-1}f(y)
+\end{align*}
+
+What about the joint density of $ Y_1,Y_n$?
+\begin{align*}
+G(y,y_n) &= \prob{Y_1 \leq y_1, Y_n \leq y_n}\\
+&= \prob{Y_n \leq y_n} - \prob{Y_n \leq y_n, Y_1 \ge _1}\\
+&=  \prob{Y_n \leq y_n} - \prob{y_1 \leq X_1 \leq y_n, y_1 \leq X_2
+  \leq y_n,\dots,  y_1 \leq X_n \leq y_n}\\
+&=  \left(F(y_n)\right)^n - \left(F(y_n) - F(y_1) \right)^n
+\end{align*}
+
+Thus the pdf of $Y_1,Y_n$ is 
+\begin{align*}
+g(y_1,y_n) & = \frac{\partial^2}{\partial y_1\partial y_n}
+G(y_1,y_n)\\
+&= n(n-1) \left(F(y_n) - F(y_1) \right)^{n-2}f(y_1)f(y_n) \qquad -\infty
+\le y_1 \leq y_n \le \infty\\
+&= 0 \qquad \text{ otherwise}
+\end{align*}
+
+What happens if the mapping is not 1-1? $X = f(x)$ and $\abs{X} = g(x)$?
+\[
+\prob{\abs{X}\in (a,b)} = \int_{a}^{b}\left(f(x) +f(-x) \right)dx \quad
+g(x) = f(x) +  f(-x)
+\]
+
+Suppose $X_1,\dots,X_n$ are iidrv's. What is the pdf of
+$Y_1,\dots,Y_n$ the order statistics?
+\begin{equation}
+g(y_1,\dots,y_n) = 
+\begin{cases}
+n!f(y_1)\dots f(y_n), & y_1\le y_2 \le \dots \le y_n\\
+0, &\text{Otherwise}
+\end{cases}
+\end{equation}
+\end{example}
+\begin{example}
+Suppose  $X_1,\dots,X_n$ are iidrv's exponentially distributed with
+parameter $\lambda$. Let
+\begin{align*}
+z_1 &=Y_1\\
+z_2 & = Y_2 -Y_1\\
+&\vdots\\
+z_n &=Y_n-Y_{n-1}
+\end{align*}
+Where $Y_1,\dots,Y_n$ are the order statistics of
+$X_1,\dots,X_n$. What is  the distribution of the $z's$?
+
+$Z=AY$
+
+Where
+\begin{equation} 
+A=
+\begin{pmatrix} 
+1 & 0 & 0&\dots  0&0\\
+-1& 1 & 0& \dots 0 &0\\
+0& -1 & 1& \dots 0 &0\\
+\vdots&\vdots&\ddots&\vdots &\vdots\\
+0 & 0 & \dots&-1&1
+\end{pmatrix}
+\end{equation}
+
+$det(A) = 1$
+\begin{align*}
+h(z_1,\dots,z_n)&= g(y_1,\dots,y_n)\\
+&=n!f(y_1)\dots f(y_n)\\
+&=n! \lambda^n e^{-\lambda y_1}\dots  e^{-\lambda y_n}\\
+&=n! \lambda^n e^{-\lambda(y_1 +\dots +y_n)}\\
+&=n! \lambda^n e^{-\lambda(z_1 2z_2 +\dots + nz_n)}\\
+&= \prod_{i=1}^{n}\lambda ie^{-\lambda iz_{n+1-i}}
+\end{align*}
+Thus $h(z_1,\dots,z_n)$ is expressed as the product of n density
+functions and
+\[
+Z_{n+1-i} \sim exp(\lambda i)
+\]
+exponentially distributed with parameter $\lambda i$, with
+$z_1,\dots,z_n$ independent.
+\end{example}
+
+\begin{example}
+Let $X$ and $Y$ be independent $N(0.1)$ random variables. Let 
+\[
+D = R^2 = X^2 + Y_2
+\]
+
+\vspace{2in}
+
+then $\tan \Theta = \frac{Y}{X}$ then
+\[
+d=x^2 + y^2 \text{ and }\theta = \arctan \left(\frac{y}{x} \right)
+\]
+\begin{equation}
+\abs{J} = 
+\begin{vmatrix}
+2x & 2y \\
+\frac{\frac{-y}{x^2}}{1+\left(\frac{y}{x}\right)^2} &
+ \frac{\frac{1}{x}}{1+\left(\frac{y}{x}\right)^2}
+\end{vmatrix}
+=2
+\end{equation}
+
+\begin{align*}
+f(x,y) &= \frac{1}{\sqrt{2\pi}}e^{\frac{-x^2}{2}}
+\frac{1}{\sqrt{2\pi}}e^{\frac{-y^2}{2}}\\
+&=  \frac{1}{2\pi}e^{\frac{-(x^2+y^2)}{2}}
+\end{align*}
+Thus
+\[
+g(d,\theta) = \frac{1}{4\pi}e^{\frac{-d}{2}} \quad 0 \le d \le
+\infty \quad 0 \le \theta \le 2\pi
+\]
+But this is just the product of the densities
+\begin{align*}
+g_D(d) &= \frac{1}{2}e^{\frac{-d}{2}} \qquad 0 \le d \le \infty\\
+g_{\Theta}(\theta) &= \frac{1}{2\pi} \qquad 0 \le \theta \le 2\pi
+\end{align*}
+
+Then $D$ and $\Theta$ are independent. $d \sim$exponentially mean 2. 
+$\Theta \sim U[0,2\pi]$.
+
+\emph{Note} this is useful for the simulations of the normal random variable.
+
+We know we can simulate $N[0,1]$ random variable by $X = f'(U)$
+when $ U\sim U[0,1]$ but this is difficult for $N [0,1]$ random
+variable since
+\[
+F(x) = \Theta(x) = \int_{-\infty}^{+x}\frac{1}{\sqrt{2\pi}}e^{\frac{-z^2}{2}}
+\]
+is difficult.
+
+Let $U_1$ and $U_2$ be independent $\sim U[0,1]$. Let $ R^2 =
+-2\log{U}$, so that $R^2$ is exponential with mean 2. $\Theta =
+2\pi U_2$. Then $\Theta \sim U[0,2\pi]$. Now let
+\begin{align*}
+X&= R\cos \Theta = \sqrt{-2\log U_1}\cos(2\pi U_2)\\
+Y&= R\sin \Theta = \sqrt{-2\log U_2}\sin(2\pi U_1)
+\end{align*}
+Then $X$ and $Y$ are independent $N[0,1]$ random variables.
+\end{example}
+\begin{example}[Bertrand's Paradox]
+
+Calculate the probability that a ``random chord'' of a circle of
+radius 1 has length greater that $\sqrt{3}$. The length of the side of
+an inscribed equilateral triangle.
+
+There are at least 3 interpretations of a random chord.
+
+(1) The ends are independently and uniformly distributed over the
+    circumference.
+
+\vspace{2in}
+
+answer $=\frac{1}{3}$
+
+(2)The chord is perpendicular to a given diameter and the point of
+   intersection is uniformly distributed over the diameter.
+
+\vspace{2in}
+
+\[
+a^2 +\left(\frac{\sqrt{3}}{2}\right)^2  = \left(\sqrt{3}\right)^2
+\]
+answer $= \frac{1}{2}$
+
+(3) The foot of the perpendicular to the chord from the centre of the
+    circle is uniformly distributed over the diameter of the
+    interior circle.
+
+\vspace{2in}
+
+interior circle has radius $\frac{1}{2}$.
+\[
+\text{answer } = \frac{\pi\left(\frac{1}{2^2}\right)}{\pi 1^2} = \frac{1}{4}
+\]
+\end{example}
+\section{Moment Generating Functions}
+
+If X is a continuous random variable then the analogue of the pgf is
+the moment generating function defined by
+\[
+m(\theta) = \expect{e^{\theta x}}
+\]
+for those $ \theta$ such that $m(\theta)$ is finite
+\[
+m(\theta) = \int_{-\infty}^{\infty} e^{\theta x}f(x)dx
+\]
+where $f(x)$ is the pdf of $X$.
+
+\begin{theorem}
+The moment generating function determines the distribution of $X$,
+provided $m(\theta)$ is finite for some interval containing the origin.
+
+\end{theorem}
+
+\begin{proof}
+Not proved.
+\end{proof}
+
+\begin{theorem}
+If $X$ and $Y$ are independent random variables with moment generating
+function $m_x(\theta)$ and $m_y(\theta)$ then $X+Y$ has the moment
+generating function
+\[
+m_{x +y} (\theta) = m_x(\theta) \times m_y(\theta)
+\]
+\end{theorem}
+
+
+\begin{proof}
+\begin{align*}
+\expect{e^{\theta(x+y)}} &= \expect{e^{\theta x}e^{\theta y}}\\
+&= \expect{e^{\theta x}}\expect{e^{\theta y}}\\
+&=  m_x(\theta) m_y(\theta)
+\end{align*}
+\end{proof}
+
+\begin{theorem}
+The $r^{th}$ moment of $X$ ie the expected value of $X^r$,
+$\expect{X^r}$, is the coefficient of $\frac{\theta^r}{r!}$ of the
+series expansion of $n(\theta)$.
+\end{theorem}
+
+\begin{proof}
+Sketch of....
+
+\begin{align*}
+e^{\theta X} &= 1 + \theta X + \frac{\theta^2}{2!}X^2 +\dots\\
+\expect{e^{\theta X}}&= 1 + \theta \expect{X} +
+\frac{\theta^2}{2!}\expect{X^2} +\dots
+\end{align*}
+\end{proof}
+
+\begin{example}
+Recall $X$ has an exponential distribution, parameter $\lambda$ if it
+has a density $\lambda e^{\lambda x}$ for $ 0 \leq x \le \infty$.
+\begin{align*}
+\expect{e^{\theta X}}&= \int_{0}^{\infty} e^{\theta x}\lambda
+e^{\lambda x}dx\\
+&= \lambda \int_{0}^{\infty} e^{-(\lambda - \theta)x}dx\\
+&= \frac{\lambda}{\lambda - \theta} = m(\theta) \text{ for } \theta
+\le \lambda\\
+\expect{X} &= m^{'}(0) = \left[\frac{\lambda}{(\lambda -
+    \theta)^2}\right]_{\theta = 0} = \frac{1}{\lambda}\\
+\expect{X^2} &=  \left[\frac{2\lambda}{(\lambda -
+    \theta)^2}\right]_{\theta = 0} = \frac{2}{\lambda^2}
+\end{align*}
+Thus 
+\begin{align*}
+\var{X} &= \expect{X^2} - \expect{X}^2\\
+&= \frac{2}{\lambda^2} -\frac{1}{\lambda^2}\\ 
+\end{align*}
+\end{example}
+
+\begin{example}
+Suppose $X_1,\dots,X_n$ are iidrvs each exponentially distributed
+with parameter $\lambda$.
+
+Claim : $X_1,\dots,X_n$ has a gamma distribution, $\Gamma(n,\lambda)$
+ with parameters $n,\lambda$. With density
+\[
+\frac{\lambda^ne^{-\lambda x}x^{n-1}}{(n-1)!} \qquad 0 \leq x \le \infty
+\]
+we can check that this is a density by integrating it by parts and
+show that it equals 1.
+
+\begin{align*}
+\expect{e^{\theta(X_1 +\dots +X_n)}} &= \expect{e^{\theta X_1}}\dots
+\expect{e^{\theta X_n}}\\
+&= \left[\expect{e^{\theta X_1}} \right]^n\\
+&= \left( \frac{\lambda}{\lambda - \theta}\right)^n
+\end{align*}
+Suppose that $ Y \sim \Gamma(n,\lambda)$.
+\begin{align*}
+\expect{e^{\theta Y}} &= \int_0^{\infty}e^{\theta
+  x}\frac{\lambda^ne^{-\lambda x}x^{n-1}}{(n-1)!}dx\\
+&= \left( \frac{\lambda}{\lambda - \theta}\right)^n  \int_0^{\infty}
+\frac{(\lambda - \theta)^ne^{-(\lambda -\theta)x}x^{n-1}}{(n-1)!}dx
+\end{align*}
+Hence claim, since moment generating function characterizes distribution.
+ \end{example}
+
+\begin{example}[Normal Distribution]
+
+$ X \sim N[0,1]$
+
+\begin{align*}
+\expect{e^{\theta X}} & = \int_{-\infty}^{\infty}e^{\theta x}
+\frac{1}{\sqrt{2\pi}\sigma}e^{-\left(\frac{x-\mu}{2\sigma^2}
+  \right)^2}dx\\
+&= \int_{-\infty}^{\infty}\frac{1}{\sqrt{2\pi}\sigma}
+\exp\left[\frac{-1}{2\sigma^2}(x^2 - 2x\mu +\mu^2 - 2\theta
+    \sigma^2x)\right] dx\\
+&= \int_{-\infty}^{\infty}\frac{1}{\sqrt{2\pi}\sigma}
+\exp\left[\frac{-1}{2\sigma^2} \left((x-\mu-\theta\sigma^2)^2 -
+    2\mu\sigma^2\theta - \theta^2\sigma^4\right)\right]dx\\
+&= e^{\mu\theta +\theta^2\frac{\sigma^2}{2}}
+\int_{-\infty}^{\infty}\frac{1}{\sqrt{2\pi}\sigma}
+\exp\left[\frac{-1}{2\sigma^2} (x-\mu-\theta\sigma^2)^2\right]dx\\
+\intertext{ The integral equals 1 are it is the density of $N[\mu
+  +\theta\sigma^2, \sigma^2]$}
+&= e^{\mu\theta +\theta^2\frac{\sigma^2}{2}}\\
+\end{align*}
+Which is the moment generating function of $N[\mu,\sigma^2]$ random variable.
+\end{example}
+
+\begin{theorem}
+Suppose $X$, $Y$ are independent $X\sim N[\mu_1,\sigma_1^2]$ and
+$Y\sim  N[\mu_2,\sigma_2^2]$ then
+\begin{enumerate}
+\item 
+\[
+X+Y \sim N[\mu_1 +\mu_2, \sigma_1^2 +\sigma_2^2]
+\]
+\item
+\[
+aX \sim N[a\mu_1 +a^2\sigma^2]
+\]
+\end{enumerate} 
+\end{theorem}
+\begin{proof}
+\begin{enumerate}
+\item
+\begin{align*}
+\expect{e^{\theta(X+Y)}} &= \expect{e^{\theta X}}\expect{e^{\theta
+      Y}}\\
+&= e^{(\mu_1\theta +\frac{1}{2}\sigma_1^2\theta^2)}
+e^{(\mu_2\theta +\frac{1}{2}\sigma_2^2\theta^2)}\\
+&= e^{(\mu_1+\mu_2)\theta +\frac{1}{2}(\sigma_1^2 +\sigma_2^2)\theta^2}
+\end{align*}
+which is the moment generating function for
+\[
+N[\mu_1 +\mu_2, \sigma_1^2 +\sigma_2^2]
+\]
+\item
+\begin{align*}
+\expect{e^{\theta(aX)}} &= \expect{e^{(\theta a)X}}\\
+&= e^{\mu_1(\theta a) + \frac{1}{2}\sigma_1^2(\theta a)^2}\\
+&= e^{(a\mu_1)\theta +\frac{1}{2}a^2\sigma_1^2\theta^2}
+\end{align*}
+which is the moment generating function of
+\[
+N[a\mu_1 , a^2\sigma_1^2]
+\]
+\end{enumerate}
+\end{proof}
+
+\section{Central Limit Theorem}
+$X_1,\dots,X_n$ iidrv's, mean $0$ and variance $\sigma^2$.  $X_i$
+has density
+
+\vspace{2in}
+
+\[
+\var{X_i} = \sigma^2
+\]
+
+
+$X_1+\dots+X_n$ has Variance
+\[
+\var{X_1+\dots+X_n} = n \sigma^2
+\]
+
+\vspace{2in}
+
+$\frac{X_1+\dots+X_n}{n}$ has Variance
+
+\[
+\var{\frac{X_1+\dots+X_n}{n}} = \frac{\sigma^2}{n}
+\]
+
+\vspace{2in}
+
+$\frac{X_1+\dots+X_n}{\sqrt{n}}$  has Variance
+\[
+\var{\frac{X_1+\dots+X_n}{\sqrt{n}}} = \sigma^2
+\]
+
+\vspace{2in}
+
+\begin{theorem}
+Let $X_1,\dots,X_n$ be iidrv's with $\expect{X_i} = \mu$ and
+$\var{X_i} = \sigma^2 \le \infty$.
+\[
+S_n = \sum_1^n X_i 
+\]
+
+Then $\forall (a,b)$ such that $ -\infty \leq a \leq b \leq \infty$
+
+\[
+\lim_{n\to\infty} \prob{ a \leq \frac{S_n - n\sigma}{\sigma\sqrt{n}}
+  \leq b} = \int_a^b \frac{1}{\sqrt{2\pi}}e^{\frac{-z^2}{2}}dz
+\]
+Which is the pdf of a $N[0,1]$ random variable.
+
+\vspace{2in}
+
+\end{theorem}
+
+\begin{proof}
+Sketch of proof.....
+
+WLOG take $\mu = 0$ and $\sigma^2 = 1 $. we can replace $X_i$ by
+$\frac{X_i - \mu}{\sigma}$. mgf of $X_i$ is
+\begin{align*}
+m_{X_i}(\theta) &= \expect{e^{\theta X_i}}\\
+&= 1 + \theta\expect{X_i} + \frac{\theta^2}{2} \expect{X_i^2} + 
+\frac{\theta^3}{3!} \expect{X_i^3} + \dots\\
+&= 1 + \frac{\theta^2}{2} + \frac{\theta^3}{3!} \expect{X_i^3} + \dots\\
+\end{align*}
+
+The mgf of $\frac{S_n}{\sqrt{n}}$
+
+\begin{align*}
+\expect{e^{\theta\frac{S_n}{\sqrt{n}}}} & =
+    \expect{e^{\frac{\theta}{\sqrt{n}}(X_1+\dots +X_n)}}\\
+&=  \expect{e^{\frac{\theta}{\sqrt{n}}X_1}}\dots
+    \expect{e^{\frac{\theta}{\sqrt{n}}X_n}}\\
+&= \expect{e^{\frac{\theta}{\sqrt{n}}X_1}}^n\\
+&= \left(m_{X_1}\left(\frac{\theta}{\sqrt{n}} \right) \right)^n\\
+&=\left(1 + \frac{\theta^2}{2n} + \frac{\theta^3
+    \expect{X^3}}{3!n^{\frac{3}{2}}} \right)^n
+&= \to e^{\frac{\theta^2}{2}} \text{ as } n \to \infty
+\end{align*}
+Which is the mgf of $N[0,1]$ random variable.
+\end{proof}
+
+\emph{Note} if $S_n \sim Bin[n,p]$ $X_i = 1$ with probability p and
+$=0$ with probability $(1-p)$. Then
+\[
+\frac{S_n - np}{\sqrt{npq}} \simeq N[0,1]
+\]
+This is called the normal approximation the the binomial
+distribution. Applies as $n \to \infty$ with $p$ constant. Earlier we
+discussed the Poisson approximation to the binomial. which applies when
+$n \to \infty$ and $np$ is constant.
+
+\begin{example}
+There are two competing airlines. n passengers each select 1 of the 2
+plans at random. Number of passengers in plane one
+\[
+S\sim Bin[n,\frac{1}{2}]
+\]
+Suppose each plane has s seats and let
+\begin{align*}
+f(s) &= \prob{S\le s}\\
+\frac{S-np}{\sqrt{npq}} &\simeq n[0,1]\\
+f(s) &= \prob{\frac{S - \frac{1}{2}n}{\frac{1}{2}\sqrt{n}}
+ \le \frac{s - \frac{1}{2}n}{\frac{1}{2}\sqrt{n}}}\\
+&= 1 - \Phi\left( \frac{2s - n}{\sqrt{n}}\right)
+\end{align*}
+therefore if $n=1000$ and $s=537$ then $f(s) = 0.01$. Planes hold 1074
+seats only 74 in excess.
+\end{example}
+
+\begin{example}
+An unknown fraction of the electorate, p, vote labour.  It is desired to
+find p within an error no exceeding 0.005. How large should the sample
+be.
+
+Let the fraction of labour votes in the sample be $p^{'}$.  We can
+never be certain (without complete enumeration), that $\abs{p - p^{'}}
+\le 0.005$. Instead choose n so that the event  $\abs{p - p^{'}}
+\le 0.005$ have probability $\ge 0.95$.
+\begin{align*}
+\prob{\abs{p - p^{'}} \le 0.005} &= \prob{\abs{S_n - np} \le 0.005n}\\
+&= \prob{\frac{\abs{S_n - np}}{\sqrt{npq}} \le\frac
+  { 0.005\sqrt{n}}{\sqrt{n}}}\\
+\end{align*}
+
+Choose n such that the probability is  $\ge 0.95$.
+
+\vspace{2in}
+
+\[
+\int_{-1.96}^{1.96} \frac{1}{\sqrt{2\pi}} e^{\frac{-x^2}{2}}dx =
+  2\Phi(1.96) - 1 
+\]
+We must choose n so that 
+\[
+\frac{ 0.005\sqrt{n}}{\sqrt{n}} \ge 1.96
+\]
+But we don't know $p$. But $pq\leq \frac{1}{4}$ with the worst case
+$p=q=\frac{1}{2}$ 
+\[
+n \geq \frac{1.96^2}{0.005^2}\frac{1}{4} \simeq 40,000
+\]
+If we replace 0.005 by 0.01 the $n \ge 10,000$ will be sufficient. And
+is we replace 0.005 by 0.045 then $n\ge 475$ will suffice.
+
+\emph{Note} Answer does not depend upon the total population.
+\end{example}
+
+\section{Multivariate normal distribution}
+Let $x_1,\dots,X_n$ be iid $N[0,1]$ random variables with joint
+density $g(x_1,\dots x_n)$
+\begin{align*}
+g(x_1,\dots x_n) & = \prod_{i=1}^n  \frac{1}{\sqrt{2\pi}}
+e^{\frac{-x_i^2}{2}}\\
+&= \frac{1}{(2\pi)^{\frac{n}{2}}}e^{\frac{-1}{2}\sum_{i=1}^nx_i^2}\\
+&=  \frac{1}{(2\pi)^{\frac{n}{2}}}e^{\frac{-1}{2}\vec{x}\wedge\vec{x}}
+\end{align*}
+Write
+\[
+\vec{X} = 
+\begin{pmatrix}
+X_1\\
+X_2\\
+\vdots\\
+X_n
+\end{pmatrix}
+\]
+and let $\vec{z} = \vec{\mu} + A\vec{X}$ where $A$ is an invertible
+matrix $\left(\vec{x} = A^{-1}(\vec{x} - \vec{\mu}) \right)$. Density
+of $\vec{z}$
+\begin{align*}
+f(z_1,\dots,z_n) &=  \frac{1}{(2\pi)^{\frac{n}{2}}}\frac{1}{\det A}
+e^{\frac{-1}{2}\left( A^{-1}(\vec{z} - \vec{\mu}) \right)^T
+ \left( A^{-1}(\vec{z} - \vec{\mu}) \right)}\\
+&= \frac{1}{(2\pi)^{\frac{n}{2}}\abs{\Sigma}^{\frac{1}{2}}}
+e^{\frac{-1}{2}(\vec{z} - \vec{\mu})^T \Sigma^{-1}(\vec{z} - \vec{\mu})}
+\end{align*}
+where $\Sigma AA^T$.  This is the multivariate normal density 
+\[
+\vec{z} \sim MVN[\vec{\mu},\Sigma]
+\]
+\[
+Cov(z_i,z_j) = \expect{(z_i - \mu_i)(z_j - \mu_j)}
+\]
+But this is the $(i,j)$ entry of
+\begin{align*}
+\expect{(\vec{z} - \vec{\mu})(\vec{z} - \vec{\mu})^T} 
+&= \expect{(A\vec{X})(A\vec{X})^T}\\
+&=A\expect{XX^T}A^T\\
+&=AIA^T
+&=AA^T = \Sigma \text{ Covariance matrix}
+\end{align*}
+If the covariance matrix of the MVN distribution is diagonal, then
+the components of the random vector $\vec{z}$ are independent since
+\[
+f(z_1,\dots,z_n) = \prod_{i=1}^n\frac{1}{(2\pi)^\frac{1}{2}\sigma_i} 
+e^{\frac{-1}{2}\left(\frac{z_i - \mu_i}{\sigma_i} \right)^2}
+\]
+Where
+\[
+\Sigma = 
+\begin{pmatrix}
+\sigma_1^2&0& \dots&0\\
+0&\sigma_2^2&\dots&0\\
+\vdots&\vdots& \ddots& \vdots\\
+0&0&\dots &\sigma_n^2
+\end{pmatrix}
+\]
+Not necessarily true if the distribution is no MVN recall sheet 2
+question 9.
+
+\begin{example}[bivariate normal]
+\begin{multline*}
+f(x_1,x_2) = \frac{1}{2\pi(1-p^2)^{\frac{1}{2}}\sigma_1\sigma_2}
+\times \\
+\exp\left[-\frac{1}{2(1-p^2)} \left[\left(\frac{x_1-\mu_1}{\sigma_1}
+    \right)^2 - \right.\right. \\
+      \left.\left. 2p \left(\frac{x_1-\mu_1}{\sigma_1}\right)
+    \left(\frac{x_2-\mu_2}{\sigma_2}
+    \right)  +\left(\frac{x_1-\mu_1}{\sigma_1}
+    \right)^2  \right] \right]
+\end{multline*}
+
+$\sigma_1,\sigma_2 \le 0$ and $ -1 \le p \le +1$. Joint distribution
+of a \emph{bivariate normal random variable}.
+\end{example}
+
+\begin{example}
+
+An example with 
+\[
+\Sigma^{-1} = \frac{1}{1-p^2}
+\begin{pmatrix}
+\sigma_1^2 & p\sigma_1^{-1}\sigma_2^{-1}\\
+p\sigma_1^{-1}\sigma_2^{-1} & \sigma_2^2
+\end{pmatrix}
+\]
+\[
+\Sigma = 
+\begin{pmatrix}
+\sigma_1^2 & p\sigma_1\sigma_2\\
+p\sigma_1\sigma_2 & \sigma_2^2
+\end{pmatrix}
+\]
+$\expect{X_i} = \mu_i$ and $\var{X_i} = \sigma_i^2$. $Cov(X_1,X_2) =
+\sigma_1\sigma_2 p$. 
+\[
+Correlation(X_1,X_2) = \frac{Cov(X_1,X_2)}{\sigma_1\sigma_2} = p
+\]
+\end{example}
+
+\end{document}  

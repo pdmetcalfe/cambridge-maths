@@ -1,0 +1,1589 @@
+\documentclass{notes}
+
+\theoremstyle{plain}
+
+\newtheorem{theorem}{Theorem}[chapter]
+\newtheorem{corollary}[theorem]{Corollary}
+\newtheorem{definition}[theorem]{Definition}
+\newtheorem{lemma}[theorem]{Lemma}
+\newtheorem*{example}{Example}
+\newtheorem*{notation}{Notation}
+
+\newcommand{\legsym}[2]{\left( \frac{#1}{#2} \right)}
+\newcommand{\nequiv}{\not \equiv}
+
+\DeclareMathOperator{\im}{im}
+
+\begin{document}
+\frontmatter
+\title{Quadratic Mathematics}
+
+\date{Mich\ae lmas Term 1996}
+
+\lecturer{Prof.~J.H.~Coates}
+\maintainer{Paul Metcalfe}
+
+\maketitle
+
+\thispagestyle{empty}
+
+\noindent\verb$Revision: 2.8 $\hfill\\
+\noindent\verb$Date: 2000/06/05 07:50:22 $\hfill\\
+
+\vspace{1.5in}
+
+The following people have maintained these notes.
+
+\begin{center}
+\begin{tabular}{ r  l}
+-- date & Paul Metcalfe
+\end{tabular}
+\end{center}
+
+\tableofcontents
+
+\chapter{Introduction}
+
+These notes are based on the course ``Quadratic Mathematics'' which was
+lectured by Prof.~J.~H.~Coates in Cambridge in the Mich\ae lmas Term 1997.
+These typeset notes are totally unconnected with Prof.~Coates.
+
+\alsoavailable
+\archimcopyright
+
+\mainmatter
+
+\chapter{Introduction to Bilinear Forms}
+
+This course is divided into two parts.  The first part is about 2/3 of
+the course, and covers quadratic phenomena using the tools of linear
+algebra.  The orthogonal, unitary and symplectic groups are
+introduced.  The second part of the course looks at quadratic
+phenomena in number theory.
+
+\section{Definition of a field}
+
+A field $\mathbb{K}$ is a set with two binary operations written $+$
+and $*$ satisfying these axioms :-
+
+\begin{enumerate}
+\item $\mathbb{K}$ is an Abelian group under $+$.  The zero element of
+  this group is written $0$.
+\item $\mathbb{K}\setminus \{0\}$ is Abelian under $*$.  The identity
+  element is written $1$.
+\item $a*(b+c) = a*b+a*c$ for all $a$, $b$, $c \in \mathbb{K}$.
+\end{enumerate}
+
+\begin{example}
+  Examples of fields include $\mathbb{Q}$, $\mathbb{C}$, $\mathbb{Z} /
+  p\mathbb{Z}$ (where $p$ is prime).
+\end{example}
+
+\section{The characteristic of a field}
+
+Let $\mathbb{K}$ be a field.  Then :-
+
+\begin{definition}
+  For $n \in \mathbb{Z}$, let
+
+\[
+n*1 =
+\begin{cases}
+  \overbrace{1 + \dots + 1}^{\text{$n$ times}} & \text{if $n > 0$;}  \\
+  -\overbrace{(1+ \dots + 1)}^{\text{$\abs{n}$ times}} & \text{if $n <0$;} \\
+  0 & \text{if n = 0.}
+\end{cases}
+\]
+
+\end{definition}
+
+\begin{definition}
+  We say that $\mathbb{K}$ has characteristic $0$ if $n*1 = 0$ implies
+  $n = 0$.  Otherwise we say that $\mathbb{K}$ has characteristic $n$
+  if $n$ is the least (strictly) positive $n$ such that $n*1 = 0$.
+\end{definition}
+
+\begin{example}
+  $\mathbb{Z} / p\mathbb{Z}$ has characteristic $p$.
+\end{example}
+
+\section{Some definitions}
+
+\begin{definition}
+  A bilinear form $\psi$ is a map $U \times V \mapsto \mathbb{K}$
+  satisfying :-
+\begin{enumerate}
+\item If $y = y_0$ is fixed, then $x \mapsto \psi (x,y_0)$ is linear
+  in $x$.
+\item If $x = x_0$ is fixed, then $y \mapsto \psi (x_0,y)$ is linear
+  in $y$.
+\end{enumerate}
+\end{definition}
+
+\begin{example}
+  If $U=V=\mathbb{R}^{N}$, $\psi (X,Y) = \sum_{i=1}^{N}x_{i}y_{i}$ is
+  bilinear.
+  
+  If $V=C[a,b]$, take $\psi : V \times V \mapsto \mathbb{R}$ as $\psi
+  (f,g) = \int_a^{b}f(x)g(x)dx$.
+\end{example}
+
+If $U$, $V$ are finite-dimensional then a bilinear form has an
+attached matrix .  Fix bases $\{d_1, \dots ,d_m\}$, $\{e_1, \dots ,
+e_n\}$ of $U$ and $V$ respectively.
+
+\begin{definition}
+  The matrix of $\psi$ relative to the bases $\{d_1, \dots
+  ,d_m\}$, $\{e_1, \dots , e_n\}$ is the $m \times n$ matrix $A =
+  (\psi (d_i,e_j))$.
+\end{definition}
+
+So if $x \in U$, $y \in V$ then $\psi (x,y) = x^{T}Ay$.
+
+\section{Change Of Basis}
+
+Suppose $U$, $V$ are finite dimensional vector spaces over a field
+$\mathbb{K}$.  Then given a bilinear form $\psi : U \times V \mapsto
+\mathbb{K}$, and bases $\{d_1, \dots ,d_m\}$, $\{e_1, \dots , e_n\}$
+of $U$ and $V$ respectively there is an associated matrix $A =
+\left(\psi (d_i,e_j)\right)$.  If we take other bases $\{d'_1, \dots
+,d'_m\}$, $\{e'_1, \dots , e'_n\}$, then the matrix of $\psi$ with
+respect to this basis is $A' = \left(\psi(d'_i,e'_j)\right)$.
+
+\begin{lemma}
+  There exist invertible matrices $\mathcal{M}$ ($m \times m$) and
+  $\mathcal{N}$ ($n \times n$) such that :-
+\[
+A' = \mathcal{M}^{T}A\mathcal{N}
+\] 
+\end{lemma}
+
+\begin{proof}
+  
+  Since the $d_{j}$'s and $e_{i}$'s form bases for their respective
+  vector spaces
+
+\[
+d'_{h} = \sum_{i=1}^{m}\mathcal{M}_{ih}d_{i} \text{ and } e'_{l} =
+\sum_{j=1}^{n}\mathcal{N}_{jl}e_{j}
+\]
+Now,
+\begin{align*}
+  a'_{hl} &= \psi (d'_h,e'_l) = \psi \left(\sum_{i=1}^{m}\mathcal{M}_{ih}d_{i},\sum_{j=1}^{n}\mathcal{N}_{jl}e_{j}\right) \\
+  &=\sum_{i=1}^{m}\mathcal{M}_{ih}\psi \left(d_i,\sum_{j=1}^{n}\mathcal{N}_{jl}e_{j}\right)\\
+  &=\sum_{i=1}^{m}\sum_{j=1}^{n}\mathcal{M}_{ih}\mathcal{N}_{jl}a_{ij}\\
+  &=\left(\mathcal{M}^{T}A\mathcal{N} \right)_{hl}\\
+\end{align*}
+Both $\mathcal{M}$ and $\mathcal{N}$ are clearly invertible, since the
+$d'_{j}$'s and $e'_{i}$'s form bases for their respective vector
+spaces.
+\end{proof}
+
+\begin{corollary}\label{corr1}
+  $A' = \mathcal{R}^{-1}A\mathcal{N}$
+\end{corollary}
+
+\begin{definition}
+  The rank of $\psi$ is the rank of its associated matrix for any
+  choice of bases.  This is well defined due to \eqref{corr1} and
+  linear algebra results.
+\end{definition}
+
+\begin{corollary}
+  Given $\psi$ we can always find bases of $U$, $V$ such that the
+  matrix of $\psi$ is of the form :-
+\[
+\left(
+\begin{matrix}
+  I_r & 0 \\
+  0 & 0
+\end{matrix}
+\right)
+\]
+where $r = rank(\psi)$
+\end{corollary}
+
+If $U=V$, we choose the two new bases to be the same.  We get :-
+
+\begin{align*}
+  A &= \left(\psi(e_i,e_j)\right) \\
+  A' &= \left(\psi(e'_i,e'_j)\right) \\
+  &= \mathcal{M}^{T}A\mathcal{M}
+\end{align*}
+
+\begin{definition}
+  If $A$ and $A'$ are related by $A' = \mathcal{M}^{T} A \mathcal{M}$
+  then $A$ and $A'$ are said to be congruent.
+\end{definition}
+
+\section{Relation between bilinear forms and dual space}
+
+\begin{definition}
+  Given a vector space $V$ over a field $\mathbb{K}$, the \emph{dual
+    space} $V^*$ is defined by
+
+\[
+V^* = \{ \alpha : V \mapsto \mathbb{K}, \alpha \text{ linear}\}.
+\]
+\end{definition}
+
+Some definitions.  For all of these, take $\psi : U \times V \mapsto
+\mathbb{K}$ to be bilinear.
+
+\begin{definition}
+  Suppose $A \subseteq U$.  Then define
+\[
+A_{R}^{\perp} = \{ v \in V : \psi (u,v) = 0, \forall u \in A\}
+\]
+
+Now take $B \subseteq V$ and define
+\[
+B_{L}^{\perp} = \{ u \in U : \psi (u,v) = 0, \forall v \in B\}
+\]
+\end{definition}
+
+\begin{definition}
+  If we take $A = U$ or $B = V$, we get
+
+\begin{align*}
+  U_{R}^{\perp} &= \text{ the \emph{right kernel} of $\psi$} \\
+  &= \{v \in V : \psi(u,v) = 0, \forall u \in U\}
+\end{align*}
+
+and
+
+\begin{align*}
+  V_{L}^{\perp} &= \text{ the \emph{left kernel} of $\psi$}\\
+  &= \{u \in U : \psi(u,v) = 0, \forall v \in V\}
+\end{align*}
+\end{definition}
+
+Given $\psi$, we get two canonical linear maps :-
+\[
+\widehat{\psi}_{L} : U \mapsto V^*, \widehat{\psi}_L(u) = \left( v
+  \mapsto \psi(u,v) \right)
+\]
+and
+\[
+\widehat{\psi}_{R} : V \mapsto U^*, \widehat{\psi}_R(v) = \left( u
+  \mapsto \psi(u,v) \right)
+\]
+
+\begin{lemma}
+  $\ker \widehat{\psi}_{L} = V_{L}^{\perp}$ and
+  $\ker \widehat{\psi}_{R} = U_{R}^{\perp}$.
+\end{lemma}
+
+\begin{proof}
+  If $u \in \text{ker } \widehat{\psi}_{L}$ then
+  $\widehat{\psi}_{L}(u)=0$ and so $u \in V_{L}^{\perp}$.  Same for
+  other three cases.
+\end{proof}
+
+\begin{example}
+  Let $U=\mathbb{R}^2$ and $V=\mathbb{R}^3$, $\psi : U \times V
+  \mapsto \mathbb{R}$, $\psi(x,y) = x_{1}y_{2}$.
+  
+  The left kernel is $\left< \left(
+\begin{matrix}
+  0 \\
+  1
+\end{matrix}
+\right) \right>$
+and the right kernel is $\left< \left(
+\begin{matrix}
+  1 \\
+  0 \\
+  0
+\end{matrix}
+\right), \left(
+\begin{matrix}
+  0 \\
+  0 \\
+  1
+\end{matrix}
+\right) \right>$.
+\end{example}
+
+\begin{definition}
+  If $V_{L}^{\perp} = \{0\}$ and $U_{R}^{\perp} = \{0\}$ we say that
+  $\psi$ is \emph{non-degenerate}.
+\end{definition}
+
+\begin{theorem}
+  Assume $U$, $V$ are finite dimensional vector spaces over
+  $\mathbb{K}$ and that $\psi$ is non-degenerate.  Then
+
+\begin{enumerate}
+\item $\dim U = \dim V$.
+\item $\widehat{\psi}_{L}$ is an isomorphism.
+\item $\widehat{\psi}_{R}$ is an isomorphism.
+\end{enumerate}
+\end{theorem}
+
+\begin{proof}
+  From Linear Maths, $\dim U = \dim U^*$ and $\dim V = \dim V^*$.
+  Since $\psi$ is non-degenerate, both $\widehat{\psi}_{L}$ and
+  $\widehat{\psi}_{R}$ are injective.  Now, $\widehat{\psi}_{L}$
+  injective implies
+
+\begin{align*}
+  \dim U &= \dim \widehat{\psi}_{L}(U) \\
+  &\le \dim V^* = \dim V
+\end{align*}
+
+And $\widehat{\psi}_{R}$ injective implies
+
+\begin{align*}
+  \dim V &= \dim \widehat{\psi}_{L}(V) \\
+  &\le \dim U^* = \dim U
+\end{align*}
+
+Therefore $\dim U = \dim V$.  Now $\dim \widehat{\psi}_{R}(V) =
+\dim U$ and hence $\widehat{\psi}_{R}(V) = U$.
+\end{proof}
+
+\begin{theorem}\label{2:tref1}
+  Assume $\dim U = \dim V < \infty$.  Then the following assertions
+  about $\psi$ are equivalent.
+
+\begin{enumerate}
+\item $\psi$ is non-degenerate.
+\item The left kernel of $\psi$ is $\{0\}$.
+\item The right kernel of $\psi$ is $\{0\}$.
+\item The matrix $A$ representing $\psi$ is non-singular relative to
+  any bases of $U$, $V$.
+\end{enumerate}
+
+\end{theorem}
+
+A lemma would be helpful.  First of all, some notation.
+
+\begin{notation}
+  Let $\{d_1, \dots ,d_m\}$ be a basis for $U$ and $\{e_1, \dots ,
+  e_n\}$ be a basis for $V$.  Then the dual bases are $\{d^{*}_1,
+  \dots ,d^{*}_m\}$, $\{e^{*}_1, \dots , e^{*}_n\}$ for $U^*$ and
+  $V^*$ respectively, where $d^{*}_i$ is defined by
+  $d^{*}_i(d_j)=\delta_{ij}$ and $e^{*}_i(e_j)=\delta_{ij}$.
+\end{notation}
+
+\begin{lemma} \label{2:lref}
+  The matrix of $\widehat{\psi}_{R} : V \mapsto U^*$ is $A =
+  \left(\psi(d_i,e_j)\right)$ relative to the bases $\{e_1, \dots , e_n\}$,
+  $\{d^{*}_1, \dots ,d^{*}_m\}$.  The matrix of $\widehat{\psi}_{L} :
+  U \mapsto V^*$ is $A^T$ relative to the bases $\{e^*_1, \dots , e^*_n\}$,
+  $\{d_1, \dots ,d_m\}$.
+\end{lemma}
+
+\begin{proof}
+  I'll only prove for $\widehat{\psi}_{L}$.  Let $R$ be the matrix for
+  $\widehat{\psi}_{L}$.
+
+\begin{align*}
+  \widehat{\psi}_{L}(d_j)(e_h) &= \psi(d_j,e_h) \\
+  &= a_{jh}
+\end{align*}
+
+\begin{align*}
+  \widehat{\psi}_{L}(d_j)(e_h) &= \sum^{n}_{i=1}r_{ij}e^{*}_i(e_h) \\
+  &= \sum^{n}_{i=1}r_{ij}\delta_{ih} \\
+  &= r_{hj}
+\end{align*}
+
+So $a_{jh}=r_{hj}$ giving $R=A^T$.
+\end{proof}
+
+\begin{corollary}
+  Assume $\dim U = \dim V < \infty$.  Then $\widehat{\psi}_{R}$ is an
+  isomorphism if and only if $\widehat{\psi}_{L}$ is an isomorphism.
+\end{corollary}
+
+\begin{proof}[Proof of Theorem \ref{2:tref1}]
+  Immediate from Lemma \ref{2:lref}.
+\end{proof}
+
+\section{The adjoint map}
+
+\begin{definition}
+  Given $V$ a finite-dimensional vector space over $\mathbb{K}$, $\psi
+  : V \times V \mapsto \mathbb{K}$ a non-degerate bilinear form and
+  $\alpha : V \mapsto V$, a linear map, we define the \emph{adjoint
+    map} $\beta$ of $\alpha$ with respect to $\psi$ by
+\[
+\psi(\alpha(x),y)=\psi(x,\beta(y)) \forall x,y \in V
+\]
+
+$\beta$ is written as $\alpha^{*}_{\psi}$.
+
+\end{definition}
+
+\begin{theorem}
+  Such a $\beta$ always exists, and is unique.
+\end{theorem}
+
+\begin{proof}
+  First prove uniqueness.
+
+\begin{align*}
+  \psi(\alpha(x),y) &= \psi(x,\beta_1(y)) = \psi(x,\beta_2(y)) \\
+  &\Rightarrow \psi(x,(\beta_1-\beta_2)(y)) = 0 \\
+  &\Rightarrow \beta_1(y)-\beta_2(y) \in V^{\perp}_{R} \\
+  &\Rightarrow \beta_1(y)=\beta_2(y) \\
+  &\Rightarrow \beta_1=\beta_2
+\end{align*}
+
+And for existence, look at the map $\phi : x \mapsto \psi(x,z)$.
+Firstly, $\phi \in V^{*}$.  Now, I claim that every element of $V^*$
+is of form $x \mapsto \psi(x,z)$ for some $z$.  Proof, either be
+subtle or blat it out in co-ordinates.  Then pick $\beta$ such that
+$\beta(y)=z$.  Now $\beta : V \mapsto V$, and it is easy to see that
+$\beta$ is linear.
+\end{proof}
+
+\chapter{Special Bilinear Forms}
+
+In this section, we look at bilinear forms with some sort of
+additional structure.
+
+\section{Symmetric Bilinear Forms}
+
+\begin{notation}
+  In this subsection, $V$ is a vector space over $\mathbb{K}$ and
+  $\psi : V \times V \mapsto \mathbb{K}$ is always bilinear.
+\end{notation}
+
+\begin{definition}
+  $\psi$ is symmetric if and only if $\psi(x,y) = \psi(y,x) \forall
+  x,y \in V$.
+\end{definition}
+
+If $V$ is finite dimensional, it is clear that the matrix $A$
+representing $\psi$ is symmetric, i.e. $A=A^T$.
+
+\begin{definition}
+  A quadratic form on $V$ is a function $q : V \mapsto \mathbb{K}$ of
+  the form $q(x)=\psi(x,x)$, where $\psi$ is symmetric.
+\end{definition}
+
+\begin{lemma}
+  If $1+1 \ne 0$ in $\mathbb{K}$, then $\psi(x,y)$ is determined by
+  $q(x)$.  Specifically,
+\[
+\psi(x,y) = \frac{q(x+y)-q(x)-q(y)}{2}.
+\]
+\end{lemma}
+
+\begin{proof}
+  Expand it.
+\end{proof}
+
+Now, an important theorem.
+
+\begin{theorem}
+  If the characteristic of $\mathbb{K}$ is not $2$ and $V$ is finite
+  dimensional, then there exists a basis $\{v_1,\dots,v_n\}$ such that
+  $\psi(v_i,v_j)=0$ if $i \neq j$.
+\end{theorem}
+
+\begin{proof}
+  This is proved by induction on $n = \dim V$.  It is true if $n=1$
+  without too much effort.  So assume true for all $V'$ and $\psi' :
+  V' \times V' \mapsto \mathbb{K}$, $\dim V' < \dim V$.  Next, assume
+  that $\psi$ is not equivalently $0$, since otherwise the result is
+  trivial.  So $\exists x$,$y$ such that $\psi(x,y)\ne 0 \Rightarrow
+  \exists x_1$ such that $q(x_1) \ne 0$.
+  
+  Let $V_1 = \{ x \in V : \psi(x,x_1)=0\}$.  $V_1$ is clearly a
+  subspace of $V$, and $V_1 \ne V$ (as $x_1 \notin V$).  Define
+  $\psi_1 : V_1 \times V_1 \mapsto \mathbb{K}$ by $\psi_1(x,y) =
+  \psi(x,y)$.  Now by the inductive hypothesis there exists a basis
+  $\{e_1, \dots , e_r\}$ of $V_1$ such that $\psi_1(e_i,e_j)=0$ if $i
+  \ne j$.
+  
+  Now, must prove that $\{x_1,e_1,\dots,e_r\}$ is a basis of $V$, as
+  this gives the result immediately.  Since $\{x_1,e_1,\dots,e_r\}$
+  has at most $n$ elements, it suffices to show that it spans $V$.
+  Now take $y \in V$ and let $y' = y -
+  \frac{\psi(y,x_1)}{\psi(x_1,x_1)}x_1$.  Then $\psi(y',x_1)=0$, so
+  $y' = \sum_{i=2}^{r} a_i e_i$.
+\end{proof}
+
+\begin{corollary}{A matrix interpretation of the theorem.}
+  If the characteristic of $\mathbb{K}$ is not 2, then for any
+  symmetric matrix $A$, $\exists$ invertible $N$ such that $N^TAN$ is
+  diagonal.
+\end{corollary}
+
+\begin{proof}
+  Obvious from theorem
+\end{proof}
+
+\begin{corollary}
+  Let $\mathbb{K}=\mathbb{C}$, $V$ be a finite dimensional vector
+  space over $\mathbb{C}$ and $\psi$ be a symmetric bilinear form $V
+  \times V \mapsto \mathbb{C}$.  Then $\exists$ a basis
+  $\{e_1,\dots,e_n\}$ of $V$ such that if $x = x_1e_1 + \dots +
+  x_ne_n$ then $\psi(x,x) = x_1^2 + \dots +x_r^2$, where $r$ is the
+  rank of $\psi$.
+\end{corollary}
+
+\begin{proof}
+  Immediate from theorem.
+\end{proof}
+
+\begin{corollary}
+  If $A_1$ and $A_2$ are two complex symmetric matrices, then they are
+  congruent if and only if rank $A_1 =$ rank $A_2$.
+\end{corollary}
+
+\begin{proof}
+  Immediate from matrix interpretation.
+\end{proof}
+
+\section{Real Quadratic Forms}
+
+\begin{theorem}[Sylvester's Law Of Inertia]\hfill\\
+  Let $V$ be a finite-dimensional vector space over $\mathbb{R}$ and
+  let $q \colon V \mapsto \mathbb{R}$ be any quadratic form.  Then there
+  exists a basis $\{e_1,\dots\,e_n\}$ of $V$ such that if $x = x_1e_1
+  + \dots + x_ne_n$, $q(x)=x_1^2+\dots + x_p^2 - x_{p+1}^2 - \dots -
+  x_r^2$, where $r$ is the rank of $q$, defined as the rank of $\psi$.
+  Moreover, $p$ is the same for all such bases.
+\end{theorem}
+
+\begin{definition}
+  $2p-r = p - (r-p)$ is called the signature of $q$.
+\end{definition}
+
+\begin{corollary}[Matrix interpretation]
+  Let $\mathcal{A}$ be any real symmetric matrix.  Then there exists
+  an invertible $\mathcal{N}$ such that
+\[
+\mathcal{N}^t\mathcal{A}\mathcal{N} = \left(
+\begin{matrix}
+  I_p     & 0     & 0\\
+  0       & -I_{r-p} &0      \\
+  0 & 0 & 0
+\end{matrix}
+\right)
+\]
+\end{corollary} 
+
+\begin{corollary}
+  Let $\mathcal{A}_1$,$\mathcal{A}_2$ be real symmetric matrices.
+  Then $\mathcal{A}_1$ and $\mathcal{A}_2$ are congruent iff they have
+  the same rank and signature.
+\end{corollary}
+
+\begin{definition}
+  We say that a quadratic form $q$ is positive definite in a subspace
+  $W$ of $V$ if $q(x) > 0 \forall x \ne 0 \in W$.
+\end{definition}
+
+\begin{lemma}\label{lem:plem}
+  $p$ is the maximal dimension of any subspace of $V$ on which $q$ is
+  positive definite.
+\end{lemma}
+
+\begin{proof}
+  Let $W$ be any subspace of $V$ on which $q$ is positive definite.
+  Define $R = \langle e_{p+1},\dots\,e_n \rangle $.  Now $q(x) \le 0
+  \forall x \in R$, and so $R \cap W = \{ 0 \}$.  Now
+\[
+\dim W+R = \dim W + \dim R \le \dim V \text{, so } \dim W \le p.
+\]
+\end{proof}
+
+\begin{proof}[Proof of Sylvester's Law of Inertia]
+  Firstly, prove existence of basis.  General result implies there
+  exists a basis $\{ v_1, \dots\, v_n \}$ of $V$ such that
+  $\psi(v_i,v_j) = 0$ if $i \neq j$.  Order basis such that
+  $\psi(v_i,v_i) > 0$ for $i=1,\dots\,p$, $\psi(v_i,v_i) < 0$ for
+  $i=p+1,\dots\,r$.  Now, we can find $c_i \in \mathbb{R}$ st $c_i^2 =
+  \abs{\psi(v_i,v_i)}$.  Define $e_i=\frac{v_i}{c_i}$ for $i=1,
+  \dots\, r$, $e_i = v_i$ otherwise.
+  
+  The uniqueness of $p$ follows from Lemma \ref{lem:plem}.
+\end{proof}
+
+\begin{theorem}
+  Let $\mathcal{A}$ be a real symmetric matrix.  Then there exists a
+  matrix $\mathcal{N}$ such that :-
+\begin{enumerate}
+\item $\mathcal{N}^t\mathcal{A}\mathcal{N}$ is diagonal.
+\item $\mathcal{N}^t\mathcal{N} = I$.
+\end{enumerate}
+\end{theorem}
+
+\begin{proof}
+  Proof later.
+\end{proof}
+
+\section{Orthogonal Groups}
+
+Let $V$ be a finite dimensional vector space over $\mathbb{K}$, with
+the characteristic of $\mathbb{K}$ not 2.  Given $\psi : V \times V
+\mapsto \mathbb{K}$ bilinear, symmetric, non-degenerate.
+
+\begin{definition}
+  \[
+\mathcal{O}(V,\psi ) = \{ \alpha \colon V \mapsto V : (\alpha(x)=0
+  \Leftrightarrow x=0), q(x) = q(\alpha(x)) \: \forall x \in V \}
+\]
+ is the orthogonal group of $\psi$, with the obvious group laws.
+\end{definition}
+
+\begin{definition}[Orthogonal direct sum]
+  If $U$, $W$ are subspaces of $V$, then $V = U \perp W$ iff $V = U
+  \oplus W$ and $\psi(u,w)=0 \: \forall (u,w) \in U \times W$.
+\end{definition}
+
+\begin{definition}
+  Let $V = U \perp W$.  A reflexion with respect to $(U,W)$ is a map
+  $r : V \mapsto V$ such that $r(u+w) = u-w \: \forall (u,w) \in U
+  \times W$.
+\end{definition}
+
+\begin{lemma}
+  Let $r \in \mathcal{O}(V,\psi)$ such that $r^2 = \iota$.  Then $r$
+  is a reflexion wrt subspace $U,W$ of $V$ with $V = U \perp W$.
+\end{lemma}
+
+\begin{proof}
+  Define $U,W$ as
+\[
+U = \{ x \in V : r(x) = x \}, W = \{ x \in V : r(x) = -x \}.
+\]
+
+These work!
+\end{proof}
+
+\begin{theorem}[Main Theorem]
+  Every element of $\mathcal{O}(V,\psi)$ can be written as a product
+  of $n$ reflexions, where $n = \dim V$.
+\end{theorem}
+
+\begin{lemma}
+  Let $x,y$ be any elements of $V$ with $\psi(x,x) = \psi(y,y) \ne 0$.
+  Then there exists a reflexion $r \in \mathcal{O}(V,\psi)$ with $y =
+  r(x)$.
+\end{lemma}
+
+\begin{proof}
+  Define $u = \frac{x+y}{2}$ and $v = \frac{x-y}{2}$.  Firstly,
+  $\psi(u,v) = 0$.  Secondly $\psi(u,u) + \psi(v,v) = \psi(x,x) \ne 0$
+  and so one of $\psi(u,u)$ and $\psi(v,v)$ is non-zero, say
+  $\psi(u,u) \ne 0$.
+  
+  Define $U = \{ \lambda u : \lambda \in \mathbb{K} \}$ and $W = \{ w
+  \in V : \psi(u,w) = 0 \}$.  Claim : $V = U \oplus W$.  $U \cap W =
+  \{ 0 \}$ trivially, and given $v \in V$, define $v_1 = b -
+  \frac{\psi(v,u)}{\psi(u,u)}u$.  Now $\psi(u,v_1) = 0$ and so $V = U
+  \perp W$.  Let $r$ be the reflexion wrt $(U,W)$.  $r(x) = r(u+v) =
+  y$.
+\end{proof}
+
+\begin{proof}[Proof of theorem]
+  Induction on $\dim V = n$.  Trivial when $n = 1$.  Now assume $n >
+  1$ and the theorem is true for all $V', \psi'$ st $\dim V < n$ and
+  $\psi' : V' \times V' \mapsto \mathbb{K}$ non-degenerate, symmetric
+  and bilinear.  In $V$, and given $\alpha \in \mathcal{O}(V,\psi)$,
+  choose a basis $\{ e_1, \dots\, e_n\}$ of $V$ such that
+  $\psi(e_i,e_j) = 0$ if $i \ne j$.  Note that $\psi(e_i,e_i) \ne 0 \:
+  \forall i$ since $\psi$ is non-degenerate.
+  
+  Define $U = \langle e_1 \rangle$ and $W = \langle e_2,\dots\,e_n
+  \rangle$.  Note that $V = U \perp W$ and $W = U^{\perp}$.  Define
+  $\psi' : W \times W \mapsto \mathbb{K}$ by $\psi'(x,y) = \psi(x,y)
+  \: \forall x,y \in W$.  $\psi'$ is a non-degenerate, symmetric
+  bilinear form.
+  
+  Return to $\alpha$.  By lemma, there exists a reflexion $r_1 \in
+  \mathcal{O}(V,\psi)$ with $r(\alpha(e_1))=e_1$.  Now consider $\beta
+  = r_1\alpha \in \mathcal{O}(V,\psi)$.  By construction $\beta(e_1) =
+  e_1$.  Given $w \in W$, $\psi(\beta(w),e_1) =
+  \psi(\beta(w),\beta(e_1))=\psi(w,e_1)=0$ and so $\beta(W) \subseteq
+  W$.  Let $\beta'$ be the restriction of $\beta$ to $W$.  Now $\beta'
+  \in \mathcal{O}(W,\psi')$ and so $\beta' = s_2\dots\ s_n$, where the
+  $s_i$ are reflexions.  Extend $s_i$ to V by $s_i(e_1) = e_1$, let
+  $r_i$ be this extension.  So $\alpha = r_1\dots\ r_n$.
+\end{proof}
+
+\chapter{Hermitian Forms}
+
+\section{Introduction}
+
+Let $V$ be a vector space over $\mathbb{C}$.
+
+\begin{definition}
+  A Hermitian form on $V$ is a function $\psi : V \times V \mapsto
+  \mathbb{C}$ such that :-
+\begin{enumerate}
+\item $\psi(x,y)$ is linear in $x$ if $y$ fixed.
+\item $\psi(x,y) = \overline{\psi(y,x)}$.
+\end{enumerate}
+\end{definition}
+
+If $\psi : V \times V \mapsto \mathbb{C}$ is Hermitian, then define
+$q(x) = \psi(x,x)$.  $q(x) \in \mathbb{R} \forall x \in V$.  Possibly
+useful (?) to know
+\[
+\psi(x,y)=\frac{q(x+y)-q(x-y)+iq(x+iy)-iq(x-iy)}{4}
+\]
+
+\section{Hermitian Matrices and Change of Basis}
+
+Given $A \in M_n(\mathbb{C})$ ...
+
+\begin{definition}
+  $A^h = \overline{A}^t$.
+\end{definition}
+
+\begin{definition}
+  $A$ is Hermitian if $A^h = A$.
+\end{definition}
+
+If $V$ is finite dimensional, we can define the matrix of $\psi$
+relative to some basis $\{v_1,\dots,v_n\}$ of $V$ by $A =
+\left(\psi(v_i,v_j)\right)$.  $A$ is Hermitian iff $\psi$ is
+Hermitian.
+
+\begin{theorem}[Change of Basis]
+  Take bases $\{v_1,\dots ,v_n\}$, $\{v_1',\dots ,v_n'\}$
+of $V$ such that $v_j' = \sum_{i=1}^n \mathcal{M}_{ij}v_i$, then
+\[
+A' = \overline{\mathcal{M}}^hA\overline{\mathcal{M}}
+\]
+\end{theorem}
+
+\begin{proof}
+  DIY!
+\end{proof}
+
+\section{Sylvester's Law?}
+
+\begin{theorem}[Analogue of Sylvester's Law of Inertia]
+  Assume that $V$ is a finite dimensional vector space over $\mathbb{C}$
+  and that $\psi : V \times V \mapsto \mathbb{C}$ is Hermitian.  Then
+  there exists a basis $\{e_1, \dots ,e_n\}$ of $V$ such that if
+  $x=x_1e_1+ \dots + x_ne_n$, then
+\[
+\psi(x,x) = \abs{x_1}^2 + \dots + \abs{x_p}^2 - \abs{x_{p+1}}^2 -
+\dots - \abs{x_r}^2
+\]
+where $r$ is the rank of $\psi$ and p is the same for all such bases.
+\end{theorem}
+
+\begin{proof}
+  See previous.
+\end{proof}
+
+\section{The Unitary Group}
+
+\begin{definition}[The Unitary Group]
+  Define the unitary group $\mathcal{U}(V,\psi)$ just like the
+  orthogonal group.
+\end{definition}
+
+\chapter{Inner Product Spaces}
+
+\section{Euclidean Space}
+
+Let $V$ be a vector space over $\mathbb{R}$.  An inner product on $V$
+is a symmetric bilinear form $\psi$ such that $\psi(x,x) > 0$ if $x
+\ne 0$.  We thus get the Euclidean space $(V,\psi)$.
+
+\begin{definition}
+\begin{enumerate}
+\item $\abs{\abs{x}} = \sqrt{\psi(x,x)}$,
+\item $x$ is orthogonal to $y$ if $\psi(x,y)=0$.
+\end{enumerate}
+\end{definition}
+
+We also get Cauchy-Schwarz (a transplantable proof will be given for
+unitary space) and thus the triangle inequality.
+
+\section{Unitary Space}
+
+\begin{definition}
+  An inner product on V is a Hermitian form $\psi$ is $\psi(x,x) > 0
+  \: \forall x \ne 0$.  This gives rise to unitary space $(V,\psi)$.
+\end{definition}
+
+\begin{theorem}[Cauchy-Schwarz]
+\[
+\abs{\psi(x,y)} \le \abs{\abs{x}}\abs{\abs{y}}
+\]
+\end{theorem}
+
+\begin{proof}
+  Given $\lambda \in \mathbb{C}$,
+\[
+\psi(x-\lambda y,x-\lambda y) \ge 0
+\]
+\[
+\psi(x,x)-\lambda \psi(y,x)- \overline{\lambda\psi(y,x)} +
+\abs{\lambda}^2\psi(y,y) \ge 0
+\]
+Assume $y \ne 0$ and put
+\[
+\lambda=\frac{\psi(x,y)}{\psi(y,y)}.
+\]
+This gives result.
+\end{proof}
+
+\section{Orthogonal Projection}
+
+$(V,\psi)$ is either orthogonal or unitary space.  Let $W \ne V$ be a
+subspace of $V$, and let $\alpha \in V$.  How do we define the ``foot
+of the perpendicular'' from $\alpha$ to $W$?
+
+We want $\mu \in W$ such that $\psi(\alpha-\mu,w)=0 \: \forall w \in
+W$.  Or alternatively, $\alpha - \mu \in W^{\perp}$.  If such an
+$\alpha-\mu$ exists for all $\alpha$, we can write $V = W +
+W^{\perp}$.  This is not always possible, but...
+
+\begin{theorem}
+  Assume $V$ is finite dimensional.  Then for any subspace $W$ of $V$,
+  we have $V=W \oplus W^{\perp}$.
+\end{theorem}
+
+\begin{proof}[Proof in Euclidean case]
+  Define $\theta : V \mapsto W^*$ as $\theta(v)(w) = \psi(w,v)$.  Now
+\begin{align*}
+  \dim V &= \dim (\ker \theta) + \dim (\im \theta) \\
+  &= \dim W^{\perp} + \dim (\im \: \theta)
+\end{align*}
+
+Now $\dim W^* = \dim W$, and so $\theta$ surjective gives theorem.
+
+Since $\psi$ is non-degenerate, every element of $V^*$ is of the form
+$x \mapsto \psi(x,v)$ for some $v \in V$.  So given $\phi \in W^*$,
+extend $\phi$ to $\rho : V \mapsto \mathbb{R}$.  Then $\rho(x) =
+\psi(x,v) \: \forall \: x \in V$, the restriction of which gives
+$\phi$.
+\end{proof}
+
+Now, assume V finite-dimensional over $\mathbb{C}$ or $\mathbb{R}$ and
+$W$ any subspace of $V \Rightarrow V = W \oplus W^{\perp}$.  Define
+the orthogonal projection $\Pi_W : V \mapsto W$ by $\Pi_W(w+v)=w \:
+\forall w \in W, v \in W^{\perp}$.
+
+Assume $W = \langle \eta \rangle, \eta \ne 0$.  Now $\Pi_W(v) =
+\lambda_v\eta$.
+
+\begin{lemma}
+\[
+\lambda_v = \frac{\psi(v,\eta)}{\psi(\eta,\eta)}
+\]
+\end{lemma}  
+
+\begin{proof}
+  $v-\lambda_v\eta \in W^{\perp}$ gives result.
+\end{proof}
+
+\begin{definition}
+  Given a subset $S = \{ e_1, e_2, \dots \} \subset V$, we say $S$ is
+  orthonormal iff $\psi(e_i,e_j)=\delta_{ij}$.
+\end{definition}
+
+\section{Gram-Schmidt Process}
+
+Let $V$ be an Euclidean or unitary space, with $\psi$ the inner
+product.
+
+\begin{theorem}
+  Let $\{ v_1, v_2, \dots \}$ be a linearly independent set in $V$.
+  Then there exists an orthonormal set $\{e_1, e_2, \dots \}$ such
+  that $\forall n \ge 1$
+\[
+\langle e_1, \dots ,e_n \rangle = \langle v_1, \dots, v_n \rangle.
+\] 
+\end{theorem}
+
+\begin{proof}
+  By induction on $n$.  For $n=1$, put $e_1 =
+  \frac{v_1}{\abs{\abs{v_1}}}$.
+  
+  Now assume $n > 1$ and have already constructed $\{ e_1, \dots,
+  e_{n-1}\}$ as required.  Put
+\[
+e_n' = v_n - \sum_{i=1}^{n-1} \psi(v_n,e_i)e_i.
+\]
+Now $\langle e_1, \dots ,e_n' \rangle = \langle v_1, \dots, v_n
+\rangle$ so $e_n' \ne 0$.  Put $e_n = \frac{e_n'}{\abs{\abs{e_n'}}}$.
+\end{proof}
+
+\section{Spectral Theory for $\mathbb{C}$}
+
+Let $V$ be a finite dimensional vector space over $\mathbb{C}$.  A
+linear map $\alpha : V \mapsto V$ is called Hermitian or self-adjoint
+if $\alpha = \alpha^*$ wrt a Hermitian inner product $\psi$.
+
+\begin{lemma}
+  The eigenvalues of $\alpha$ are real and $\psi(\xi_1,\xi_2)=0$ if
+  $\xi_1$ and $\xi_2$ are eigenvectors belonging to different
+  eigenvalues.
+\end{lemma}
+
+\begin{proof}
+\[
+\lambda \psi(\xi,\xi)= \psi(\alpha(\xi),\xi) =
+\overline{\lambda}\psi(\xi,\xi)
+\]
+
+Now
+\[
+\psi(\alpha(\xi_1),\xi_2)=\psi(\xi_1,\alpha(\xi_2))
+\]
+and so
+\[
+\lambda_1\psi(\xi_1,\xi_2)-\lambda_2\psi(\xi_1,\xi_2) = 0
+\]
+Since $\lambda_1 \ne \lambda_2$, result follows.
+\end{proof}
+
+\begin{theorem}[Self-Adjoint Case]
+  Let $V$ be a finite dimensional vector space over $\mathbb{C}$
+  endowed with an inner product $\psi$.  Let $\alpha : V \mapsto V$ be
+  a linear map such that $\alpha = \alpha^*$.  Then there exists an
+  orthonormal basis of $V$ consisting of eigenvectors of $\alpha$.
+\end{theorem}
+
+\begin{proof}
+  By induction on $\dim V$.  Trivial when $\dim V = 1$.  So assume
+  $\dim V > 1$, and the theorem true for all subspaces of $V$.
+  
+  $\alpha$ has one eigenvalue $\lambda_1$, with corresponding
+  eigenvector $\xi_1 \ne 0$.  Let $V_1 = \langle \xi_1 \rangle$, and
+  $W = V_1^{\perp}$.  Now $V=V_1 \oplus W$, so $\dim W = \dim V - 1$.
+  Let $\psi_W$ be the restriction of $\psi$.  Now, does $\alpha$ take
+  $W$ to $W$?  But if $w \in W$, then
+\[
+\psi(\alpha(w),\xi_1) = \psi(w,\alpha(\xi_1)) =
+\overline{\lambda_1}\psi(w,\xi_1)= 0
+\]
+
+Now define $\beta : W \mapsto W$ by $\beta(w) = \alpha(w) \: \forall w
+\in W$.  Now $\beta = \beta_{\psi_W}^*$ and so by inductive hypothesis
+W has an orthonormal basis $\{e_2, \dots, e_n \}$ of eigenvectors of
+$\beta$.  Put $e_1 = \frac{\xi_1}{\abs{\abs{\xi_1}}}$ to get
+$\{e_1,e_2, \dots, e_n\}$, the desired orthonormal basis of $V$.
+\end{proof}
+
+\begin{theorem}[Unitary Case]
+  Let $V$ be a finite dimensional vector space over $\mathbb{C}$
+  endowed with an inner product $\psi$.  Let $\alpha : V \mapsto V$ be
+  a linear map such that $\alpha^* = \alpha^{-1}$.  Then there exists
+  an orthonormal basis of $V$ consisting of eigenvectors of $\alpha$.
+\end{theorem}
+
+\begin{proof}
+  There exists one eigenvalue $\lambda_1 \ne 0$ with eigenvector
+  $\xi_1$.  Let $V_1 = \langle \xi_1 \rangle$ and $W = V_1^{\perp}$.
+  Given $w \in W$,
+\[
+\psi(\alpha(w),\xi_1) = \psi(x,\alpha^{-1}(\xi_1) =
+\psi(x,\frac{\xi_1}{\lambda_1}) = 0
+\]
+and so $\alpha(w) \in W$.  Fill in the blanks.
+\end{proof}
+
+\section{Spectral Theory for $\mathbb{R}$}
+
+So $V$ is a finite dimensional vector space over $\mathbb{R}$, with
+$\psi : V \times V \mapsto \mathbb{R}$ an inner product.  $\alpha$ is
+self-adjoint wrt $\psi$ if $\alpha = \alpha^*$.
+
+\begin{lemma}
+  Let $\alpha$ be self-adjoint.  Then all the eigenvalues of $\alpha$
+  are real and if $\xi_1$ and $\xi_2$ are eigenvectors belonging to
+  distinct eigenvalues, then they are automatically orthogonal.
+\end{lemma}
+
+\begin{proof}
+  For the first part, choose a basis of $V$, then $\alpha$ corresponds
+  to a matrix $A = A^t$.  The map $X \mapsto A X, \mathbb{C}^n \mapsto
+  \mathbb{C}^n$ is Hermitian, so has real eigenvalues.
+
+\[
+\psi(\alpha(\xi_1),\xi_2)=\psi(\xi_1,\alpha(\xi_2))
+\]
+and so
+\[
+\lambda_1\psi(\xi_1,\xi_2)-\lambda_2\psi(\xi_1,\xi_2) = 0
+\]
+Since $\lambda_1 \ne \lambda_2$, result follows.
+\end{proof}
+
+\begin{theorem}[Real, self-adjoint case]
+  Let $V$ be a finite dimensional vector space over $\mathbb{R}$
+  endowed with an inner product $\psi$.  Let $\alpha : V \mapsto V$ be
+  a linear map such that $\alpha^* = \alpha$.  Then there exists
+  an orthonormal basis of $V$ consisting of eigenvectors of $\alpha$.
+\end{theorem}
+
+\begin{proof}
+  As before, noting that $\alpha$ has real eigenvalues.
+\end{proof}
+
+\chapter{Alternating Forms}
+
+Let $V$ be a vector space over any field $\mathbb{K}$ and $\psi : V
+\times V \mapsto \mathbb{K}$ bilinear.
+
+\begin{definition}
+  $\psi$ is alternating if $\psi(x,x) = 0 \: \forall x \in V$.  $\psi$
+  is anti-symmetric if $\psi(x,y) = - \psi(y,x)$.
+\end{definition}
+
+Alternating implies anti-symmetric (consider $\psi(x+y,x+y)$), and if
+the characteristic of $\mathbb{K}$ is not 2, anti-symmetric implies
+alternating.
+
+\section{Nice matrices}
+
+\begin{theorem}
+  Assume $V$ is finite dimensional and $\psi$ is alternating.  Then
+  $\psi$ has even rank $2m$ and there exists a basis $\{e_1, \dots
+  ,e_n \}$ such that the matrix $(\psi(e_i,e_j))$ is of the form
+\[
+\left(
+\begin{matrix}
+  0       & I_m   & 0 \\
+  -I_m    & 0     & 0 \\
+  0 & 0 & 0
+\end{matrix}
+\right)
+\]
+\end{theorem}
+
+\begin{proof}
+  By induction on $\dim V$.  Obvious when $\dim V = 1$, then $\psi
+  \equiv 0$.  Assume $\dim V > 1$ and result proven for all
+  $(V',\psi')$ where $\psi' : V' \times V' \mapsto \mathbb{K}$ is
+  alternating and $\dim V' < \dim V$.
+  
+  We want a basis $\{u_1,\dots, u_m, v_1, \dots, v_m, w_1, \dots ,
+  w_s\}$ where $2m+s = n$ such that $\psi(u_i,v_i)=-\psi(v_i,u_i)=1$
+  and $\psi(\text{anything else}) = 0$.  If $\psi \equiv 0$, there is
+  nothing to prove, so assume $\exists x,y$ such that $\psi(x,y) \ne
+  0$.  Put $u_1 = \frac{x}{\psi(x,y)}$ and $v_1 = y$.  Then
+  $\psi(u_1,v_1)=0$.  Let $V_1 = \langle u_1,v_1 \rangle$.  Note that
+  $\dim V_1 = 2$.  Let $W=V_1^{\perp}$.  Claim that $V = V_1 \oplus
+  W$.
+  
+  Firstly note that $V_1 \cap W = \{0\}$ (by putting $\zeta = \lambda
+  u_1 + \mu v_1 \in V_1 \cap W$).  Now, given $z \in V$, define $z_1 =
+  \psi(z,v_1)u_1 + \psi(u_1,z)v_1$ and $z-z_1 \in W$.  So $V = V_1
+  \perp W$.  Now given $(W,\psi_W)$ apply inductive hypothesis.
+\end{proof}
+
+\section{Symplectic Group}
+
+Let $V$ be a finite dimensional vector space over $\mathbb{K}$, $\psi
+: V \times V \mapsto \mathbb{K}$ be bilinear, alternating and
+non-degenerate (implies $\dim V = 2m$).
+
+\begin{definition}
+  The symplectic group $Sp(V,\psi)$ is the set of linear maps $\alpha
+  : V \mapsto V$ satisfying
+\begin{enumerate}
+\item $\alpha$ is an isomorphism of vector spaces
+\item $\psi(\alpha(x),\alpha(y)) = \psi(x,y)$.
+\end{enumerate}
+\end{definition}
+
+Or alternatively, for matrix definition, choose a basis of V st $\psi$
+has a matrix
+\[J_{2m}=
+\left(
+\begin{matrix}
+  0       & I_m \\
+  -I_m & 0
+\end{matrix}
+\right)
+\]
+
+Then $Sp_{2m}(\mathbb{K}) = \{ P \in M_{2m}(\mathbb{K}) \: | P \text{
+  is invertible and } P^tJ_{2m}P = J_{2m}\}$.
+
+\chapter{Number Theory}
+
+\section{Introduction}
+
+\begin{lemma}
+  Let $p$ be any prime.  Then $\mathbb{F}_p = \mathbb{Z}/p\mathbb{Z}$
+  is a field with $p$ elements and $\mathbb{F}_p^{\times}$ the set of
+  non-zero elements is a multiplicative group of order $p-1$.
+\end{lemma}
+
+\begin{proof}
+  DIY!
+\end{proof}
+
+\begin{corollary}
+  Let $a$ be any integer with $(a,p)=1$. Then $a^{p-1}\equiv 1
+  \pmod{p}$.
+\end{corollary}
+
+\begin{proof}
+  $a+p\mathbb{Z} \in \mathbb{F}_p^{\times}$, so
+  $(a+p\mathbb{Z})^{p-1}=1+p\mathbb{Z}$.
+\end{proof}
+
+\begin{definition}
+  Let $p>2$ and take $a$ with $(a,p)=1$.  We say $a$ is a quadratic
+  residue modulo p if $a+p\mathbb{Z}$ is a square in
+  $\mathbb{F}_p^{\times}$.  Or equivalently, the congruence
+\[
+x^2 \equiv a \mod{p}
+\]
+is soluble.
+\end{definition}
+
+\begin{lemma}
+  Let $a \in \mathbb{Z}$ have $(a,p)=1$, $p>2$.  Then the congruence
+  $x^2 \equiv a \pmod{p}$ has either no solutions or two solutions
+  modulo $p$.
+\end{lemma}
+
+\begin{proof}
+  If $x_0$ is a solution then $-x_0$ is a solution. $x_0 \nequiv -x_0
+  \pmod{p}$ since $p \ne 2$.  Now suppose $x_0$ and $x_1$ are both
+  solns of $x^2 \equiv a \pmod{p}$.  Then $x_0^2 \equiv x_1^2
+  \pmod{p}$, and so $p|x_0^2 - x_1^2 = (x_0-x_1)(x_0+x_1)$.  So either
+  $x_0 \equiv x_1 \pmod p$ or $x_0 \equiv -x_1 \pmod{p}$.
+\end{proof}
+
+\begin{lemma}
+  Let $p$ be an odd prime.  Then there are precisely $\frac{p-1}{2}$
+  quadratic residues modulo $p$.
+\end{lemma}
+
+\begin{proof}
+  Define $\theta : \{1, \dots ,p-1 \} \mapsto \{1, \dots , p-1 \}$ by
+  $\theta(x)$ is the least positive residue of $x^2$ modulo $p$.  Now
+  by above, $\theta$ is $2$ to $1$, so $\#Im(\theta) = \frac{p-1}{2}$.
+\end{proof}
+
+\section{Quadratic Reciprocity}
+
+\begin{definition}
+  For $p$ odd, $(a,p)=1$, we define the Legendre symbol
+  $\legsym{a}{p}$ by
+\[
+\legsym{a}{p} =
+\begin{cases}
+  1       & \text{if $a$ is a quadratic residue modulo $p$;} \\
+  -1 & \text{otherwise.}
+\end{cases}
+\]
+\end{definition}
+
+\begin{lemma}
+\[
+\legsym{ab}{p}=\legsym{a}{p}\legsym{b}{p}
+\]
+\end{lemma}
+
+\begin{proof}
+  Follows from Euler's Criterion.
+\end{proof}
+
+\begin{lemma}[Euler's Criterion]
+\[
+\legsym{a}{p} \equiv a^{\frac{p-1}{2}} \mod{p}
+\]
+\end{lemma}
+
+\begin{proof}
+  Trivial if $\legsym{a}{p}=1$.  So take $\legsym{a}{p}=-1$.  Now take
+  $y \in \{1, \dots, p-1 \}$, then there exists unique $z \in \{1,
+  \dots, p-1\}$ such that $zy \equiv a \pmod{p}$, with $z \ne y$.  So
+  can break up $\{1, \dots, p-1 \}$ into $\frac{p-1}{2}$ distinct
+  pairs whose product $\equiv a \pmod{p}$.  So
+\begin{align*}
+  (p-1)! &\equiv a^{\frac{p-1}{2}} \mod{p} \\
+  &\equiv -1 \qquad \text{by Wilson's Theorem}
+\end{align*}
+\end{proof}
+
+\begin{theorem}[The Law of Quadratic Reciprocity]
+  If $p$ and $q$ are odd primes then
+\[
+\legsym{p}{q}\legsym{q}{p} = (-1)^{\frac{p-1}{2}\frac{q-1}{2}} =
+\begin{cases}
+  1       & \text{one of $p$ or $q$ } \equiv 1 \pmod 4 \text{;}\\
+  -1 & p,q \equiv -1 \pmod 4 \text{.}
+\end{cases}
+\]
+\end{theorem}
+
+\begin{lemma}
+  If $p$ an odd prime, then
+\[
+\legsym{2}{p} = (-1)^{\frac{p^2-1}{8}} =
+\begin{cases}
+  1       & p \equiv \pm 1 \pmod 8 \text{;} \\
+  -1 & p \equiv \pm 3 \pmod 8 \text{.}
+\end{cases}
+\]
+\end{lemma}
+
+\begin{proof}
+  None given - take it on trust...
+\end{proof}
+
+\begin{example}
+  Compute $\legsym{34}{97}$.
+\begin{align*}
+  \legsym{34}{97} &= \legsym{2}{97}\legsym{17}{97} = +1\legsym{17}{97} \\
+  &= \legsym{97}{17} = \legsym{12}{17} \\
+  &= \legsym{3}{17}\legsym{4}{17} = \legsym{3}{17} \\
+  &= \legsym{17}{3} = \legsym{2}{3} \\
+  &= -1
+\end{align*}
+\end{example}
+
+\begin{example}
+  Is $x^2 \equiv 20964 \pmod{1987}$ soluble?  $1987$ is known to be
+  prime.
+\begin{align*}
+  \legsym{20964}{1987} & = \legsym{1094}{1987} \\
+  & = \legsym{2}{1987}\legsym{547}{1987} = -\legsym{547}{1987} \\
+  & = \legsym{1987}{547} = \legsym{346}{547} \\
+  & = \legsym{2}{547}\legsym{173}{547} = - \legsym{173}{547} \\
+  & = - \legsym{547}{173} = - \legsym{28}{173} = -\legsym{7}{173} \\
+  & = - \legsym{173}{7} = -\legsym{5}{7} = -\legsym{2}{5} \\
+  & = 1
+\end{align*}
+So the congruence is soluble.
+\end{example}
+
+\begin{example}
+  Compute $\legsym{5}{p}$, $p \ne 5$.  Let $p=5a+r, r = 1,2,3,4$.
+
+\begin{align*}
+  \legsym{5}{p} &= \legsym{p}{5} \\
+  & = \legsym{r}{5} \\
+  & =
+\begin{cases}
+  +1      & \text{if $r = 1,4$;} \\
+  -1 & \text{if $r = 2,3$.}
+\end{cases}
+\end{align*}
+\end{example}
+
+\begin{example}
+  Compute $\legsym{3}{p}, p \ne 3$.
+
+\begin{align*}
+  \legsym{3}{p} &= \legsym{p}{3}(-1)^{\frac{p-1}{2}} \\
+  \intertext{Let $p = 12a+r, r = 1,5,7,11$}
+  &= \legsym{r}{3} \\
+  &=
+\begin{cases}
+  +1      & r=1,11 \text{;} \\
+  -1 & r=5,7 \text{.}
+\end{cases}
+\end{align*}
+\end{example}
+
+\section{Introduction to Binary Quadratic Forms}
+
+Something of the form
+\[
+f(x,y) = ax^2+bxy+cy^2 \qquad a,b,c \in \mathbb{Z}
+\]
+is called a binary quadratic form.  We want to look at the problem of
+representation, i.e., given a fixed $f(x,y)$ and $m \in \mathbb{Z}$,
+find $x_0,y_0 \in \mathbb{Z}$ such that $f(x_0,y_0)=m$.
+
+\begin{definition}
+\[
+SL_2(\mathbb{Z}) = \{ \left(
+\begin{matrix}
+  p       & q \\
+  r & s
+\end{matrix}
+\right) |\: p,q,r,s \in \mathbb{Z}, ps-rq = 1 \}
+\]
+\end{definition}
+
+\begin{definition}
+\[
+\mathcal{B} = \{ f(x,y) = ax^2+bxy+cy^2 \: | \: a,b,c \in \mathbb{Z}
+\}
+\]
+\end{definition}
+
+For the action of $SL_2(\mathbb{Z})$ on $\mathcal{B}$, take $\sigma
+\in SL_2(\mathbb{Z})$ and $f \in \mathcal{B}$.  Define
+\begin{align*}
+  \sigma\circ f &= f(px+qy,rx+sy) \\
+  &= a'x^2+b'xy+c'y^2
+\end{align*}
+where
+\begin{align*}
+  a' &= f(p,r) \\
+  b' &= 2apq+2crs+b(ps+qr) \\
+  c' &= f(q,s).
+\end{align*} 
+
+You can check (if sufficiently bored), that $\sigma_1 \circ (\sigma_2
+\circ f) = (\sigma_1\sigma_2) \circ f$.
+
+\begin{definition}
+  Two binary quadratic forms $f_1, f_2 \in \mathcal{B}$ are said to be
+  equivalent if there exists $\sigma \in SL_2(\mathbb{Z})$ such that
+  $f_2 = \sigma \circ f_1$.
+\end{definition}
+
+\begin{definition}
+  The discriminant $\Delta(f) = b^2-4ac$.
+\end{definition}
+
+\begin{lemma}
+  $\Delta(\sigma \circ f) = \Delta(f)$
+\end{lemma}
+
+\begin{proof}
+  DIY!
+\end{proof}
+
+Note that inequivalent forms can have the same discriminant, for
+instance, $x^2+6y^2$ and $2x^2 + 3y^2$ both have discriminant $-24$,
+but are not equivalent.
+
+$\Delta(f) = b^2 - 4ac$, so $\Delta(f) \equiv 0,1 \pmod{4}$.
+
+\begin{lemma}
+  For each $d \in \mathbb{Z}$ with $d \equiv 0,1 \pmod{4}$, there
+  exists a binary quadratic form with $d$ as discriminant.
+\end{lemma}
+
+\begin{proof}
+  Given $d$, seek $a,b,c \in \mathbb{Z}$ with $b^2 - 4ac = d$.  Take
+  $a=1$ and $b = 0,1$ according as $d \equiv 0,1 \pmod{4}$.  Take
+  $c=\frac{-d}{4}$ if $d \equiv 0 \pmod{4}$ and $c=\frac{1-d}{4}$
+  otherwise.  These work!
+\end{proof}
+
+\begin{align*}
+  4af(x,y) &= (2ax+by)^2 - \Delta(f)y^2 \\
+  \intertext{if $a \ne 0$, then $f$ is positive definite when}
+  & a > 0 \text{ and } \Delta(f) < 0 \\
+  \intertext{negative definite when}
+  & a < 0 \text{ and } \Delta(f) < 0 \\
+  \intertext{and indeterminate when} & a \ne 0 \text{ and } \Delta(f)
+  > 0
+\end{align*}
+
+\section{Problem of Representation}
+
+\begin{definition}
+  Let $m \in \mathbb{Z}$.  We say $m$ is properly represented by $f
+  \in \mathcal{B} \text{ if } \exists p,r \in \mathbb{Z}$ with
+  $(p,r)=1$ such that $f(p,r)=m$.
+\end{definition}
+
+\begin{lemma}
+  $m \in \mathbb{Z}$ is properly represented by $f \in \mathcal{B}
+  \Leftrightarrow \exists f'$ equivalent to $f$ such that $m$ is the
+  coefficient of $x^2$ in $f'$.
+\end{lemma}
+
+\begin{proof}
+  If $f' = f(px+qy,rx+sy)$ with $ps-qr=1$, and $f' = mx^2 + \dots$,
+  then $f' = f(p,r)x^2 + \dots$, so $m = f(p,r)$ and $(p,r)=1$.
+  
+  Now assume $f(p,r)=m$ with $p,r \in \mathbb{Z} \text{ such that }
+  (p,r)=1$.  Choose $q,s \in \mathbb{Z}$ such that $ps-qr = 1$.  Form
+  $\sigma = \left(
+\begin{smallmatrix}
+  p       & q \\
+  r & s
+\end{smallmatrix}\right)$, then $\sigma \circ f = mx^2 + \dots$. 
+\end{proof}
+
+\begin{corollary}
+  Assume $m \ne 0$ is properly represented by $f$.  Then the
+  congruence
+\[
+z^2 \equiv \Delta(f) \mod{4\abs{m}}
+\]
+is soluble.
+\end{corollary}
+
+\begin{proof}
+  $f \sim f' = mx^2+b'xy+c'y^2$ if $m$ is properly represented by $f$.
+  Now
+\begin{align*}
+  \Delta(f) &= \Delta(f') \\
+  &= {b'}^2 - 4mc'
+\end{align*}
+So b' is a solution of the congruence.
+\end{proof}
+
+\begin{lemma}
+  Assume $f$ given, and $0 \ne m \in \mathbb{Z}$.  Then if the
+  congruence $z^2 \equiv \Delta(f) \pmod{4\abs{m}}$ is soluble m is
+  properly represented by some form with discriminant $\Delta(f)$.
+\end{lemma}
+
+\begin{proof}
+  $z=b'$ is a solution of the congruence.  Now ${b'}^2-\Delta(f)=4mc',
+  c' \in \mathbb{Z}$ and define $f'(x,y) = mx^2+b'xy+c'y^2$, which has
+  discriminant $\Delta(f)$ and properly represents $m$.
+\end{proof}
+
+\begin{example}
+  The primes represented by $x^2+y^2$ are $2$ and all $p$ with $p
+  \equiv 1 \pmod{4}$.  Trivial for p=2, so take $p>2'$.  Now all forms
+  with discriminant $-4$ are equivalent to $x^2+y^2$ (proof later), so
+\begin{align*}
+  p \text{ represented by } f & \Leftrightarrow z^2 \equiv -4 \pmod{4p} \text{ is soluble } \\
+  & \Leftrightarrow z=2z_1 \text{ and } z_1^2 \equiv -1 \pmod{p} \text{ is soluble }\\
+  & \Leftrightarrow z=2z_1 \text{ and } \legsym{-1}{p} = 1 \\
+  & \Leftrightarrow z=2z_1 \text{ and } p \equiv 1 \pmod{4}
+\end{align*}
+\end{example}
+
+\begin{example}
+  $f(x,y) = x^2+xy+2y^2$. The primes represented by $f$ are $2$ and
+  all odd primes congruent to 1,2 or 4 modulo 7.  2 is trivial, so
+  take $p>2$.  All forms of discriminant $-7$ are equivalent to $f$
+  (proof later).  So
+\begin{align*}
+  p \text{ represented by } f & \Leftrightarrow z^2 \equiv -7 \mod{4 p} \text{ is soluble} \\
+  & \Leftrightarrow z_1^2 \equiv -7 \mod{4} \text{ and } z_2^2 \equiv
+  -7 \mod{p}
+  \text{ are both soluble} \\
+  & \Leftrightarrow \legsym{-7}{p} = 1 \\
+  & p \equiv 1,2 \text{ or } 4 \mod{7}
+\end{align*}
+
+Step 2 is made using the Chinese remainder theorem.
+\end{example}
+
+\section{Reduction Theory}
+
+\begin{definition}
+  $\mathcal{P} = \{ f \in \mathcal{B} \: | \: a>0 \text{ and }
+  \Delta(f) < 0\}$ is the set of positive definite binary quadratic
+  forms.
+\end{definition}
+
+$SL_2(\mathbb{Z})$ acts on $\mathcal{P}$.
+
+\begin{notation}
+  Write $(a,b,c)$ for $f(x,y) = ax^2+bxy+cy^2$.
+\end{notation}
+
+We now produce two members of $SL_2(\mathbb{Z})$ which make $a$,
+$\abs{b}$ as small as possible.
+
+If $c < a$, replace $(a,b,c)$ by $(c,-b,a)$ using $\left(
+\begin{smallmatrix}
+  0       & 1 \\
+  -1 & 0
+\end{smallmatrix}
+\right)$.  If $\abs{b} > a$, replace $(a,b,c)$ by the equivalent form
+$(a, b_1, c_1)$ where $b_1 = b+2\mu a, \mu$ chosen such than
+$\abs{b_1}<a$ and $c_1$ given by $\Delta(f)=b_1^2-4ac_1$, using
+$\left(
+\begin{smallmatrix}
+  1       & \mu \\
+  0 & 1
+\end{smallmatrix}
+\right)$
+
+Now start with any form and apply these successively.  At each stage
+either $a$ or $\abs{b}$ is reduced, so algorithm must terminate with a
+form which has $c \ge a$ and $\abs{b} \le a$.  If $b=-a$ we can apply
+the second operation with $\mu = 1$ to change $b$ to $+a$.  If $c=a$,
+apply operation 1 to get $b \ge 0$.  We have thus proved the following
+theorem.
+
+\begin{theorem}
+  Any element of $\mathcal{P}$ is equivalent to a form
+  $f(x,y)=ax^2+bxy+cy^2$ satisfying either $c > a$ \text{ and } $-a <
+  b \le a$ or $c=a \text{ and } 0 \le b \le a$.  An element of
+  $\mathcal{P}$ satisfying these conditions is said to be reduced.
+  Additionally no two reduced forms are equivalent.
+\end{theorem}
+
+\begin{corollary}
+  If $\Delta < 0$ fixed, there are only finitely many positive
+  definite reduced forms $(a,b,c)$ of discriminant $\Delta$.
+\end{corollary}
+
+\begin{proof}
+  Put $D=-\Delta$.  Now $4ac-b^2=D$.  If $(a,b,c)$ reduced then $b^2
+  \le a^2 \le ac \Rightarrow 3ac \le D$.  There are only a finite
+  number of possibilities for $(a,c)$, each with only two choices of
+  $b$.
+\end{proof}
+
+\begin{definition}
+  If $\Delta < 0$, then $h(\Delta)$ is the number of equivalence
+  classes of positive definite $(a,b,c)$ with discriminant $\Delta$.
+\end{definition}
+
+The above proof gives an algorithm to find $h(\Delta)$.
+
+\begin{example}
+  $D=4 \Rightarrow \abs{b} \le \sqrt{\frac{4}{3}} \text{ and } b
+  \text{ even } \Rightarrow b=0$.  Now factor $1$! to get $a=c=1$.
+  Thus there is a unique reduced form $x^2+y^2$.
+\end{example}
+
+\begin{example}
+  $D=7 \Rightarrow \abs{b} \le \sqrt{\frac{7}{3}} \text{ and } b
+  \text{ odd } \Rightarrow b=\pm 1$.  $b=-1$ ruled out, since we want
+  reduced form, so now factor $2$ to get $a=1$, $c=2$.  Thus there is
+  a unique reduced form $x^2+xy+2y^2$.
+\end{example}
+
+And so on.  For an example with $h(\Delta)>1$, put $\Delta=-20$ or
+$\Delta=-15$.
+
+\begin{example}
+  When $\Delta=-15$, get the two reduced forms $x^2+xy+4y^2$ and
+  $2x^2+xy+2y^2$.  Question: which primes are represented by at least
+  one of these?
+  
+  Get $p \equiv 1,2,4, \text{ or } 8 \pmod{15}$ eventually.  Now, can
+  we decide which one?
+  
+  If $p=x^2+xy+4y^2$, then $4p = (2x+y)^2+15y^2$, and $4p \equiv
+  (2x+y)^2 \pmod{15}$.  This implies that $p$ is a square modulo 15,
+  so $p \equiv 1 \text{ or } 4 \pmod{15}$.  Similarly, by considering
+  $8p$, $p \equiv 2 \text{ or } 8 \pmod{15}$ to be represented by
+  $2x^2+xy+2y^2$.
+\end{example}
+
+This is not always possible.  No congruence condition on $p$ can
+decide between $x^2+55y^2$ and $5x^2+11y^2$.
+
+\backmatter
+
+\begin{thebibliography}{9}
+
+\bibitem{Cohn} P.M. Cohn, \emph{Algebra Vol. 1}, Second ed., Wiley,
+  1993.
+  
+  {\sffamily \small This is the best book I found for the first part
+    of the course.  It has more in than is needed and is also quite
+    good for Linear Maths.}
+
+\bibitem{Davenport} H. Davenport, \emph{The Higher Arithmetic}, Sixth
+  ed., CUP, 1992.
+  
+  {\sffamily \small A \emph{very} good book for the last part of the
+    course.  It's also worth a read just for interest's sake. }
+
+\end{thebibliography}
+
+\end{document}

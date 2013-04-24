@@ -1,0 +1,1782 @@
+\documentclass{notes}
+
+\usepackage{varioref}
+
+\newcommand{\dif}[1]{\frac{\ud\phantom{#1}}{\ud#1}}
+\newcommand{\absd}[1]{\frac{\uD\phantom{#1}}{\ud#1}}
+\newcommand{\absdf}[2]{\frac{\uD#1}{\ud#2}}
+\newcommand{\ch}[2]{\genfrac{\{}{\}}{0pt}{}{#1}{#2}}
+\newcommand{\del}{\nabla}
+\renewcommand{\v}{\vect{v}}
+\renewcommand{\Box}{\square}
+\newcommand{\cO}{\mathcal{O}}
+\newcommand{\cL}{\mathcal{L}}
+
+\begin{document}
+
+\frontmatter
+
+\title{General Relativity}
+
+\lecturer{Dr.~P.~D.~D'Eath}
+\maintainer{Paul Metcalfe}
+\date{Lent 1998} \maketitle
+
+\thispagestyle{empty}
+
+\noindent\verb$Revision: 2.9 $\hfill\\
+\noindent\verb$Date: 2001/11/01 14:49:47 $\hfill
+
+\vspace{1.5in}
+
+The following people have maintained these notes.
+
+\begin{center}
+\begin{tabular}{ r  l}
+-- date & Paul Metcalfe
+\end{tabular}
+\end{center}
+
+\tableofcontents
+
+\chapter{Introduction}
+
+These notes are based on the course ``General Relativity'' given by
+Dr.~P.~D.~D'Eath in Cambridge in the Lent Term 1998.  These typeset
+notes are totally unconnected with Dr.~D'Eath.  The recommended books
+for this course are discussed in the bibliography.
+
+\alsoavailable
+\archimcopyright
+
+\mainmatter
+
+\chapter{Outline of the theory}
+
+\section{Curved spaces}
+
+Consider a two dimensional curved surface in Euclidean $\R^3$, for
+instance with the defining equation $z = z(x,y)$.  We distinguish
+between the extrinsic and intrinsic properties of such a surface.
+
+The extrinsic properties describe the relation between the surface and the
+surrounding 3 dimensional space, for instance the extrinsic
+curvature if $z = z(x,y)$ is not a plane.
+
+The intrinsic properties refer to quantities such as distance, angle
+and area measured within the surface.  For instance, the
+Euclidean metric $\ud s^2 = \ud x^2 + \ud y^2 + \ud z^2$ gives
+the distance between nearby points in the surface as
+\[
+\ud s^2 = \ud x^2 + \ud y^2 + \left( \pd{z}{x} \ud x + \pd{z}{y} \ud y
+\right)^2.
+\]
+
+The surface has an intrinsic Riemannian (positive definite) metric of the form
+\[
+\ud s^2 = A(x,y)\, \ud x^2 + 2 B(x,y)\, \ud x \ud y + C(x,y)\, \ud y^2.
+\]
+
+The metric at a point $P$ on the surface describes the geometry (distances,
+angles, etc.) on the plane tangent to the surface at $P$.
+
+We have the freedom to change co-ordinates.  If $x,y \mapsto
+x'(x,y), y'(x,y)$ then the metric becomes
+\[
+\ud s^2 = A'(x',y')\, \ud x'{}^2 + 2 B'(x',y')\, \ud x' \ud y' + C'(x',y')\,
+\ud y'{}^2,
+\]
+
+where $A'$, $B'$ and $C'$ can be calculated.  The geometry of the
+surface is the same however the co-ordinate lines are painted on ---
+as an example take $\R^2$ with the metric ${\ud s^2 = \ud x^2 + \ud y^2
+= \ud r^2 + r^2\, \ud \theta^2}$.
+
+The cylinder in $\R^3$, $x^2 + y^2 = R^2$ has the intrinsic
+metric $\ud s^2 = \ud z^2 + R^2\, \ud \phi^2$ (using cylindrical polars).
+We can locally make the co-ordinate change $x = z$, $y = R \phi$ and
+we get the flat space metric.  The intrinsic geometry of the cylinder is
+that of a plane, although the cylinder has extrinsic curvature.
+
+We can do the same sort of thing with the 2-sphere of radius $a$ in
+$\R^3$. This has the intrinsic metric $\ud s^2 = a^2 \left( \ud
+  \theta^2 + \sin^2 \theta\, \ud \phi^2 \right)$ (where $\theta$ and
+$\phi$ are the usual spherical polars).  Letting $r = a \theta$ we get
+the metric
+\begin{align*}
+\ud s^2 &= \ud r^2 + \sin^2 \frac{r}{a}\ \ud \phi^2 \\
+& \approx \ud r^2 + \left( r^2 - \frac{r^4}{3 a^2} + \dots \right)\, \ud \phi^2
+\quad \text{near the North pole.}
+\end{align*}
+
+These extra terms are the effects of the intrinsic curvature of the sphere,
+which is $K = a^{-2}$.
+
+The circumference of the circle at constant $r$ is
+\[
+C = 2 \pi \left(r - \frac{r^3}{6 a^2} + \dots \right) = \oint \ud s,
+\]
+
+and the area within the circle is
+\[
+A = \pi r^2 - \frac{\pi r^4}{12 a^2} + \dots = \int C \ud r.
+\]
+
+We note that
+\begin{equation}\label{eq:curv}
+K = \lim_{r \to 0} \frac{3}{\pi} \frac{2 \pi r - C}{r^3}
+= \lim_{r \to 0} \frac{12}{\pi} \frac{\pi r^2 - A}{r^4}.
+\end{equation}
+
+\subsection{Geodesics}
+
+These are the generalisation of straight lines in a flat space.  If
+points are not too far apart we can find the geodesic $\gamma$ by
+extremizing the length
+$\int_\gamma \ud s$.
+
+Geodesics are intrinsic to the surface (they depend on the metric).
+As an example, great circles on the sphere are geodesics.
+
+We can find the intrinsic curvature of any surface at a point $P$ by
+drawing all geodesics from $P$ out to a distance $r$.  We evaluate
+the circumference $C(r)$ and thus area $A(r)$ and use \eqref{eq:curv}
+to define the curvature $K$ at that point.  $K$ can be negative
+(for instance at a saddle).
+
+Let $\xi(r)$ (the geodesic deviation) be the distance between the ends
+of two nearby geodesics of length $r$ from a point $P$.  On $S^2$,
+$\xi(r) = a \sin \tfrac{r}{a} \delta \phi$ and we note that $\xi$
+satisfies the \emph{geodesic deviation equation}:
+
+\[
+\diff{^2 \xi}{r^2} = - K \xi.
+\]
+
+A similar equation holds in any curved space.  Thus if $K > 0$ two
+neighbouring geodesics recross (eventually), if $K = 0$ the geodesics
+are straight lines and if $K < 0$ the geodesics separate exponentially.
+
+\section{The principle of equivalence}
+
+\subsection{Uniqueness of free fall}
+
+Consider the (Newtonian) dynamics of a single particle under gravity,
+\[
+\mathcal{M} \ddot{\x} = - M \nabla \phi, 
+\]
+
+where $\mathcal{M}$, the inertial mass, equals $M$, the passive
+gravitational mass.  Motion under gravity is independent of mass
+and composition.
+
+If a gravitational field $\vect{g} = - \nabla \phi$ is constant in
+space and time then all particles have a constant acceleration
+$\vect{a} = \vect{g}$ superimposed on the gravity-free motion, $\x =
+\x' + \tfrac{1}{2} \vect{a} t^2$, where $\x'$ could be regarded as the
+position in an inertial frame with no gravitational field.
+Conversely, uniform acceleration $\vect{a}$ applied to the
+co-ordinates gives the illusion of a uniform gravitational field
+$\vect{a}$.  Uniform gravitational fields are ``fictitious'' --- they can
+be eliminated by a change of co-ordinates.
+
+In \emph{any} gravitational field, if an observer falls freely in
+a non-rotating laboratory, he%
+\footnote{More properly, (s)he.  Sex will be assigned at random.}
+sees objects in the laboratory moving essentially on straight lines
+--- the local gravitational field has been eliminated.
+
+A freely falling non-rotating laboratory provides a \emph{local
+  inertial frame} allowing inertial co-ordinates $(\x,t)$ to be set up
+near the laboratory.
+
+There are limitations on local inertial frames.  Nearby particles
+at $\x$ and $\x + \boldsymbol{\xi}$ have relative tidal acceleration
+\[
+\diff{^2 \xi^i}{t^2} = - \phi_{,ij} \xi^j.
+\]
+
+In a ``true'' non-uniform gravitational field tidal forces cannot
+be eliminated by co-ordinate transforms and there are many different local
+inertial frames with relative accelerations.
+
+\subsection{Equivalence principle}
+
+\begin{center}
+\parbox{4in}{\itshape
+All local inertial frames are equivalent for the performance
+of all experiments.  All non-gravitational laws of physics take
+their special-relativistic forms in local inertial frames (by the
+usual arguments of special relativity).
+}
+\end{center}
+
+We can thus do things like fluid dynamics, quantum mechanics
+and electromagnetic theory in a gravitational field by using the
+special-relativistic laws and local inertial frames.
+
+The speed of light is therefore $c$ and distances and times are
+measured by the Minkowski metric $\ud s^2 = \ud x^2 + \ud y^2 + \ud z^2 -
+c^2 \ud t^2$.
+
+\subsection{Consequences for light propagation}
+
+The obvious consequence is that light can be deflected by gravitational
+fields (just like ordinary matter) because light moves in straight lines
+in local inertial frames which accelerate with respect to global
+co-ordinates.
+
+There is also a gravitational frequency shift.  Consider a lift of height
+$h$ accelerating downwards at a rate $g$ with respect to the earth.
+The lift has speed $0$ at $t=0$ and a light ray of frequency $\nu$
+is emitted from the base of the lift at $t = 0$.  At $t = h c^{-1}$ 
+the light ray is at the top of the lift and has an observed frequency
+$\nu$ in the lift frame (by the equivalence principle).  The lift
+then has speed $\tfrac{gh}{c}$ and so the light has
+a Doppler shifted frequency $\nu \left(1 - \frac{gh}{c^2} \right)$
+measured from the earth frame.  Note that
+
+\begin{equation}\label{eq:gravtim}
+\frac{\ud \nu}{\nu} = - \frac{\ud \phi}{c^2}.
+\end{equation}
+
+The same thing happens for light emitted in the other direction.%
+\footnote{This aspect of the equivalence principle is confirmed
+by the Pound-Rebka experiment.}
+
+We can integrate \eqref{eq:gravtim} to find
+
+\[
+\frac{\nu}{\nu_0} = \exp \left(\frac{\phi_0 - \phi}{c^2}\right)
+\]
+
+for a photon emitted at $P_0$ with a frequency $\nu_0$ and observed
+with a frequency $\nu$ at $P$.
+
+We expect that clocks in a potential well will appear to go slow
+(gravitational time dilation).  This is observed for spectral lines
+in some white dwarf stars, but is not a big effect.
+
+\subsection{Special relativity and gravitation}
+
+Can we fix up special relativity so that it holds over an extended
+region containing gravitational fields?
+
+Gravitational time dilation implies that a good clock at rest
+measures a time $t_m = t_c \exp \frac{\phi}{c^2}$,
+where $(x_c, y_c, z_c,t_c)$ are special relativistic co-ordinates.
+We can only make the theory Lorentz invariant if all measurements
+obey
+\[
+\ud s_m^2 = \exp \left(\frac{\phi}{c^2}\right)\, \ud s^2_c.
+\]
+
+This is completely equivalent to a special type of curved spacetime
+theory (\emph{not} GR) with metric
+\[
+\ud s^2 = \exp \left(\frac{\phi}{c^2}\right)\, \left(\ud x^2 + \ud y^2 +
+\ud z^2 - c^2 \ud t^2\right),
+\]
+
+and this is a more natural viewpoint.  We see that attempts at
+combining special relativity and Newtonian gravity lead naturally
+to curved spacetimes.
+
+\section{Outline of general relativity}
+
+Our arguments have led us to a curved spacetime with four
+co-ordinates $x^a$ ($a = 1 \dots 4$) and a metric
+$\ud s^2 = g_{a b}\, \ud x^a\, \ud x^b$, where
+$g_{a b} = g_{b a}$ depends on position.
+
+At any event $P$ in spacetime one can find a local inertial frame ---
+one can make a co-ordinate change such that
+\[
+g_{a b} = \eta_{a b}
+= \begin{pmatrix}
+1 & 0 & 0 & 0 \\
+0 & 1 & 0 & 0 \\
+0 & 0 & 1 & 0 \\
+0 & 0 & 0 & -c^2
+\end{pmatrix}.
+\]
+
+$\eta_{a b}$ is the \emph{Minkowski metric} (here defined oppositely
+to Electrodynamics).
+
+The metric $g_{a b}$ has the canonical form $+ + + -$ at each point.
+
+Recall that intervals with $\ud s^2 < 0$ are \emph{timelike},
+intervals with $\ud s^2 > 0$ are \emph{spacelike} and intervals with
+$\ud s^2 = 0$ are \emph{null}.
+
+Ordinary massive bodies move on timelike paths $x^a(\lambda)$ with
+$\diff{x^a}{\lambda}$ timelike and light travels on null paths
+with $\diff{x^a}{\lambda}$ null.
+
+We also have the \emph{clocks hypothesis}: the metric determines
+the time measured by a standard clock moving on a timelike path
+$x^a(\lambda)$ from event $A$ to event $B$:
+
+\[
+\tau = \frac{1}{c} \int_A^B \abs{\ud s}.
+\]
+
+The \emph{length hypothesis} is that standard rods measure the length
+$\ud s$.
+
+As for the equations of motion, we know that particles move on essentially
+straight lines in local inertial frames and this suggests the \emph{geodesic
+hypothesis}, that freely falling particles move on geodesics.  The
+path of a particle moving from $A$ to $B$ extremizes
+\[
+\int_A^B \abs{\ud s}.
+\]
+
+We guess that massive particles move on timelike geodesiscs and
+that massless particles move on null geodesics.
+
+\section{Static spacetime and Newtonian gravity}
+
+We compare general relativity with Newtonian gravity for low
+speeds and weak fields.
+
+\subsection{Static metrics}
+
+Consider a time independent gravitational field produced
+by a system of bodies at rest.  We have co-ordinates
+$x^a = (x^i,t)$ ($i =1,2,3$) and the metric tensor
+$g_{a b}$ is a function of the $x^i$ alone.  This is a stationary metric,
+and allows us to synchronize clocks.
+
+\begin{flushright}
+\parbox{3in}{
+Observer 1 at $x_1^i$ bounces light rays off observer 2 at $x_2^i$.
+Since the metric is independent of time the photon paths
+$x^i(\lambda)$ in space, and hence the
+time $t$ elapsed must be the same for each bounce.
+
+Observer 1 sees the photon returning regularly after a proper time
+interval $\tau_1$ and observer 2 sees the photon returning regularly
+after a proper time interval $\tau_2$.  Thus observer 2 can measure
+time by defining $t_2 = \tfrac{k_1}{k_2} \tau_2 + \text{const}$.
+Observers at all points in space can do the same thing --- ensure that
+time passes at the same rate.
+}
+\end{flushright}
+
+However, can we actually synchronize the origin of time for different
+observers?  We can do this (as shown) if the metric is \emph{static}:
+
+\[
+\ud s^2 = g_{ij}(x^k)\, \ud x^i\, \ud x^j - A(x^k)\, \ud t^2.
+\]
+
+In this case the metric is symmetric under time reversal and so the
+time reverse of a photon path is also a photon path.
+
+If the field is produced by matter at rest then the matter distribution
+is invariant under time reversal and so the metric should also be symmetric
+--- i.e. static.
+
+Stationary metrics are produced by steadily moving distributions of
+matter --- for example rotating stars.
+
+From gravitational time dilation we see that $A = c^2 \exp \left(
+\tfrac{2 \phi}{c^2} \right)$.
+
+\subsection{Newtonian limit}
+
+Take a static metric and a weak field, that is $\abs{\tfrac{\phi}{c^2}}$
+small.  Then $A \approx c^2 + 2 \phi$ and we expect
+$g_{ij} = \delta_{ij} \cO(\tfrac{\phi}{c^2})$.
+
+Consider a slowly moving particle with $v^i = \diff{x^i}{t}$ such
+that $v^2 \ll c^2$.  We thus have
+\[
+\ud s^2 = g_{a b}\, \ud x^a\, \ud x^b
+= \left(v^2 + \cO(v^2 \tfrac{\phi}{c^2})
+- c^2 - 2 \phi + \cO(\tfrac{\phi^2}{c^2}) \right) \ud t^2
+\quad \text{on the path.}
+\]
+
+Thus
+\[
+\int \abs{\ud s} \approx \int c^2 + \phi - \tfrac{1}{2} v^2\, \ud t
+\]
+
+and the Euler-Lagrange equations yield $\diff{v^i}{t} = - \pd{\phi}{x^i}$.
+
+\chapter{Metric differential geometry}
+
+We need a formulation of physics valid in arbitrary co-ordinate
+systems.  Physical quantities must have existence independent of
+particular co-ordinates being used -- hence must transform properly
+under co-ordinate transforms.  They should be represented by tensors.
+
+\section{Basic tensors}
+Consider the co-ordinate change $x^a \mapsto x^{a'}(x^b)$ on spacetime,
+with inverse $x^{a'} \to x^a(x^{b'})$.
+
+Define
+\begin{align*}
+p^{a'}_a =& \pd{x^{a'}}{x^a},\\
+p^a_{a'} =& \pd{x^a}{x^{a'}}.
+\end{align*}
+
+Note that $p^{a'}_a p^{b}_{a'} = \pd{x^{a'}}{x^a}
+\pd{x^b}{x^{a'}} =
+\delta^{\phantom{a}b}_a$, by using the chain rule, where
+\[
+\delta^{\phantom{a}b}_a= \begin{cases} 1 & a=b \\
+0& a \neq b \end{cases}
+\]
+is the Kronecker delta.
+
+Under repeated co-ordinate change $x^a \mapsto x^{a'} \mapsto x^{a''}$, 
+we have the group property, using the chain rule,
+\[
+p^{a'}_a p^{a''}_{a'} = p^{a''}_a.
+\]
+
+A \emph{covariant tensor} of $n^{\text{th}}$ rank, with components $T_{a
+  \cdots b}$ with respect to co-ordinates $x^a$, at a point $P$
+has transformation law
+\[
+T_{a \cdots b} \to T_{a' \cdots b'}=p^{a}_{a'} \cdots
+p^{b}_{b'} T_{a \cdots b}.
+\]
+Note that the group property shows that the components $T_{a' \cdots b'}$
+are uniquely defined with respect to any co-ordinate system if they are
+fixed in one system $x^a$; this provides a way of constructing all tensors.
+
+A \emph{contravariant tensor} $T^{a \dots b}$ transforms as
+\[
+T^{a \cdots b} \to T^{a' \cdots b'}= p^{a'}_{a}
+\dots p^{b'}_{b}  T^{a \cdots b}
+\]
+Similarly for \emph{mixed tensors}, for example
+\[
+T^{\phantom{a}b}_a \to T^{\phantom{a'}b'}_{a'} 
+= p^a_{a'} p^{b'}_b T^{\phantom{a}b}_a
+\]
+It is important to keep the order of the indices the same.
+
+A \emph{scalar} is a tensor with no indices, invariant under 
+co-ordinate change, for example the mass of a particle.
+
+A \emph{scalar field} $\phi(x^a)$ is a scalar function for example
+pressure or particle density in a fluid.
+
+A \emph{covariant vector field} $v_a(x^b)$ is a vector function
+of position.  For example if $\phi (x^b)$ is a scalar field then
+$v_a = \phi_{,a}:=\pd{\phi}{x^a}$
+is a covariant vector field, since 
+\[
+v_{a'}= \pd{\phi}{x^{a'}} = \pd{x^a}{x^{a'}} \pd{\phi}{x^a}.
+\]
+A further example is a pressure gradient $p_{,a}$ in a fluid.
+
+Suppose a curve $x^a(\lambda)$
+parametrised by $\lambda$, has a tangent of $v^a=\diff{x^a}{\lambda}$
+at the point $P$.  $v^a$ is a \emph{contravariant vector}.  This follows
+because
+\[
+v^{a'}= \diff{x^{a'}}{\lambda} =
+\diff{x^{a'}}{x^a}\diff{x^a}{\lambda}.
+\]
+
+Other examples are the $4$-velocity of an observer, $u^a=\diff{x^a}{\tau}$,
+where $\tau$ is proper time.
+
+\subsection{Examples of tensors}
+
+\begin{itemize}
+\item The Kronecker delta is a tensor:
+\[
+p^a_{a'} p^{b'}_{b} \delta^{\phantom{a}b}_a = 
+p^a_{a'} p^{b'}_a = \delta^{\phantom{a'}b'}_{a'}.
+\]
+\item The metric $g_{ab}$ is a tensor, since the invariant $\ud s^2$
+can be written
+\[
+\ud s^2= g_{ab} \ud x^a \ud x^b = g_{ab}
+\pd{x^a}{x^{a'}} \ud x^{a'} \pd{x^b}{x^{b'}} \ud x^{b'} =
+g_{a'b'} \ud x^{a'} \ud x^{b'}
+\]
+where $g_{a'b'}=g_{ab} p^a_{a'} p^b_{b'}$.
+\end{itemize}
+
+Further examples will be provided by the curvature and energy momentum
+tensors.
+
+\subsection{Operations preserving tensor property}
+
+\begin{itemize}
+\item Addition: $T_{ab}+W_{ab}$ is a tensor if $T_{ab}$
+  and $W_{ab}$ are tensors.
+\item Scalar multiplication: $fT_{ab}$ is a tensor if $T_{ab}$ is a tensor.
+\item Outer products: $v^a T_{bc}$ transforms
+as
+\[
+v^{a'} T_{b' c'} = p^{a'}_a p^b_{b'} p^c_{c'}
+v^a T_{bc}.
+\]
+\item Contraction of one covariant with one contravariant index: if
+  $T^a_{\phantom{a}bc}$ is a tensor, define
+  $v_c=T^a_{\phantom{a}ac}$, transforming as
+\begin{align*}
+  v_{c'} &= T^{a'}_{\phantom{a'}a'c'} \\
+  &= p^{a'}_a p^b_{a'} p^c_{c'}
+  T^{a}_{\phantom{a} bc} = \delta^{\phantom{a}b}_a
+  p^{c}_{c'}
+  T^{a}_{\phantom{a}bc}\\
+  &= p^{c}_{c'} T^a_{\phantom{a}ac}
+  = p^{c}_{c'} v_c.
+\end{align*}
+
+\item Interchange of indices: $T_{ab}$ (a tensor) $\mapsto$ $T_{ba}$
+which is also a tensor.  Similarly symmetrisation and anti-symmetrisation
+\begin{align*}
+T_{(ab)} &= \frac{1}{2!} (T_{ab}+T_{ba})\\
+T_{[ab]} &= \frac{1}{2!} (T_{ab}-T_{ba})
+\end{align*}
+\end{itemize}
+
+The above can readily be generalised to more indices.
+
+\subsection{Quotient theorem}
+
+Suppose $U^a=T^{ab}V_b$ is a vector for all vectors $V_b$.  Then
+$p^{a'}_a U^a=p_a^{a'} T^{ab} V_b$, and 
+\[
+U^{a'}=p^{a'}_a U^a= T^{a'b'} V_{b'}=
+T^{a'b'}p^b_{b'} V_b.
+\]
+
+Subtracting these last two yields,
+
+\begin{align*}
+  (T^{a'b'} p^b_{b'} - p^{a'}_a T^{ab})V_b
+  &= 0 \qquad \forall V_b \text{ and so}\\
+  T^{a'b'}p^b_{b'} &= p^{a'}_a T^{ab}.
+\end{align*}
+
+Multiplying both sides by $p_b^{c'}$ yields
+\[
+T^{a'b'} p^b_{b'} p^{c'}_b =T^{a'b'}
+\delta^{\phantom{b'}c'}_{b'}
+= T^{a'c'}= p^{c'}_b p^{a'}_a T^{ab}.
+\]
+
+Hence $T^{a}$ is a tensor.
+
+\subsection{Inverse metric tensor}
+
+Define $g^{ab} (=g^{ba})$ to be the matrix inverse of
+$g_{ab}$, i.e.  such that $g_{ac}
+g^{cb}=\delta_{a}^{\phantom{a}b}$.  Now for any vector
+$V^a$ can define a vector $U_a=g_{ab} V^b$.  Note that there
+is a one to one correspondance between $U_a$ and $V^a$ since
+$g_{ab}$ is non-singular and so we can construct all vectors $U_b$
+in this way.  The quotient theorem implies that $g^{ab}$ is a tensor.
+
+\subsection{Raising and lowering of indices}
+
+We can use $g^{ab}$ to raise any covariant index.  For example
+$T_{ab}$ gives a tensor $T^a_{\phantom{a}b}= g^{ac}
+T_{c b}$ if the first index is raised.  Similarly we can use
+$g_{ab}$ to lower any index, for example $W^{ab}$ gives
+$W^{\phantom{a}b}_a = g_{ac} W^{cb}$. The index
+ordering must be carefully maintained.
+
+Raising and lowering are inverse operations.  One normally regards
+e.g. $T_{ab}$, $T_a^{\phantom{a}b}$,
+$T^a_{\phantom{a}b}$ and $T^{ab}$ as different versions of
+the same object.
+
+\subsection{Partial derivatives of tensors}
+
+Partial derivatives of tensors are not tensors in
+general.  For example suppose $v_a$ is a vector field.
+Then $v_{a'}= \pd{x^a}{x^{a'}} v_a$ and so
+\begin{align*}
+  \pd{v_{a'}}{x^{b'}} =\pd{^2x^a}{x^{a'} \partial x^{b'}}
+  v_a + \pd{x^a}{x^{a'}}\pd{x^b}{x^{b'}} \pd{v_a}{x^b}\\
+  & \neq p^a_{a'} p^b_{b'} \pd{v_a}{x^b} \qquad \text{in general.}
+\end{align*}
+
+The only exception is $\phi_{,a}$ as mentioned earlier.
+
+\section{Lengths and geodesics}
+
+The squared magnitude of a vector $v_a$ or $v^a$ is defined to be
+$v_a v^a= v_a v_b g^{ab}= v^a v^b g_{ab}$ and is
+invariant under co-ordinate transformations.
+
+It can be evaluated in a local inertial frame where
+$g_{ab}=\eta_{ab}$.
+
+\[
+v_a \text{ is } \begin{cases}
+\text{spacelike if $v_a v^a > 0$,} \\
+\text{null if $v_a v^a = 0$,}\\
+\text{timelike if $v_a v^a < 0$.}
+\end{cases}
+\]
+
+As before, if $v^a$ is spacelike we can find a Lorentz transformation
+in the local inertial frame making $v^a=(v^i,0)$.  Then $v_a v^a=
+(v^1)^2+ (v^2)^2 +(v^3)^2= \abs{\v}^2$, which is the physically
+measured squared magnitude of $v^a$ in that frame.  If $v^a$ is
+timelike we can make $v^a=(0,v^4)$ and then $v_a v^a = -c^2 (v^4)^2$.
+
+\section{Angles between vectors}
+Suppose that $v^a$ and $w^a$ are both spacelike and that we have
+chosen a local inertial frame such that $v^a=(v^i,0)$,
+$w^a=(w^i,0)$.  Then the angle $\theta$ between $v^a$ and $w^b$
+is defined by
+
+\begin{align*}
+\cos \theta &= \frac{\v \cdot \vect{w}}{\abs{\v} \abs{\vect{w}}} \qquad
+\text{Cartesian notation in LIF, or}\\
+&= \frac{(g_{a b} v^a w^b)}{(v_d v^d)^{1/2}
+(w_c w^c)^{1/2} } \qquad
+\text{invariant definition.}
+\end{align*}
+
+\section{Lengths of curves}
+
+If $x^a(\lambda)$ describes a spacelike curve $\gamma$, which is
+parameterised by $\lambda$ (i.e. if $v^a=\diff{x^a}{\lambda}$ is spacelike
+along $\gamma$), the length of $\gamma$ from $A$ to $B$ is
+\[
+\int_A^B \ud s= \int_A^B \left( g_{a b} \diff{x^a}{\lambda}\diff{x^b}
+{\lambda} \right)^{1/2} \ud\lambda.
+\]
+
+If $x^a(\lambda)$ gives a timelike curve $\gamma$ (i.e.
+$v^a=\diff{x^a}{\lambda}$ is timelike along $\gamma$), then the time
+elapsed along $\gamma$ from $A$ to $B$ is
+\[
+\frac{1}{c}\int_A^B \abs{\ud s} =\frac{1}{c} \int_A^B \left( - g_{a
+    b} \diff{x^a}{\lambda}\diff{x^b} {\lambda} \right)^{1/2}
+\ud\lambda.
+\]
+
+\section{Geodesics}
+
+A geodesic $\gamma$ from $A$ to $B$ extremises 
+\[
+\int_A^B \abs{\ud s} = \int_A^B \abs{g_{a b}  \diff{x^a}{\lambda}
+\diff{x^b}{\lambda}}^{1/2} \ud \lambda =
+\int_A^B L(x^a(\lambda), \dot x^b(\lambda))\, \ud \lambda,
+\]
+where
+$\dot x^a(\lambda)=\diff{x^a}{\lambda}$, subject to fixed
+endpoints: $x^a(\lambda_1)$ are the co-ordinates of $A$, and
+$x^a(\lambda_2)$ are the co-ordinates of $B$. 
+
+For example consider a spacelike geodesic.  Then
+\begin{align*}
+\pd{L}{\dot x^a} &= \frac{g_{a b} \dot x^b}{L}\cr
+\pd{L}{x^a} &= \frac{g_{bc,a} \dot x^b \dot x^c}{2L}
+\end{align*}
+
+Using the Euler-Lagrange equations
+\[
+\dif{\lambda} \left ( \pd{L}{\dot x^a} \right)-\pd{L}{x^a} = 0
+\]
+
+gives 
+\[
+L^{-1} \left [ g_{a b} \ddot x^b + (g_{a b,c}-\frac{1}{2}
+  g_{b c,a}) \dot x^b \dot x^c \right] =
+L^{-2} \diff{L}{\lambda} g_{a b} \dot x^b.
+\]
+Using our freedom to reparametrise the curve we can choose
+$\lambda=s$, the distance along $\gamma$.  Then $L=1$
+and $\diff{L}{\lambda}=0$ along $\gamma$.  Therefore
+
+\begin{align*}
+0 &= g_{a b}\ddot x^b + ( g_{a b,c} -\frac{1}{2} g_{bc,
+a}) \dot x^b \dot x^c \\
+&=  g_{a b}\ddot x^b + \frac{1}{2} ( g_{a b,c}+
+g_{a c,b}-g_{c b,a}) \dot x^b \dot x^c.
+\end{align*}
+
+Raising index $a$ yields the \emph{geodesic equation}
+\[
+\frac{\ud^2 x^a}{\ud s^2} + \ch{a}{bc}
+\diff{x^b}{s}\diff{x^c}{s} = 0,
+\]
+where
+\[
+\ch{a}{b c} = \frac{1}{2} g^{ad} ( g_{bd,c}+
+g_{cd,b}-g_{b c,d} ).
+\]
+
+The same equation is obtained for timelike geodesics and we have the
+equations of motion for a test particle in a gravitational field.
+
+The expression $\ch{a}{b c}$ involves the ``derivatives of
+gravitational potential'' and corresponds to $\phi_{,i}$ in Newtonian
+gravity.  It is possible to rederive Newtonian dynamics in this way --
+see later.
+
+The geodesic equation is a second order ordinary differential equation
+and so a geodesic is uniquely specified once the starting point
+$x^a(0)$ and an initial tangent direction $\dot x^a(0)$ are
+chosen.
+
+\section{Covariant differentiation and Christoffel symbols}
+
+Physical laws involve partial derivatives. We need a generalisation
+$\del_a$ of $\partial_a := \pd{}{x^a}$ which preserves tensorial
+properties.  We want the covariant derivative operator to
+
+\begin{itemize}
+\item keep $\del_a \phi=\partial_a \phi$ for scalar
+fields $\phi$, since $\partial_a \phi$ is already a 
+covariant vector field.
+
+\item look like $\del_b v_a = \partial_b v_a -
+  \Gamma^c_{b a} v_c$ acting on covariant vector fields,
+  where $\Gamma^c_{b a}$ is a (non-tensorial) collection of
+  $4^3$ numbers to be constructed out of the metric and its first
+  derivatives, and $-\Gamma^c_{b a} v_c$ is designed to
+  cancel out the bad transformation properties of $\partial_b v_a$.
+
+\item commute with addition:
+\[
+\del_d ( T^{a \dots b}_{\phantom{a \dots b}
+d \dots c} +
+U^{a \dots b}_{\phantom{a \dots b} d \dots c} ) =
+\del_d T^{\dots}_{\phantom{\dots}\dots} + \del_d U^{\dots}_{
+\phantom{\dots}\dots}.
+\]
+
+\item obey the Leibniz rule
+\[
+\del_a \left( T^{\dots}_{\phantom{\dots}\dots}
+  U^{\dots}_{\phantom{\dots}\dots} \right) = \left(\del_a
+  T^{\dots}_{\phantom{\dots}\dots}\right)
+U^{\dots}_{\phantom{\dots}\dots} + T^{\dots}_{\phantom{\dots}\dots}
+\left(\del_a U^{\dots}_{\phantom{\dots}\dots}\right)
+\]
+
+\item satisfy $\nabla_d g_{a b} = 0$, $\nabla_d g^{a b}
+  = 0$ and $\nabla_d \delta^a_{\phantom{a}b} = 0$.
+
+\item commute with index contraction:
+\[
+\del_a \left( T^{\cdots b \cdots}_{\phantom{\cdots b \cdots}\cdots
+    b \cdots}\right) = \delta^d_{\phantom{d} c} \del_a \left(
+T^{\cdots c \cdots}_{\phantom{\cdots c \cdots}\cdots
+    d \cdots}
+\right).
+\]
+\end{itemize}
+
+These properties imply that $\del_a$ commutes with the operations of
+raising/lowering indices.
+
+We want to find the $\Gamma$'s, which we will do using the zero
+covariant derivative of the metric.  First note that for any covariant
+vector fields $u_a$ and $v_b$,
+
+\begin{align*}
+\del_d (u_a v_b) &= u_a \del_d v_b + v_b \del_d
+u_a \\
+&= \partial_d (u_a v_b) - \Gamma^c_{d b} u_a
+v_c - \Gamma^c_{d a} u_c v_b.
+\end{align*}
+
+Now any tensor field $T_{a b}$ can be built by adding tensors of
+the form $u_a v_b$, so using linearity
+\[
+\del_d T_{a b} = \partial_d T_{a b} -
+\Gamma^c_{d b} T_{a c} - \Gamma^c_{d a}
+T_{c b}.
+\]
+
+for any tensor $T_{a b}$.  We apply this to the metric tensor
+$g_{a b}$ to get
+
+\begin{align}
+\del_d g_{a b} &= g_{a b,d} - \Gamma^c_{d b}
+g_{a c} - \Gamma^c_{d a} g_{c b} = 0.
+\label{eq:cvdm1} \\
+\intertext{Permuting the indices cyclically, we get}
+\del_a g_{b d} &= g_{b d,a} - \Gamma^c_{a d}
+g_{b c} - \Gamma^c_{a b} g_{c d} = 0.
+\label{eq:cvdm2} \\
+\del_b g_{d a} &= g_{d a,b} - \Gamma^c_{b a}
+g_{d c} - \Gamma^c_{b d} g_{c a} = 0.
+\label{eq:cvdm3}
+\end{align}
+
+We make the further simplifying assumption of symmetry:
+$\Gamma^c_{a b} = \Gamma^c_{b a}$.  Now take
+$\eqref{eq:cvdm3} - \eqref{eq:cvdm1} - \eqref{eq:cvdm2}$ and adjust
+the indices to get
+\[
+2 \Gamma^d_{bc} g_{ad} = - g_{bc,a} + g_{ac,b} + g_{ab,c}.
+\]
+
+Raise the index $a$ to get
+\begin{equation}\label{eq:chrsym}
+\Gamma^a_{bc} = \tfrac{1}{2} g^{ad} ( g_{bd,c} + g_{cd,b} - g_{bc,d}).
+\end{equation} 
+
+These are the \emph{Christoffel symbols} for the metric $g_{ab}$ and
+define the metric connection $\del$ on spacetime.
+
+\subsection{Transformation properties of Christoffel symbol}
+
+We start from $g_{a'b'} = p^a_{a'} p^b_{b'} g_{ab}$, so that
+\[
+g_{a'b',c'} = p^a_{a'} p^b_{b'} p^c_{c'} g_{ab,c} + g_{ab}
+\partial_{c'} \left( \pd{x^a}{x^{a'}} \pd{x^b}{x^{b'}}\right). 
+\]
+
+\begin{multline*}
+g_{a'b',c'} + g_{a' c',b'} - g_{b' c',a'} =p^a_{a'} p^b_{b'} p^c_{c'}
+\left( g_{ab,c} + g_{ac,b} - g_{bc,a} \right) \\
++ g_{ab}
+\left( \partial_{c'} \left( \pd{x^a}{x^{a'}} \pd{x^b}{x^{b'}}\right)
++ \partial_{b'} \left(\pd{x^a}{x^{a'}} \pd{x^c}{x^{c'}} \right)
+- \partial_{a'} \left( \pd{x^b}{x^{b'}} \pd{x^c}{x^{c'}}\right) \right) 
+\end{multline*}
+
+Putting all of this together we find 
+\begin{equation}\label{eq:gamtran}
+\Gamma^{a'}_{b' c'} = p^{a'}_a p^b_{b'} p^c_{c'} \Gamma^a_{bc}
++ \pd{x^{a'}}{x^a} \pd{^2 x^a}{x^{b'} \partial x^{c'}}.
+\end{equation}
+
+\eqref{eq:gamtran} can be used to verify that $\del_b v_a$ is a
+tensor.
+
+\subsection{Covariant differentiation of other types of tensor}
+
+For instance:  what is $\del_b u^a$?  Take an arbitrary covariant
+vector field $v_a$ and consider $\del_b \left(v_a u^a\right)
+= \partial_b \left( v_a u^a \right)$.  Then
+
+\begin{align*}
+\del_b \left( v_a u^a \right) &= u^a \del_b v_a + v_a \del_b u^a \\
+&= u^a \partial_b v_a - \Gamma^c_{ba} v_c u^a + v_a \del_b u^a \\
+&= u^a \partial_b v_a + v_a \partial_b u^a.
+\end{align*}
+
+This is true for all $v_a$, so that
+\[
+\del_b u^a = \partial_b u^a + \Gamma^a_{bc} u^c.
+\]
+
+In general we get a $+$ sign for each contravariant index and a $-$
+sign for each covariant index, that is
+\[
+\del_b T_a^{\phantom{a} c} = \partial_b T_a^{\phantom{a}c}
+- \Gamma^d_{ba} T_d^{\phantom{d} c} + \Gamma^c_{bd} T_a^{\phantom{a} d}.
+\]
+
+We write $\del_b\left(\ \right)$ as $\left(\ \right)_{;b}$.
+
+\section{Differentiation along a curve: geodesics}
+
+We need a geometrical description of the rate of change of a physical
+quantity seen by an observer moving along a path $x^a(\lambda)$.  This
+is the \emph{absolute derivative}, given by
+\begin{align*}
+\absd{\lambda} v^a &= \diff{x^b}{\lambda} \del_b v^a
+= \diff{x^b}{\lambda} \pd{v^a}{x^b} + \Gamma^a_{bc}
+\diff{x^b}{\lambda} v^c \\
+&= \diff{v^a}{\lambda} + \Gamma^a_{bc} \diff{x^b}{\lambda} v^c.
+\end{align*}
+
+Note that we only need to know $v^a$ along the path.  We can similarly
+define $\absd{\lambda}$ on other fields.  The absolute derivative of a
+tensor is again a tensor.
+
+A field $v^a$ is said to be \emph{parallelly transported} along a curve
+$x^a(\lambda)$ iff $\absdf{v^a}{\lambda} = 0$ (and similarly for other
+types of tensor).
+
+Note that parallel transport preserves lengths and angles.  If $v^a$
+and $w^a$ are parallelly transported, then
+
+\begin{align*}
+\dif{\lambda} \left( v_a w^a\right)  &= \diff{x^b}{\lambda} \del_b
+\left( g_{cd} v^c w^d \right) \\
+&= \diff{x^b}{\lambda} g_{cd;b} + g_{cd} w^d \absdf{v^c}{\lambda}
++ g_{cd} v^c \absdf{w^c}{\lambda}\\
+& = 0.
+\end{align*} 
+
+We can apply the notation of absolute derivative to the tangent vector
+$\diff{x^a}{\lambda}$.  A curve $x^a(\lambda)$ is said to be
+\emph{autoparallel} iff
+\[
+\absd{\lambda} \diff{x^a}{\lambda} = 0,
+\]
+
+that the tangent vector is parallelly transported along the curve.
+This is equivalent to
+\[
+\diff{^2 x^a}{\lambda^2} + \Gamma^a_{bc} \diff{x^b}{\lambda}
+\diff{x^c}{\lambda} = 0,
+\]
+
+which, since $\Gamma^a_{bc} = \ch{a}{bc}$, is the geodesic equation.
+This gives an alternative characterisation of geodesics, and $\lambda$
+is called an \emph{affine parameter} along the geodesic.
+
+If $\gamma$ is a geodesic with affine parameter $\lambda$ then
+\[
+\dif{\lambda} \left( g_{ab} \diff{x^a}{\lambda}
+  \diff{x^b}{\lambda}\right) = 0,
+\]
+
+so that $g_{ab} \diff{x^a}{\lambda} \diff{x^b}{\lambda}$ is a constant
+along $\gamma$ and $\lambda$ is proportional to length $s$ (or proper
+time $\tau$) along $\gamma$.
+
+The acceleration (vector) of a timelike curve $x^a(\tau)$ with
+4-velocity $u^b = \diff{x^a}{\tau}$ is
+\[
+a^b = \absdf{u^b}{\tau} = \diff{^2 x^b}{\tau^2} + \Gamma^b_{cd}
+\diff{x^c}{\tau} \diff{x^d}{\tau}.
+\]
+
+and so geodesics are unaccelerated curves (free fall).
+
+\section{Local inertial frames}
+
+We can now make our definition of a LIF more precise.  We want to
+choose locally inertial co-ordinates $x^a$ near an event $P$ ($x^a =
+0$) such that $g_{ab} = \eta_{ab}$ at $P$ and that particles moving
+through $P$ under gravity have no co-ordinate acceleration.  We want
+to arrange $\Gamma^a_{bc} = 0$ (or equivalently $g_{ab,c} = 0$) at $P$
+
+In a LIF
+
+\begin{itemize}
+\item the metric looks as much as possible like the flat space metric
+\item geodesics become straight lines
+\item parallel transport, acceleration etc. acquire usual flat-space
+  interpretations
+\item covariant derivatives become partial derivatives.
+\end{itemize}
+
+To find inertial co-ordinates near $P$ we translate to put $x^a  = 0$
+and then use a linear transformation to give $g_{ab} = \eta_{ab}$ at
+$P$.   Define ${}^0\Gamma^a_{bc} = \left.\Gamma^a_{bc}\right|_P$.
+Then use the transformation $x^a \to y^a$ with quadratic inverse
+\[
+x^a = y^a - \tfrac{1}{2} {}^0\Gamma^a_{bc} y^b y^c.
+\]
+
+In the new co-ordinates,
+\begin{align*}
+g^{\text{new}}_{ab} &= \pd{x^c}{y^a} \pd{x^d}{y^b} g^{\text{old}}_{cd}
+\\
+&= \left(\delta_a^{\phantom{a}c} - {}^0 \Gamma^c_{ae} y^e\right)
+\left(\delta_b^{\phantom{b}d} - {}^0\Gamma^d_{bf} y^f \right)
+\left(\eta_{cd} + g^{\text{old}}_{cd,g} y^g + \dots\right).
+\end{align*}
+
+The terms linear in $y^c$ are
+\[
+\left(- {}^0\Gamma^d_{ac} \eta_{bd} - {}^0\Gamma^d_{bc} \eta_{ad} +
+g^{\text{old}}_{ab,c} \right) y^c = 0.
+\]
+
+Hence $g^{\text{new}}_{ab} = \eta_{ab} + \text{quadratic in $y^c$}$
+--- the co-ordinates $y^a$ provide a LIF near $P$.
+
+\section{Curvature}
+
+The curvature of spacetime measures the non-commutation of covariant
+derivatives.  For a scalar field $\phi$, $\phi_{;ab} = \phi_{;ba}$,
+but for a vector field $v^a$,
+
+\begin{align*}
+v^a_{;bc} - v^a_{;cb} &= \left( \Gamma^a_{be,c} - \Gamma^a_{ce,b}
++ \Gamma^a_{cd} \Gamma^d_{be} - \Gamma^a_{bd} \Gamma^d_{ce}
+\right) v^e \\
+&= R^a_{\phantom{a} e c b} v^e,
+\end{align*}
+
+where
+
+\[
+R^a_{\phantom{a} e c b} = \Gamma^a_{be,c} - \Gamma^a_{ce,b}
++ \Gamma^a_{cd} \Gamma^d_{be} - \Gamma^a_{bd} \Gamma^d_{ce}.
+\]
+
+$R^a_{\phantom{a} e c b}$ is a tensor (by the quotient theorem) and is
+called the the \emph{Riemann curvature tensor}.  It is constructed
+from the metric and its first and second covariant derivatives.  If
+the spacetime is flat we can choose Minkowskian co-ordinates to get
+$g_{ab} = \eta_{ab}$ so that $R^a_{\phantom{a}bcd} = 0$.  Therefore
+$R^a_{\phantom{a}bcd} = 0$ in all co-ordinates.  The converse can be
+proved: if $R^a_{\phantom{a}bcd} = 0$ then the spacetime is flat.
+
+In a LIF at $P$,
+\[
+R_{abcd} = \tfrac{1}{2} \left( g_{ad,bc} + g_{bc,ad} - g_{ac,bd} -
+  g_{bd,ac} \right).
+\]
+
+This gives the symmetry properties
+
+\begin{itemize}
+\item $R_{abcd} = R_{[ab]cd} := \tfrac{1}{2} \left(R_{abcd} -
+    R_{bacd}\right)$
+\item $R_{abcd} = R_{ab[cd]}$
+\item $R_{abcd} = R_{cdab}$
+\item $R_{a[bcd]} := \tfrac{1}{3!} \left(R_{abcd} + R_{acdb} +
+    R_{adbc} - R_{acbd} - R_{abdc} - R_{adcb}\right) = 0$.  Using the other
+    symmetries of $R_{abcd}$, this can be equivalently written as
+\[
+R_{abcd} + R_{acdb} + R_{adbc} = 0.
+\] 
+\end{itemize}
+
+Since symmetries of tensors are preserved by co-ordinate
+transformations, these hold at any point $P$ in any co-ordinates.
+These symmetries imply that $R_{abcd}$ has only 20 free components.
+
+The \emph{Ricci tensor} is $R_{bd} = R^a_{\phantom{a}bad}$.  Note that
+\[
+R_{bd} = g^{ac} R_{abcd} = g^{ac} R_{cdab} = R_{db}.
+\]
+
+$R_{bd}$ therefore has only ten free components.  The \emph{Ricci
+  scalar} is $R = g^{bd} R_{bd}$.
+
+\section{Geodesic deviation}
+
+Spacetime curvature produces relative acceleration of nearby test
+particles moving on geodesics.  For convenience in the derivation we
+replace ``2 nearby test particles'' with ``1 parameter family of
+geodesics''. Each geodesic is labelled by a parameter $s$.  We label
+points on a given geodesic by proper time $\tau$ measured from the
+origin.
+
+\vspace{1.5in}
+
+Write $u^a = \pd{}{\tau} x^a(\tau,s)$: the 4-velocity on the geodesic
+labelled by $s$.  The geodesic equation is
+\[
+\frac{\uD}{\partial\tau} u^a := \pd{x^b}{\tau} \del_b u^a = u^b \del_b u^a = 0.
+\]
+
+Define $\xi^a = \pd{}{s} x^a(\tau,s)$.  Then for small $\Delta s$,
+$\Delta s \xi^a$ is a separation vector from the geodesic labelled by
+$s$ to the geodesic labelled by $s+\Delta s$.
+
+Note that
+\[
+\pd{u^a}{s} = \pd{^2 x^a}{s \partial \tau} = \pd{\xi^a}{\tau},
+\]
+
+and so
+
+\begin{align*}
+\xi^b \del_b u^a &= \pd{x^b}{s} \del_b u^a = \pd{u^a}{s} +
+\Gamma^a_{bc} \xi^b u^c \\
+&= \pd{\xi^a}{\tau} + \Gamma^a_{bc} u^b \xi^c = \pd{x^b}{\tau} \del_b \xi^a
+\\
+&= u^b \del_b \xi^a. 
+\end{align*}
+
+We now prove (and then use!) the \emph{curvature identity}, which is
+valid for any vector fields $X^a$, $Y^b$ and $Z^c$:
+
+\begin{multline*}
+Y^b \del_b \left( Z^c \del_c X^a \right) - Z^c \del_c \left(Y^b \del_b
+  X^a\right) = \\
+Y^b \left( \del_b Z^c\right) \left( \del_c X^a\right)
++ Y^b Z^c \del_b \del_c X^a \\
+- Z^c \left( \del_c Y^b \right) \left( \del_b X^a \right)
+- Z^c Y^b \del_c \del_b X^a \\
+=\left(Y^c \del_c Z^b - Z^c \del_c Y^b \right)\del_b X^a
++ Y^b Z^c R^a_{\phantom{a} dbc} X^d.
+\end{multline*}
+
+Now take $X^a = u^a$, $Y^b = u^b$ and $Z^c = \xi^c$, so that
+\begin{align*}
+Z^c \del_c X^a &= \xi^c \del_c u^a = u^c \del_c \xi^a \\
+Y^b \del_b X^a &= u^b \del_b u^a = 0 \\
+Y^c \del_c Z^b - Z^c \del_c Y^b &= u^c \del_c \xi^b - \xi^c \del_c u^b
+= 0.
+\end{align*}
+
+Substituting these into the curvature identity we get
+\[
+u^b \del_b \left( u^c \del_c \xi^a \right) = R^a_{\phantom{a}dbc} u^d
+u^b \xi^c,
+\]
+or
+\begin{equation}\label{eq:geodev}
+\frac{\uD^2\phantom{\tau}}{\partial \tau^2} \xi^a
+= R^a_{\phantom{a}dbc} u^d u^b \xi^c.
+\end{equation}
+
+This is the \emph{equation of geodesic deviation}.  It shows that the
+relative acceleration is proportional to separation for two nearby
+test bodies.  We have a \emph{true} gravitational field iff we have
+relative accelerations, iff $R^a_{\phantom{a}bcd} \neq 0$, iff
+spacetime is curved.
+
+\chapter{Vacuum gravitational fields}
+
+\section{The vacuum field equations}
+
+We need to guess the field equations of General Relativity.  We will use
+the Newtonian limit to suggest the vacuum GR field equations and then
+compare the predictions of these equations in the non-Newtonian case.
+
+In the Newtonian limit (weak fields and low speeds), $\abs{\tfrac{\phi}{c^2}}
+\ll 1$ and $\tfrac{V}{c} \ll 1$ (where $V$ is a ``typical'' speed).  We
+will use co-ordinates $x^a = (x,y,z,ct)$.  From the equivalence principle,
+$g_{44} = -1 - \tfrac{2 \phi}{c^2} + \dots$ and it is reasonable to
+expect that \emph{all} deviations from flatness are of order
+$\tfrac{\phi}{c^2}$.
+
+A geodesic in Newtonian gravity has $\tau \approx t$,
+$\abs{\diff{x^i}{t}} \ll c$, and the spatial component of the
+geodesic equation is
+\[
+0 = \diff{^2 x^i}{\tau^2} + \Gamma^i_{a b} \diff{x^a}{\tau}
+\diff{x^b}{\tau} \approx \diff{^2 x_i}{t^2} + \Gamma^i_{44} c^2.
+\]
+
+Now
+\[
+\Gamma^i_{44} = \tfrac{1}{2} g^{i 4} g_{44,4} + \tfrac{1}{2} g^{ij}
+(g_{j4,4} - g_{44,j}) \approx - \tfrac{1}{2} \delta^{ij} g_{44,j}
+\]
+
+as $g^{ij} \approx \delta^{ij}$ and the derivative $\partial_4$ should be
+smaller than derivatives $\partial_i$ by a factor of order
+$\cO(\tfrac{v}{c}) \ll 1$.  Thus $\Gamma^i_{44} \approx c^{-2} \phi_{,i}$
+and the geodesic equation is
+\[
+\diff{^2 x^i}{t^2} \approx - \phi_{,i},
+\]
+
+which is probably a good thing.  $\Gamma^i_{44}$ are the only
+Christoffel symbols significant for Newtonian gravity.
+
+We now consider geodesic deviation in the Newtonian limit.  Take a
+(spatial) separation vector $\xi^a = (\xi^i,0)$.  Now
+$u^a = \diff{x^a}{\tau} = (0,c)$ at low speeds and the geodesic
+deviation equation 
+
+\[
+\frac{\uD^2 \xi^a}{\ud t^2} = R^a_{\phantom{a}bdc}
+u^b u^d \xi^c
+\]
+
+gives $\diff{^2 \xi^i}{t^2} \approx c^2 R^i_{\phantom{i}44j} \xi^j$.
+Therefore $R^i_{\phantom{i}44j}$ are the only components of the Riemann
+tensor which are significant for Newtonian gravity.  In the
+Newtonian limit
+
+\begin{align*}
+R^a_{\phantom{a}bdc} &= \Gamma^a_{bc,d}
+- \Gamma^a_{bd,c}
++ \Gamma^a_{d\alpha} \Gamma^\alpha_{bc}
+- \Gamma^a_{c\alpha} \Gamma^\alpha_{bd} \\
+&\approx \Gamma^a_{bc,d} - \Gamma^a_{bd,c}.
+\end{align*}
+
+Therefore $R^i_{\phantom{i}44j} \approx \Gamma^i_{4j,4}
+- \Gamma^i_{44,j}$.  If $L$ is a typical lengthscale of the system then
+all the $\Gamma^a_{bd}$ are $\cO(\tfrac{\phi}{c^2 L})$ and so
+$\Gamma^i_{4j,4} = \cO( \tfrac{\phi}{c^2 L^2}\tfrac{V}{c})$ but
+$\Gamma^i_{44,j} = \cO( \tfrac{\phi}{c^2 L^2})$.  Thus
+$R^i_{\phantom{i}44j} \approx - \Gamma^i_{44,j} = - c^{-2}
+\phi_{,ij}$.  The Newtonian geodesic deviation equation is therefore
+
+\[
+\diff{^2 \xi^i}{t^2} \approx - \phi_{,ij} \xi^j.
+\]
+
+We base the vacuum GR equations on that for a Newtonian field,
+$\phi_{,ii} = 0$.  In the Newtonian limit we find that
+\[
+R_{44} = R^i_{\phantom{i}4i4} \approx c^{-2} \phi_{,ii} = 0 \text{ in vacuum.}
+\]
+
+Since we want \emph{tensor} field equations valid in all co-ordinate
+systems this suggests
+
+\begin{equation}\label{eq:einstein}
+R_{a b} = 0
+\end{equation}
+
+for the vacuum field equations (vacuum Einstein equations).  Since
+$R_{a b}$ is symmetric we have 10 field equations, second order
+in the ``gravitational potential'' $g_{a b}$.  A highly nonlinear
+gravitational field can act as its own source.
+
+\section{The Schwarzschild metric}
+
+We look for a solution of the vacuum Einstein equations describing the
+gravitational field outside a spherically symmetric body at rest.
+(It can be shown that) A static spherically symmetric metric has the
+form
+\[
+\ud s^2 = e^{\alpha(r)} \ud r^2 + r^2 \left( \ud \theta^2
++ \sin^2 \theta \ud \phi^2 \right) - e^{\gamma(r)}\ud t^2
+\]
+in suitable co-ordinates.  There are no cross terms $\ud t \ud (
+\text{space})$ since the metric must be invariant under $t \to -t$.
+
+The radial co-ordinate $r$ is chosen for simplicity --- such that each
+sphere with $t$, $r$ constant has the intrinsic metric
+$r^2 \left( \ud \theta^2 + \sin^2 \theta \ud \phi^2 \right)$.  We
+can change $r$ to $r'(r)$, but the metric loses its simplicity in this
+case.
+
+The spherical symmetry forbids cross terms $\ud r \ud \theta$ (etc)
+and makes $g_{rr}$ a function of $r$ only.
+
+To impose the vacuum Einstein equations $R_{a b} = 0$ we need to
+find the Christoffel symbols.  It is most convenient to find them
+via the geodesic equations.  We use an alternate Lagrangian for
+the geodesics,
+\[
+\delta \int_A^B g_{a b} \Dot{x}^a \Dot{x}^b\, \ud \lambda = 0,
+\]
+
+where $\Dot{x}^a \equiv \diff{x^a}{\lambda}$.  It is easy to
+use the Euler-Lagrange equations to show that this gives the geodesic
+equations.  We find that $\lambda$ must be a multiple of $s$ or $t$
+along extremal curves.
+
+In this spherically symmetric metric
+
+\begin{equation}\label{eq:schwarzL}
+\cL = e^{\alpha(r)} \Dot{r}^2 + r^2 \left( \Dot{\theta}^2 + \sin^2 \theta
+\Dot{\phi}^2 \right) - e^{\gamma(r)} \Dot{t}^2.
+\end{equation}
+
+The Euler-Lagrange equations give
+
+\begin{gather}
+  2 e^\alpha \Ddot{r} + e^\alpha \alpha' \Dot{r}^2 - 2 r \left(
+    \Dot{\theta}^2 + \sin^2 \theta \Dot{\phi}^2 \right) + e^\gamma
+  \gamma' \Dot{t}^2 = 0, \\
+  2 r^2 \Ddot{\theta} + 4 r \Dot{r} \Dot{\theta} - 2 r^2 \sin \theta
+  \cos \theta \Dot{\phi}^2 = 0, \label{eq:ELschwartz2}\\
+  2 r^2 \sin^2 \theta \Ddot{\phi} + 4 r \sin^2 \theta \Dot{\phi}
+  \Dot{r} + 4 r^2 \sin \theta \cos \theta \Dot{\theta} \Dot{\phi} = 0, \\
+  -2 e^\gamma \Ddot{t} - 2 \gamma' e^{\gamma} \Dot{r} \Dot{t} = 0.
+\end{gather}
+
+The only non-zero Christoffel symbols (where $x^a =
+(r,\theta,\phi,t)$) are:
+\[
+\begin{array}{l l l}
+\Gamma^1_{11} = \tfrac{1}{2} \alpha' & \Gamma^1_{22} = -r e^{-\alpha}
+& \Gamma^1_{33} = - r e^{-\alpha} \sin^2 \theta \\
+\Gamma^1_{44} = \tfrac{1}{2} \gamma' e^{\gamma - \alpha} &
+\Gamma^2_{12} = r^{-1} & \Gamma^2_{33} = - \sin \theta \cos \theta \\
+\Gamma^3_{13} = r^{-1} & \Gamma^3_{23} = \cot \theta
+& \Gamma^4_{14} = \tfrac{1}{2} \gamma'
+\end{array}
+\]
+and the transposes $\Gamma^a_{bc} = \Gamma^a_{cb}$.  We can now
+find the Ricci tensor, which has non-zero components
+
+\begin{align}
+R_{11} &= - \tfrac{1}{2} \gamma'' + \tfrac{1}{4} \alpha' \gamma'
++ \tfrac{1}{4} \gamma'{}^2 + r^{-1} \alpha' \label{eq:ricciS1} \\
+R_{22} &= e^{-\alpha} \left( \tfrac{1}{2} r (\alpha' - \gamma') - 1
+\right) + 1 \label{eq:ricciS2} \\
+R_{33} &= \sin^2 \theta R_{22} \label{eq:ricciS3} \\
+R_{44} &= e^{\gamma - \alpha} \left( \tfrac{1}{2} \gamma''
+- \tfrac{1}{2} \alpha' \gamma' + \tfrac{1}{4} \gamma'{}^2
++ r^{-1} \gamma'\right) \label{eq:ricciS4}.
+\end{align}
+
+Equations \eqref{eq:ricciS1} and \eqref{eq:ricciS4}
+give us $\alpha + \gamma = \kappa$ (a constant).  Substituting into
+\eqref{eq:ricciS2} we get $e^{-\alpha} = 1 - \tfrac{a}{r}$
+(and we can check that this is consistent with \eqref{eq:ricciS1}).
+Thus
+\[
+\ud s^2 = \frac{\ud r^2}{1 - \tfrac{a}{r}} + r^2 \left(
+\ud \theta^2 + \sin^2 \theta \ud \phi^2 \right) - e^{\kappa}
+\left( 1 - \tfrac{a}{r} \right) \ud t^2.
+\]
+
+We normalize $t$ to ordinary time as $r \to \infty$, so that
+$e^\kappa = c^2$.  In the far field, $g_{tt} = - c^2 + \tfrac{2 G M}{r}$
+if the body has mass $M$.  Thus $a = \tfrac{2 G M}{c^2}$ and we
+arrive at the Schwarzschild metric
+
+\begin{equation}\label{eq:Schwarz}
+\ud s^2 = \frac{\ud r^2}{1 - \tfrac{2 G M}{c^2 r}} + r^2 \left(
+\ud \theta^2 + \sin^2 \theta \ud \phi^2 \right) - c^2
+\left( 1 - \tfrac{2 G M}{c^2 r} \right) \ud t^2
+\end{equation}
+(in Schwarzschild co-ordinates $(r,\theta,\phi,t)$).
+
+This is only defined in the vacuum outside the body, but we can smoothly
+join it onto a different solution in the region containing matter.
+There is an apparent singularity at $r = r_S = \tfrac{2 G M}{c^2}$,
+the Schwarzschild radius.
+
+Usually the radius of matter is much greater than the Schwarzschild
+radius (for the Sun, $r_S = 3 \mathrm{km}$), but if there is vacuum down
+to $r = r_S$ we have a black hole.
+
+It can be proven that spherical symmetry and the Einstein equations
+imply the static Schwarzschild solution (even allowing time dependence).
+This is called Birkhoff's theorem.
+
+Direct computation shows that $R^a_{\phantom{a}b dc}$
+has non-zero components and so this spacetime is genuinely curved.
+The space part has metric
+\[
+\ud s^2 = \frac{\ud r^2}{1 - \frac{2 G M}{c^2 r}} + r^2 \left(
+\ud \theta^2 + \sin^2 \theta \ud \phi^2\right)
+\]
+
+and is also curved.
+
+As expected the corrections to the flat space metric are
+$\cO(\tfrac{\phi}{c^2})$ in the far field.
+
+\section[Gravitational redshift]%
+{Gravitational redshift in the Schwarzschild metric}
+
+\vspace{1.5in}
+
+The proper frequency as measured by the emitter is
+$b_1 = \tfrac{2 \pi}{\ud \tau_1} = \tfrac{2 \pi c}{p_1
+\left( - g_{tt}(r_1) \right)^{\frac{1}{2}}}$.  The
+proper frequency measured by the reciever is
+$b_2 = \tfrac{2 \pi}{\ud \tau_2} = \tfrac{2 \pi c}{p_1
+\left( - g_{tt}(r_2) \right)^{\frac{1}{2}}}$.
+
+The ratio
+\[
+\frac{b_2}{b_1} = \sqrt{\frac{g_{tt}(r_1)}{g_{tt}(r_2)}}
+= \left( 1 - \frac{2 G M}{c^2 r_1} \right)^{\frac{1}{2}}
+\left( 1 - \frac{2 G M}{c^2 r_2} \right)^{-\frac{1}{2}}
+\]
+
+gives the gravitational redshift.  This is observed for many white
+dwarf stars.
+
+\section[Particle and photon paths]%
+{Particle paths in the Schwarzschild metric}
+
+In this section we use geometrical units in which $c = G = 1$.
+We can obtain the geodesics from the Lagrangian $\cL$ in
+\eqref{eq:schwarzL}.  We do not attempt to solve the geodesic
+equations directly but instead seek first integrals of the motion.
+
+$\pd{L}{\phi} = 0$ and so $r^2 \sin^2 \theta \Dot{\phi} = h$,
+a constant.  For a massive particle ($\lambda = \tau$) in
+the far field ($\tau \approx t$), we see that this is
+just the angular momentum (per unit mass) about the $\theta = 0$ axis.
+
+$\pd{L}{t} = 0$, so that $\left( 1 - \tfrac{2 M}{r}\right)
+\Dot{t} = E$ is a constant.  This is the energy per unit mass.
+
+For a slow moving massive particle, $\diff{t}{\tau}
+\approx \left( 1 - v^2 \right)^{-\frac{1}{2}} \left( 1 + \tfrac{M}{r}\right)
+\approx 1 + \tfrac{M}{r} + \tfrac{1}{2} v^2$.  Thus in the far
+field, for a slow moving massive particle we see that
+$E \approx 1 + \tfrac{1}{2} v^2 - \tfrac{M}{r}$, and so it is reasonable
+to associate $E$ with the energy.
+
+Finally, as particle paths are geodesics,
+\[
+\frac{\uD\phantom{\lambda}}{\ud\lambda} \diff{x^a}{\lambda} = 0
+\]
+
+and so
+\[
+\dif{\lambda} \left( g_{a b} \diff{x^a}{\lambda}
+\diff{x^b}{\lambda} \right) = 0.
+\]
+
+Thus $\cL$ is conserved.  In fact, for a timelike geodesic $\cL = - 1$
+and for a spacelike geodesic $\cL = 0$.
+
+We can further simplify the problem by taking the motion only
+in the equatorial plane.  We can initially arrange
+$\theta = \tfrac{\pi}{2}$ and $\Dot{\theta} = 0$ by rotating
+the co-ordinates.  Note that \eqref{eq:ELschwartz2} is
+now automatically satisfied.
+
+Using the conserved quantities we get the radial equation
+\[
+- \frac{E^2}{1 - \frac{2 M}{r}} + \frac{\Dot{r}^2}{1-\frac{2 M}{r}}
++ \frac{h^2}{r^2} = \begin{cases}
+-1 & \text{massive particle} \\
+0 & \text{massless particle.}
+\end{cases}
+\]
+
+In principle we can integrate this to get $\lambda(r)$, $\phi(r)$
+and $t(r)$.  For spatial orbits we use $u = r^{-1}$, so that
+$\Dot{t} = -h \diff{u}{\phi}$.
+
+For a massive particle the radial equation becomes
+\[
+h^2 \left( \diff{u}{\phi} \right)^2
+= E^2 - (1 + h^2 u^2)(1- 2 M u).
+\]
+
+Taking $\dif{\phi}$ of this and dividing by $\diff{u}{\phi}$ we get
+\[
+\diff{^2 u}{\phi^2} + u = \frac{M}{h^2} + 3 M u^2.
+\]
+
+The massless version of this is
+\[
+\diff{^2 u}{\phi^2} + u = 3 M u^2.
+\]
+
+\section{Perihelion advance}
+
+Consider bound orbits of a slow massive particle at large $r$ ($r \gg
+M$).  We seek to solve the equation
+
+\[
+\diff{^2 u}{\phi^2} + u = \frac{M}{h^2} + 3 M u^2,
+\]
+
+which we will do by perturbation methods.  The zeroth approximation is
+\[
+u = \frac{1 + e \cos \phi}{l}, \qquad l = \frac{h^2}{m}.
+\]
+
+We iterate this: the next approximation to $u(\phi)$ satisfies
+\[
+\diff{^2 u}{\phi^2} + u = \frac{1}{l} + \frac{3 h^2}{l^3}
+\left( 1+\tfrac{1}{2} e^2 +2 e \cos \phi + \tfrac{1}{2} e^2 \cos 2 \phi
+\right).
+\]
+
+It will be a better approximation if $h \ll l$.  The solution of this
+equation is
+\[
+l u = 1 + \tfrac{3 h^2}{l^2} (1 + \tfrac{1}{2} e^2)
++ \frac{h^2 e}{l} \left(3 \phi \sin \phi - \tfrac{1}{2} e \cos 2 \phi\right)
++ e \cos \phi.
+\]
+
+The $e \cos \phi$ comes from the zeroth order solution.  The aperiodic
+$\phi \sin \phi$ term corresponds to an altered periodicity.  Note that
+\[
+e \cos \phi + \tfrac{3 h^2 e}{l^2} \phi \sin \phi
+\approx e \cos \left( 1- \tfrac{3 h^2}{l^2}\right)\phi,
+\]
+
+and the periodicity in $\phi$ is approximately
+$2 \pi \left( 1+ \tfrac{3 h^2}{l^2}\right)$.  If $a$ is
+the semi-major axis with
+\[
+2 a = \frac{1}{u_{\text{min}}} + \frac{1}{u_{\text{max}}}
+= \frac{2 l}{1-e^2}
+\]
+we can write the perihelion advance
+\[
+\frac{6 \pi h^2}{l^2} = \frac{6 \pi M}{l}
+= \frac{6 \pi M}{a (1-e^2)},
+\]
+which is $\tfrac{6 \pi G M}{c^2 a(1-e^2)}$ in MKS units.
+
+The orbit is approximately elliptical, but is slowly rotating (precessing).
+The perihelion advance is $\tfrac{6 \pi M}{a (1-e^2)}$ per orbit.
+
+In the solar system the largest effect is on Mercury --- the residual
+precession (that not accounted for by $n$-body Newtonian effects) 
+of $43''$ per century measured agrees with this calculated result.
+
+In a binary pulsar this effect is much bigger --- about
+$4^\circ$ per year.
+
+\section{Light deflection}
+
+Consider a particle on a null geodesic, satisfying the equation
+\[
+\diff{^2 u}{\phi^2} + u = 3 M u^2.
+\]
+
+\vspace{1.5in}
+
+The zeroth order approximation for the light path is
+$u = \frac{\sin \phi}{R}$.  The next approximation is
+\[
+u = \frac{\sin \phi + \tfrac{M}{2 R} (3 +\cos 2 \phi)}{R},
+\]
+keeping the symmetry about $\phi = \tfrac{\pi}{2}$.
+
+The light path is bent and we need to find $\epsilon$.  We set $u = 0$
+and $\sin \epsilon \approx \epsilon$, $\cos 2 \epsilon \approx 1$, so
+that $\epsilon \approx \tfrac{2 M}{R}$.  This is
+$\tfrac{2 G M}{c^2 R}$ in MKS units.
+
+This is observed in the solar system for light from stars which passes
+close to the sun at eclipses.
+
+More detailed analysis of light deflection shows that the
+$\cO(\tfrac{\phi}{c^2})$ corrections in $g_{ij}$ and $g_{tt}$
+produce comparable contributions.  In other theories of matter
+they combine differently, for instance Nordstr\"om's theory
+predicts no light deflection.
+
+\section{Black holes and the event horizon}
+
+Consider the vacuum Schwarzschild metric near $r=2 M$ and look at
+particles/photons falling towards $r = 2M$.  For radial infall we have
+$(\theta,\phi)$ constant and $h=0$.  We want to solve the equations
+
+\[
+\left( 1- \frac{2 M}{r} \right) \diff{t}{\lambda} = E
+\]
+
+and
+\[
+\left( \diff{r}{\lambda} \right)^2 - E^2 = \begin{cases}
+- \left( 1 - \frac{2 M}{r} \right) & \text{massive} \\
+0 & \text{massless.}
+\end{cases}
+\]
+
+In the massive case $\lambda = \tau$ and so
+\[
+\ud \tau = - \frac{\ud r}{\left( E^2 - 1 + \tfrac{2 M}{r}
+\right)^{\frac{1}{2}}}.
+\]
+
+We clearly need $E^2 > 1$.  We see that $r \to 2 M$ in a finite proper
+time
+\[
+\tau = - \int \frac{\ud r}{\left( E^2 - 1 + \tfrac{2 M}{r}
+\right)^{\frac{1}{2}}}.
+\]
+
+The co-ordinate time is nastier.  We have
+\[
+\ud t = - \frac{E \ud r}{(1 - \frac{2 M}{r}) \left( E^2 - 1 +
+    \tfrac{2 M}{r} \right)^{\frac{1}{2}}}
+\]
+
+and so $t \to \infty$ as $r \to 2 M$.  Something similar happens for
+photons.  We conclude that $t$ is not a good co-ordinate for
+analysing the metric near $r = 2 M$.  Instead we use a co-ordinate
+tied to the incoming particles.  It is simplest to do photons.
+
+Consider radially infalling photons, which satisfy the equation
+\[
+\diff{r}{t} = - \left( 1 - \frac{2 M}{r} \right).
+\]
+
+We can integrate this to find $t = -r - 2 M \log (r - 2M) + v$, where
+$v$ is constant on photon paths.  We change co-ordinates from
+$(r,\theta,\phi,t)$ to $(r,\theta,\phi,v)$, \emph{ingoing
+  Eddington-Finkelstein co-ordinates}.  The Schwarzschild metric
+becomes
+\[
+\ud s^2 = - \left( 1- \frac{2 M}{r} \right)\, \ud v^2 + 2 \ud v \ud r
++ r^2 \left( \ud \theta^2 + \sin^2 \theta\, \ud \phi^2\right).
+\]
+
+This metric is well-behaved down to $r = 0$ (except for
+a trivial polar co-ordinate singularity at $\theta = (0,\pi)$).  It
+has $\det g_{a b} < 0$ and canonical form $+++-$ everywhere in
+$v > 0$.  It provides the ingoing extension of the Schwarzschild
+metric through $r = 2 M$.  This is a simple \emph{co-ordinate singularity}.
+
+However we find the curvature invariant
+$R_{abdc}R^{a b d c} = \tfrac{48 M^2}{r^6}$
+and so there is a genuine singularity of the spacetime at $r=0$.
+This is a \emph{curvature singularity} and constitutes a boundary
+of the spacetime.
+
+On any worldline we need $\ud s^2 \le 0$ (equality iff photons).  Thus
+\[
+- \left( 1 - \frac{2 M}{r} \right)\ud v^2 + 2 \ud v \ud r \le 0
+\]
+with equality iff we have photons with $\ud \theta = \ud \phi = 0$.
+In $r > 2 M$ the future light cone is defined by
+\[
+\ud v \ge \frac{2 \ud r}{1 - \frac{2 M}{r}} \qquad \ud v \ge 0.
+\]
+
+\vspace{2in}
+
+In $r < 2 M$ we have
+\[
+\ud r \le \left( 1 - \frac{2 M}{r} \right)\ud v \qquad \ud v \ge 0
+\]
+
+and so $\ud r \le 0$.  Thus any particle in $r < 2 M$ inevitably
+has $r$ decreasing to zero. Light or particles cannot escape from
+$r < 2M$, but \emph{can} clearly escape from $r > 2 M$.  The
+region $r < 2M$ is a \emph{black hole} and the boundary surface
+$r = 2 M$ is its \emph{event horizon}.
+
+\chapter{Matter in General Relativity}
+
+Our final aim is to formulate the nongravitational laws of physics in
+curved spacetime and to find the field equations of GR in the
+presence of matter.
+
+\section{Physical laws}
+
+The equivalence principle means that all laws have their usual special
+relativistic forms in any LIFs.  Moreover, the formulation of the laws
+should be the same in any reference frame --- tensorial.  Therefore to
+find physical laws we take the special relativistic laws and use them
+at the centre of a LIF to find the curved space covariant law.
+
+In a LIF at $P$, $g_{a b} = \eta_{a b}$, $g_{a b,d} =
+0$ and $\Gamma^a_{b d} = 0$ and so covariant derivatives reduce
+to partial derivatives.  Therefore to make a special relativistic law
+covariant we replace partial derivatives with covariant derivatives
+and $\eta_{a b}$ with $g_{a b}$.  This is \emph{minimal
+  coupling} --- we do not make unnecessary changes to the flat space
+laws.
+
+For instance, consider free particle motion, which satisfies the
+equation $\diff{^2 x^a}{\tau^2} = 0$ in a local inertial frame.
+This becomes
+\[
+\diff{^2 x^a}{\tau^2} + \Gamma^a_{b d} \diff{x^b}{\tau}
+\diff{x^d}{\tau} = \frac{\uD}{\ud \tau} \left( \diff{x^a}{\tau}\right)
+= 0,
+\]
+
+which is the geodesic law.
+
+A scalar field $\psi$ satisfying the wave equation $\Box \psi =
+\eta^{a b} \psi_{,a b} = 0$ in flat spacetime becomes $g^{a
+  b} \psi_{;a b} = 0$ in curved spacetime.
+
+\section{Energy-momentum tensors}
+
+The matter content of spacetime is described by an energy-momentum
+tensor $T^{a b}$.
+
+Consider a continuous medium of density $\rho$, without pressure
+(``dust'').  $\rho$ is the proper density measured in the local
+inertial rest frame.  Let $T^{a b} = \rho u^a u^b = T^{b
+  a}$.  In a local inertial frame we have $T^{a b}_{\phantom{a
+    b},b} = 0$ (by Navier-Stokes and the continuity equation) and
+so the equations of motion in general co-ordinates are $T^{a
+  b}_{\phantom{a b};b} = 0$.  In the Newtonian limit, with
+gravity, the space parts of this give Navier-Stokes and the time part
+gives the continuity equation.
+
+All forms of matter have symmetric energy-momentum tensors $T^{a
+  b}$ obeying $T^{a b}_{\phantom{a b};b}$.  This is
+  ultimately because all quantum fields have a Lagrangian from which
+  one can construct an energy-momentum tensor which is automatically
+  conserved.
+
+\section{The Einstein field equations}
+
+We wish to generalise the vacuum Einstein equations $R_{a b} = 0$
+to include matter sources and reproduce $\phi_{,ii} = 4 \pi G \rho$ in
+the Newtonian limit.
+
+\subsection{The Bianchi identities}
+
+In a local inertial frame centred at $x^a=0$ we have $g_{a b} =
+\eta_{a b} + \text{quadratic}$ and $\Gamma^a_{b d}=
+\text{linear}$ in a Taylor expansion about $x^a = 0$.  Then
+\[
+R^a_{\phantom{a} b d c} = \Gamma^a_{b c, d}
+- \Gamma^a_{b d,c} + \text{quadratic}
+\]
+and so
+\[
+R^a_{\phantom{a} b d c;e} = \Gamma^a_{b c, d e}
+- \Gamma^a_{b d,c e} + \text{quadratic}.
+\]
+
+Hence at the origin of a local inertial frame,
+$R^a_{\phantom{a} b [d c;e]} = \Gamma^a_{b
+  [c, d e]} - \Gamma^a_{b [d,c e]} = 0$.  But
+this is a tensorial equation, so $R^a_{\phantom{a} b [d
+  c;\xi]} = 0$ everywhere.  These are the \emph{Bianchi
+  identities}.
+
+They can be equivalently written (using the symmetries of
+$R^a_{\phantom{a} b d c}$) as
+\[
+R^a_{\phantom{a} b d c; e}
++ R^a_{\phantom{a} b c e; d}
++ R^a_{\phantom{a} b e d; c} = 0.
+\]
+
+contracting on $a$ and $c$, multiplying by $g^{b e}$ and
+renaming the indices gives
+\[
+-R^a_{\phantom{a} b; a} + R_{; b} - R^a_{\phantom{a}b;
+ a} = 0.
+\]
+
+We thus obtain the \emph{contracted Bianchi identities},
+\[
+\nabla_b\left(R^{a b} - \tfrac{1}{2} g^{a b} R \right) = 0
+\]
+
+\subsection{Field equations}
+
+The contracted Bianchi identities suggest taking the field equations
+\[
+R^{a b} - \tfrac{1}{2} R g^{a b} = \kappa T^{a b}.
+\]
+
+These are the \emph{Einstein field equations}.  The Bianchi identities
+then imply the conservation of energy-momentum automatically.  In
+fact it can be shown that the left hand side of the Einstein equations
+is the only possible tensorial expression linear in $g_{a b,d
+  c}$, not involving higher derivatives, vanishing in flat
+spacetime and with identically zero divergence.
+
+One can verify the Newtonian limit: it turns out that $\kappa =
+\frac{8 \pi G}{c^4}$ (Einstein's constant of gravitation).
+
+Gravitation is nonlinear.  The gravitational field must carry energy,
+although this can never be localised, since the geometry near any
+point $P$ looks Minkowskian in a local inertial frame at $P$.
+
+\backmatter
+
+\begin{thebibliography}{9}
+
+\bibitem{LandL} Landau and Lifschitz, \emph{The Classical Theory of
+    Fields}, Fourth ed., Butterworth-Heinemann, 1975.
+  
+  {\sffamily \small The more I read this book the better I think it
+    is.  The style of presentation is very different from that used in
+    this course with least action principles being used whenever
+    possible.  This style is more to my liking but you may have
+    a different opinion.}
+
+\bibitem{ElectroNotes} \emph{Electrodynamics}, unpublished, 1997.
+  
+  {\sffamily \small Another field theory which the interested reader
+    may like to take a look at.  It was presented in a more quickfire
+    manner than this course.}
+
+\end{thebibliography}
+
+\end{document}

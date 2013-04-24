@@ -1,0 +1,753 @@
+\documentclass[a4paper]{article}
+\usepackage{amsmath,amsfonts,fullpage}
+
+\newcommand{\R}{\mathbb{R}}
+\newcommand{\C}{\mathbb{C}}
+\newcommand{\RRR}{\mathbb{R}^{3}}
+\newcommand{\Z}{\mathbb{Z}}
+\newcommand{\eps}{\epsilon_0}
+\newcommand{\pd}[2]{\frac{\partial #1}{\partial #2}}
+\newcommand{\schrod}{Schr{\"o}dinger }
+\newcommand{\abs}[1]{\left| #1 \right|}
+\newcommand{\mom}{\mathbf{p}}
+\newcommand{\posn}{\mathbf{x}}
+\newcommand{\amom}{\mathbf{L}}
+\newcommand{\com}[2]{\left[ #1,#2 \right]}
+
+\begin{document}
+
+\title{Quantum Mechanics}
+\author{Dr.~N.S.~Manton\thanks{\LaTeX ed by Paul Metcalfe.  Comments and
+corrections to \texttt{soc-archim-notes@lists.cam.ac.uk}}}
+\date{Mich\ae lmas Term 1996}
+\maketitle
+
+\tableofcontents
+
+\section{Introduction}
+
+This section is mandated by the schedules (and was lectured), but it's 
+all A-level physics.  So I'll just summarize the salient points 
+\emph{extremely} briefly.
+
+\emph{Planck} hypothesised that light of angular frequency $\omega$ exists
+in packets of energy $\hbar \omega$.  $\hbar$ is a fundamental constant of
+nature, and equals $1.05 \times 10^{-34} Js$.  Einstein's 
+\emph{photoelectric effect} confirmed Planck's idea, the crucial formula
+being $\hbar \omega = E + W$.  Photons are massless particles, and so move at
+$c$.
+
+\emph{The Bohr atom.}  To explain atomic spectra, Bohr suggested that angular 
+momentum was quantized in units of $\hbar$, so using
+\[
+m v R = N \hbar
+\] and
+\[
+\frac{m v^2}{R} = \frac{1}{4\pi \eps}\frac{e^2}{R^2}
+\] gives the allowed radii.  In good agreement with experiment, but has two
+major flaws.  Firstly, can only be used for hydrogen atom and secondly is 
+a load of rubbish.
+
+De Broglie suggested that associated with a particle of momentum $\mathbf{p}$
+is a wave with wave vector $\mathbf{k}=\frac{\mathbf{p}}{\hbar}$.
+
+\section{The \schrod Equation}
+
+This is not relativistic and only works for a single particle in a potential
+$U(\mathbf{x},t)$.
+
+\[
+i\hbar \pd{\psi}{t} = -\frac{\hbar^2}{2m}\nabla^2 \psi + U(\mathbf{x},t)\psi
+\]
+
+It is, however, the remainder of this course...
+
+For a free particle with $U\equiv 0$, the solution is 
+\[
+\psi(\mathbf{x},t) = A e^{i(\mathbf{k}.\mathbf{x} - \omega t)}.
+\]
+
+We interpret $\hbar \mathbf{k}$ as the momentum of the particle and
+$\hbar\omega$ as the kinetic energy.
+
+Note that
+\begin{itemize}
+\item $\psi$ is complex,
+\item \schrod equation is linear,
+\item $\psi$ is called the state of the particle and
+\item the \schrod equation governs how the state evolves in time.
+\end{itemize}
+
+It is postulated that any solution of the \schrod equation is an 
+allowed physical state.
+
+\subsection{Probabilistic Interpretation of $\psi$}
+
+The probability of finding the particle in an infinitesimal region $dV$
+centered on $\mathbf{x}$ is postulated to be $\abs{\psi(\mathbf{x},t)}^2 dV$.
+
+$\psi$ must be normalised, i.e.
+\[
+\int_{\RRR} \abs{\psi(\mathbf{x},t)}^2 dV = 1.
+\]
+
+There is still freedom to multiply by $e^{i\alpha}$ -- this has no
+physical consequences.  Some wavefunctions are not normalisable, and are
+regarded as idealisations of physically realisable ones.
+
+\subsubsection{Probability Flux and Conservation of probability}
+
+If the potential is real, then consider the \schrod equation and it's 
+complex conjugate
+\[
+i\hbar \pd{\psi}{t} = -\frac{\hbar^2}{2m}\nabla^2 \psi + U(\mathbf{x},t)\psi
+\]
+\[
+i\hbar \pd{\psi^*}{t} = -\frac{\hbar^2}{2m}\nabla^2 \psi^* + U(\mathbf{x},t)\psi^*,
+\] and calculate $\pd{\psi\psi^*}{t}$ to get
+\[
+\pd{\psi\psi^*}{t} + \nabla . (-\frac{i\hbar}{2m}(\psi^* \nabla \psi -
+\nabla \psi^* \psi)) = 0,
+\] an analogue of conservation of charge.
+\[\mathbf{J} = -\frac{i\hbar}{2m}(\psi^* \nabla \psi - \nabla \psi^* \psi)
+\] is called the probability current.
+
+\subsection{Stationary States}
+
+If $U$ is independent of time, we can separate the \schrod equation to get
+\[
+\psi(\mathbf{x},t) = \chi(\mathbf{x})e^{-i\omega t},
+\] with
+\[
+H\chi = E\chi,
+\] where $E$ is the energy $\hbar \omega$ and $H$ is the Hamiltonian operator
+\[
+H = -\frac{\hbar^2}{2 m}\nabla^2 + U.
+\]
+
+This wavefunction is called a stationary state with energy $E$. $\psi$ is
+normalised iff $\chi$ is normalised.  In a stationary state, the probability
+density is $\abs{\chi}^2$ and depends only on position.  Since $H$ is real,
+$E$ is real.  If $\chi$ is real, then $\mathbf{J}=0$.
+
+The general solution of the \schrod equation with a static potential is a
+superposition of stationary states, i.e. suppose $H$ has eigenvalues
+$E_1, E_2, \dots$ with corresponding eigenfunctions $\chi_1, \chi_2, \dots$.
+Then
+\[
+\psi(\mathbf{x},t) = \sum_{n=1}^{\infty} a_n\chi_n(\mathbf{x}) e^{-\frac{i E_n t}{\hbar}}.
+\]  $\psi$ is normalised iff
+\[
+\sum_{n=1}^{\infty} \abs{a_n}^2 = 1.
+\]
+
+This can all be generalised to non-normalisable states and continuum 
+and degenerate eigenvalues.
+
+\subsection{Gaussian Wave Packet}
+
+We superpose plane wave solutions to get a localised particle.
+
+\[
+\psi(x,t) = \int_{\R} e^{-\frac{\sigma (k-k_0)^2}{2}} e^{i(k x - 
+\frac{\hbar k^2}{2m}t)} dk
+\]
+
+This integral ``simplifies'' (honestly!) to give
+\[
+\psi(x,t) = \frac{const}{\sqrt{\sigma + \frac{i \hbar t}{m}}}
+\exp \frac{1}{2}\left( \frac{k_0 t + i x}{\sigma + \frac{i \hbar t}{m}}
+\right)^2.
+\]
+
+\[
+\psi \psi^* = \frac{const'}{\sqrt{\sigma^2 + \frac{\hbar^2 t^2}{m^2}}}
+\exp{-\sigma
+\frac{\left( x - \frac{\hbar k_0}{m}t
+\right)^2}
+{\sigma^2 + \frac{\hbar^2 t^2}{m^2}}}, 
+\] which is a Gaussian in $x$, centered at $\frac{\hbar k_0}{m}t$.  $\psi$ is
+normalised if $const' = \sqrt{\frac{\sigma}{m}}$.
+
+Particle moves along at a speed $\frac{\hbar k_0}{m}=\frac{\text{average momentum}}{\text{mass}}$.  The width of the packet changes with time and is narrowest
+at $t=0$.
+
+\subsection{Particle in infinite potential well (1--D)}
+
+This has a potential
+\[
+U(x)=
+\begin{cases}
+0       & 0 < x < a; \\
+\infty  & \text{otherwise.}
+\end{cases}
+\]
+
+Look for stationary states, i.e. solutions of
+\[
+\frac{-\hbar^2}{2m}\pd{^2\chi}{x^2}=E\chi ,
+\]
+with $\chi(0)=\chi(a)=0$ since $\chi=0$ where $U$ is infinite.  Not too hard to
+get
+\[
+\chi_n(x)=\sqrt{\frac{2}{a}}\sin \frac{n \pi x}{a}
+\]
+with
+\[
+E_n = \frac{\hbar^2}{2m}\frac{n^2 \pi^2}{a^2}.
+\]
+
+\subsection{Remarks on bound states}
+
+The stationary state equation is
+
+\[
+-\frac{\hbar^2}{2m}\pd{^2\chi}{x^2} + U(x)\chi = E\chi,
+\]
+with $U \rightarrow U_0$ as $x \rightarrow \pm \infty$.  This equation
+has 2 linearly independent solutions.  If $E > U_0$, both of this are
+oscillatory as $x \rightarrow \pm \infty$ and there is no bound state.
+If $E < U_0$, one soln decays exponentially one way and grows exponentially
+the other way.  For special $E$, the eigenvalues, this doesn't happen and
+there is one solution which decays exponentially as $x \rightarrow \pm \infty$.
+This solution is unique up to normalisation.  The other solution is not
+normalisable.  The eigenvalues correspond to bound states with $E<U_0$.
+
+\subsection{Remarks on continuity}
+
+If $U$ is smooth, so is $\chi$.  If $U$ has a finite discontinuity, then $\chi$
+and $\chi'$ are continuous, but $\chi''$ is discontinuous.  If $U$ has an
+infinite discontinuity, usually $\chi$ is continuous, $\chi'$ discontinuous
+and $\chi = 0$ where $U$ infinite.
+
+\subsection{Remarks on parity}
+
+If $U(x)=U(-x)$, then bound states are either even or odd, since if $\chi(x)$
+is a solution with energy $E$, so is $\chi(-x)$ and hence is a multiple of
+$\chi(x)$.
+
+\subsection{Finite Potential Well (1D)}
+
+\[
+U(x) =
+\begin{cases}
+0       & -a < x < a \\
+U_0     & \text{otherwise.}
+\end{cases}
+\]
+
+Look for even parity bound states.  Let $k=\sqrt{\frac{2 m E}{\hbar^2}}$ and
+$\kappa = \sqrt{\frac{2 m (U_0 - E)}{\hbar^2}}$.  Then we have to solve
+\[
+\pd{^2\chi}{x^2} + k^2 \chi = 0 \text{ if } \abs{x} < a,
+\]
+and
+\[
+\pd{^2\chi}{x^2} - \kappa^2 \chi = 0 \text{ if } \abs{x}>a,
+\]
+with $\chi$ and $\chi'$ continuous at $x=\pm a$.  Easily obtain
+\[
+\chi(x)=
+\begin{cases}
+A \cos k x      & \abs{x} < a; \\
+B e^{-\kappa \abs{x}}   & \abs{x} > a.
+\end{cases}
+\]
+
+Now impose continuity on $\frac{1}{\chi}\pd{\chi}{x}$ at $x=\pm a$ to get
+\[
+k \tan k a = \kappa.
+\]
+
+We also have
+\[
+k^2 + \kappa^2 = \frac{2 m U_0}{\hbar^2}.
+\]
+Solve numerically or graphically.  Number of solutions increases with $k a$
+and there is always one solution is $U_0 > 0$.  The energy is
+\[
+E = \frac{\hbar^2 k^2}{2 m}.
+\]
+
+\subsection{Scattering problems}
+
+Ideally, we would like to study the scattering of wavepackets on some
+potential.  The evolution of such scattering is complicated, and finding the
+probabilities for reflection and transmission is not nice...  So we look for
+stationary states.
+
+\subsubsection{Potential step}
+
+\[
+U(x) =
+\begin{cases}
+0 & x < 0; \\
+U_0 &   x > 0.
+\end{cases}
+\]
+
+If $E<U_0$, let $k=\sqrt{\frac{2 m E}{\hbar^2}}$ and 
+$\kappa = \sqrt{\frac{2 m (U_0 - E)}{\hbar^2}}$.  Solve appropriate ode's
+and impose continuity at $x=0$ to get
+\[
+\chi(x) =
+\begin{cases}
+e^{i k x} + A e^{-i k x}        & x < 0, \\
+B e^{-\kappa x} & x > 0.
+\end{cases}
+\]
+with $A = \frac{k-i\kappa}{k+i\kappa}$ and $B = \frac{2 k}{k + i \kappa}$.
+$\abs{A}^2$ is the probability of reflection, and equals 1.
+
+If $E>U_0$, let $k=\sqrt{\frac{2 m E}{\hbar^2}}$ and 
+$\kappa = \sqrt{\frac{2 m (E-U_0)}{\hbar^2}}$.  Solve appropriate ode's
+and impose continuity at $x=0$ to get
+\[
+\chi(x) =
+\begin{cases}
+e^{i k x} + A e^{-i k x}        & x < 0, \\
+B e^{i \kappa x}        & x > 0.
+\end{cases}
+\]
+with $A = \frac{k-\kappa}{k+\kappa}$ and $B = \frac{2 k}{k + \kappa}$.
+$\abs{A}^2$ is the probability of reflection, and if $E \gg U_0$,
+$\abs{A}^2 \approx 0$.  This is the classical limit.
+
+$\abs{B}^2$ is the probability of finding a particle in $x>0$.  The decrease
+in speed bunches up the particles and we need to compensate for this.  The
+transition probability is $\frac{\kappa}{k}\abs{B}^2$, which takes account
+of the change in momentum.
+
+\subsubsection{Quantum Tunneling}
+
+\[
+U(x) = 
+\begin{cases}
+U_0     & 0<x<a; \\
+0       & \text{otherwise.}
+\end{cases}
+\]
+
+Suppose $E<U_0$ and let $k=\sqrt{\frac{2 m E}{\hbar^2}}$ and 
+$\kappa = \sqrt{\frac{2 m (U_0-E)}{\hbar^2}}$.  Get
+
+\[
+\chi(x) =
+\begin{cases}
+e^{i k x} + A e^{-i k x}        & x < 0; \\
+B e^{- \kappa x} + C e^{\kappa x}       & 0 \le x \le a; \\
+D e^{i k x}     & x > a.
+\end{cases}
+\]
+
+Impose continuity and do painful algebra to get...
+\[
+D = \frac{-4 i k \kappa}{(\kappa - i k)^2 e^{(i k + \kappa)a}-(\kappa + i k)^2
+e^{(i k - \kappa) a}}
+\]
+and
+\begin{align*}
+\text{probability of tunneling} &= \abs{D}^2 \\
+& = \frac{4 k^2 \kappa^2}{(k^2+\kappa^2)^2 \sinh^2 \kappa a +4 k^2 \kappa^2},
+\end{align*}
+which although exponentially small if $k a$ is large, is non-zero.  Tunneling
+probabilities in real systems exhibit an enormous range, e.g. the half-lives
+for $\alpha$ decay range from $10^{-8}$ seconds to $10^{10}$ years.
+
+\subsection{The Quantum Harmonic Oscillator}
+
+\[
+U(x)=\frac{1}{2}m \omega^2 x^2
+\]
+
+Solve
+\[
+\frac{-\hbar^2}{2 m} \pd{^2 \chi}{x^2} + \frac{1}{2} m \omega^2 x^2 \chi = E\chi.
+\]
+
+Put $\xi = \sqrt{\frac{m \omega}{\hbar}}x$ and $\epsilon = \frac{2 E}{\hbar \omega}$.  Now must solve
+\[
+-\pd{^2\chi}{\xi^2} + \xi^2 \chi = \epsilon \chi.
+\]
+
+Try $\chi(\xi) = f(\xi)e^{-\frac{1}{2}\xi^2}$.  Solve for $f$ using power
+series to get
+\[
+f(\xi) = \sum_{n=0}^{\infty}a_n\xi^n
+\]
+and
+\[
+a_{n+2}=\frac{2 n + 1 - \epsilon}{(n+2)(n+1)}a_n.
+\]
+A non-terminating series is unacceptable, since then $\chi \sim e^{\frac{1}{2}\xi^2}$.  So series terminates, with implies $\epsilon$ is odd. $f_N(\xi)$
+is the $N^{th}$ Hermite polynomial $H_N(\xi)$.  $E_N = (N + \frac{1}{2})\hbar \omega$.  $\frac{\hbar \omega}{2}$ is called the zero-point energy of the
+oscillator.
+
+\begin{center}
+\begin{tabular}{ c | c | c}
+$N$     & $E_N$ & $\chi_N(\xi)$ \\ \hline \hline
+0       & $\frac{1}{2} \hbar \omega$    & $e^{-\frac{1}{2}\xi^2}$ \\
+1       & $\frac{3}{2} \hbar \omega$    & $\xi e^{-\frac{1}{2}\xi^2}$ \\
+2       & $\frac{5}{2} \hbar \omega$    & $(1-2 \xi^2)e^{-\frac{1}{2}\xi^2}$ \\
+3       & $\frac{7}{2} \hbar \omega$    & $(\xi - \frac{2}{3}\xi^3)e^{-\frac{1}{2}\xi^2}$ \\
+\end{tabular}
+\end{center}
+
+\section{Observables and Operators}
+
+In quantum mechanics, physical numbers such as position, velocity etc. are
+represented by operators.  These are chosen such that a state with a definite
+value for the quantity is an eigenfunction of the operator, with the value
+being the eigenvalue of the operator.
+
+The operators look the same as their values.
+
+Energy is represented by the Hamiltonian
+\[
+H = \frac{-\hbar^2}{2 m} \nabla^2 + U.
+\]
+
+Momentum is represented by 
+\[
+\mom = - i \hbar \mathbf{\nabla}.
+\]
+
+Note that 
+\[
+H = \frac{1}{2 m}\mom . \mom + U(\posn),
+\]
+which is reassuring.
+
+The position operators $x_1, x_2, x_3$ act by multiplication, so $f$ is an
+eigenfunction of $\posn$ if
+\[
+\posn f(x) = \mathbf{X} f(x)
+\]
+for constant $\mathbf{X}$.  $f$ must be a delta function, and
+$\delta(x_1 - X_1)\delta(x_2 - X_2) \delta(x_3 - X_3)$ is an eigenfunction of
+$\posn$ with eigenvalue $\mathbf{X}$.
+
+Angular momentum is defined as expected
+\begin{align*}
+\amom &= \posn \wedge \mom \\
+&=-i \hbar \posn \wedge \mathbf{\nabla}.
+\end{align*}
+
+In general, a state is not an eigenfunction.
+
+\subsection{Canonical Commutation Relations}
+
+Operators do not necessarily commute.
+
+The \emph{commutator} of $O_1$ and $O_2$ is $O_1 O_2 - O_2 O_1$ and is written
+$\com{O_1}{O_2}$.  $O_1$ and $O_2$ commute iff $\com{O_1}{O_2}=0$.
+
+\begin{itemize}
+\item $\com{x_i}{x_j} = 0$
+\item $\com{p_i}{p_j} = 0$
+\item $\com{x_i}{p_j} = i \hbar \delta_{ij} 1$.
+\end{itemize}
+
+These are easily proven.
+
+\subsection{Hermitian Operators}
+
+An operator $O$ is Hermitian if
+
+\[
+\int_{\RRR} \mathbf{v}^{*}(\posn) (O\mathbf{u})(\posn)d^3x =
+\int_{\RRR} ( (O\mathbf{v})(\posn))^* \mathbf{u}(\posn)d^3x.
+\]
+for all $\mathbf{u}, \mathbf{v}$ decaying at infinity.
+
+All the operators we have seen so far are Hermitian (easily proven).
+
+\subsubsection{Eigenvalues and Eigenfunctions of Hermitian operators}
+
+Suppose $O$ is a Hermitian operator, with eigenvalues $\lambda_n$ and
+normalised eigenfunctions $U_n(\posn)$.  Then
+
+\begin{align*}
+\lambda_m \int y_n^* y_m &= \int y_n^* O y_m \\
+&= \lambda_n^* \int y_m^* y_n.
+\end{align*}
+
+Putting $m=n$ gives $\lambda_n$ real, and $m \ne n$ gives that
+\[
+\int y_n y_m^* = 0.
+\]
+
+Any decaying $U(\posn)$ can be written as a linear combination of the $U_n$.
+
+It is postulated that :-
+
+\begin{itemize}
+\item Each dynamical variable is represented by a Hermitian operator,
+\item If the normalised wavefunction at a given time is
+$\psi(\posn) = \sum a_n U_n(\posn)$, with the $U_n$ normalised eigenfunctions,
+then the probability that the particle is in state $n$ is $\abs{a_n}^2$.
+\item If an experiment is carried out and the particle is found to be in
+state $n$, then immediately afterwards $\psi(\posn) = U_n(\posn)$.  Further
+evolution of the system is governed by the \schrod equation.
+\end{itemize}
+
+We can simultaneously measure observables whose operators commute, since
+such operators have a complete set of simultaneous eigenfunctions.
+
+\subsection{Expection}
+
+A measurement of $O$ gives outcome $\lambda_n$ with probability $\abs{a_n}^2$.
+The expectation of $O$, $\langle O \rangle = \sum \lambda_n \abs{a_n}^2$.
+
+It is easy to prove that $\langle O \rangle = \int \psi^* O\psi$.
+
+In a stationary state, $\langle \posn \rangle$ and $\langle \mom \rangle$ are
+constant.  
+
+It is easy to see that $\langle E \rangle$ is independent of time, and this
+can be interpreted as conservation of energy.
+
+\subsection{Uncertainty Principle}
+
+The uncertainty of the observable $O$ is $\Delta O$, where $(\Delta O)^2= \langle (O - \langle O \rangle )^2 \rangle$.  There are wavefunctions which have
+$\Delta O  = 0$.  Given two observables with commuting operators, we can make
+$\Delta O_1$ and $\Delta O_2$ arbitrarily small by choosing simultaneous
+eigenfunctions.  We have an inequality
+\[
+(\Delta O_1)^2 (\Delta O_2)^2 \ge \frac{1}{4} \langle i \com{O_1}{O_2} \rangle^2,
+\]
+which gives the Heisenberg Uncertainty principle
+\[
+\Delta x \Delta p \ge \frac{1}{2} \hbar.
+\]
+
+The Gaussian achieves equality.
+
+\section{\schrod Equation in Three Dimensions}
+
+Assume a spherically symmetric potential $U(r)$ and look at the spherically
+symmetric stationary states $\chi(r)$.  Get
+
+\[
+\frac{-\hbar^2}{2 m r} \pd{^2 r \chi}{r^2} + U(r)\chi = E\chi.
+\]
+
+with $\chi(0)$ finite and $\lim_{r \rightarrow 0} \chi = 0$ for a bound state.
+Let $\sigma(r) = r\chi(r)$ to get something familiar...
+ \[
+\frac{-\hbar^2}{2 m} \pd{^2 \sigma}{r^2} + U(r)\sigma = E\sigma,
+\]
+$\sigma(0)=0$, which gives the 1-D \schrod equation on the whole line, with
+a reflection symmetric potential and an odd parity $\sigma$.
+
+The spherical harmonic oscillator ($U(r) = \frac{1}{2}m \omega^2 r^2$) and
+potential well ($U(r) = 0 (r < a), U_0 (r>a)$) follow through, with the proviso
+that no bound states need exist for the potential well.
+
+\subsection{Spherically symmetric bound states for Hydrogen atom}
+
+Let $U(r) = \frac{-\beta}{r}$, with $\beta = \frac{e^2}{4 \pi \eps}$ and
+solve
+\[
+\frac{-\hbar^2}{2 m_e}(\pd{^2\chi}{r^2}+\frac{2}{r}\pd{\chi}{r})
+- \frac{\beta \chi}{r} = E \chi.
+\]
+Let $\nu^2 = \frac{-2 m_e E}{\hbar^2}$ and $\alpha = - \frac{2 m_e \beta}{\hbar^2}$.
+
+\[
+\pd{^2 \chi}{r^2} + \frac{2}{r}\pd{\chi}{r} + \frac{\alpha}{r} \chi - 
+\nu^2 \chi = 0.
+\]
+
+Asymptotically, $\chi \sim e^{-\nu r}$, so put $\chi(r) = f(r) e^{-\nu r}$ and
+try a power series solution for $f$ to get
+\[
+\frac{a_n}{a_{n-1}} = \frac{2 \nu n - \alpha}{n(n+1)}.
+\]
+The series must terminate, otherwise $\chi \sim e^{\nu r}$, so $\alpha = 2 \nu n$ for some $n$.
+\[
+E_N = \frac{-m_e \beta^2}{2 N^2 \hbar^2} =
+\frac{-m_e e^4}{32 \pi^2 \eps^2 \hbar^2} \frac{1}{N^2},
+\]
+as in the Bohr model.
+
+$\chi_N = L_N(\nu r)e^{- \nu r}$, where $L_N$ is the $N^{th}$ Laguerre polynomial.  For normalisation,
+\[
+4 \pi \int_0^\infty \chi^2(r) r^2 dr = 1.
+\]
+
+The Bohr radius is $R_0 = \frac{2}{\alpha} = \frac{\hbar^2}{m_e \beta}$.  In
+the $N^{th}$ state, $\langle r \rangle = \frac{3}{2}N^2 R_0$.  Get spectral
+lines etc..
+
+\subsection{Angular Momentum Operators}
+
+\[
+\amom = \posn \wedge \mom
+\]
+
+\[
+L_j = i \hbar \epsilon_{jkl}x_k \pd{}{x_l}
+\]
+
+It can be shown by expanding out that
+
+\[
+\com{L_j}{L_k} = i \hbar \epsilon_{jkl}L_l.
+\]
+
+Define $\amom^2 = L_1^2 + L_2^2 + L_3^2$.  Now $\amom^2$ commutes with all
+the $L_i$ (use $\com{A}{B^2}=\com{A}{B}B + B\com{A}{B}$).
+
+Now
+\[
+\com{L_i}{x_j} = i \hbar \epsilon_{ijk}x_k,
+\]
+\[
+\com{L_i}{p_j} = i \hbar \epsilon_{ijk}p_k
+\]
+and
+\[
+\com{L_i}{U(r)} = 0 \text{ for spherically symmetric U.}
+\]
+
+It is now easy to show that $\com{L_i}{\nabla^2} = 0$ and so $\com{L_i}{H} = 0$
+and $\com{L^2}{H} = 0$.  Thus $H, \amom^2 \text{ and } L_3$ commute if the
+potential is spherically symmetric.  $L_3$ is the conventional choice of
+component.  Thus the simultaneous eigenfunctions of $H, \amom^2 
+\text{ and } L_3$ form a complete set of functions.
+
+\subsection{Eigenfunctions of $\amom^2$ and $L_3$}
+
+For $L_3$,
+\[
+-i \hbar \pd{f}{\phi} = \lambda f
+\]
+gives 
+\[
+f(\phi) = e^{i m \phi}.
+\]
+Since the eigenfunction should be unchanged by $\phi \rightarrow \phi + 2 \pi$,
+$m \in \Z$.  The possible values of $L_3$ are $\text{an integer }\times \hbar$,
+which looks like Bohr's hypothesis.  The simultaneous eigenfunctions of $L_3$
+and $\amom^2$ are the spherical harmonics, which, un-normalised, are
+\[
+Y_{l,m}(\theta,\phi) = P_{l,m}(\theta)e^{i m \phi}, l \ge 0 \text{ and }
+-l \le m \le l.
+\]
+
+$P_{l,m}$ is an associated Legendre function
+$P_{l,m}(\theta) = (\sin \theta)^{\abs{m}}
+\pd{^{\abs{m}} P_l \left(\cos \theta \right)}{\theta^{\abs{m}}}
+$ and $P_l$ is the 
+$l^{th}$ Legendre polynomial.
+
+Or, $P_{l,m}$ is the solution to
+\[
+\left(
+\frac{-1}{\sin \theta}
+\pd{}{\theta}
+\left(
+\sin{\theta}
+\pd{}{\theta}
+\right)
+- \frac{m^2}{\sin^2 \theta}
+\right)
+P_{l,m}(\theta)
+= l(l+1)P_{l,m}(\theta).
+\]
+
+The eigenvalues are $L_3 Y_{l,m} = \hbar m Y_{l,m}$ and $\amom^2 Y_{l,m}=\hbar^2 l(l+1)$.
+
+\subsection{\schrod Equation with spherically symmetric potential}
+
+\[
+\frac{-\hbar^2}{2 M}
+\left(
+\pd{^2 \chi}{r^2} + \frac{2}{r}\pd{\chi}{r}
++ \frac{1}{r^2}
+\left(
+\frac{1}{\sin \theta} \pd{}{\theta}
+\left(
+\sin \theta \pd{\chi}{\theta}
+\right)
++\frac{1}{\sin^2 \theta}\pd{^2 \chi}{\phi^2}
+\right)
+\right)
++U(r) \chi = E \chi
+\]
+
+Separate variables to put $\chi(r,\theta,\phi) = g(r) Y_{l,m}(\theta,\phi)$.
+This simplifies the above equation to
+\[
+\frac{-\hbar^2}{2 M}
+\left(
+\pd{^2 g}{r^2} + \frac{2}{r} \pd{g}{r}
+\right)
++ \left(
+U(r) + \frac{\hbar^2}{2 M} \frac{l(l+1)}{r^2}
+\right)g = E g.
+\]
+
+There is an effective potential of $U(r) + \frac{\hbar^2}{2 M}\frac{l(l+1)}{r^2}$, giving a centrifugal repulsion.  We seek bound states with $E < 0$.
+
+Put $\alpha = \frac{2 m_e \beta}{\hbar^2}$ and $\nu^2 = \frac{-2 m_e E}{\hbar^2}$.  Asymptotically $g(r)=e^{-\nu r}$, so try $g(r) = e^{- \nu r}f(r)$.  The
+equation now simplifies to
+\[
+\pd{^2f}{r^2} + 
+\left(
+\frac{2}{r} - 2 \nu
+\right)
+\pd{f}{r}
+-\frac{l(l+1)}{r^2}f
++ \frac{1}{r}
+\left(
+\alpha - 2 \nu
+\right)
+f = 0.
+\]
+Try a series solution $f(r) = \sum_{n=0}^{\infty}a_n r^{n+\sigma}$.  The
+indicial equation gives $\sigma = l$, and the rest reduces to
+\[
+\frac{a_n}{a_{n-1}}=\frac{(n+l)2\nu - \alpha}{n(n+2l+1)}
+\].  This must terminate, so $\nu = \frac{\alpha}{2(n+l)}$, or
+$\alpha = 2\nu N$.  $E_N = \frac{-m_e e^4}{32 \pi^2 \eps^2 \hbar^2}\frac{1}{N^2}$ is familiar.  The complete unnormalised wavefunction
+\[
+\chi_{N,l,m}(r,\theta,\phi) = r^l L_{N,l}(\frac{\alpha r}{2 N})
+e^{\frac{-\alpha r}{2 N}} Y_{l,m}(\theta,\phi).
+\]
+$L_{N,l}$ is a generalised Laguerre polynomial.
+
+\subsection{Energy Levels}
+
+Energy only depends on $N$ (the principal quantum number).
+\[
+E_N = \frac{-m_e e^4}{32 \pi^2 \eps^2 \hbar^2}\frac{1}{N^2}
+\]
+
+The allowed values for $l, m$ for given $N$ are $0 \le l < N$ and $-l \le m
+\le l$.  The total degeneracy of $E_N$ is $\sum_{l=0}^{N-1}(2l+1) = N^2$.
+This large degeneracy is a feature of the Coulomb potential.
+
+$N$ is called the principal quantum number, $l$ is the total angular momentum
+quantum number and $m$ is the magnetic quantum number (a magnetic field along
+$3^{rd}$ axis removes this degeneracy.
+
+\subsection{Relation with Bohr orbit}
+
+The Bohr picture emerges if $N$ is large, $l \approx N$.  If $m=l \approx N$
+then the electron has an angular momentum component about the $3^{rd}$ axis
+$\approx \hbar N$ and the total angular momentum $\approx \hbar N$.
+
+Consider the radial part of the wavefunction with $l = N-1$, $g(r) = r^l
+e^{\frac{-\alpha r}{2 N}}$.  The radial probability density is proportional
+to $r^2 g^2(r) \approx r^{2 N} e^{-\alpha r}{N}$, which has a maximum at
+$r = \frac{2 N^2}{\alpha} = N^2 R_0$, agreeing with the Bohr model.
+
+{\noindent \hrulefill}
+
+The syllabus ends here.  The lecturer went on to discuss atoms with more 
+than one electron.  It was covered at approximately A-level Chemistry standard
+(although considerably quicker).
+
+\end{document}

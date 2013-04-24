@@ -1,0 +1,1724 @@
+\documentclass{notes}
+
+\newcommand{\cP}{\mathcal{P}}
+\newcommand{\cH}{\mathcal{H}}
+\newcommand{\cO}{\mathcal{O}}
+\newcommand{\bra}[1]{\langle#1|}
+\newcommand{\ket}[1]{|#1\rangle}
+\newcommand{\scp}[2]{\langle#1|#2\rangle}
+\newcommand{\com}[2]{\left[#1,#2\right]}
+\newcommand{\sv}{\boldsymbol{\sigma}}
+\newcommand{\cv}{\boldsymbol{\chi}}
+\newcommand{\pv}{\boldsymbol{\psi}}
+\newcommand{\ua}{\!\!\uparrow}
+\newcommand{\da}{\!\!\downarrow}
+
+\begin{document}
+
+\frontmatter
+\title{Foundations of Quantum Mechanics}
+\lecturer{Dr.~H.~Osborn}
+\maintainer{Paul Metcalfe}
+\date{Mich\ae lmas 1997}
+\maketitle
+
+\thispagestyle{empty}
+
+\noindent\verb$Revision: 2.6 $\hfill\\
+\noindent\verb$Date: 1999/09/17 15:28:35 $\hfill
+
+\vspace{1.5in}
+
+The following people have maintained these notes.
+
+\begin{center}
+\begin{tabular}{ r  l}
+-- date & Paul Metcalfe
+\end{tabular}
+\end{center}
+
+\tableofcontents
+
+\chapter{Introduction}
+
+These notes are based on the course ``Foundations of Quantum
+Mechanics'' given by Dr.~H.~Osborn in Cambridge in the Mich\ae lmas
+Term 1997.  Recommended books are discussed in the bibliography at the
+back.
+
+\alsoavailable
+\archimcopyright
+
+\mainmatter
+
+\chapter[Basics]{The Basics of Quantum Mechanics}
+
+Quantum mechanics is viewed as the most remarkable development in
+$20^{\text{th}}$ century physics.  Its point of view is completely different
+from classical physics.  Its predictions are often probabilistic.
+
+We will develop the mathematical formalism and some applications.  We
+will emphasize vector spaces (to which wavefunctions belong).  These vector
+spaces are sometimes finite-dimensional, but more often infinite dimensional.
+The pure mathematical basis for these is in Hilbert Spaces but 
+(fortunately!) no knowledge of this area is required for this course.
+
+\section{Review of earlier work}
+
+This is a \emph{brief} review of the salient points of the 1B Quantum
+Mechanics course.  If you anything here is unfamiliar it is as well to
+read up on the 1B Quantum Mechanics course.  This section can be
+omitted by the brave.
+
+A wavefunction $\psi(x) \colon \R^3 \mapsto \C$ is associated with a single
+particle in three dimensions.  $\psi$ represents the state of a physical
+system for a single particle.  If $\psi$ is \emph{normalised}, that is
+\[
+\norm{\psi}^2 \equiv \int \ud^3 x\, \abs{\psi}^2 = 1
+\]
+then we say that $\ud^3 x\, \abs{\psi}^2$ is the probability of finding
+the particle in the infinitesimal region $\ud^3 x$ (at $x$).
+
+\subsubsection*{Superposition Principle}
+
+If $\psi_1$ and $\psi_2$ are two wavefunctions representing states of
+a particle, then so is the linear combination
+$a_1 \psi_1 + a_2 \psi_2$ ($a_1, a_2 \in \C)$.
+This is obviously the statement that wavefunctions live in a vector space.
+If $\psi' = a \psi$ (with $a \neq 0$) then $\psi$ and $\psi'$ represent the
+same physical state.  If $\psi$ and $\psi'$ are both normalised then
+$a = e^{\imath \alpha}$.  We write $\psi \sim e^{\imath \alpha} \psi$
+to show that they represent the same physical state.
+
+For two wavefunctions $\phi$ and $\psi$ we can define a scalar product
+\[
+(\phi, \psi) \equiv \int \ud^3 x\, \phi^{\ast} \psi \in \C.
+\]
+
+This has various properties which you can investigate at your leisure.
+
+\subsubsection*{Interpretative Postulate}
+
+Given a particle in a state represented by a wavefunction $\psi$ (henceforth
+``in a state $\psi$'') then the probability of finding the particle in
+state $\phi$ is $\cP = \abs{(\phi,\psi)}^2$ and if the wavefunctions are
+normalised then $0 \le \cP \le 1$.  $\cP = 1$ if $\psi \sim \phi$.
+
+We wish to define (linear) operators on our vector space --- do the obvious
+thing.  In finite dimensions we can choose a basis and replace an operator
+with a matrix.
+
+For a complex vector space we can define the Hermitian conjugate of the
+operator $A$ to be the operator $A^\dag$ satisfying $(\phi, A \psi)
+= (A^\dag \phi, \psi)$.  If $A = A^\dag$ then $A$ is Hermitian.  Note
+that if $A$ is linear then so is $A^\dag$.
+
+In quantum mechanics dynamical variables (such as energy, momentum
+or angular momentum) are represented by (linear) Hermitian operators, the
+values of the dynamical variables being given by the eigenvalues.  For
+wavefunctions $\psi(x)$, $A$ is usually a differential operator.
+For a single particle moving in a potential $V(x)$ we get the Hamiltonian
+$H = -\frac{\hbar^2}{2 m} \nabla^2 + V(x)$.  Operators may have either
+a continuous or discrete spectrum.
+
+If $A$ is Hermitian then the eigenfunctions corresponding to different
+eigenvalues are orthogonal.  We assume completeness --- that any wavefunction
+can be expanded as a linear combination of eigenfunctions.
+
+The expectation value for $A$ in a state with wavefunction $\psi$ is
+$\langle A \rangle_\psi$, defined to be $\sum_i \lambda_i \abs{a_i}^2
+= \left( \psi, A \psi\right)$.  We define the square deviation $\Delta
+A^2$ to be $\langle \left( A - \langle A \rangle_\psi \right)^2
+\rangle_{\psi}$ which is in general nonzero.
+
+\subsubsection{Time dependence}
+
+This is governed by the Schr\"odinger equation
+\[
+\imath \hbar \pd{\psi}{t} = H \psi,
+\]
+where $H$ is the Hamiltonian.  $H$ must be Hermitian for the consistency
+of quantum mechanics:
+\[
+\imath \hbar \pd{}{t} \left( \psi,\psi \right)
+= \left( \psi,H\psi \right) - \left( H \psi, \psi\right) = 0
+\]
+if $H$ is Hermitian.  Thus we can impose the condition $\left( \psi, \psi
+\right)=1$ for all time (if $\psi$ is normalisable).
+
+If we consider eigenfunctions $\psi_i$ of $H$ with eigenvalues $E_i$ we
+can expand a general wavefunction as
+\[
+\psi(x,t) = \sum a_i e^{-\frac{\imath E_i}{\hbar} t} \psi_i(x).
+\]
+If $\psi$ is normalised then the probability of finding the system with
+energy $E_i$ is $\abs{a_i}^2$.
+
+\section{The Dirac Formalism}
+
+This is where we take off into the wild blue yonder, or at least a more
+abstract form of quantum mechanics than that previously discussed. The
+essential structure of quantum mechanics is based on operators acting
+on vectors in some vector space.  A wavefunction $\psi$ corresponds to
+some abstract vector $\ket{\psi}$, a \emph{ket} vector.  $\ket{\psi}$
+represents the state of some physical system described by the vector space.
+
+If $\ket{\psi_1}$ and $\ket{\psi_2}$ are
+ket vectors then $\ket{\psi} = a_1 \ket{\psi_1}
++ a_2 \ket{\psi_2}$ is a possible ket vector describing a state --- this
+is the superposition principle again.
+
+We define a dual space of \emph{bra} vectors $\bra{\phi}$ and a scalar
+product $\scp{\phi}{\psi}$, a complex number.%
+\footnote{\emph{bra ket}.  Who said that mathematicians have no sense of
+  humour?}  For any $\ket{\psi}$ there corresponds a unique
+$\bra{\psi}$ and we require $\scp{\phi}{\psi} =
+\scp{\psi}{\phi}^\ast$.  We require the scalar product to be linear
+such that $\ket{\psi} = a_1 \ket{\psi_1} + a_2 \ket{\psi_2}$ implies
+$\scp{\phi}{\psi} = a_1 \scp{\phi}{\psi_1} + a_2 \scp{\phi}{\psi_2}$.
+We see that $\scp{\psi}{\phi} = a_1^\ast \scp{\psi_1}{\phi} + a_2^\ast
+\scp{\psi_2}{\phi}$ and so $\bra{\psi} = a_1^\ast \bra{\psi_1} +
+a_2^\ast \bra{\psi_2}$.
+
+We introduce linear operators $\Hat{A} \ket{\psi} = \ket{\psi'}$ and
+we define operators acting on bra vectors to the left
+$\bra{\phi}\Hat{A} = \bra{\phi'}$ by requiring $\scp{\phi'}{\psi}
+= \bra{\phi}\Hat{A}\ket{\psi}$ for all $\psi$.  In general, in
+$\bra{\phi}\Hat{A}\ket{\psi}$, $\Hat{A}$ can act either to the right or
+the left.  We define the \emph{adjoint} $\Hat{A}^\dag$ of $\Hat{A}$
+such that if $\Hat{A} \ket{\psi} = \ket{\psi'}$ then $\bra{\psi} \Hat{A}^\dag
+= \bra{\psi'}$.  $\Hat{A}$ is said to be Hermitian if $\Hat{A}
+= \Hat{A}^\dag$.
+
+If $\Hat{A} = a_1 \Hat{A}_1 + a_2 \Hat{A}_2$ then
+$\Hat{A}^\dag = a_1^\ast \Hat{A}_1^\dag + a_2^\ast \Hat{A}_2^\dag$, which
+can be seen by appealing to the definitions.  We also find the
+adjoint of $\Hat{B}\Hat{A}$ as follows:
+
+Let $\Hat{B}\Hat{A} \ket{\psi} = \Hat{B} \ket{\psi'} = \ket{\psi''}$.  Then
+$\bra{\psi''} = \bra{\psi'} \Hat{B}^\dag = \bra{\psi} \Hat{A}^\dag
+\Hat{B}^\dag$ and the result follows.  Also, if
+$\bra{\psi} \Hat{A} = \bra{\phi'}$ then $\ket{\phi'}
+= \Hat{A}^\dag \ket{\phi}$.
+
+We have eigenvectors $\Hat{A} \ket{\psi} = \lambda \ket{\psi}$ and
+it can be seen in the usual manner that the eigenvalues of a Hermitian
+operator are real and the eigenvectors corresponding to two different
+eigenvalues are orthogonal.
+
+We assume completeness --- that is any $\ket{\phi}$ can be expanded in terms
+of the basis ket vectors,
+$\ket{\phi} = \sum a_i \ket{\psi_i}$ where $\Hat{A} \ket{\psi_i}
+= \lambda_i \ket{\psi_i}$ and $a_i = \scp{\psi_i}{\phi}$.  If
+$\ket{\psi}$ is normalised --- $\scp{\psi}{\psi} = 1$ --- then the
+expected value of $\Hat{A}$ is 
+$\langle \Hat{A} \rangle_\psi = \bra{\psi} \Hat{A} \ket{\psi}$, which is
+real if $\Hat{A}$ is Hermitian.
+
+The completeness relation for eigenvectors of $\Hat{A}$ can be
+written as
+$\Hat{1} = \sum_i \ket{\psi_i} \bra{\psi_i}$, which gives (as before)
+\[
+\ket{\psi} = \Hat{1} \ket{\psi}
+= \sum_i \ket{\psi_i} \scp{\psi_i}{\psi}.
+\]
+
+We can also rewrite $\Hat{A} = \sum_i \ket{\psi_i} \lambda_i
+\bra{\psi_i}$ and if $\lambda_j \neq 0\ \forall j$ then we can define
+$\Hat{A}^{-1} = \sum_i \ket{\psi_i} \lambda_i^{-1} \bra{\psi_i}$.
+
+We now choose an orthonormal basis $\{ \ket{n} \}$ with
+$\scp{n}{m} = \delta_{nm}$ and the completeness relation
+$\Hat{1} = \sum_n \ket{n} \bra{n}$.  We can thus expand
+$\ket{\psi} = \sum_n a_n \ket{n}$ with $a_n = \scp{n}{\psi}$.  We
+now consider a linear operator $\Hat{A}$, and then
+$\Hat{A} \ket{\psi} = \sum_n a_n \Hat{A} \ket{n} = \sum_m a_m' \ket{m}$,
+with $a_m' = \bra{m} \Hat{A} \ket{\psi} = \sum_n a_n \bra{m} \Hat{A} \ket{n}$.
+Further, putting $A_{mn} = \bra{m} \Hat{A} \ket{n}$ we get
+$a_m' = \sum_n A_{mn} a_n$ and therefore solving
+$\Hat{A} \ket{\psi} = \lambda \ket{\psi}$ is equivalent to solving the
+matrix equation
+$A \vect{a} = \lambda \vect{a}$.  $A_{mn}$ is called the matrix representation
+of $\Hat{A}$.  We also have $\bra{\psi} = \sum_n a_n^\ast \bra{n}$, with
+$a'_n{}^\ast = \sum_m a_m^\ast A^\dag_{m n}$, where
+$A^\dag_{m n} = A_{n m}^\ast$ gives the Hermitian conjugate matrix.  This
+is the matrix representation of $\Hat{A}^\dag$.
+
+\subsection{Continuum basis}
+
+In the above we have assumed discrete eigenvalues $\lambda_i$ and normalisable
+eigenvectors $\ket{\psi_i}$.  However, in general, in quantum mechanics
+operators often have continuous spectrum --- for instance the position operator
+$\Hat{\vect{x}}$ in 3 dimensions.  $\Hat{\vect{x}}$ must have eigenvalues
+$\vect{x}$ for any point $\vect{x} \in \R^3$.  There exist eigenvectors
+$\ket{\vect{x}}$ such that $\Hat{\vect{x}} \ket{\vect{x}} =
+\vect{x} \ket{\vect{x}}$ for any $\vect{x} \in \R^3$.
+
+As $\Hat{\vect{x}}$ must be Hermitian we have $\bra{\vect{x}}
+\Hat{\vect{x}} = \vect{x} \bra{\vect{x}}$.  We define the vector space
+required in the Dirac formalism as that spanned by $\ket{\vect{x}}$.
+
+For any state $\ket{\psi}$ we can define a wavefunction
+$\psi(\vect{x}) = \scp{\vect{x}}{\psi}$.
+
+We also need to find some normalisation criterion, which uses the 3
+dimensional Dirac delta function to get
+$\scp{\vect{x}}{\vect{x'}} = \delta^3(\vect{x} - \vect{x'})$.  Completeness
+gives
+\[
+\int \ud^3 x \ket{\vect{x}} \bra{\vect{x}} = 1.
+\]
+
+We can also recover the ket vector from the wavefunction by
+\[
+\ket{\psi} = \Hat{1} \ket{\psi} = \int \ud^3 x \ket{\vect{x}} \psi(\vect{x}).
+\]
+
+Also $\bra{\vect{x}} \Hat{\vect{x}} \ket{\psi} = \vect{x} \psi(\vect{x})$;
+the action of the operator $\Hat{\vect{x}}$ on a wavefunction is multiplication
+by $\vect{x}$.
+
+Something else reassuring is
+\begin{align*}
+\scp{\psi}{\psi} = \bra{\psi} \Hat{1} \ket{\psi}
+& = \int \ud^3 x \scp{\psi}{\vect{x}} \scp{\vect{x}}{\psi} \\
+& = \int \ud^3 x \abs{\psi(\vect{x})}^2.
+\end{align*}
+
+The momentum operator $\Hat{\vect{p}}$ is also expected to have continuum
+eigenvalues.  We can similarly define states $\ket{\vect{p}}$ which
+satisfy $\Hat{\vect{p}} \ket{\vect{p}} = \vect{p} \ket{\vect{p}}$.  We
+can relate $\Hat{\vect{x}}$ and $\Hat{\vect{p}}$ using the commutator,
+which for two operators $\Hat{A}$ and $\Hat{B}$ is defined by
+\[
+\com{\Hat{A}}{\Hat{B}} = \Hat{A} \Hat{B} - \Hat{B} \Hat{A}.
+\]
+
+The relationship between $\Hat{\vect{x}}$ and $\Hat{\vect{p}}$ is
+$\com{\Hat{x}_i}{\Hat{p}_j} = \imath \hbar \delta_{i j}$.  In one dimension
+$\com{\Hat{x}}{\Hat{p}} = \imath \hbar$.
+
+We have a useful rule for calculating commutators, that is:
+\[
+\com{\Hat{A}}{\Hat{B}{\Hat{C}}}
+= \com{\Hat{A}}{\Hat{B}} \Hat{C} + \Hat{B} \com{\Hat{A}}{\Hat{C}}.
+\]
+
+This can be easily proved simply by expanding the right hand side out.
+We can use this to calculate $\com{\Hat{x}}{\Hat{p}^2}$.
+
+\begin{align*}
+\com{\Hat{x}}{\Hat{p}^2} &= \com{\Hat{x}}{\Hat{p}} \Hat{p}
++ \Hat{p} \com{\Hat{x}}{\Hat{p}} \\
+&= 2 \imath \hbar \Hat{p}.
+\end{align*}
+
+It is easy to show by induction that $\com{\Hat{x}}{\Hat{p}^n}
+= n \imath \hbar \Hat{p}^{n-1}$.
+
+We can define an exponential by
+\[
+e^{-\frac{\imath a \Hat{p}}{\hbar}} = \sum_{n=0}^\infty \frac{1}{n!}
+\left(-\frac{\imath a \Hat{p}}{\hbar} \right)^n.
+\]
+
+We can evaluate $\com{\Hat{x}}{e^{-\frac{\imath a \Hat{p}}{\hbar}}}$
+by
+\begin{align*}
+\com{\Hat{x}}{e^{-\frac{\imath a \Hat{p}}{\hbar}}}
+&= \com{\Hat{x}}{\sum_{n=0}^\infty \frac{1}{n!}
+\left(-\frac{\imath a \Hat{p}}{\hbar} \right)^n} \\
+&= \sum_{n=0}^\infty \frac{1}{n!} \com{\Hat{x}}{\left(-\frac{\imath a \Hat{p}}
+{\hbar} \right)^n} \\
+&= \sum_{n=0}^\infty \frac{1}{n!} \left(-\frac{\imath a}{\hbar} \right)^n
+\com{\Hat{x}}{\Hat{p}^n} \\
+&= \sum_{n=1}^\infty \frac{1}{(n-1)!} \left(-\frac{\imath a}{\hbar} \right)^n
+\imath \hbar \Hat{p}^{n-1} \\
+&= a \sum_{n=1}^\infty \left(-\frac{\imath a}{\hbar} \right)^{n-1}
+\Hat{p}^{n-1} \\
+&= a e^{-\frac{\imath a \Hat{p}}{\hbar}}
+\end{align*}
+and by rearranging this we get that
+\[
+\Hat{x} e^{-\frac{\imath a \Hat{p}}{\hbar}}
+= e^{-\frac{\imath a \Hat{p}}{\hbar}} \left(\Hat{x}+a\right)
+\]
+and it follows that $e^{-\frac{\imath a \Hat{p}}{\hbar}} \ket{x}$
+is an eigenvalue of $\Hat{x}$ with eigenvalue $x+a$.  Thus we see
+$e^{-\frac{\imath a \Hat{p}}{\hbar}} \ket{x} = \ket{x+a}$.  We
+can do the same to the bra vectors with the Hermitian conjugate
+$e^{\frac{\imath a \Hat{p}}{\hbar}}$ to get
+$\bra{x+a} = \bra{x} e^{\frac{\imath a \Hat{p}}{\hbar}}$.  Then
+we also have the normalisation ${\scp{x'+a}{x+a} = \scp{x'}{x}}$.
+
+We now wish to consider $%
+\scp{x+a}{p} = \bra{x} e^{\frac{\imath a \Hat{p}}{\hbar}} \ket{p}%
+= e^{\frac{\imath a p}{\hbar}} \scp{x}{p}$.  Setting $x=0$
+gives $\scp{a}{p} = e^{\frac{\imath a p}{\hbar}} N$, where
+$N=\scp{0}{p}$ is independent of $x$.  We can determine $N$ from
+the normalisation of $\ket{p}$.
+
+\begin{align*}
+\delta(p'-p) = \scp{p'}{p} &= \int \ud a\, \scp{p'}{a} \scp{a}{p}\\
+&= \abs{N}^2 \int \ud a\, e^{\frac{\imath a (p-p') }{\hbar}} \\
+&= \abs{N}^2 2 \pi \hbar\, \delta(p'-p)
+\end{align*}
+
+So, because we are free to choose the phase of $N$, we can set
+$N=\left( \frac{1}{2 \pi \hbar} \right)^{\frac{1}{2}}$ and thus
+$\scp{x}{p} = \left( \frac{1}{2 \pi \hbar} \right)^{\frac{1}{2}}
+e^{\frac{\imath x p}{\hbar}}$.  We could \emph{define} $\ket{p}$ by
+\[
+\ket{p} = \int \ud x\, \ket{x} \scp{x}{p}
+= \left( \frac{1}{2 \pi \hbar} \right)^{\frac{1}{2}} \int \ud x\, \ket{x}
+e^{\frac{\imath x p}{\hbar}},
+\]
+but we then have to check things like completeness.
+
+\subsection{Action of operators on wavefunctions}
+
+We recall the definition of the wavefunction $\psi$ as $\psi(x)
+=\scp{x}{\psi}$.  We wish to see what operators (the position and momentum
+operators discussed) do to wavefunctions.
+
+Now $\bra{x} \Hat{x} \ket{\psi} = x \scp{x}{\psi} = x \psi(x)$, so
+the position operator acts on wavefunctions by multiplication.  As for
+the momentum operator,
+
+\begin{align*}
+\bra{x} \Hat{p} \ket{\psi}
+&= \int \ud p\, \bra{x} \Hat{p} \ket{p} \scp{p}{\psi} \\
+&= \int \ud p\, p \scp{x}{p} \scp{p}{\psi} \\
+&= \left( \frac{1}{2 \pi \hbar} \right)^{\frac{1}{2}} \int \ud p\, p
+e^{\frac{\imath x p}{\hbar}} \scp{p}{\psi} \\
+&= - \imath \hbar \diff{}{x} \int \ud p\, \scp{x}{p}\scp{p}{\psi} \\
+&= - \imath \hbar \diff{}{x} \scp{x}{\psi} = -\imath \hbar
+\diff{}{x} \psi(x). 
+\end{align*}
+
+The commutation relation $\com{\Hat{x}}{\Hat{p}} = \imath \hbar$ corresponds
+to $\com{x}{-\imath \hbar \diff{}{x}} = \imath \hbar$ (acting on $\psi(x)$).
+
+\subsection{Momentum space}
+
+$\ket{x} \mapsto \psi(x) = \scp{x}{\psi}$ defines a particular
+representation of the vector space.  It is sometimes useful to
+use a momentum representation, $\Tilde{\psi}(p) = \scp{p}{\psi}$.
+We observe that
+\begin{align*}
+\Tilde{\psi}(p) &= \int \ud x\, \scp{p}{x} \scp{x}{\psi} \\
+&= \left( \frac{1}{2 \pi \hbar} \right)^{\frac{1}{2}}
+\int \ud x\, e^{- \frac{\imath x p}{\hbar}} \psi(x).
+\end{align*}
+
+In momentum space, the operators act differently on wavefunctions.  It
+is easy to see that $\bra{p} \Hat{p} \ket{\psi} = p \Tilde{\psi}(p)$
+and $\bra{p} \Hat{x} \ket{\psi} = \imath \hbar \diff{}{p} \Tilde{\psi}(p)$.
+
+We convert the Schr\"odinger equation into momentum space.  We have
+the operator equation $\Hat{H} = \frac{\Hat{p}^2}{2 m} + V(\Hat{x})$
+and we just need to calculate how the potential operates on the
+wavefunction.
+
+\begin{align*}
+\bra{p} V(\Hat{x}) \ket{\psi} &= \int \ud x\,
+\bra{p} V(\Hat{x}) \ket{x} \scp{x}{\psi} \\
+&= \left( \frac{1}{2 \pi \hbar} \right)^{\frac{1}{2}}
+\int \ud x\, e^{- \frac{\imath x p}{\hbar}} V(x) \scp{x}{\psi} \\
+&= \frac{1}{2 \pi \hbar} \iint \ud x\, \ud p'\, V(x) \Tilde{\psi}(p')
+ e^{\frac{\imath x (p'-p) }{\hbar}} \\
+&= \int \ud p'\, \Tilde{V}(p-p') \Tilde{\psi}(p'),
+\end{align*}
+
+where $\Tilde{V}(p) = \frac{1}{2 \pi \hbar}
+\int \ud x\, e^{- \frac{\imath x p}{\hbar}} V(x)$.  Thus in momentum
+space,
+\[
+H_p \Tilde{\psi}(p) = \frac{p^2}{2 m} \Tilde{\psi}(p)
++ \int \ud p'\, \Tilde{V}(p-p') \Tilde{\psi}(p').
+\]
+
+\subsection{Commuting operators}
+
+Suppose $\Hat{A}$ and $\Hat{B}$ are Hermitian and $\com{\Hat{A}}{\Hat{B}}=0$.
+Then $\Hat{A}$ and $\Hat{B}$ have simultaneous eigenvectors.
+
+\begin{proof}
+Suppose $\Hat{A} \ket{\psi} = \lambda \ket{\psi}$ and the vector
+subspace $V_\lambda$ is the span of the eigenvectors of $\Hat{A}$ with
+eigenvalue $\lambda$.  (If $\dim V_\lambda > 1$ then $\lambda$ is said to
+be degenerate.)
+
+As $\Hat{A}$ and $\Hat{B}$ commute we know that
+$\lambda \Hat{B} \ket{\psi} = \Hat{A} \Hat{B} \ket{\psi}$ and so
+$\Hat{B} \ket{\psi} \in V_\lambda$.  If $\lambda$ is non-degenerate
+then $\Hat{B} \ket{\psi} = \mu \ket{\psi}$ for some $\mu$.  Otherwise
+we have that $\Hat{B} \colon V_\lambda \mapsto V_\lambda$ and we can therefore
+find eigenvectors of $\Hat{B}$ which lie entirely inside $V_\lambda$.  We
+can label these as $\ket{\lambda,\mu}$, and we know that
+\begin{gather*}
+\Hat{A} \ket{\lambda,\mu} = \lambda \ket{\lambda,\mu}\\
+\Hat{B} \ket{\lambda,\mu} = \mu \ket{\lambda,\mu}.
+\end{gather*}
+\end{proof}
+
+These may still be degenerate.  However we can in principle remove this
+degeneracy by adding more commuting operators until each state is uniquely
+labeled by the eigenvalues of each common eigenvector.  This set of operators
+is called a \emph{complete commuting set}.
+
+This isn't so odd: for a single particle in 3 dimensions we have the
+operators $\Hat{x}_1$, $\Hat{x}_2$ and $\Hat{x}_3$.  These all commute,
+so for a single particle with no other degrees of freedom we can label
+states uniquely by $\ket{\vect{x}}$.  We also note from this example that
+a complete commuting set is not unique, we might just as easily have taken
+the momentum operators and labeled states by $\ket{\vect{p}}$.  To ram
+the point in more, we could also have taken some weird combination like
+$\Hat{x}_1$, $\Hat{x}_2$ and $\Hat{p}_3$.
+
+For our single particle in 3 dimensions, a natural set of commuting operators
+involves the angular momentum operator, $\Hat{\vect{L}} = \Hat{\vect{x}} \wedge
+\Hat{\vect{p}}$, or $\Hat{L}_i = \epsilon_{ijk} \Hat{x}_j \Hat{p}_k$.
+
+We can find commutation relations between $\Hat{L}_i$ and the other operators
+we know. These are summarised here, proof is straightforward.
+
+\begin{itemize}
+\item $\com{\Hat{L}_i}{\Hat{x}_l} = \imath \hbar \epsilon_{i l j} \Hat{x}_j$
+\item $\com{\Hat{L}_i}{\Hat{\vect{x}}^2} = 0$
+\item $\com{\Hat{L}_i}{\Hat{p}_m} = \imath \hbar \epsilon_{i m k} \Hat{p}_k$
+\item $\com{\Hat{L}_i}{\Hat{\vect{p}}^2} = 0$
+\item $\com{\Hat{L}_i}{\Hat{L}_j} = \imath \hbar \epsilon_{i j k} \Hat{L}_k$
+\item $\com{\Hat{L}_i}{\Hat{\vect{L}}^2} = 0$
+\end{itemize}
+
+If we have a Hamiltonian $\Hat{H} = \frac{\Hat{\vect{p}}^2}{2 m} + V(\abs{
+\Hat{\vect{x}}})$ then we can also see that $\com{\Hat{\vect{L}}}{\Hat{H}}
+= 0$.
+We choose as a commuting set $\Hat{H}$, $\Hat{\vect{L}}^2$ and $\Hat{L}_3$
+and label states $\ket{E,l,m}$, where the eigenvalue of $\Hat{\vect{L}}^2$
+is $l (l+1)$ and the eigenvalue of $\Hat{L}_3$ is $m$.
+
+\subsection{Unitary Operators}
+
+An operator $\Hat{U}$ is said to be \emph{unitary} if
+$\Hat{U}^\dag \Hat{U} = \Hat{1}$, or equivalently $\Hat{U}^{-1}
+= \Hat{U}^\dag$.
+
+Suppose $\Hat{U}$ is unitary and $\Hat{U} \ket{\psi} = \ket{\psi'}$,
+$\Hat{U} \ket{\phi} = \ket{\phi'}$.  Then $\bra{\phi'} = \bra{\phi}
+\Hat{U}^\dag$ and $\scp{\phi'}{\psi'} = \scp{\phi}{\psi}$.  Thus the
+scalar product, which is the probability amplitude of finding the state
+$\ket{\phi}$ given the state $\ket{\psi}$, is invariant under unitary
+transformations of states.
+
+For any operator $\Hat{A}$ we can define $\Hat{A}' = \Hat{U} \Hat{A}
+\Hat{U}^\dag$.  Then $\bra{\phi'} \Hat{A}' \ket{\psi'}
+= \bra{\phi} \Hat{A} \ket{\psi}$ and matrix elements are unchanged under
+unitary transformations. We also note that if $\Hat{C} = \Hat{A} \Hat{B}$
+then $\Hat{C}' = \Hat{A}' \Hat{B}'$.
+
+The quantum mechanics for the $\ket{\psi}$, $\ket{\phi}$, $\Hat{A}$,
+$\Hat{B}$ etc. is the same as for $\ket{\psi'}$, $\ket{\phi'}$, $\Hat{A}'$,
+$\Hat{B}'$ and so on.  A unitary transform in quantum mechanics is analogous
+to a canonical transformation in dynamics.
+
+Note that if $\Hat{O}$ is Hermitian then $\Hat{U} = e^{\imath \Hat{O}}$
+is unitary, as $\Hat{U}^\dag = e^{-\imath \Hat{O}^\dag} = e^{-\imath \Hat{O}}$.
+
+\subsection{Time dependence}
+
+This is governed by the Schr\"odinger equation,
+\[
+\imath \hbar \pd{}{t} \ket{\psi(t)} = \Hat{H} \ket{\psi(t)}.
+\]
+
+$\Hat{H}$ is the Hamiltonian and we require it to be Hermitian.  We can
+get an explicit solution of this if $\Hat{H}$ does not depend explicitly
+on $t$.  We set $\ket{\psi(t)} = \Hat{U}(t) \ket{\psi(0)}$, where
+$\Hat{U}(t) = e^{- \frac{\imath \Hat{H} t}{\hbar}}$.  As $\Hat{U}(t)$ is
+unitary, $\scp{\phi(t)}{\psi(t)} = \scp{\phi(0)}{\psi(0)}$.
+
+If we measure the expectation of $\Hat{A}$ at time $t$ we get
+$\bra{\psi(t)}\Hat{A} \ket{\psi(t)} = a(t)$.  This description is called the
+Schr\"odinger picture.  Alternatively we can absorb the time dependence
+into the operator $\Hat{A}$ to get the Heisenberg picture,
+$a(t) = \bra{\psi} \Hat{U}^\dag (t) \Hat{A} \Hat{U}(t) \ket{\psi}$.  We
+write $\Hat{A}_H(t) = \Hat{U}^\dag (t) \Hat{A} \Hat{U}(t)$.  In this
+description the operators are time dependent (as opposed to the states).
+$\Hat{A}_H(t)$ is the Heisenberg picture time dependent operator.  Its
+evolution is governed by
+\[
+\imath \hbar \pd{}{t} \Hat{A}_H(t) = \com{\Hat{A}_H(t)}{\Hat{H}},
+\]
+which is easily proven.
+
+For a Hamiltonian $\Hat{H} = \frac{1}{2 m} \Hat{p}(t)^2 + V(\Hat{x}(t))$
+we can get the Heisenberg equations for the operators $\Hat{x}_H$ and
+$\Hat{p}_H$
+
+\begin{align*}
+\diff{}{t} \Hat{x}_H(t) &= \frac{1}{m} \Hat{p}_H(t) \\
+\diff{}{t} \Hat{p}_H(t) &= - V'(\Hat{x}_H(t)).
+\end{align*}
+
+These ought to remind you of something.
+
+\chapter{The Harmonic Oscillator}
+
+In quantum mechanics there are two basic solvable systems, the harmonic
+oscillator and the hydrogen atom.  We will examine the quantum harmonic
+oscillator using algebraic methods.  In quantum mechanics the harmonic
+oscillator is governed by the Hamiltonian
+\[
+\Hat{H} = \frac{1}{2 m}\Hat{p}^2 + \tfrac{1}{2} m \omega^2 \Hat{x}^2,
+\]
+with the condition that $\com{\Hat{x}}{\Hat{p}} = \imath \hbar$.  We
+wish to solve $\Hat{H} \ket{\psi} = E \ket{\psi}$ to find the energy
+eigenvalues.
+
+We define a new operator $\Hat{a}$.
+\begin{align*}
+\Hat{a} &= \left( \frac{m \omega}{2 \hbar}
+\right)^{\frac{1}{2}} \left( \Hat{x} + \frac{\imath \Hat{p}}{m \omega}
+\right)\\
+\Hat{a}^\dag &= \left( \frac{m \omega}{2 \hbar}
+\right)^{\frac{1}{2}} \left( \Hat{x} - \frac{\imath \Hat{p}}{m \omega} \right).
+\end{align*}
+
+$\Hat{a}$ and $\Hat{a}^\dag$ are respectively called the annihilation and
+creation operators.  We can easily obtain the commutation relation
+$\com{\Hat{a}}{\Hat{a}^\dag} = \Hat{1}$.  It is easy to show that, in
+terms of the annihilation and creation operators, the Hamiltonian
+$\Hat{H} = \frac{1}{2} \hbar \omega \left( \Hat{a} \Hat{a}^\dag
++ \Hat{a}^\dag \Hat{a}\right)$, which reduces to $\hbar \omega
+\left( \Hat{a}^\dag \Hat{a} + \frac{1}{2} \right)$.  Let $\Hat{N}
+= \Hat{a}^\dag \Hat{a}$.  Then $\com{\Hat{a}}{\Hat{N}} = \Hat{a}$ and
+$\com{\Hat{a}^\dag}{\Hat{N}} = -\Hat{a}^\dag$.  Therefore
+$\Hat{N} \Hat{a} = \Hat{a} \left( \Hat{N} - 1 \right)$ and
+$\Hat{N} \Hat{a}^\dag = \Hat{a}^\dag \left( \Hat{N} + 1 \right)$.
+
+Suppose $\ket{\psi}$ is an eigenvector of $\Hat{N}$ with eigenvalue
+$\lambda$.  Then the commutation relations give that $\Hat{N} \Hat{a}
+\ket{\psi} = \left( \lambda - 1 \right) \Hat{a} \ket{\psi}$ and
+therefore unless $\Hat{a} \ket{\psi} = 0$ it is an eigenvalue of
+$\Hat{N}$ with eigenvalue $\lambda-1$.  Similarly $\Hat{N}
+\Hat{a}^\dag \ket{\psi} = \left( \lambda +1 \right) \Hat{a}^\dag
+\ket{\psi}$.
+
+But for any $\ket{\psi}$, $\bra{\psi}\Hat{N} \ket{\psi} \ge 0$ and
+equals $0$ iff $\Hat{a} \ket{\psi} = 0$.  Now suppose we have an
+eigenvalue of $\Hat{H}$, $\lambda \notin \{ 0,1,2,\dots \}$.  Then
+$\exists n$ such that $\Hat{a}^n \ket{\psi}$ is an eigenvector of
+$\Hat{N}$ with eigenvalue $\lambda - n < 0$ and so we must have
+$\lambda \in \{ 0,1,2, \dots\}$.  Returning to the Hamiltonian we get
+energy eigenvalues $E_n = \hbar \omega \left( n+ \tfrac{1}{2}
+\right)$, the same result as using the Schr\"odinger equation for
+wavefunctions, but with much less effort.
+
+We define $\ket{n} = C_n \Hat{a}^\dag{}^n \ket{0}$, where $C_n$ is such as
+to make $\scp{n}{n} = 1$.  We can take $C_n \in \R$, and evaluate
+$\bra{0} \Hat{a}^n \Hat{a}^\dag{}^n \ket{0}$ to find $C_n$.
+
+\begin{align*}
+1 &= \scp{n}{n} \\
+&= C_n^2 \bra{0} \Hat{a}^n \Hat{a}^\dag{}^n \ket{0} \\
+&= C_n^2 \bra{0} \Hat{a}^{n-1} \Hat{a} \Hat{a}^\dag \Hat{a}^\dag{}^{n-1}
+\ket{0} \\
+&= \frac{C_n^2}{C_{n-1}^2} \bra{n-1} \Hat{a} \Hat{a}^\dag \ket{n-1} \\
+&= \frac{C_n^2}{C_{n-1}^2} \bra{n-1} \Hat{N} + 1 \ket{n-1} \\
+&= \frac{C_n^2}{C_{n-1}^2} (n - 1 + 1) \scp{n-1}{n-1} \\
+&= n \frac{C_n^2}{C_{n-1}^2}.
+\end{align*}
+
+We thus require $C_n = \frac{C_{n-1}}{\sqrt{n}}$ and as $C_0 = 1$ we
+get $C_n = \left( n! \right)^{-\frac{1}{2}}$ and so we have the
+normalised eigenstate (of $\Hat{N}$) $\ket{n} = \frac{1}{\sqrt{n!}}
+\Hat{a}^\dag{}^n \ket{0}$ (with eigenvalue $n$).  $\ket{n}$ is also an
+eigenvector of $\Hat{H}$ with eigenvalue $\hbar \omega \left( n +
+  \frac{1}{2} \right)$.  The space of states for the harmonic
+oscillator is spanned by $\{\ket{n}\}$.
+
+We also need to ask if there exists a non-zero state $\ket{\psi}$ such that
+$\Hat{a}^\dag \ket{\psi} = 0$.  Then
+\[
+0 = \bra{\psi} \Hat{a} \Hat{a}^\dag \ket{\psi} = \scp{\psi}{\psi}
++ \bra{\psi} \Hat{a}^\dag \Hat{a} \ket{\psi} \ge \scp{\psi}{\psi} > 0.
+\]
+
+So there exist no non-zero states $\ket{\psi}$ such that
+$\Hat{a}^\dag \ket{\psi} = 0$.
+
+\section{Relation to wavefunctions}
+
+We evaluate
+\[
+0 = \bra{x} \Hat{a} \ket{0} = \left( \frac{m \omega}{2 \hbar}
+\right)^{\frac{1}{2}} \left( x + \frac{\hbar}{m \omega}
+\diff{}{x} \right) \scp{x}{0}
+\]
+
+and we see that $\psi_0(x) = \scp{x}{0}$ satisfies the differential equation
+\[
+\left(\diff{}{x} + \frac{m \omega}{\hbar} x \right) \psi_0(x) = 0.
+\]
+
+This (obviously) has solution $\psi_0(x) = N e^{- \frac{1}{2}
+\frac{m \omega}{\hbar} x^2}$ for some normalisation constant $N$.  This is
+the ground state wavefunction which has energy $\frac{1}{2} \hbar \omega$.
+
+For $\psi_1(x) = \scp{x}{1} = \bra{x} \Hat{a}^\dag \ket{0}$ we find
+\begin{align*}
+\psi_1(x) &= \left( \frac{m \omega}{2 \hbar} \right)^{\frac{1}{2}}
+\bra{x} \Hat{x} - \tfrac{\imath}{m \omega}\Hat{p} \ket{0} \\
+&= \left( \frac{m \omega}{2 \hbar} \right)^{\frac{1}{2}}
+\left( x - \frac{\hbar}{m \omega} \diff{}{x} \right) \psi_0(x) \\
+&= \left( \frac{2 m \omega}{\hbar} \right)^{\frac{1}{2}} x \psi_0(x).
+\end{align*}
+
+\section{More comments}
+
+Many harmonic oscillator problems are simplified using the creation
+and annihilation operators.%
+\footnote{And such problems \emph{always} occur in Tripos papers.  You
+  have been warned.}  It is useful to summarise the action of the
+annihilation and creation operators on the basis states:
+
+\[
+\Hat{a}^\dag \ket{n} = \sqrt{n+1} \ket{n+1} \quad \text{and} \quad
+\Hat{a} \ket{n} = \sqrt{n} \ket{n-1}.
+\]
+
+For example
+
+\begin{align*}
+\bra{m} \Hat{x} \ket{n} &=
+\left( \frac{\hbar}{2 m \omega} \right)^{\frac{1}{2}}
+\bra{m} \Hat{a} + \Hat{a}^\dag \ket{n} \\
+&= \left( \frac{\hbar}{2 m \omega} \right)^{\frac{1}{2}}
+\left( \sqrt{n}\, \scp{m}{n-1} + \sqrt{n+1}\, \scp{m}{n+1} \right)\\
+& = \left( \frac{\hbar}{2 m \omega} \right)^{\frac{1}{2}}
+\left( \sqrt{n}\, \delta_{m,n-1} + \sqrt{n+1}\, \delta_{m,n+1} \right).
+\end{align*}
+
+This is non-zero only if $m = n \pm 1$.  We note that
+$\Hat{x}^r$ contains terms $\Hat{a}^s \Hat{a}^\dag{}^{r - s}$,
+where $0 \le s \le r$ and so $\bra{m} \Hat{x}^r \ket{n}$ can be non-zero
+only if $n-r \le m \le n+r$.
+
+It is easy to see that in the Heisenberg picture $\Hat{a}_H(t)
+= e^{\imath \frac{\Hat{H} t}{\hbar}} \Hat{a}
+e^{- \imath \frac{\Hat{H} t}{\hbar}} = e^{- \imath \omega t} \Hat{a}$.
+Then using the equations for $\Hat{x}_H(t)$ and $\Hat{p}_H(t)$, we
+see that
+\[
+\Hat{x}_H(t) = \Hat{x} \cos \omega t + \tfrac{1}{m \omega} \Hat{p}
+\sin \omega t.
+\]
+
+Also, $\Hat{H} \Hat{a}_H^\dag(t) = \Hat{a}_H^\dag(t) (\Hat{H} + \hbar \omega)$,
+so if $\ket{\psi}$ is an energy eigenstate with eigenvalue $E$ then
+$\Hat{a}_H^\dag(t) \ket{\psi}$ is an energy eigenstate with eigenvalue
+$E + \hbar \omega$.
+
+\chapter{Multiparticle Systems}
+
+\section{Combination of physical systems}
+
+In quantum mechanics each physical system has its own vector space
+of physical states and operators, which if Hermitian represent observed
+quantities.
+
+If we consider two vector spaces $V_1$ and $V_2$ with bases
+$\{ \ket{r}_1 \}$ and $\{ \ket{s}_2 \}$ with $r = 1 \dots \dim V_1$
+and $s = 1 \dots \dim V_2$.  We define the tensor product
+$V_1 \otimes V_2$ as the vector space spanned by pairs of vectors
+\[
+\{ \ket{r}_1 \ket{s}_2 : r = 1 \dots \dim V_1, s = 1 \dots \dim V_2\}.
+\]
+
+We see that $\dim (V_1 \otimes V_2) = \dim V_1 \dim V_2$.  We also
+write the basis vectors of $V_1 \otimes V_2$ as $\ket{r,s}$.  We can define
+a scalar product on $V_1 \otimes V_2$ in terms of the basis vectors:
+$\scp{r',s'}{r,s} = \scp{r'}{r}_1 \scp{s'}{s}_2$.  We can see that if
+$\{ \ket{r}_1 \}$ and $\{ \ket{s}_2 \}$ are orthonormal bases for their
+respective vector spaces then $\{ \ket{r,s} \}$ is an orthonormal basis for
+$V_1 \otimes V_2$.
+
+Suppose $\Hat{A}_1$ is an operator on $V_1$ and $\Hat{B}_2$ is an operator
+on $V_2$ we can define an operator $\Hat{A}_1 \times \Hat{B}_2$ on
+$V_1 \otimes V_2$ by its operation on the basis vectors:
+\[
+\left(\Hat{A}_1 \times \Hat{B}_2\right) \ket{r}_1 \ket{s}_2
+=
+\left(\Hat{A}_1 \ket{r}_1 \right)
+\left(\Hat{B}_2 \ket{s}_2 \right).
+\]
+
+We write $\Hat{A}_1 \times \Hat{B}_2$ as $\Hat{A}_1 \Hat{B}_2$.
+
+\subsubsection*{Two harmonic oscillators}
+
+We illustrate these comments by example.  Suppose
+\[
+\Hat{H}_i = \frac{\Hat{p}_i^2}{2 m} + \tfrac{1}{2} m \omega \Hat{x}_i^2
+\qquad i=1,2.
+\]
+
+We have two independent vector spaces $V_i$ with bases $\ket{n}_i$
+where $n=0,1,\dots$ and $\Hat{a}_i$ and $\Hat{a}_i^\dag$ are
+creation and annihilation operators on $V_i$, and
+\[
+\Hat{H}_i \ket{n}_i = \hbar \omega \left( n + \tfrac{1}{2} \right) \ket{n}_i.
+\]
+
+For the combined system we form the tensor product $V_1 \otimes V_2$
+with basis $\ket{n_1,n_2}$ and Hamiltonian $\Hat{H} = \sum_i \Hat{H}_i$,
+so $\Hat{H} \ket{n_1,n_2} = \hbar \omega \left( n_1 + n_2 + 1 \right)
+\ket{n_1,n_2}$.  There are $N+1$ ket vectors in the $N^{\text{th}}$ excited
+state.
+
+The three dimensional harmonic oscillator follows similarly.  In general
+if $\Hat{H}_1$ and $\Hat{H}_2$ are two independent Hamiltonians which
+act on $V_1$ and $V_2$ respectively then the Hamiltonian for the
+combined system is $\Hat{H} = \Hat{H}_1 + \Hat{H}_2$ acting
+on $V_1 \otimes V_2$.  If $\{ \ket{\psi_r} \}$ and
+$\{ \ket{\psi_s} \}$ are eigenbases for $V_1$ and $V_2$ with energy
+eigenvalues $\{E^1_r\}$ and $\{E^2_s\}$ respectively then the basis
+vectors $\{ \ket{\Psi}_{r,s}\}$ for $V_1 \otimes V_2$ have energies
+$E_{r,s} = E^1_r + E^2_s$.
+
+\section{Multiparticle Systems}
+
+We have considered single particle systems with states $\ket{\psi}$
+and wavefunctions $\psi(x) = \scp{x}{\psi}$.  The states belong to a
+space $\cH$.
+
+Consider an $N$ particle system.  We say the states belong to
+$\cH^n = \cH_1 \otimes \dots \otimes \cH_N$ and define a basis of states
+$\ket{\psi_{r_1}}_1 \ket{\psi_{r_2}}_2 \dots \ket{\psi_{r_N}}_N$ where
+$\{ \ket{\psi_{r_i}}_i \}$ is a basis for $\cH_i$.
+
+A general state $\ket{\Psi}$ is a linear combination of basis vectors and
+we can define the $N$ particle wavefunction as
+$\Psi(\vect{x}_1, \vect{x}_2, \dots, \vect{x}_N)
+= \scp{\vect{x}_1, \vect{x}_2, \dots, \vect{x}_N}{\Psi}$.
+
+The normalisation condition is
+\[
+\scp{\Psi}{\Psi} = \int \ud^3 x_1\dots\ud^3 x_N\, \abs{\Psi(\vect{x}_1,
+\vect{x}_2, \dots, \vect{x}_N)}^2 = 1 \qquad \text{if normalised.}
+\]
+
+We can interpret $\ud^3 x_1\dots\ud^3 x_N\, \abs{\Psi(\vect{x}_1,
+\vect{x}_2, \dots, \vect{x}_N)}^2$ as the probability density that particle
+$i$ is in the volume element $\ud^3 x_i$ at $\vect{x}_i$.  We can
+obtain the probability density for one particle by integrating out all the
+other $\vect{x}_j$'s.
+
+For time evolution we get the equation $\imath \hbar \pd{}{t} \ket{\Psi}
+= \Hat{H} \ket{\Psi}$, where $\Hat{H}$ is an operator on $\cH^N$.
+
+If the particles do not interact then
+\[
+\Hat{H} = \sum_{i=1}^N \Hat{H}_i
+\]
+where $\Hat{H}_i$ acts on $\cH_i$ but leaves $\cH_j$ alone for $j \neq i$.
+We have energy eigenstates in each $\cH_i$ such that $\Hat{H}_i
+\ket{\psi_r}_i = E_r \ket{\psi_r}_i$ and so
+$\ket{\Psi} = \ket{\psi_{r_1}}_1 \ket{\psi_{r_2}}_2 \dots \ket{\psi_{r_N}}_N$
+is an energy eigenstate with energy $E_{r_1} + \dots + E_{r_N}$.
+
+\subsection{Identical particles}
+
+There are many such cases, for instance multielectron atoms.  We will
+concentrate on two identical particles.
+
+``Identical'' means that physical quantities are be invariant under
+interchange of particles.  For instance if we have $\Hat{H} =
+H(\Hat{\vect{x}}_1, \Hat{\vect{p}}_1, \Hat{\vect{x}}_2,
+\Hat{\vect{p}}_2)$ then this must equal the permuted Hamiltonian
+$H(\Hat{\vect{x}}_2, \Hat{\vect{p}}_2,\Hat{\vect{x}}_1,
+\Hat{\vect{p}}_1)$ if we have identical particles.  We introduce
+$\Hat{U}$ such that
+
+\begin{align*}
+\Hat{U} \Hat{\vect{x}}_1 \Hat{U}^{-1} &= \Hat{\vect{x}}_2
+&\Hat{U} \Hat{\vect{x}}_2 \Hat{U}^{-1} &= \Hat{\vect{x}}_1 \\
+\Hat{U} \Hat{\vect{p}}_1 \Hat{U}^{-1} &= \Hat{\vect{p}}_2
+&\Hat{U} \Hat{\vect{p}}_2 \Hat{U}^{-1} &= \Hat{\vect{p}}_1.
+\end{align*}
+
+We should also have $\Hat{U} \Hat{H} \Hat{U}^{-1} = \Hat{H}$ and
+more generally if $\Hat{A}_1$ is an operator on particle 1 then
+$\Hat{U} \Hat{A}_1 \Hat{U}^{-1}$ is the corresponding operator on particle 2
+(and vice versa).  Note that if $\ket{\Psi}$ is an energy eigenstate
+of $\Hat{H}$ then so is $\Hat{U}\ket{\Psi}$.  Clearly $\Hat{U}^2 = \Hat{1}$
+and we require $\Hat{U}$ to be unitary, which implies that $\Hat{U}$ is
+Hermitian.
+
+In quantum mechanics we require $\ket{\Psi}$ and $\Hat{U} \ket{\Psi}$ to
+be the same states (for identical particles).  This implies
+that $\Hat{U} \ket{\Psi} = \lambda \ket{\Psi}$ and the requirement
+$\Hat{U}^2 = \Hat{1}$ gives that $\lambda = \pm 1$.  In terms of
+wavefunctions this means that
+$\Psi(\Hat{\vect{x}}_1, \Hat{\vect{x}}_2) = \pm \Psi(\Hat{\vect{x}}_2,
+\Hat{\vect{x}}_1)$.  If we have a plus sign then the particles are
+bosons (which have integral spin) and if a minus sign then the particles
+are fermions (which have spin $\tfrac{1}{2}, \tfrac{3}{2}, \dots$).%
+\footnote{Spin will be studied later in the course.}
+
+The generalisation to $N$ identical particles is reasonably obvious.
+Let $\Hat{U}_{ij}$ interchange particles $i$ and $j$.  Then
+$\Hat{U}_{ij} \Hat{H} \Hat{U}_{ij}^{-1} = \Hat{H}$ for all pairs
+$(i,j)$.
+
+The same physical requirement as before gives us that
+$\Hat{U}_{ij} \ket{\Psi} = \pm \ket{\Psi}$ for all pairs $(i,j)$.
+
+If we have bosons (plus sign) then in terms of wavefunctions we must have
+\[
+\Psi(\Hat{\vect{x}}_1, \dots, \Hat{\vect{x}}_N) = \Psi(
+\Hat{\vect{x}}_{p_1}, \dots, \Hat{\vect{x}}_{p_N}),
+\]
+where
+$(p_1, \dots, p_N)$ is a permutation of $(1, \dots, N)$.  If we have
+fermions then 
+\[
+\Psi(\Hat{\vect{x}}_1, \dots, \Hat{\vect{x}}_N) = \lambda \Psi(
+\Hat{\vect{x}}_{p_1}, \dots, \Hat{\vect{x}}_{p_N}),
+\]
+where
+$\lambda = +1$ if we have an even permutation of $(1, \dots, N)$ and
+$-1$ if we have an odd permutation.
+
+\emph{Remark for pure mathematicians.}  $1$ and $\{ \pm 1 \}$ are the
+two possible representations of the permutation group in one dimension.
+
+\subsection{Spinless bosons}
+
+(Which means that the only variables for a single particle are
+$\Hat{\vect{x}}$ and $\Hat{\vect{p}}$.)  Suppose we have two identical
+non-interacting bosons.  Then $\Hat{H} = \Hat{H}_i + \Hat{H}_2$ and
+we have $\Hat{H}_1 \ket{\psi_r}_i = E_r \ket{\psi_r}_i$.  The general space
+with two particles is $\cH_1 \otimes \cH_2$ which has a basis
+$\{ \ket{\psi_r}_1 \ket{\psi_s}_2 \}$,  but as the particles are identical
+the two particle state space is $(\cH_1 \otimes \cH_2)_S$ where we restrict
+to symmetric combinations of the basis vectors.  That is, a basis
+for this in terms of the bases of $\cH_1$ and $\cH_2$ is
+\[
+\left\{ \ket{\psi_r}_1 \ket{\psi_r}_2; \tfrac{1}{\sqrt{2}}
+\left( \ket{\psi_r}_1 \ket{\psi_s}_2 + \ket{\psi_s}_1 \ket{\psi_r}_2 \right),
+r \neq s \right\}.
+\]
+
+The corresponding wavefunctions are
+\[
+\psi_r(\vect{x}_1) \psi_r(\vect{x}_2) \quad \text{and} \quad
+\tfrac{1}{\sqrt{2}} \left(\psi_r(\vect{x}_1) \psi_s(\vect{x}_2)
++ \psi_s(\vect{x}_1) \psi_r(\vect{x}_2) \right)
+\]
+and the corresponding eigenvalues are $2 E_r$ and $E_r + E_s$.
+The factor of $2^{-\frac{1}{2}}$ just ensures normalisation and
+\[
+\tfrac{1}{\sqrt{2}} \left(
+{}_1\!
+\bra{\psi_{r'}} {}_2\! \bra{\psi_{s'}} + {}_1\! \bra{\psi_{s'}} {}_2
+\!\bra{\psi_{r'}}
+\right)
+\tfrac{1}{\sqrt{2}} \left(
+\ket{\psi_r}_1 \ket{\psi_s}_2 + \ket{\psi_s}_1 \ket{\psi_r}_2
+\right)
+\]
+evaluates to $\delta_{r r'} \delta_{s s'} + \delta_{r s'} \delta_{r' s}$.
+
+For $N$ spinless bosons with $\Hat{H} = \sum \Hat{H}_i$ we get
+\[
+\tfrac{1}{\sqrt{N!}} \left(
+\ket{\psi_{r_1}}_1 \dots \ket{\psi_{r_N}}_N + \text{permutations thereof}
+\right) \text{ if } r_i \neq r_j
+\]
+
+\subsection{Spin $\frac{1}{2}$ fermions}
+
+In this case (which covers electrons, for example) a single particle state
+(or wavefunction) depends on an additional discrete variable $s$.
+The wavefunctions are $\psi(\vect{x},s)$ or $\psi_s(\vect{x})$.  The space
+of states for a single electron $\cH = L^2(\R^3) \otimes \C^2$ has a basis of
+the form $\ket{\vect{x}} \ket{s} \equiv \ket{\vect{x},s}$ and the
+wavefunctions can be written $\psi_s(\vect{x}) = \scp{\vect{x},s}{\psi}$.
+A basis of wavefunctions is $\{ \psi_{r \lambda}(\vect{x},s)
+= \psi_r(\vect{x}) \cv_\lambda(s)\}$, where $r$ and $\lambda$ are labels
+for the basis.  $\lambda$ takes two values and it will later be seen to
+be natural to take $\lambda = \pm \tfrac{1}{2}$.
+
+We can also think of the vector $\cv_\lambda = \begin{pmatrix}
+\chi_\lambda(1) \\ \chi_\lambda(2)
+\end{pmatrix}$, in which case two possible basis vectors are
+$\begin{pmatrix} 1 \\ 0 \end{pmatrix}$ and $\begin{pmatrix} 0 \\ 1
+\end{pmatrix}$.  Note that $\cv_{\lambda'}^\dag \cv_\lambda^{}
+= \delta_{\lambda \lambda'}$.
+
+The scalar product is defined in the obvious way:
+$\scp{\phi_{r' \lambda'}}{\phi_{r \lambda}} = \scp{\psi_{r'}}{\psi_r}
+\scp{\chi_{\lambda'}}{\chi_\lambda}$, which equals $\delta_{r r'}
+\delta_{\lambda \lambda'}$ if the initial basis states are orthonormal.
+
+The \emph{two} electron wavefunction is $\Psi(\vect{x}_1, s_1; \vect{x}_2,
+s_2)$ and under the particle exchange operator $\Hat{U}$ we must have
+$\Psi(\vect{x}_1, s_1; \vect{x}_2,s_2) \mapsto
+-\Psi(\vect{x}_2, s_2; \vect{x}_1, s_1)$.  The two particle states belong
+to the antisymmetric combination $\left(\cH_1 \otimes \cH_2\right)_A$.
+
+For $N$ electrons the obvious thing can be done.
+
+\subsubsection*{Basis for symmetric or antisymmetric 2 particle spin states}
+
+There is only one antisymmetric basis state
+\[
+\chi^{}_A(s_1,s_2) = \frac{1}{\sqrt{2}}\left(
+\chi^{}_{\frac{1}{2}}(s_1) \chi^{}_{-\frac{1}{2}}(s_2)
+- \chi^{}_{-\frac{1}{2}}(s_1) \chi^{}_{\frac{1}{2}}(s_2).
+\right),
+\]
+and three symmetric possibilities:
+\[
+\chi_S^{}(s_1,s_2) = \begin{cases}
+\chi^{}_{\frac{1}{2}}(s_1) \chi^{}_{\frac{1}{2}}(s_2) \\
+\frac{1}{\sqrt{2}}\left(
+\chi^{}_{\frac{1}{2}}(s_1) \chi^{}_{-\frac{1}{2}}(s_2)
++ \chi^{}_{-\frac{1}{2}}(s_1) \chi^{}_{\frac{1}{2}}(s_2).
+\right) & s_1 \neq s_2 \\
+\chi^{}_{-\frac{1}{2}}(s_1) \chi^{}_{-\frac{1}{2}}(s_2).
+\end{cases}
+\]
+
+We can now examine two non-interacting electrons, with
+$\Hat{H} = \Hat{H_1} + \Hat{H_2}$ and take $H_i$ independent of spin.
+The single particle states are $\ket{\psi_i} \ket{\chi_s}$.
+
+The two electron states live in $\left(\cH_1 \otimes \cH_2\right)_A$,
+which has a basis
+\begin{gather*}
+\ket{\psi_r}_1 \ket{\psi_r}_2 \ket{\chi_A^{}}; \\
+\frac{1}{\sqrt{2}} \left( \ket{\psi_r}_1 \ket{\psi_s}_2
++ \ket{\psi_s}_1 \ket{\psi_r}_2
+\right) \ket{\chi_A^{}}; \quad r \neq s \\
+\frac{1}{\sqrt{2}} \left(
+\ket{\psi_r}_1 \ket{\psi_s}_2 -\ket{\psi_s}_1 \ket{\psi_r}_2
+\right) \ket{\chi_S^{}};\quad r \neq s,
+\end{gather*}
+
+with energy levels $2 E_r$ (one spin state) and $E_r + E_s$
+(one antisymmetric spin state and three symmetric spin states).
+
+We thus obtain the Pauli exclusion principle: no two electrons can occupy
+the same state (taking account of spin).
+
+As an example we can take the helium atom with Hamiltonian
+\[
+\Hat{H} = \frac{\Hat{\vect{p}}_1^2}{2 m}
++ \frac{\Hat{\vect{p}}_2^2}{2 m}
+- \frac{2 e^2}{4 \pi \epsilon_0 \abs{\Hat{\vect{x}}_1}}
+- \frac{2 e^2}{4 \pi \epsilon_0 \abs{\Hat{\vect{x}}_2}}
++ \frac{e^2}{4 \pi \epsilon_0 \abs{\Hat{\vect{x}}_1 - \Hat{\vect{x}}_2}}.
+\]
+
+If we neglect the interaction term we can analyse this as two hydrogen atoms
+and glue the results back together as above.  The hydrogen atom (with a
+nuclear charge $2e$) has
+$E_n = \frac{-2 e^2}{8 \pi \epsilon_0 n^2}$, so we get a ground state for the
+helium atom with energy $2 E_1$ with no degeneracy and a first excited
+state with energy $E_1 + E_2$ with a degeneracy of four.  Hopefully these
+bear some relation to the results obtained by taking the interaction into
+account.
+
+\section{Two particle states and centre of mass}
+
+Suppose we have a Hamiltonian $\Hat{H} = \frac{\Hat{\vect{p}}_1^2}{2 m}
++\frac{\Hat{\vect{p}}_2^2}{2 m} + V(\Hat{\vect{x}}_1-\Hat{\vect{x}}_2)$
+defined on $\cH^2$.  We can separate out the centre of mass motion
+by letting
+
+\begin{align*}
+\Hat{\vect{P}} &= \Hat{\vect{p}}_1 + \Hat{\vect{p}}_2 &
+\Hat{\vect{p}} &= \frac{1}{2} \left(\Hat{\vect{p}}_1 - \Hat{\vect{p}}_2
+\right) \\
+\Hat{\vect{X}} &= \frac{1}{2} \left(\Hat{\vect{x}}_1 + \Hat{\vect{x}}_2
+\right) &
+\Hat{\vect{x}} &= \Hat{\vect{x}}_1 - \Hat{\vect{x}}_2.
+\end{align*}
+
+Then $\com{\Hat{X}_i}{\Hat{P}_j} = \imath \hbar \delta_{ij}$,
+$\com{\Hat{x}_i}{\Hat{p}_j} = \imath \hbar \delta_{ij}$ and
+$\Hat{\vect{X}}$, $\Hat{\vect{P}}$ and $\Hat{\vect{x}}$, $\Hat{\vect{p}}$
+commute respectively.  We can rewrite the Hamiltonian as
+$\Hat{H} = \frac{\Hat{\vect{P}}^2}{2 M} + \Hat{h}$,
+$\Hat{h} = \frac{\Hat{\vect{p}}^2}{m} + V(\Hat{\vect{x}})$, where
+$M = 2 m$ and we can decompose $\cH^2$ into
+$\cH_{\text{CM}} \otimes \cH_{\text{int}}$.  $\cH_{\text{CM}}$ is acted
+on by $\Hat{\vect{X}}$ and $\Hat{\vect{P}}$ and has wavefunctions
+$\phi(\vect{X})$.  $\cH_{\text{int}}$ is acted on by $\Hat{\vect{x}}$,
+$\Hat{\vect{p}}$ and any spin operators.  It has wavefunctions
+$\psi(\vect{x},s_1,s_2)$.  We take wavefunctions
+$\Psi(\vect{x_1}, s_1; \vect{x_2},s_2) = \Phi(\vect{X})
+\psi(\vect{x},s_1,s_2)$ in $\cH^2$.
+
+This simplifies the Schr\"odinger equation, we can just have ${\phi(\vect{X})
+= e^{\frac{\imath \vect{P}.\vect{X}}{\hbar}}}$ and then
+$E = \frac{\vect{P}^2}{2 M} + E_{\text{int}}$.  We thus need only to solve
+the one particle equation $\Hat{h} \psi = E_{\text{int}} \psi$.
+
+Under the particle exchange operator $\Hat{U}$ we have
+\[
+\psi(\vect{x},s_1,s_2) \mapsto \psi(-\vect{x},s_2,s_1)
+= \pm \psi(\vect{x},s_1,s_2),
+\]
+with a plus sign for bosons and a minus sign for fermions.  In the
+spinless case then $\psi(\vect{x}) = \psi(-\vect{x})$.
+
+If we have a potential $V(\abs{\Hat{\vect{x}}})$ then we may separate
+variables to get
+\[
+\psi(\vect{x},s_1,s_2) = Y_l\!\left( \frac{\vect{x}}{\abs{\vect{x}}}\right)
+R(\abs{\vect{x}}) \chi(s_1,s_2)
+\]
+with $Y_l\!\left(- \frac{\vect{x}}{\abs{\vect{x}}} \right) = (-1)^l
+Y_l\!\left( \frac{\vect{x}}{\abs{\vect{x}}} \right)$.  For spinless bosons
+we therefore require $l$ to be even.
+
+\section{Observation}
+
+Consider the tensor product of two systems $\cH_1$ and $\cH_2$.  A general
+state $\ket{\Psi}$ in $\cH_1 \otimes \cH_2$ can be written as
+\[
+\ket{\Psi} = \sum_{i,j} a_{i j} \ket{\psi_i}_1 \ket{\phi_j}_2
+\]
+with $\ket{\psi_i}_1 \in \cH_1$ and $\ket{\phi_j}_2 \in \cH_2$ assumed
+orthonormal bases for their respective vector spaces.
+
+Suppose we make a measurement on the first system leaving the second system
+unchanged, and find the first system in a state $\ket{\psi_i}_1$.
+Then ${}_1\!\scp{\psi_i}{\Psi} = \sum_j a_{i j} \ket{\phi_j}_2$,
+which we write as $A_i \ket{\phi}_2$, where $\ket{\phi}_2$ is a normalised
+state of the second system.  We interpret $\abs{A_i}^2$ as the probability
+of finding system 1 in state $\ket{\psi_i}_1$.  After measurement system
+$2$ is in a state $\ket{\phi}_2$.
+
+If $a_{i j} = \lambda_i \delta_{i j}$ (no summation) then $A_i = \lambda_i$
+and measurement of system 1 as $\ket{\psi_i}_1$ determines system 2 to be
+in state $\ket{\phi_i}_2$.
+
+\chapter{Perturbation Expansions}
+
+\section{Introduction}
+
+Most problems in quantum mechanics are not exactly solvable and it
+it necessary to find approximate answers to them.  The simplest method is
+a perturbation expansion.  We write $\Hat{H} = \Hat{H}_0 + \Hat{H}'$
+where $\Hat{H}_0$ describes a solvable system with known eigenvalues and
+eigenvectors, and $\Hat{H}'$ is in some sense small.
+
+We write $\Hat{H}(\lambda) = \Hat{H}_0 + \lambda \Hat{H}'$ and
+expand the eigenvalues and eigenvectors in powers of $\lambda$.  Finally
+we set $\lambda = 1$ to get the result.  Note that we do not necessarily
+have to introduce $\lambda$; the problem may have some small parameter
+which we can use. This theory can be applied to the time dependent problem
+but here we will only discuss the time independent Schr\"odinger equation.
+
+\section{Non-degenerate perturbation theory}
+
+Suppose that $\Hat{H}_0 \ket{n} = \epsilon_n \ket{n}$ for $n=0,1, \dots$.
+We thus assume discrete energy levels and we assume further that the
+energy levels are non-degenerate.  We also require $\Hat{H}'$ to
+be sufficiently non-singular to make a power series expansion possible.
+
+We have the equation $\Hat{H}(\lambda) \ket{\psi_n(\lambda)} =
+E_n(\lambda) \ket{\psi_n(\lambda)}$.  We suppose that $E_n(\lambda)$
+tends to $\epsilon_n$ as $\lambda \to 0$ and $\ket{\psi_n(\lambda)}
+\to \ket{n}$ as $\lambda \to 0$.  We pose the power series expansions
+
+\begin{align*}
+E_n(\lambda) &= \epsilon_n + \lambda E^{(1)}_n + \lambda^2 E^{(2)}_n + \dots \\
+\ket{\psi_n(\lambda)} &= N \ket{n} + \lambda \ket{\psi_n^{(1)}} + \dots,
+\end{align*} 
+
+substitute into the Schr\"odinger equation and require it to be satisfied
+at each power of $\lambda$.  The normalisation constant $N$ is
+easily seen to be $1 + \cO(\lambda^2)$. The $\cO(1)$ equation is automatically
+satisfied and the $\cO(\lambda)$ equation is
+\[
+\Hat{H}_0\ket{\psi_n^{(1)}} + \Hat{H}' \ket{n}
+= E_n^{(1)} \ket{n} + \epsilon_n \ket{\psi_n^{(1)}}.
+\]
+
+Note that we can always replace $\ket{\psi_n^{(1)}}$ with
+$\ket{\psi_n^{(1)}} + \alpha \ket{n}$ and leave this equation unchanged.  We
+can therefore impose the condition $\scp{n}{\psi_n^{(1)}} = 0$.  If
+we apply $\bra{n}$ to this equation we get
+$E_n^{(1)} = \bra{n}\Hat{H}'\ket{n}$ --- the first order perturbation in
+energy.  If we apply $\bra{r}$ where $r \neq n$ we see that
+\[
+\scp{r}{\psi_n^{(1)}} = - \frac{\bra{r} \Hat{H}' \ket{n}}{\epsilon_r
+- \epsilon_n}
+\]
+and therefore
+\[
+\ket{\psi_n^{(1)}} = - \sum_{r \neq n} \frac{\ket{r} \bra{r} \Hat{H}' \ket{n}}
+{\epsilon_r - \epsilon_n}.
+\]
+Note that we are justified in these divisions as we have assumed that the
+eigenvalues are non-degenerate.  On doing the same thing to
+the $\cO(\lambda^2)$ equation we see that
+\begin{align*}
+E^{(2)}_n &= \bra{n} \Hat{H}' \ket{\psi_n^{(1)}} \\
+&= - \sum_{r \neq n} \frac{\abs{\bra{r} \Hat{H}' \ket{n}}^2}
+{\epsilon_r - \epsilon_n}.
+\end{align*}
+
+This procedure is valid if $\epsilon_r - \epsilon_n$ is not very small when
+$\bra{r} \Hat{H}' \ket{n} \neq 0$.
+
+Using these results we can see that $\diff{}{\lambda}E_n(\lambda)
+= \bra{\psi_n(\lambda)}\Hat{H}'\ket{\psi_n(\lambda)}$ and
+\[
+\pd{}{\lambda} \ket{\psi_n(\lambda)} = - \sum_{r \neq n}
+\frac{1}{E_r(\lambda)-E_n(\lambda)} \ket{\psi_r(\lambda)}
+\bra{\psi_r(\lambda)} \Hat{H}' \ket{\psi_n(\lambda)}.
+\]
+
+Also $\pd{\Hat{H}}{\lambda} = \Hat{H}'$ and so
+\[
+\pd{^2}{\lambda^2} E_n(\lambda) = 2 \bra{\psi_n(\lambda)} \Hat{H}'
+\pd{}{\lambda} \ket{\psi_n(\lambda)}.
+\]
+
+\subsubsection*{Example: harmonic oscillator}
+
+Consider $\Hat{H} = \frac{\Hat{p}^2}{2 m} + \frac{1}{2} m \omega^2 \Hat{x}^2
++ \lambda m \omega^2 \Hat{x}^2$, which can be viewed as
+$\Hat{H}_0 + \Hat{H}'$, where $\Hat{H}_0$ is the plain vanilla quantum
+harmonic oscillator Hamiltonian.
+
+Calculating the matrix elements $\bra{r} \Hat{x}^2 \ket{n}$ required
+is an extended exercise in manipulations of the annihilation and creation
+operators and is omitted.  The results are
+
+\begin{align*}
+E_n^{(1)} &= \hbar \omega \left(n + \tfrac{1}{2}\right) \\
+E_n^{(2)} &= - \frac{1}{2} \hbar \omega \left( n + \frac{1}{2} \right).
+\end{align*}
+
+We thus get the perturbation expansion for $E_n'$
+\[
+E_n' = \hbar \omega \left( n + \tfrac{1}{2} \right)
+\left( 1 + \lambda - \tfrac{\lambda^2}{2} + \cO(\lambda^3)\right).
+\]
+
+This system can also be solved exactly to give
+$E_n' = \hbar \omega \left( n + \tfrac{1}{2} \right) \sqrt{1 + 2 \lambda}$
+which agrees with the perturbation expansion.
+
+\section{Degeneracy}
+
+The method given here breaks down if $\epsilon_r = \epsilon_n$ for
+$r \neq n$.  Perturbation theory can be extended to the degenerate case,
+but we will consider only the first order shift in $\epsilon_r$.  We
+suppose that the states $\ket{n,s}$, $s=1 \dots N_n$ have the same energy
+$\epsilon_n$.  $N_n$ is the degeneracy of this energy level.
+
+As before we pose a Hamiltonian $\Hat{H} = \Hat{H}_0
++ \lambda \Hat{H}'$ such that $\Hat{H}_0 \ket{n,s} = \epsilon_n
+\ket{n,s}$ and look for states $\ket{\psi(\lambda)}$ with energy
+$E(\lambda) \to \epsilon_n$ as $\lambda \to 0$.
+
+The difference with the previous method is that we expand $\ket{\psi(\lambda)}$
+as a power series in $\lambda$ \emph{in the basis of eigenvectors of
+$\Hat{H}_0$}.  That is
+\[
+\ket{\psi(\lambda)} = \sum_s \ket{n,s} a_s + \lambda \ket{\psi^{(1)}}.
+\]
+
+As the $a_s$ are arbitrary we can impose the conditions
+$\scp{n,s}{\psi^{(1)}} = 0$ for each $s$ and $n$.  We thus have to solve
+$\Hat{H} \ket{\psi(\lambda)} = E(\lambda) \ket{\psi(\lambda)}$ with
+$E(\lambda) = \epsilon_n + \lambda E^{(1)}$.  If we take the $\cO(\lambda)$
+equation and apply $\bra{n,r}$ to it we get
+\[
+\sum_s a_s \bra{n,r} \Hat{H}' \ket{n,s} = a_r E_n^{(1)}
+\]
+which is a matrix eigenvalue problem.  Thus the first order perturbations
+in $\epsilon_n$ are the eigenvalues of
+the matrix $\bra{n,r} \Hat{H}' \ket{n,s}$.  If all the eigenvalues are
+distinct then the perturbation ``lifts the degeneracy''.  It is
+convenient for the purpose of calculation to choose a basis for the space
+spanned by the degenerate eigenvectors in which this matrix is
+``as diagonal as possible''.%
+\footnote{Don't ask...}
+
+\chapter{General theory of angular momentum}
+
+For a particle with position and momentum operators $\Hat{\vect{x}}$
+and $\Hat{\vect{p}}$ with the commutation relations
+$\com{\Hat{x_i}}{\Hat{p_j}} = \imath \hbar \delta_{i j}$ we define
+$\Hat{\vect{L}} = \Hat{\vect{x}} \wedge \Hat{\vect{p}}$.  It can
+be seen that $\Hat{\vect{L}}$ is Hermitian and it is easy to show
+$\com{\Hat{L}_i}{\Hat{L}_j} = \imath \hbar \epsilon_{i j k}
+\Hat{L}_k$.
+
+\section{Introduction}
+
+We want to find out if there are other Hermitian operators $\hbar
+\vect{J}$ which satisfy this commutation relation.%
+\footnote{The $\hbar$ is taken outside - you can put it back in if you
+  want, it is inessential but may or may not appear in exam questions.
+  Since we are now grown up we will omit the hats if they do not add
+  to clarity.}  We ask on what space of states can this algebra of
+operators be realised, or alternatively, what are the representations?
+
+We want
+\[
+\com{J_i}{J_j} = \imath \epsilon_{ijk} J_k.
+\]
+
+We will choose one component of $\vect{J}$ whose eigenvalues label the
+states.  In accordance with convention we choose $J_3$.  Note that
+$\com{\vect{J}^2}{J_3} = 0$, so we can simultaneously diagonalise
+$\vect{J}^2$ and $J_3$.  Denote the normalised eigenbasis by
+$\ket{\lambda\ \mu}$, so that
+
+\[
+\vect{J}^2 \ket{\lambda\ \mu} = \lambda \ket{\lambda\ \mu} \quad
+\text{and}
+\quad J_3 \ket{\lambda\ \mu} = \mu \ket{\lambda\ \mu}.
+\]
+
+We know that $\lambda \ge 0$ since $\vect{J}^2$ is the sum of the
+squares of Hermitian operators.  Now define $J_\pm = J_1 \pm \imath
+J_2$.  These are not Hermitian, but $J_+^\dag = J_-$.
+
+It will be useful to note that
+
+\begin{align*}
+\com{J_\pm}{J_3} &= \pm J_\pm\\
+\quad \com{J_+}{J_-} & = 2 J_3\\
+\vect{J}^2 &= \tfrac{1}{2} \left(J_+ J_- + J_- J_+\right) + J_3^2 \\
+&= J_+ J_- - J_3 + J_3^2 \\
+&= J_- J_+ + J_3 + J_3^2. 
+\end{align*}
+
+Proof of this is immediate.
+
+Using the $\com{J_\pm}{J_3}$ relation we have
+$J_3 J_\pm = J_\pm J_3 \pm J_3$, so that
+
+\[
+J_3 J_\pm \ket{\lambda\ \mu} = \left( \mu \pm 1\right) J_\pm
+\ket{\lambda\ \mu}
+\]
+
+and $J_\pm \ket{\lambda\ \mu}$ is an eigenstate of $J_3$ with
+eigenvalue $\mu \pm 1$.  By similar artifice we can see that $J_\pm
+\ket{\lambda\ \mu}$ is an eigenstate of $\vect{J}^2$ with eigenvalue
+$\lambda$.
+
+Now evaluate the norm of $J_\pm \ket{\lambda\ \mu}$, which is
+
+\[
+\bra{\lambda\ \mu}J_\mp J_\pm \ket{\lambda\ \mu}
+= \lambda - \mu^2 \mp \mu \ge 0.
+\]
+
+We can now define states $\ket{\lambda\ \left(\mu \pm n\right)}$ for
+$n= 0,1,2,\dots$.  We can pin them down more by noting that $ \lambda
+- \mu^2 \mp 2 \mu \ge 0$ for positive norms.  However the formulae we
+have are, given $\lambda$, negative for sufficiently large $\abs{\mu}$
+and so to avoid this we must have $\mu_{\text{max}} = j$ such that
+$J_+ \ket{j} = 0$: hence $\lambda - j^2 - j = 0$ and so $\lambda = j
+(j+1)$.
+
+We can perform a similar trick with $J_-$; there must exist
+$\mu_{\text{min}} = - j'$ such that $J_- \ket{-j'} = 0$: thus $\lambda
+= j' (j' + 1)$.  So $j' = j$ and as $-j' = -j = j - n$ for some
+$n \in \{0,1,2,\dots\}$ we have $j = 0,\frac{1}{2},1,\frac{3}{2},\dots$.
+
+In summary the states can be labelled by $\ket{j\ m}$ such that
+
+\begin{align*}
+\vect{J}^2 \ket{j\ m} &= j(j+1) \ket{j\ m} \\
+J_3 \ket{j\ m} &= m \ket{j\ m} \\
+J_\pm \ket{j\ m} &= \left(
+\left( j \mp m \right) \left( j \pm m + 1 \right) \right)^{\frac{1}{2}}
+\ket{j\ m \pm 1}
+\end{align*}
+
+with $m \in \{ -j, -j + 1,\dots, j-1, j \}$ and $j \in \{0, \frac{1}{2},
+1, \frac{3}{2},\dots \}$.  There are $2 j + 1$ states with different $m$
+for the same $j$.  $\ket{j\ m}$ is the standard basis of the angular
+momentum states.
+
+We have obtained a representation of the algebra labelled by $j$.  If
+$\hbar \vect{J} = \vect{L} = \Hat{\vect{x}} \wedge \Hat{\vect{p}}$ we
+must have $j$ an integer.
+
+Recall that if we have $\Hat{A}$ we can define a
+matrix $A_{\lambda' \lambda}$ by ${\Hat{A} \ket{\lambda} =
+\sum_{\lambda'} \ket{\lambda'} A_{\lambda' \lambda}}$.  Note that
+$\left( B A \right)_{\lambda' \lambda} = \sum_\mu B_{\lambda' \mu}
+A_{\mu \lambda}$.  Given $j$, we have
+$\left(J_3\right)_{m' m} = m\, \delta_{m' m}$ and
+$\left( J_\pm \right)_{m' m} = \sqrt{\left( j \mp m
+\right) \left( j \pm m + 1 \right)}\, \delta_{m',m\pm 1}$, giving us
+$\left( 2 j + 1 \right) \times \left( 2 j + 1 \right)$ matrices satisfying
+the three commutation relations $\com{J_3}{J_\pm} = \pm J_\pm$
+and $\com{J_+}{J_-} = 2 J_3$.
+
+If $\vect{J}$ are angular momentum operators which act on a vector
+space $V$ and we have $\ket{\psi} \in V$ such that $J_3 \ket{\psi}
+= k \ket{\psi}$ and $J_+ \ket{\psi} = 0$ then $\psi$ is
+a state with angular momentum $j = k$.  The other states are given by
+$J_-^n \ket{\psi}$, $1 \le n \le 2 k$.  The conditions also give
+$\vect{J}^2 \ket{\psi} = k \left( k + 1 \right) \ket{\psi}$
+
+\subsection{Spin $\frac{1}{2}$ particles}
+
+This is the simplest non-trivial case.  We have $j = \frac{1}{2}$ and
+a two dimensional state space with a basis $\ket{\frac{1}{2}\ \frac{1}{2}}$
+and $\ket{\frac{1}{2}\ -\frac{1}{2}}$.  We have the relations
+$J_3 \ket{\tfrac{1}{2}\ \pm \tfrac{1}{2}} = \pm \frac{1}{2}
+\ket{\tfrac{1}{2}\ \pm \tfrac{1}{2}}$ and
+
+\begin{align*}
+J_+ \ket{\tfrac{1}{2}\ \tfrac{1}{2}} &= 0  &
+J_- \ket{\tfrac{1}{2}\ \tfrac{1}{2}} &= \ket{\tfrac{1}{2}\
+-\tfrac{1}{2}} \\
+J_+ \ket{\tfrac{1}{2}\ -\tfrac{1}{2}} &= \ket{\tfrac{1}{2}\ 
+\tfrac{1}{2}}
+& J_- \ket{\tfrac{1}{2}\ -\tfrac{1}{2}} &= 0.
+\end{align*}
+
+It is convenient to introduce explicit matrices $\sv$ such that
+\[
+\vect{J} \ket{\tfrac{1}{2}\ m} = \sum_{m'} \ket{\tfrac{1}{2}\ m'}
+\tfrac{1}{2} \left( \sv \right)_{m' m}.
+\]
+
+The matrices $\sv$ are $2 \times 2$ matrices (called the Pauli spin
+matrices).  Explicitly, they are
+
+\begin{align*}
+\sigma_+ &= \begin{pmatrix} 0 & 2 \\ 0 & 0 \end{pmatrix} &
+\sigma_- &= \begin{pmatrix} 0 & 0 \\ 2 & 0 \end{pmatrix} &
+\sigma_3 &= \begin{pmatrix} 1 & 0 \\ 0 & -1 \end{pmatrix} \\
+\sigma_1 = \frac{1}{2} \left( \sigma_+ + \sigma_-\right) &=
+\begin{pmatrix} 0 & 1 \\ 1 & 0 \end{pmatrix} &
+\sigma_2 = \frac{-\imath}{2} \left( \sigma_+ - \sigma_- \right) &=
+\begin{pmatrix} 0 & -\imath \\ \imath & 0 \end{pmatrix}.
+\end{align*}
+
+Note that $\sigma_1^2 = \sigma_2^2 = \sigma_3^2 = \vect{1}$ and
+$\sv^\dag = \sv$.  These satisfy the commutation relations
+$\com{\sigma_i}{\sigma_j} = 2 \imath \epsilon_{i j k} \sigma_k$
+(a slightly modified angular momentum commutation relation) and
+we also have $\sigma_2 \sigma_3 = \imath \sigma_1$ (and the relations
+obtained by cyclic permutation), so $\sigma_i \sigma_j
++ \sigma_j \sigma_i = 2 \delta_{i j} \vect{1}$.  Thus if $\Hat{\vect{n}}$ is
+a unit vector we have $\left( \sv.\Hat{\vect{n}} \right)^2 = 1$
+and we see that $\sv. \Hat{\vect{n}}$ has eigenvalues $\pm 1$.
+
+We define the angular momentum matrices $\vect{s} = \frac{1}{2} \hbar
+\sv$ and so $\vect{s}^2 = \frac{3}{4} \hbar^2 \vect{1}$.
+
+The basis states are $\cv_{\frac{1}{2}} = \begin{pmatrix} 1 \\ 0 \end{pmatrix}$
+and $\cv_{-\frac{1}{2}} = \begin{pmatrix} 0 \\ 1 \end{pmatrix}$.
+
+\subsection{Spin $1$ particles}
+
+We apply the theory as above to get
+
+\[
+S_+ = \begin{pmatrix} 0 & \sqrt{2} & 0 \\ 0 & 0 & \sqrt{2} \\ 0 & 0 &
+  0 \end{pmatrix}
+\qquad
+S_3 = \begin{pmatrix} 1 & 0 & 0 \\ 0 & 0 & 0 \\ 0 & 0 & -1 \end{pmatrix}
+\]
+
+and $S_- = S_+^\dag$.
+
+\subsection{Electrons}
+
+Electrons are particles with intrinsic spin $\frac{1}{2}$.  The
+angular momentum $\vect{J} = \Hat{\vect{x}} \wedge \Hat{\vect{p}}
++ \vect{s}$, $\vect{s}$ are the spin operators for spin $\frac{1}{2}$.
+
+The basic operators for an electron are $\Hat{\vect{x}}$, $\Hat{\vect{p}}$
+and $\vect{s}$.  We can represent these operators by their action
+on two component wavefunctions:
+\[
+\pv(\vect{x}) = \sum_{\lambda =
+\pm \frac{1}{2}} \psi_\lambda(\vect{x}) \cv_\lambda.
+\]
+
+In this basis $\Hat{\vect{x}} \mapsto \vect{x}$, $\Hat{\vect{p}}
+\mapsto - \imath \hbar \nabla$ and $\vect{s} \mapsto \frac{\hbar}{2}
+\sv$.  All other operators are constructed in terms of these, for
+instance we may have a Hamiltonian
+\[
+H = \frac{\Hat{\vect{p}}^2}{2 m} + V(\vect{x}) + U(\vect{x}) \sv.\vect{L}
+\]
+where $\vect{L} = \Hat{\vect{x}} \wedge \Hat{\vect{p}}$.
+
+If $V$ and $U$ depend only on $\abs{\vect{x}}$ then $\com{\vect{J}}{H} = 0$.
+
+\section{Addition of angular momentum}
+
+Consider two independent angular momentum operators $\vect{J}^{(1)}$
+and $\vect{J}^{(2)}$ with $\vect{J}^{(r)}$ acting on some space $V^{(r)}$
+and $V^{(r)}$ having spin $j_r$ for $r=1,2$.
+
+We now define an angular momentum $\vect{J}$ acting on $V^{(1)} \otimes
+V^{(2)}$ by $\vect{J} = \vect{J}^{(1)} + \vect{J}^{(2)}$.  Using the
+commutation relations for $\vect{J}^{(r)}$ we can get
+$\com{J_i}{J_j} = \imath \epsilon_{i j k} J_k$.  
+
+We want to construct states $\ket{J\ M}$ forming a standard angular momentum
+basis, that is such that:
+
+\begin{align*}
+J_3 \ket{J\ M} &= M \ket{J\ M} \\
+J_\pm \ket{J\ M} &= N^\pm_{J,M} \ket{J\ M \pm 1}
+\end{align*}
+
+with $N^\pm_{J,M} = \sqrt{\left(J \mp M \right) \left(J \pm M + 1
+  \right)}$.  We look for states in $V$ which satisfy $J_+ \ket{J\ J}
+= 0$ and $J_3 \ket{J\ J} = J \ket{J\ J}$.  The maximum value of $J$ we
+can get is $j_1 + j_2$; and $\ket{j_1 + j_2\ j_1 + j_2} = \ket{j_1\ 
+  j_1}_1 \ket{j_2\ j_2}_2$.  Then $J_+ \ket{j_1 + j_2\ j_1 + j_2} =
+0$.  Similarly this is an eigenvector of $J_3$ with eigenvalue $\left(
+  j_1 + j_2 \right)$.  We can now apply $J_-$ repeatedly to form all
+the $\ket{J\ M}$ states. Applying $J_-$ we get
+\[
+\ket{J\ M-1} = \alpha \ket{j_1\ j_1-1}_1 \ket{j_2\ j_2}_2 
++ \beta \ket{j_1\ j_1}_1 \ket{j_2\ j_2 - 1}_2.
+\]
+
+The coefficents $\alpha$ and $\beta$ can be determined from the coefficents
+$N^-_{a,b}$, and we must have $\alpha^2 + \beta^2 = 1$.  If we choose
+$\ket{\psi}$ a state orthogonal to this;
+\[
+\ket{\psi} = - \beta
+\ket{j_1\ j_1 - 1}_1 \ket{j_2\ j_2}_2 + \alpha \ket{j_1\ j_1}_1
+\ket{j_2\ j_2 - 1}_2.
+\]
+
+$J_3 \ket{\psi}$ can be computed and it shows that $\ket{\psi}$ is an
+eigenvector of $J_3$ with eigenvalue $\hbar \left(j_1 + j_2 -
+  1\right)$.  Now
+\[
+0 = \scp{\psi}{j_1 + j_2\ j_1 + j_2 - 1} \propto
+\bra{\psi} J_- \ket{j_1 + j_2\ j_1 + j_2}
+\]
+and so $\bra{\psi} J_- \ket{\phi} = 0$ for all states $\ket{\phi}$ in $V$.
+Thus $J_+ \ket{\psi} = 0$ and
+\[
+\ket{\psi} = \ket{j_1 + j_2 - 1\ j_1 + j_2- 1}.
+\]
+We can then construct the states $\ket{j_1 + j_2 - 1\ M}$ by
+repeatedly applying $J_-$.
+
+For each $J$ such that $\abs{j_1 - j_2} \le J \le j_1 + j_2$ we can
+construct a state $\ket{J\ J}$.  We define the Clebsch-Gordan coefficients
+$\scp{j_1\ m_1\ j_2\ m_2}{J\ M}$, and so
+\[
+\ket{J\ M} = \sum_{m_1, m_2} \scp{j_1\ m_1\ j_2\ m_2}{J\ M}
+\ket{j_1\ m_1} \ket{j_2\ m_2}.
+\]
+
+The Clebsch-Gordan coefficients are nonzero only when $M = m_1 + m_2$.
+
+We can check the number of states;
+\[
+\sum_{J = \abs{j_1 - j_2}}^{j_1 + j_2}
+\left( 2 J + 1\right)
+= \sum_{J = \abs{j_1 - j_2}}^{j_1 + j_2} \left\{ \left(J+1\right)^2
+- J^2 \right\} = \left(2 j_1 + 1 \right) \left(2 j_2 + 1 \right).
+\]
+
+\subsubsection*{Electrons}
+
+Electrons have spin $\frac{1}{2}$ and we can represent their spin states
+with $\cv_{\pm \frac{1}{2}}(s)$.  Using this notation we see that
+two electrons can form a symmetric spin 1 triplet
+\[
+\cv_m(s_1,s_2) = \begin{cases}
+\cv_{\frac{1}{2}} (s_1) \cv_{\frac{1}{2}}(s_2) \\
+\frac{1}{\sqrt{2}} \left(
+\cv_{\frac{1}{2}} (s_1) \cv_{-\frac{1}{2}}(s_2)
++ \cv_{-\frac{1}{2}} (s_1) \cv_{\frac{1}{2}}(s_2)
+\right) \\
+\cv_{-\frac{1}{2}} (s_1) \cv_{-\frac{1}{2}}(s_2)
+\end{cases}
+\]
+
+and an antisymmetric spin 0 singlet;
+\[
+\cv_0(s_1,s_2) = \frac{1}{\sqrt{2}} \left(
+\cv_{\frac{1}{2}}(s_1) \cv_{-\frac{1}{2}}(s_2)
+- \cv_{-\frac{1}{2}} (s_1) \cv_{\frac{1}{2}}(s_2)
+\right).
+\]
+
+\section{The meaning of quantum mechanics}
+
+Quantum mechanics deals in probabilities, whereas classical mechanics
+is deterministic \emph{if we have complete information}.  If we have
+incomplete information classical mechanics is also probabilistic.
+
+Inspired by this we ask if there can be ``hidden variables'' in quantum
+mechanics such that the theory is deterministic.  Assuming that local
+effects have local causes, this is not possible.
+
+We will take a spin example to show this.  Consider a spin $\frac{1}{2}$
+particle, with two spin states $\ket{\ua}$ and $\ket{\da}$ which
+are eigenvectors of $S_3 = \frac{\hbar}{2} \sigma_3$.  If we choose to
+use two component vectors we have
+\[
+\cv_\uparrow = \begin{pmatrix} 1 \\ 0 \end{pmatrix} \qquad
+\cv_\downarrow = \begin{pmatrix} 0 \\ 1 \end{pmatrix}.
+\]
+
+Suppose $\vect{n} = (\sin \theta, 0, \cos \theta)$ (a unit vector) and
+let us find the eigenvectors of 
+\[
+\sv.\vect{n} = \begin{pmatrix} \cos \theta & \sin \theta \\
+\sin \theta & - \cos \theta
+\end{pmatrix}.
+\]
+
+As $\left( \sv.\vect{n}\right)^2 = 1$ we must have eigenvalues $\pm 1$
+and an inspired guess gives $\cv_{\uparrow,\vect{n}}$ and
+$\cv_{\downarrow,\vect{n}}$ as
+\[
+\cv_{\uparrow,\vect{n}} = \cos \tfrac{\theta}{2} \cv_\uparrow
++ \sin \tfrac{\theta}{2} \cv_\downarrow \qquad \text{and} \qquad
+\cv_{\downarrow,\vect{n}} = - \sin \tfrac{\theta}{2} \cv_\uparrow
++ \cos \tfrac{\theta}{2} \cv_\downarrow.
+\]
+
+Thus (reverting to ket vector notation) if an electron is in a state
+$\ket{\ua}$ then the probability of finding it in a state
+$\ket{\ua,\vect{n}}$ is $\cos^2 \frac{\theta}{2}$ and the probability
+of finding it in a state $\ket{\da,\vect{n}}$ is $\sin^2 \frac{\theta}{2}$.
+
+Now, suppose we have two electrons in a spin $0$ singlet state;
+\[
+\ket{\Phi} = \frac{1}{\sqrt{2}} \left\{ \ket{\ua}_1 \ket{\da}_2 -
+\ket{\da}_1 \ket{\ua}_2 \right\}.
+\]
+
+Then the probability of finding electron 1 with spin up is $\frac{1}{2}$,
+and after making this measurement electron 2 must be spin down.  Similarly,
+if we find electron 1 with spin down (probability $\frac{1}{2}$ again) then
+electron 2 must have spin up.  More generally, suppose we measure electron
+1's spin along direction $\vect{n}$.  Then we see that the probability
+for electron 1 to have spin up in direction $\vect{n}$ (aligned) is
+$\frac{1}{2}$ and then electron 2 must be in the state $\ket{\da,\vect{n}}_2$.
+
+If we have two electrons (say electron 1 and electron 2) in a spin 0
+state we may physically separate them and consider independent experiments
+on them.
+
+We will consider three directions as sketched.  For electron 1 there are
+three variables which we may measure (in separate experiments);
+$S^{(1)}_\vect{z} = \pm 1$, $S^{(1)}_\vect{n} = \pm 1$ and $S^{(1)}_\vect{m}
+= \pm 1$.  We can also do this for electron 2.
+
+We see that if we find electron 1 has $S^{(1)}_\vect{z} = 1$ then
+electron 2 has $S^{(2)}_\vect{z} = -1$ (etc.).
+
+If there exists an underlying deterministic theory then we could
+expect some probability distribution $p$ for this set of experiments;
+
+\[
+0 \le p\!\left( S^{(1)}_\vect{z}, S^{(1)}_\vect{n}, S^{(1)}_\vect{m},
+S^{(2)}_\vect{z}, S^{(2)}_\vect{n}, S^{(2)}_\vect{m}\right)
+ \le 1
+\]
+which is nonzero only if $S^{(1)}_{\text{dirn}} = - S^{(2)}_{\text{dirn}}$
+and
+\[
+\sum_{\{ s \}} p(\{ s \}) = 1.
+\]
+
+\subsubsection*{Bell inequality}
+
+Suppose we have a probability distribution $p(a,b,c)$ with $a,b,c = \pm 1$.
+We define partial probabilities $p_{bc} = \sum_a p(a,b,c)$ and similarly
+for $p_{ac}$ and $p_{a b}$.  Then
+
+\begin{align*}
+p_{bc}(1,-1) & = p(1,1,-1) + p(-1,1,-1) \\
+& \le p(1,1,-1) + p(1,1,1) + p(-1,1,-1) + p(-1,-1,-1) \\
+&\le p_{ab}(1,1) + p_{ac}(-1,-1).
+\end{align*}
+
+Applying this to the two electron system we get
+
+\[
+\cP\! \left(S^{(1)}_\vect{n} = 1, S^{(2)}_\vect{m} = 1 \right)
+\le \cP\!\left(S^{(1)}_\vect{z} = 1, S^{(2)}_\vect{n} = -1 \right)
++ \cP\!\left(S^{(1)}_\vect{z} = -1, S^{(2)}_\vect{m} = 1\right).
+\]
+
+We can calculate these probabilities from quantum mechanics
+\begin{align*}
+\cP\!\left(S^{(1)}_\vect{z} = 1, S^{(2)}_\vect{n} = -1\right) &=
+\cP\!\left(S^{(1)}_\vect{z} = 1, S^{(1)}_\vect{n} = 1 \right)
+= \cos^2 \tfrac{\theta}{2} \\
+\cP\!\left(S^{(1)}_\vect{z} = -1, S^{(2)}_\vect{m} = 1\right) &=
+\cos^2 \tfrac{\theta + \phi}{2} \qquad \text{and} \\
+\cP\!\left( S^{(1)}_\vect{n} = 1, S^{(2)}_\vect{m} = 1\right) &=
+\sin^2 \tfrac{\theta}{2}.
+\end{align*}
+
+The Bell inequality gives
+$\sin^2 \tfrac{\phi}{2} \le \cos^2 \tfrac{\theta}{2} + \cos^2 \tfrac{\theta
++ \phi}{2}$ which is not in general true.
+
+\backmatter
+
+\begin{thebibliography}{9}
+
+\bibitem{Dirac} P.A.M.~Dirac, \emph{The Principles of Quantum
+    Mechanics}, Fourth ed., OUP, 1958.
+  
+  {\sffamily \small I enjoyed this book as a good read but it is also
+    an eminently suitable textbook. }
+  
+\bibitem{Feynman} Feynman, Leighton, Sands, \emph{The Feynman Lectures
+    on Physics Vol. 3}, Addison-Wesley, 1964.
+  
+  {\sffamily \small Excellent reading but not a very appropriate
+    textbook for this course.  I read it as a companion to the course
+    and enjoyed every chapter. }
+  
+\bibitem{Merzbacher} E.~Merzbacher, \emph{Quantum Mechanics}, Wiley,
+  1970.
+  
+  {\sffamily \small This is a recommended textbook for this course
+    (according to the Schedules).  I wasn't particularly impressed but
+    you may like it.}
+\end{thebibliography}
+
+There must be a good, modern textbook for this course.  If you know of
+one please send me a \emph{brief} review and I will include it if I
+think it is suitable.  In any case, with these marvellous notes
+you don't need a textbook, do you?
+
+\section*{Related courses}
+
+There are courses on \emph{Statistical Physics} and \emph{Applications
+of Quantum Mechanics} in Part 2B and courses on \emph{Quantum Physics}
+and \emph{Symmetries and Groups in Quantum Physics} in Part 2A.
+
+\end{document}

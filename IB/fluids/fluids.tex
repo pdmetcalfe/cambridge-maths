@@ -1,0 +1,1373 @@
+\documentclass{notes}
+
+\newcommand{\matd}[1]{\DDt{#1}}
+\newcommand{\bso}{\boldsymbol\omega}
+\newcommand{\grad}{\nabla}
+\newcommand{\divr}{\nabla\cdot}
+\newcommand{\curl}{\nabla\wedge}
+\newcommand{\lapl}{\nabla^2}
+\newcommand{\dgrad}[2]{\left(#1\cdot\nabla\right)#2}
+
+\begin{document}
+
+\frontmatter
+\title{Fluid Dynamics}
+\lecturer{Dr.~J.R.~Lister}
+\maintainer{Paul Metcalfe}
+\date{Mich\ae lmas 1996} \maketitle
+
+\thispagestyle{empty}
+
+\noindent\verb$Revision: 1.8 $\hfill\\
+\noindent\verb$Date: 2001/11/01 14:44:11 $\hfill\
+
+\vspace{1.5in}
+
+The following people have maintained these notes.
+
+\begin{center}
+\begin{tabular}{ r  l}
+-- date & Paul Metcalfe
+\end{tabular}
+\end{center}
+
+\tableofcontents
+
+\chapter{Introduction}
+
+These notes are based on the course ``Fluid Dynamics'' given by
+Dr.~J.R.~Lister in Cambridge in the Mich\ae lmas Term 1996.  These
+typeset notes are totally unconnected with Dr.~Lister.
+
+\alsoavailable
+\archimcopyright
+
+\mainmatter
+
+\chapter{Kinematics}
+
+\section{Continuum Fields}
+
+Everyday experience suggests that at a macroscopic scale, liquids and
+gases look like smooth continua with density $\rho(\vx,t)$, velocity
+$\vu(\vx,t)$ and pressure $p(\vx,t)$ fields.
+
+Since fluids are made of molecules this is of course only an
+approximate description.  On large lengthscales we can define these
+fields by averaging over a volume $V$ smaller than the scale of
+interest but large enough to contain many molecules.  The effect of
+this averaging is to exchange an enormous number of ODEs that describe
+the motion of each molecule for a few PDEs that describe the averaged
+fields.
+
+This \emph{continuum approximation} is not always appropriate.  For
+instance the velocity structure about a spacecraft during re-entry has
+a lengthscale comparable with the molecular mean free path.
+Similarly, blood flow in capillaries must take the red blood cells
+into account.
+
+\section{Flow Visualization}
+
+There are many experimental techniques for obtaining a description of
+the velocity field $\vu(\vx,t)$.  Three simple visualisation techniques
+give rise to the ideas of \emph{streamlines}, \emph{pathlines} and
+\emph{streaklines}.  We will illustrate these ideas by application to
+the simple two-dimensional example $\vu(\vx,t) = (t,y)$.
+
+\emph{Streamlines} are curves that are everywhere parallel to the
+instantaneous flow.  They are visualised experimentally by the
+short-time exposure of many brightly-lit particles --- the streamlines
+are obtained by joining the resulting short segments in a manner
+analogous to obtaining magnetic fields from iron filings.
+
+Mathematically, a streamline is a curve $\vx(s;\vx_0,t)$ at a given
+fixed time $t$ with $s$ varying along the curve and passing through a
+given point $\vx_0$ that satisfies
+
+\[
+\pd{\vx}{s} = \vu(\vx,t) \qquad \vx(0;x_0,t) = \vx_0.
+\]
+
+For our example we have
+
+\[
+x(s;\vx_0,t) = x_0 + t s \qquad y(s;\vx_0,t) = y_0 e^s.
+\]
+
+This gives the curve
+\[
+\frac{x - x_0}{t} = \log \frac{y}{y_0}.
+\]
+
+\emph{Pathlines} are particle paths: paths traversed by particles
+moving with the flow.  They are visualised experimentally by the
+long-time exposure of a few brightly-lit particles.
+
+Mathematically, a pathline is a curve $\vx(t;\vx_0,t_0)$ corresponding
+to a particle released from $\vx = \vx_0$ at $t = t_0$.  The
+differential equation is
+
+\[
+\pd{\vx}{t} = \vu(\vx,t) \qquad \vx(t_0;x_0,t_0) = \vx_0.
+\]
+
+Our example gives
+\[
+x(t;\vx_0,t_0) = x_0 + \frac{t^2-t_0^2}{2} \qquad y(t;\vx_0,t_0) = y_0
+e^{t - t_0}.
+\]
+
+For a particle released at $t_0 = 0$ this gives a curve
+\[
+y = y_0 e^{\sqrt{2(x-x_0)}}.
+\]
+
+\emph{Streaklines} give the position at some fixed time of dye
+released over a range of previous times from a fixed source (e.g. an
+oil spill).
+
+Mathematically, a streakline is a curve $\vx(t_0;\vx,t)$ with $t_0$
+varying along the curve and a fixed observation time $t$.  To obtain
+it, we still solve
+
+\[
+\pd{\vx}{t} = \vu(\vx,t) \qquad \vx(t_0;x_0,t_0) = \vx_0,
+\]
+
+but then fix $t$ instead of $t_0$.  Suppose we observe our flow at $t
+= 0$ --- we can use our previous solution to get a streakline
+\[
+y = y_0 e^{- t_0} = y_0 e^{-\sqrt{2(x_0 - x)}}.
+\]
+
+Note that for this unsteady flow we get different results from each
+method of visualisation.  The different methods give the same result
+if the flow is steady.
+
+\section{Material Derivative}
+
+This is a rate of change ``moving with the fluid''.  For any quantity
+$F$, the rate of change in that quantity seen by an observer moving
+with the fluid is the material or Lagrangian derivative $\matd{F}$.
+
+\begin{align*}
+  \delta F &=
+  \frac{F(\vx+\vect{\delta x},t+\delta t) - F(\vx,t)}{\delta t} \\
+  &= \dgrad{\vect{\delta x}}{F} + \delta t \pd{F}{t} + \text{ smaller
+    terms.}
+\end{align*}
+
+Hence
+\[
+\matd{F} = \dgrad{\vu}{F} + \pd{F}{t}.
+\]
+
+\section{Conservation of Mass}
+
+Consider an arbitrary (at least smooth -- this is applied maths)
+volume $V$, fixed in space with bounding surface $A$ and outward
+normal $\vn$.  The mass inside $V$ is
+\[
+M = \int_V \rho \,\ud V,
+\]
+and the mass changes due to the flow over the boundary, so
+\[
+\pd{M}{t} = -\int_A \rho \vu\cdot\vn \,\ud A.
+\]
+
+Application of the divergence theorem gives
+
+\[
+\int_V \pd{\rho}{t} \,\ud V + \int_V \divr{(\rho \vu)} \,\ud V = 0.
+\]
+
+Since $V$ is arbitrarily small,
+
+\[
+\pd{\rho}{t} + \divr{(\rho \vu)} = 0,
+\]
+or rewritten using the material derivative
+\[
+\matd{\rho} + \rho \divr{\vu} = 0.
+\]
+
+\section{Kinematic Boundary Condition}
+
+This is an expression of mass conservation at a boundary.  If the
+velocity of the boundary is $\vu^A$, the condition for no mass flux is
+
+\[
+\rho \left( \vu(\vx,t) - \vu^A(\vx,t) \right)\cdot\vn \delta A \delta t =
+0,
+\]
+which gives that $\vu\cdot\vn = \vu^A\cdot\vn$.  For a fixed surface,
+$\vu^A = 0$, so the surface is a streamline.
+
+\section{Incompressible Fluids}
+
+For this course, we restrict ourselves to fluids with $\rho = const$.
+Mass conservation reduces to $\divr{\vu} = 0$.  Such a velocity field
+$\vu$ is said to be solenoidal.
+
+\section{Streamfunctions}
+
+This gives a representation of the flow satisfying $\divr{\vu}=0$
+automatically.  For example, in 2D Cartesians, any velocity field
+$\vu=(u,v,0)$ is solenoidal if there exists $\psi(x,y,t)$ such that $u
+= \pd{\psi}{y}$ and $v = -\pd{\psi}{x}$.
+
+In 2D polars, we want $\psi$ such that $u_r =
+\frac{1}{r}\pd{\psi}{\theta}$ and $u_{\theta} = - \pd{\psi}{r}$.
+
+In axisymmetric cylindrical polars, we want $\Psi$ such that $u_z =
+\frac{1}{r} \pd{\Psi}{r}$ and $u_r = -\frac{1}{r}\pd{\Psi}{z}$.
+$\Psi$ is called a Stokes streamfunction.
+
+In axisymmetric spherical polars, we want $\Psi$ such that $u_r =
+\frac{1}{r^2 \sin \theta}\pd{\Psi}{\theta}$ and $u_{\theta} =
+\frac{-1}{r \sin \theta} \pd{\Psi}{r}$.
+
+\chapter{Dynamics}
+
+\section{Surface and volume forces}
+
+Two types of force are considered to act on a fluid: those
+proportional to volume (e.g. gravity) and those proportional to area
+(e.g. pressure).  This is a simplification appropriate to the
+continuum level description --- e.g. surface forces in a gas are the
+average result of many molecules transferring momentum by collision
+with other molecules over the very short distance of the mean free
+path.
+
+\subsection*{Volume forces}
+
+We denote the force on a small volume element $\delta V$ by
+$\vF^V(\vx,t) \delta V$.  The volume force is often conservative, with a
+potential energy per unit volume $\chi$, so that $\vF^V = -
+\grad\chi$ (or potential energy per unit mass $\Phi$, so that $\vF^V
+= - \rho \grad\chi$.
+
+The most common case is
+\[
+\vF^V(\vx,t) \delta V = \rho \vect{g} \delta V.
+\]
+
+\subsection*{Surface forces}
+
+We denote the force on a small surface element $\vn \delta A$ by
+$\vF^A(\vx,t,\vn) \delta A$, which depends on the orientation $\vn$ of the
+surface element.  A full description of surface forces includes the
+effects of friction of layers of water sliding over each other or over
+rigid boundaries (viscosity).
+
+Viscous effects are important when the \emph{Reynolds number}
+\[
+\frac{U L}{\nu} \le 1,
+\]
+where $U$ is a typical velocity, $L$ a typical length and $\nu$ is the
+dynamic viscosity, which is a property of the fluid.
+
+In many cases fluids act as nearly frictionless and in this course we
+neglect frictional forces completely.  For a treatment of viscous
+fluids see the Fluid Dynamics 2 course in Part IIB.
+
+For inviscid (frictionless) fluids the surface force is simply
+perpendicular to the surface with a magnitude independent of
+orientation:
+
+\[
+\vF^A(\vx,t) \delta A = - p(\vx,t) \vn \delta A,
+\]
+
+where $p$ is the pressure.  The minus sign is so that pressure is
+positive.
+
+\section{Momentum Equation}
+
+Consider an arbitrary (at least smooth -- this is applied maths)
+volume $V$, fixed in space with bounding surface $A$ and outward
+normal $\vn$.  The momentum inside $V$ is
+\[
+\int_V \rho \vu \,\ud V,
+\]
+and the momentum changes due to the flow over the boundary, surface
+forces and volume forces, so
+
+\begin{equation}\label{eq:momint}
+\frac{\ud}{\ud t} \int_V \rho \vu \,\ud V = -\int_A \rho \vu (\vu\cdot\vn)
+\,\ud A + \int_A -p \vn \,\ud A + \int_V \vF^V \,\ud V,
+\end{equation}
+which is the momentum integral equation.  Written in component form
+\[
+\frac{\ud}{\ud t} \int_V \rho u_i \,\ud V = -\int_A \rho u_iu_jn_j
+\,\ud A + \int_A -p n_i \,\ud A + \int_V F_i^V \,\ud V
+\]
+$\rho u_iu_j$ is called the momentum flux tensor.
+
+$V$ is fixed, so LHS is $\int_V \pd{\rho u_i}{t} \,\ud V$, and using
+the divergence theorem on the RHS, then letting $V$ be arbitrarily
+small, we achieve the Euler momentum equation
+\begin{equation}\label{eq:eumom}
+\rho \left( \pd{\vu}{t} + \dgrad{\vu}{\vu} \right) =-\grad p + \vF^V.
+\end{equation}
+
+The associated dynamic boundary condition is that given forces are
+applied at the boundary (i.e. $p$ is given).
+
+\subsection{Applications of integral form}
+
+\subsubsection*{Uncoiling of hosepipes}
+
+\vspace{1.5in}
+
+Assume a steady uniform flow $U$ through a pipe of constant
+cross-section $A$.   Neglect gravity.  Now \eqref{eq:momint} becomes
+\[
+\int_{\text{walls}} + \int_{\text{ends}} \left( \rho \vu (\vu \cdot \vn)
+  + p \vn \right)\, \ud A = 0.
+\]
+
+The integral over the walls is
+\[
+\int_{\text{walls}} p \vn\,\ud A = \text{force on pipe,}
+\]
+
+since $\vu \cdot \vn = 0$ on the walls.  The integral over the ends is
+\[
+( \rho U^2 + p) A (\vect{2} - \vect{1})
+\]
+
+and so the force on the pipe is $\vF = ( \rho U^2 + p) A (\vect{1} - \vect{2})$.
+
+\subsubsection*{Pressure change at abrupt junction}
+
+\vspace{3in}
+
+Apply a momentum balance to the sketched shape.  Neglect gravity, and
+also neglect the time derivative, which is zero on average.
+
+The momentum integral equation \eqref{eq:momint} becomes
+
+\[
+\int \left( \rho \vu (\vu \cdot\vn) + p \vn\right)\,\ud A = 0.
+\]
+
+The horizontal component gives
+
+\[
+\rho u_1^2 A_1 + p_1 A_1 = \rho u_2^2 A_2 + p_2 A_2, 
+\]
+and mass conservation gives $u_1 A_1 = u_2 A_2$.  Then we see that
+\[
+p_2 -p_1 = \rho u_1^2 \frac{A_1}{A_2} \left( 1 - \frac{A_1}{A_2} \right) > 0.
+\]
+
+\section{Bernoulli's Theorem}
+
+For a steady flow ($\pd{\vu}{t}=0$) with potential forces ($\vF_V =
+-\grad\chi$),
+\[
+\rho \dgrad{\vu}{\vu} = -\grad(p+\chi),
+\]
+which can be written
+\begin{equation}\label{eq:bern1}
+\rho \left( \frac{1}{2}\grad u^2 - \vu \wedge \left( \curl\vu \right)
+\right) = -\grad (p+\chi).
+\end{equation}
+
+We define the \emph{vorticity} $\bso = \curl{\vu}$ and then let $H =
+\frac{1}{2}\rho u^2 + p + \chi$.  Then $\grad H = \rho \vu \wedge
+\bso$.  Now $\vu \cdot \grad{H} = 0$, so $H$ is constant on streamlines.
+This is Bernoulli's theorem.
+
+Note also that $\bso \cdot \grad{H} = 0$ and that $H$ is constant on
+vortex lines.
+
+The constancy of $H$ means that $p$ is low at high speeds.
+
+\subsection{Application}
+
+Consider a water jet hitting an inclined plane.
+
+\vspace{1.5in}
+
+Neglect gravity, so that on the surface streamline $p=p_a$ the speed
+is constant.  Let this speed be $U$.
+
+Now apply the momentum integral equation \eqref{eq:momint} to get
+\[
+\int_A \rho \vu \vu \cdot \vn + (p - p_a) \cdot \vn\,\ud A = 0. 
+\]
+
+Now $\vu \cdot \vn = 0$ except at the ends.  Mass conservation gives
+\[
+\rho a U = \rho a_1 U + \rho a_2 U.
+\]
+
+Now balance the momentum parallel to the wall to get
+\[
+\rho a U^2 \cos \beta = \rho a_2 U^2 - \rho a_1 U^2.
+\]
+
+Thus
+\[
+a_1 = \frac{1 + \cos \beta}{2} a \qquad \text{and} \qquad
+a_2 = \frac{1 - \cos \beta}{2} a.
+\]
+
+Balancing the momentum perpendicular to the wall we get
+$F = \rho a U^2 \sin \beta$.
+
+\section{Vorticity and Circulation}
+
+\subsection{Vorticity Equation}
+
+Start with the Euler momentum equation \eqref{eq:eumom} with potential forces
+\[
+\rho \left( \pd{\vu}{t} + \dgrad{\vu}{\vu} \right) =-\grad{(p + \chi)}
+\]
+and take its curl to obtain
+\[
+\pd{\omega}{t} = \dgrad{\bso}{\vu} - \dgrad{\vu}{\bso} + \vu \divr{\bso}
+- \bso\divr{\vu}.
+\]
+Now $\divr{\vu} = 0$ and $\divr{\bso} = 0$, so we obtain
+\[
+\pd{\bso}{t} = \dgrad{\bso}{\vu} - \dgrad{\vu}{\bso}
+\] or
+\begin{equation}\label{eq:vorteq}
+\matd{\bso} = \dgrad{\bso}{\vu}.
+\end{equation}
+
+\subsection{Interpretation of vorticity}
+
+Consider a material line element (ie a line element moving with the
+fluid).  Then in a time $\delta t$, $\delta \vect{l} \rightarrow
+\delta \vect{l} + \dgrad{\delta \vect{l}}{\vu}\delta t$, which gives
+that $\pd{\delta \vect{l}}{t} = \dgrad{\delta \vect{l}}{\vu}$.  Hence
+the tensor $\pd{u_i}{x_j}$ determines the local rate of deformation of
+line elements.
+
+\begin{align*}
+  \pd{u_i}{x_j} &= \frac{1}{2} \left( \pd{u_i}{x_j} + \pd{x_j}{u_i}
+  \right)
+  + \frac{1}{2} \left( \pd{u_i}{x_j} - \pd{x_j}{u_i} \right) \\
+  &=e_{ij} + \frac{1}{2} \epsilon_{jik}\omega_k.
+\end{align*}
+
+The local motion due to $e_{ij}$ is called the strain.  The motion due
+to the second term $\frac{1}{2}\epsilon_{jik}\omega_k \delta l_j =
+\frac{1}{2} \left( \bso \wedge \delta \vect{l} \right)$ is rotation
+with angular velocity $\frac{1}{2} \bso$.
+
+\subsection{Ballerina effect and vortex line stretching}
+
+The vorticity equation \eqref{eq:vorteq} can be interpreted as saying
+that vorticity changes just like the rotation and stretching of
+material line elements.  This is just the conservation of angular
+momentum.
+
+Consider a rotating fluid cylinder, initially with angular velocity
+$\omega_1$, radius $a_1$ and length $l_1$.  Conservation of mass gives
+$a_1^2 l_1 = a_2^2 l_2$ and conservation of angular momentum gives
+$a_1^4 l_1 \omega_1 = a_2^4 l_2 \omega_2$.  These combine to give
+\[
+\frac{\omega_1}{\omega_2} = \frac{l_1}{l_2},
+\]
+which says that vorticity increases as the fluid is stretched.  This
+explains the bathtub vortex.
+
+\subsection{Kelvin's Circulation Theorem}
+
+Assume $\rho$ constant and $\vF^V = -\grad{\chi}$.  Define the
+circulation $C(t)$ around a closed material curve $\Gamma(t)$ by
+\[
+C(t) = \oint_{\Gamma(t)} \vu(\vx,t)\cdot\vect{dl}.
+\]
+
+Then
+\[
+\pd{C(t)}{t} = \oint_{\Gamma(t)} \matd{\vu}\cdot\vect{dl} +
+\vu\cdot\frac{\ud}{\ud t}\, \vect{dl}
+\]
+since $\Gamma$ moves with the fluid.  But from the momentum equation
+$\matd{\vu} = -\grad{\frac{p+\chi}{\rho}}$ and $\frac{\ud}{\ud
+  t}\vect{dl}= \dgrad{\vect{dl}}{\vu}$.  Hence
+
+\begin{align*}
+  \pd{C(t)}{t} &= \oint_{\Gamma(t)}
+  \left(\grad \left(\frac{1}{2}u^2 -  \frac{p+\chi}{\rho} \right) \right)
+  \cdot\vect{dl} \\
+  &=0 \qquad \text{since $\Gamma$ is closed}
+\end{align*}
+
+So, for an inviscid fluid of constant density with potential forces,
+the circulation around a closed material curve is constant.
+
+\subsection{Irrotational flow remains so}
+
+A flow with $\bso = 0$ is said to be irrotational.  If $\bso=0$
+everywhere at $t=0$, then the vorticity equation \eqref{eq:vorteq}
+becomes $\matd{\bso} = 0$, implying that $\bso=0$ for all times $t \ge
+0$.
+
+This isn't quite true, vorticity can leave a stagnation point,
+especially at sharp trailing edges.
+
+\chapter{Irrotational Flows}
+
+You will want to find a table of vector differential operators in
+various co-ordinate systems.  There is one in the back of
+Acheson.
+
+\section{Velocity potential}
+
+The vorticity equation tells us that an initially irrotational flow
+remains so for all time.  Since $\curl\vu = 0$ for all time there
+exists a velocity potential $\phi(\vx,t)$ such that $\vu = \grad\phi$.
+Note both the $+$ sign and that any function $f(t)$ can be added to
+$\phi$.  Given $\vu$, we can find $\phi$ from
+
+\[
+\phi = \int_{\vx_0}^\vx \vu(\vx,t)\cdot\vect{dl}.
+\]
+
+The result is independent of path since $\curl\vu = 0$.  Note that
+$\phi$ can be multivalued in 2D if there are holes with
+\[
+\oint_{\text{hole}} \vu \cdot \vect{dl} \neq 0.
+\]
+
+Mass conservation for an incompressible fluid reduces to $\cdot\phi =
+0$, and so if $\vu = \grad\phi$ we have to solve $\lapl\phi = 0$.%
+\footnote{Hence irrotational flows are sometimes called potential or
+  harmonic flows.}
+
+The kinematic boundary condition $\vu^A \cdot \vn = \vu \cdot \vn$ is
+\[
+\vu^A\cdot\vn = \vn\cdot\grad\phi \equiv \pd{\phi}{n}.
+\]
+
+Thus solving the Euler momentum equation \eqref{eq:eumom} reduces to
+solving the more familiar Laplace's equation with Neumann boundary
+conditions.  The flow is only non-zero because of the applied boundary
+conditions on $\pd{\phi}{n}$ (on bodies, surfaces and at infinity).
+
+\section{Some simple solutions}
+
+For simple geometries it is often possible to write down solutions of
+$\lapl\phi = 0$ as a sum of separable solutions in suitable
+co-ordinate systems.  See the Methods course for details.
+
+\subsection*{Cartesians}
+
+\begin{itemize}
+\item $\phi = \vect{U}\cdot\vx$ gives $\vu = \vect{U}$.  This is uniform
+  flow with velocity $\vect{U}$ (e.g. flow in a straight pipe).
+\item $\phi = (e^{\pm k z} \text{ or } \cosh kz \text{ or } \sinh kz)
+  \times (e^{\pm \imath k x} \text{ or } \cos kx \text{ or } \sin kx)$
+  gives a flow which is periodic in $x$ (e.g. waves).
+\end{itemize}
+
+\subsection*{Spherical polars}
+
+The general axisymmetric solution of $\lapl\phi=0$ in spherical polars
+is
+\[
+\phi = \sum_{n \ge 0} \left( A_n r^n + B_n r^{-n-1} \right) P_n(\cos \theta),
+\]
+
+where the $P_n$ are the Legendre polynomials.  We will only use the
+first few modes.
+
+\begin{itemize}
+\item $\phi = - \frac{m}{4 \pi r}$ gives $\vu = \frac{m}{4 \pi}
+  \frac{\Hat{\vect{r}}}{r^2}$.  This is a radial flow.  The total
+  outflow over a sphere of radius $R$ is $4 \pi R^2 u_r = m$, which is
+  independent of $R$ by mass conservation.  This is a \emph{point
+    source} of strength $m$.  (If $m < 0$ it is a \emph{point sink}.)
+\item $\phi = U r \cos \theta \equiv U z$ gives uniform flow again.
+\item $\phi \propto r^{-2} \cos \theta$ gives \emph{dipole flow}.
+\end{itemize}
+
+\subsection*{Plane polars}
+
+The general solution of $\lapl\phi=0$ in plane polars is
+
+\[
+\phi = K + A_0 \log r + B_0 \theta + \sum_{n \ge 1} \left(
+A_n r^n + B_n r^{-n} \right) e^{\imath n \theta}.
+\]
+
+We again use only the first few modes.
+
+\begin{itemize}
+\item $\phi = \frac{m}{2\pi} \log r$ gives $\vu = \frac{m}{2 \pi}
+  \frac{\Hat{\vect{r}}}{r}$.  This is a radial flow, a line source of
+  strength $m$.
+\item $\phi = \frac{\kappa \theta}{2 \pi}$ gives $\vu = \frac{\kappa}{2
+    \pi} \frac{\Hat{\boldsymbol\theta}}{r}$.  The circulation about a
+  circle of radius $R$ is $\kappa$, which is independent of $R$ by
+  $\curl\vu=0$.  This is a \emph{line vortex} of circulation $\kappa$.
+\item $\phi \propto r^{-1} \cos \theta$ is a 2D dipole.
+\item $\phi \propto r^2 \cos \theta \equiv x^2 - y^2$ is a 2D
+  straining flow.
+\end{itemize}
+
+\section{Applications}
+
+\subsection{Uniform flow past a sphere}\label{sec:Usphere}
+
+Consider a hard sphere of radius $a$ in a fluid having a uniform
+velocity $U$ at infinity.
+
+We have to solve the equations
+\begin{align*}
+\lapl\phi &= 0 &&\text{in $r > a$,} \\
+\pd{\phi}{r} &= 0 &&\text{at $r=a$,} \\
+\text{and } \phi &\sim U r \cos \theta &&\text{as $r \to \infty$.}
+\end{align*}
+
+We can satisfy the Laplace equation and boundary condition at infinity
+with
+\[
+\phi = U \cos \theta \left( r + \frac{B}{r^2}\right).
+\]
+
+The boundary condition at $r=a$ yields $B = \frac{a^3}{2}$.  Thus
+
+\[
+\vu = \left(U \cos \theta \left(1 - \frac{a^3}{r^3} \right),
+-U \sin \theta \left( 1 + \frac{a^3}{2 r^3} \right),0\right)
+\]
+
+in spherical polars $(r,\theta,\phi)$.
+
+\vspace{4.5in}
+
+\subsection{Uniform flow past a cylinder}
+
+Consider a hard cylinder of radius $a$ in a fluid with a uniform
+velocity $U$ at infinity and with a circulation $\kappa$.
+
+We have to solve
+\begin{align*}
+\lapl\phi &= 0 &&\text{in $r > a$,} \\
+\pd{\phi}{r} &= 0 &&\text{at $r=a$,} \\
+\text{and } \phi &\sim U r \cos \theta &&\text{as $r \to \infty$.}
+\end{align*}
+
+We further need
+\[
+\oint_{r = a} \vu \cdot \vect{dl} = \kappa = \left[ \phi \right]_{r=a}
+\]
+
+to obtain a unique solution.  These conditions give
+\[
+\phi = U \cos \theta \left( r + \frac{a^2}{r} \right) + \frac{\kappa
+  \theta}{2 \pi}.
+\]
+
+In plane polars $(r,\theta)$, we therefore have
+
+\[
+\vu = \left(U \cos \theta \left( 1 - \frac{a^2}{r^2} \right), - U \sin
+  \theta \left( 1+ \frac{a^2}{r^2}\right) + \frac{\kappa}{2 \pi
+    r}\right).
+\]
+
+\section[Pressure in irrotational flow]{The pressure in irrotational
+  potential flow with potential forces}
+
+The momentum and vorticity equations (\ref{eq:eumom}, \ref{eq:vorteq})
+become
+\[
+\rho \left( \pd{\grad{\phi}}{t} + \dgrad{\vu}{\vu} \right) = -\grad
+\left( p+ \chi \right)
+\]
+and
+\[
+\dgrad{\vu}{\vu} = \grad \left( \frac{1}{2} u^2 \right)
+\]
+respectively, and these combine to give
+\[
+\grad \left( \rho \pd{\phi}{t} + \frac{1}{2}\rho u^2 + p +\chi \right)
+= 0,
+\] which integrates to give
+\begin{equation}\label{eq:bern2}
+\rho \pd{\phi}{t} + \frac{1}{2}\rho u^2 + p +\chi = f(t) \text{
+  independent of $\vx$.}
+\end{equation}
+
+\subsection*{Application}
+
+\vspace{1.5in}
+
+We can apply this theory to the free oscillations of a manometer.  We
+need to calculate
+
+\[
+\phi(\vx,t) = \int_{\vx_0}^\vx \vu \cdot \vect{dl}.
+\]
+
+Let $s$ be the arc length from the bottom, with the equilibrium points at
+$s = -l_1, l_2$.  From mass conservation the flow is uniform, so that
+$u = \dot{h}$ everywhere.  Therefore $\phi = \dot{h} s$, and so
+\[
+\left.\pd{\phi}{t}\right|_\vx = \Ddot{h} s.
+\]
+
+At the interfaces the pressure is constant.  Using the equation for
+potential flow \eqref{eq:bern2} we get
+\[
+\rho (-l_1 + h) \Ddot{h} + \tfrac{1}{2} \rho \Dot{h}^2 + p_a -
+  \rho g h \sin \alpha = \rho (l_2 + h) + \tfrac{1}{2} \rho \Dot{h}^2
+  + p_a + \rho g h \sin \beta.
+\]
+
+This simplifies to give
+\[
+\Ddot{h} = \frac{g (\sin \alpha + \sin \beta)}{l_1 + l_2} h,
+\]
+
+and so we have SHM (even for large oscillations).
+
+\section{Bubbles}
+
+\subsection{General theory for spherically symmetric motion}
+
+The pressure is $p(r,t)$, and the far-field pressure is $p(\infty,t)$.
+We have radial motion, $u \propto \frac{1}{r^2}$.  If the radius of
+the bubble is $a(t)$, then $\dot{a} = u_r$ at $r=a$, which gives that
+$\vu = \frac{\hat{\vect{r}}}{r^2}\dot{a}a^2 = \grad \phi$.  So $\phi =
+- \frac{\dot{a}a^2}{r}$ and $\left.\pd{\phi}{t}\right|_r =
+-\frac{\ddot{a}a^2 + 2\dot{a}^2 a}{r}$.  Putting all this together
+gives
+\[
+-\rho \frac{\ddot{a}a^2 + 2\dot{a}^2 a}{r} +\frac{\rho}{2}
+\frac{\dot{a}^2 a^4}{r^4} + p(r,t) = p(\infty,t).
+\]
+At $r=a$
+\[
+-\rho \ddot{a}a -\frac{3}{2} \rho \dot{a}^2 = p(\infty,t) - p(a,t),
+\]
+or
+\[
+\frac{\ud}{\ud t}\left( \frac{1}{2}\rho a^3 \dot{a}^2 \right) = a^2
+\dot{a} \left( p(a,t) - p(\infty,t) \right).
+\]
+This can be interpreted as ``rate of change of kinetic energy equals
+rate of working by pressure forces''.
+
+Another rewrite gives
+\[
+p(r,t)-p(\infty,t) = \left( p(a,t) - p(\infty,t) \right)\frac{a}{r} +
+\frac{1}{2} \dot{a}^2 \left( \frac{a}{r} -\frac{a^4}{r^4} \right)
+\]
+
+\subsection{Small oscillations of a gas bubble}
+
+Assume $a(t) = a_0 + \delta a(t)$ and that $\delta_a(t)$ is small,
+$p_\infty$ is constant in time and that the gas in the bubble has
+pressure such that $\delta p_{\text{gas}} = - \gamma p_\infty \frac{3
+  \delta_a}{a_0}$ (**which can be obtained from $P V^\gamma$ constant
+for ideal adiabatic gas**).  Neglect surface tension.  Linearising
+\[
+-\rho \ddot{a}a -\frac{3}{2} \rho \dot{a}^2 = p(\infty,t) - p(a,t)
+\]
+about $a=a_0$ and $\dot{a} = 0$ we obtain
+\[
+-\rho a_0 \ddot{\delta_a} = \frac{3 \gamma p_\infty \delta_a}{a_0},
+\]
+which is SHM with $\omega = \left(\frac{3 \gamma p_\infty}{\rho
+    a_o^2}\right)^{\frac{1}{2}}$.
+
+\subsection{Total collapse of a void}
+
+Bernoulli implies that the pressure decreases as the speed increases.
+If this makes the pressure negative, then the liquid will break to
+form a void filled only with vapour. This has important consequences
+for valves and propellors (cavitation).
+
+Consider a spherical void (ie $p(a,t) = 0$) at rest with $a = a_0$ and
+$\dot{a} = 0$ at $t=0$ with a constant background pressure
+$p_\infty$.  Now
+\[
+\frac{\ud}{\ud t}\left( \frac{1}{2}\rho a^3 \dot{a}^2 \right) = a^2
+\dot{a} \left( p(a,t) - p(\infty,t) \right),
+\]
+so
+\[
+\frac{1}{2} \rho a^3 \dot{a}^2 = \frac{1}{3} p_\infty \left( a_0^3
+  -a^3 \right).
+\]
+
+Integrate this again (numerically!), to get
+\[
+t_{\text{collapse}} = 0.92 \left( \frac{\rho a_0^2}{p_\infty}
+\right)^{\frac{1}{2}}.
+\]
+
+\section[Translating Sphere]%
+{Translating sphere \& inertial reaction to acceleration}
+
+\subsection{Steady motion}
+
+Use the inertial frame moving steadily with the sphere.  It was shown
+in \S\ref{sec:Usphere} that uniform flow past a fixed sphere has
+\[
+\phi = U \cos \theta \left( r +\frac{a^3}{2r^2} \right) \text{ and}
+\]
+\[
+\vu = \left( U \cos \theta \left(1 - \frac{a^3}{r^3} \right),-U \sin
+  \theta \left( 1+ \frac{a^3}{2r^3}\right),0,\right).
+\]
+Hence at $r=a$, $\abs{\vu}=\frac{3}{2}U \sin \theta$.  Potential flow
+means we can apply
+\[
+\rho \pd{\phi}{t} + \frac{1}{2}\rho u^2 + p +\chi \text{ independent
+  of $\vx$,}
+\] with $\pd{\phi}{t}=0$ (since steady motion) to compare $r=a$ and $r=\infty$.
+This gives
+\[
+p(a,\theta)=p_\infty+\frac{1}{2}\rho U^2 \left( 1-\frac{9}{4} \sin^2
+  \theta \right).
+\]
+
+This pressure distribution is symmetric fore and aft and around the
+equator, so no force is exerted on a steadily moving sphere (**or
+indeed any 3D body**).  This surprising result is called D'Alembert's
+paradox.
+
+\subsection[Effects of friction]{** Effects of friction **}
+
+D'Alembert's paradox can be understood only by analogy with Newtonian
+dynamics: in the absence of friction forces are needed only for
+acceleration and not for uniform motion.
+
+This potential flow result is a good approximation for bubbles
+in steady motion, because they have slippery surfaces.  It is a bad
+approximation for rigid spheres in steady motion.  What is observed in
+experiments is \emph{separation} and a \emph{wake}.
+
+\vspace{1.5in}
+
+The small amount of friction produces a thin layer of fluid next to
+the rigid surface that is slowed down from the potential flow.  This
+thin \emph{boundary layer} is sensitive to the slowing down of the
+surrounding potential flow from the equator to the rear stagnation
+point, and detaches from the sphere into the body of the fluid to
+produce a shear layer of concentrated vorticity (this is called
+\emph{separation}).  Separation also occurs behind other bluff bodies
+in steady translation but can be suppressed to a certain extent behind
+streamlined/tapered bodies.  Boundary layers are covered in more
+detail in Part IIB and Part III courses.
+
+We can estimate the drag force as proportional to the projected area (A)
+times the pressure difference: applying Bernoulli gives
+\[
+\text{drag force} = \tfrac{1}{2} C_D \rho U^2 A,
+\]
+where $C_D$ is a dimensionless coefficient that must be measured
+experimentally (0.4 for a sphere, 1.1 for a disc, 1.0 for a cylinder).
+
+\subsection{Accelerating spheres}
+
+Potential flow is useful for slippery bubbles, rapid accelerations of
+small (rigid) particles and small oscillations.
+
+For the accelerating sphere, it is best to have the fluid at $\infty$
+at rest.  Consider a sphere of radius $a$ and centre $\vx_0(t)$ and
+velocity $\vu(t) = \dot{\vx}_0(t)$.  The velocity potential
+problem is then
+\begin{align*}
+  \lapl\phi &= 0 \text{ in } r \ge a, \\
+  \phi &\rightarrow 0 \text{ as } r \rightarrow \infty, \\
+  \left.\pd{\phi}{r}\right|_t &= \vu(t)\cdot\vn \text{ on } r = a.
+\end{align*}
+
+with solution
+\begin{align*}
+  \phi &= - \frac{U \cos \theta a^3}{2r^2} \\
+  &=- \frac{\vu\cdot\left(\vx - \vx_0(t) \right) a^3}{2 \abs{\vx -
+      \vx_0(t)}^3}
+\end{align*}
+
+To calculate the force, we need
+\[
+\left.\pd{\phi}{t}\right|_r = \frac{-\dot{\vu}\cdot\vect{r} a^3}{2r^3}
++ \vu\cdot\left( \text{terms linear in $\dot{\vx}_0$} \right).
+\]
+Now $\grad{\phi} = \text{ terms linear in $\vu$}$.  These linear terms
+must be the same as for steady motion.  Hence the pressure on the
+sphere is $p = p_\infty + \rho \frac{\dot{\vu}\cdot\vect{r}}{2} +
+\frac{1}{2} \rho U^2 \left( 1 - \frac{9}{4}\sin^2 \theta \right)$.
+The force on the sphere is given by
+\[
+\int_{r=a} -p \vn \,\ud A = -\frac{\rho}{2} \int_{r=a} \left(
+  \dot{\vu}\cdot\vect{r} \right) \frac{\vect{r}}{a} \,\ud A
+\]
+Now by the isotropy of the sphere, $\int_{r=a} r_i r_j \,\ud A =
+\frac{4 \pi a^4}{3} \delta_{ij}$, so
+\[
+\vF = -\frac{1}{2} \rho \dot{\vu} \frac{4 \pi a^4}{3} \frac{1}{a} = -m^*
+\dot{\vu}
+\]
+where $m^* = \frac{1}{2}\rho_{\text{fluid}} \frac{4 \pi a^3}{3}$, the added
+(or effective or virtual) mass.
+
+\subsection{Kinetic Energy}
+
+The kinetic energy of fluid motion in a volume $V$ is
+
+\begin{align*}
+  T &= \int_V \frac{1}{2} \rho u^2 \,\ud V \\
+  &= \frac{\rho}{2} \int_V \left( \grad{\phi} \right)^2 \,\ud V \\
+  &= \frac{\rho}{2} \int_V \divr{\left(\phi \grad{\phi}\right)}
+  - \phi \lapl\phi \,\ud V \\
+  &= \frac{\rho}{2} \int_S \phi \left(\grad{\phi}\right)\cdot\vect{dS} \\
+  &= \int_S \frac{\rho}{2} \phi \dgrad{\vn}{\phi}\, \ud S
+\end{align*}
+
+For the translating sphere we get $T = \frac{1}{2} m^* U^2$.
+
+\section{Translating cylinders with circulation}
+
+The potential for flow past a uniform cylinder with circulation
+$\kappa$ is
+
+\[
+\phi = U \cos \theta \left( r + \frac{a^2}{r} \right) + \frac{\kappa
+  \theta}{2 \pi},
+\]
+with
+\[
+\vu = \left( U \cos \theta \left( 1 - \frac{a^2}{r^2} \right), -U \sin
+  \theta \left( 1 + \frac{a^2}{r^2} \right) + \frac{\kappa}{2 \pi r}
+\right).
+\]
+On $r=a$, $\abs{\vu} = -2 \sin \theta U + \frac{\kappa}{2 \pi a}$, thus
+\[
+p(a,\theta) = p_\infty + \frac{1}{2} \rho \left( U^2 - \left(
+    \frac{\kappa}{2 \pi a} - 2 U \sin \theta \right)^2 \right)
+\]
+and so (by doing the integral), $\vF = \left( 0,-\rho U \kappa \right)$
+(in Cartesians). This is a lift force perpendicular to the velocity.
+The same lift
+force applies to arbitrary aerofoils (at least to the first
+approximation).
+
+\subsection[Generation of circulation]{** Generation of circulation
+  **}
+
+In order to calculate the lift on an aerofoil we thus need to know the
+circulation $\kappa$.  Potential flow without circulation would have
+very large velocities around the sharp trailing edge.
+
+\vspace{1.5in}
+
+This is strongly opposed by friction, and the flow avoids these high
+velocities by shedding an eddy as the aerofoil starts to move.  This
+eddy is of such a size as to streamline the flow on the aerofoil.
+
+\vspace{1.5in}
+
+The circulation around $C_1 + C_2$ is initially zero and so remains
+zero at all times (by Kelvin's theorem).  Hence the circulation around
+the aerofoil (the \emph{bound vortex}) is equal in magnitude to the
+circulation in the shed \emph{starting vortex} (but opposite in
+sign).  The strength is chosen to avoid a singularity at the sharp
+trailing edge, a condition which gives $\kappa \approx \pi l U \sin
+\alpha$, provided $\alpha < 14^\circ$.  For $\alpha > 14^\circ$ the
+ flow separates and the aerofoil stalls.%
+\footnote{See Fluids IIB or Acheson for more details.} 
+
+Since $\divr\bso = 0$ vortex lines cannot end in the fluid, and in
+fact the bound vortex on the wing is connected to the starting vortex
+by two vortices shed from the wingtips.  These are responsible for the
+observed vapour trails.
+
+\vspace{1.5in}
+
+\section{More solutions to Laplace's equation}
+
+\subsection{Image vortices and 2D vortex dynamics}
+
+Recall that a single line vortex has
+\[
+\phi = \frac{\kappa \theta}{2 \pi}, \text{ with } \vu = \frac{\kappa}{2
+  \pi r} (-y,x).
+\]
+
+Since the potential flow equations are linear we can superpose
+solutions.
+
+\vspace{1.5in}
+
+This configuration would give
+
+\[
+\phi = \sum_i \frac{\kappa_i \theta_i}{2 \pi}.
+\]
+
+This gives us a new method of finding solutions in ``nice''
+geometries.  For instance, consider a vortex near a plane wall as
+shown.
+
+\vspace{2in}
+
+The velocity field is the same as if there was an \emph{image vortex}
+of opposite strength so that normal velocities cancel.  This image
+produces a velocity $\frac{\kappa}{4 \pi d}$ at the real vortex, and
+so the vortex trundles along parallel to the wall as shown.
+
+\vspace{1.5in}
+
+\subsubsection*{Application to dispersal of wingtip vortices}
+
+\vspace{1.5in}
+
+We have vortices at $(\pm x_0(t), y_0(t))$ and so we need to add
+images at $(\pm x_0(t), -y_0(t))$.  Now
+
+\[
+\Dot{x}_0 = \frac{\kappa}{4 \pi} \frac{x_0^2}{y_0(x_0^2 + y_0^2)}
+\quad
+\text{ and }
+\quad
+\Dot{y}_0 = -\frac{\kappa}{4 \pi} \frac{y_0^2}{x_0(x_0^2 + y_0^2)}.
+\]
+
+This gives $\frac{\ud y_0}{\ud x_0} = - \frac{y_0^3}{x_0^3}$, or
+\[
+\frac{1}{x_0^2} + \frac{1}{y_0^2} = C.
+\] 
+
+\subsection{Flow in corners}
+
+We use $\phi = r^\mu \sin \mu \theta$, which satisifies
+\[
+\pd{\phi}{\theta} = 0 \text{ on } \theta = \pm \frac{\pi}{2 \mu}.
+\]
+
+\vspace{2in}
+
+Now $\abs{\vu} \propto r^{\mu - 1}$, and so there are infinite
+velocities as $r \to 0$ if $\mu < 1$.  The effect of friction here is
+to introduce a circulation.
+
+\vspace{1.5in}
+
+\chapter{Free Surface Flows}
+
+\section{Governing equations}
+
+The flow is assumed to start from rest and is thus irrotational (and
+remains so).  Let the free surface be at $\zeta(x,y,t)$, $\abs{\zeta}$
+sufficiently small for nice things to happen.  So
+
+\begin{align*}
+  \lapl\phi &= 0 \quad \zeta \ge z \ge -h, \\
+  \rho \pd{\phi}{t} + \frac{1}{2}\rho \abs{\grad{\phi}}^2 + p +\rho g
+  z
+  &= f(t), \\
+  p &= p_{\text{air}} \text{ at } z = \zeta, \\
+  \pd{\zeta}{t} + \pd{\zeta}{x} \left.\pd{\phi}{x}\right|_{z = \zeta} +
+  \pd{\zeta}{y} \left.\pd{\phi}{y}\right|_{z = \zeta}
+  &= \left.\pd{\phi}{z}\right|_{z = \zeta}, \\
+  \left.\pd{\phi}{z}\right|_{z=-h} &= 0.
+\end{align*}
+
+We will restrict to the 1-D case but even so, to have any hope of
+solving this we have to linearise it.
+\begin{enumerate}
+\item Throw out the nonlinear terms.
+\item Evaluate at $z=\zeta$ using information at $z=0$.
+\item Throw out new nonlinear terms.
+\end{enumerate}
+
+\begin{align*}
+  \lapl\phi &= 0 \quad 0 \ge z \ge -h, \\
+  \rho \left. \pd{\phi}{t}\right|_{z=0} + \rho g \zeta &= f(t), \\
+  p &= p_{\text{air}} \text{ at } z = \zeta, \\
+  \pd{\zeta}{t} &= \left.\pd{\phi}{z}\right|_{z = 0}, \\
+  \left.\pd{\phi}{z}\right|_{z=-h} &= 0.
+\end{align*}
+
+We seek separable solutions and obtain $\phi(x,z,t) = A \cosh k
+\left(z+h \right) e^{i \left( k x - \omega t \right)}$.  Using the
+dynamic boundary condition $\rho \left.\pd{\phi}{t}\right|_{z=0} +
+\rho g \zeta = f(t)$, we obtain the dispersion relation
+\[
+\omega^2 = g k \tanh k h.
+\]
+
+In deep water, $h \gg \frac{1}{k}$, so $\tanh k h \approx 1$, giving
+$\omega^2 = k h$ and $c = \sqrt{\frac{g}{k}}$\footnote{The wave
+  speed...}.  In shallow water, $\tanh k h \approx k h$ giving $\omega
+= k \sqrt{g h}$ and $c = \sqrt{g h}$.
+
+\subsection{Particle paths under a wave}
+
+By linearising, we get that
+\begin{align*}
+  x(t) &= x_0 - \frac{i a \cosh k \left(z_0 +h \right)}{\sinh k h}
+  e^{i \left( k x_0 - \omega t
+    \right)} \\
+  z(t) &= z_0 + \frac{a \sinh k \left(z_0 +h \right)}{\sinh k h} e^{i
+    \left( k x_0 - \omega t \right)},
+\end{align*}
+
+which is elliptic motion. $x_0$ and $z_0$ are the mean positions of
+the particles in the $(x,z)$ plane.
+
+In the deep water limit we get circular motion and in the shallow
+water limit we get mainly horizontal motion.
+
+\section{Standing Waves}
+
+Consider waves in a deep rectangular box, $0 \le x \le a$, $0 \le y
+\le b$ and $z \le 0$.  Look for linearised waves with displacement
+$\zeta(x,y,t)$.  Try separable solutions to obtain
+\[
+\phi (x,y,z,t) = A \cos \frac{m \pi x}{s} \cos \frac{n \pi y}{b} e^{k
+  z} e^{-i \omega t}.
+\]
+The Laplace equation determines $k$ from $m$ and $n$ by
+\[
+k^2 = \pi^2 \left( \frac{m^2}{a^2} + \frac{n^2}{b^2} \right),
+\] and the dynamic boundary conditions determine $\omega^2 = g k$.  This is to
+be expected, since a standing wave is the sum of progressive waves.
+
+\subsection{Rayleigh-Taylor instability}
+
+Turn the box in the previous section upside down (or equivalently
+replace $g$ with $-g$).  This makes $\omega$ imaginary, leading to a
+$e^{\sqrt{g k}t}$ term, which quickly magnifies any deviations from
+$\zeta = 0$.  The largest growth rate is for large $k$, but this is
+cancelled by surface tension in the real world.
+
+\section{River Flows}
+
+These are nonlinear problems, but can be solved since the shallowness
+of the river in comparision to its length means that the flow is
+nearly unidirectional.
+
+\subsection{Steady flow over a bump}\label{sec:riverbump}
+
+\vspace{1.5in}
+
+What happens to the free surface at the bump?
+
+We assume that
+
+\begin{itemize}
+\item the river has vertical sides and constant width;
+\item it varies only slowly in the $x$ direction, so that the flow is
+  (to a good approximation) horizontal and uniform across any vertical
+  section (since $\pd{u}{z} = \omega_y = 0$);
+\item the flow is steady;
+\item far from the bump ($x \to \pm \infty$), $\zeta \to 0$, $h \to
+  h_\infty$ and $U \to U_\infty$.
+\end{itemize}
+
+Then mass conservation gives
+\begin{equation}\label{eq:mass1}
+U (\zeta + h) = U_\infty h_\infty,
+\end{equation}
+
+whilst applying Bernoulli's equation \eqref{eq:bern1} to the surface
+streamline gives
+
+\begin{equation}\label{eq:freebern}
+\frac{1}{2} \rho U^2 + p_{\text{atm}} + \rho g \zeta
+= \frac{1}{2} \rho U_\infty^2 + p_{\text{atm}}.
+\end{equation}
+
+Now eliminate $\zeta$ between \eqref{eq:mass1} and \eqref{eq:freebern}
+to obtain
+
+\begin{equation}\label{eq:river1}
+\frac{1}{2} U^2 + \frac{g U_\infty h_\infty}{U}
+= \frac{1}{2} U_\infty^2 + g h.
+\end{equation}
+
+We can now extract information from \eqref{eq:river1} graphically.
+
+\vspace{2in}
+
+There are thus two roots and three possibilities.
+
+\begin{itemize}
+\item If the bump is too big then the assumption of steady/slowly
+  varying flow must fail.  This gives a hydraulic jump --- see
+  \S\ref{sec:hydraulic}.
+\item If the bump is just right then the flow can pass smoothly from
+  one root the other (e.g. flow over a weir in \S\ref{sec:weir}).
+\item If the bump is not too large then the flow stays on the same
+  root.  This has two subcases.
+  \begin{itemize}
+    \item On the left hand root: $U_\infty < \sqrt{g h_\infty}$ ---
+      flow slower than shallow water waves --- we have
+\[
+\text{bump up} \Rightarrow h \downarrow \Rightarrow \text{RHS} \downarrow
+\Rightarrow u \uparrow \Rightarrow \zeta \downarrow.
+\]
+
+i.e. slow deep flow converts PE to KE to maintain the mass flux. 
+
+    \item On the right hand root: $U_\infty > \sqrt{g h_\infty}$ ---
+      flow faster than shallow water waves --- we have
+\[
+\text{bump up} \Rightarrow h \downarrow \Rightarrow \text{RHS} \downarrow
+\Rightarrow u \downarrow \Rightarrow \zeta \uparrow.
+\]
+
+i.e. fast shallow flow converts KE to PE to maintain the mass flux.
+
+  \end{itemize}
+\end{itemize}
+
+Normal rivers are in the slow deep state.
+
+\subsection{Flow out of a lake over a broad weir}\label{sec:weir}
+
+This is the same as \S\ref{sec:riverbump} but with a smooth change of
+branch.  We need the bump ``just right''.
+
+\vspace{1.5in}
+
+How fast is the outflow as a function of the minimum of $h(x)$?
+
+The lake is large and deep, so we take the limit $h_\infty \to
+\infty$, $U_\infty \to 0$ with $U_\infty h_\infty = Q$ fixed.  Mass
+conservation gives
+
+\[
+U (\zeta + h) = Q
+\]
+
+and Bernoulli on the surface streamline gives
+\[
+\frac{1}{2} U^2 + g \zeta = 0.
+\]
+
+Eliminating $\zeta$ as before gives
+
+\begin{equation}\label{eq:river2}
+\frac{1}{2} U^2 + \frac{g Q}{U} = g h(x),
+\end{equation}
+
+which is a cubic for unknown $U(x)$ given $h(x)$.
+
+\vspace{2in}
+
+The flow starts high on the LH branch in the lake, but comes out of
+the weir high on the RH branch.  The minimum of $h(x)$ (the crest of
+the weir) must be at the join of the branches, and so
+\[
+Q = \left( \frac{8}{27} g h_{\text{min}}^3 \right)^{\frac{1}{2}},
+\]
+
+giving the flow rate as a function of the height of the weir.
+
+At the crest of the weir,
+$U = \left( \frac{2}{3} g h_{\text{min}}^3 \right)^{\frac{1}{2}}$ and
+mass conservation gives
+\[
+\zeta_{\text{crest}} = - \frac{1}{3} h_{\text{min}}
+\]
+and the fluid depth is $\frac{2}{3} h_{\text{min}}$.  Also,
+$U^2_{\text{crest}} = g ( \text{fluid depth} )_{\text{crest}}$, so
+that the flow is travelling at the speed of shallow water waves at the
+crest.  There can therefore be no communication from after the weir
+back to the lake.
+
+\subsection{Hydraulic jumps}\label{sec:hydraulic}
+
+\vspace{2in}
+
+Given $U_1$ and $h_1$ from river data and $h_2$ from tidal theory can
+we predict the speed $V$ of the jump (and the flow $U_2$)?
+
+The energy loss in the turbulent jump makes Bernoulli inapplicable
+(friction is important in the small-scale unsteady motions).  However
+the flat-bottomed case provides an application of the momentum
+integral equation.
+
+Change to a frame moving with the jump.  Away from the jump there is
+no vertical acceleration and so the pressure is hydrostatic there.
+
+\vspace*{2in}
+
+Taking the horizontal component of
+
+\[
+\frac{\ud}{\ud t} \int_V \rho \vu \,\ud V = -\int_A \left(\rho \vu (\vu\cdot\vn)
++p \vn\right) \,\ud A + \int_V \vF^V \,\ud V,
+\]
+
+and noting that the flow is steady on average we obtain (from the area
+integral)
+
+\begin{multline*}
+\rho (V + U_1)^2 h_1 + (p_a h_1 + \frac{1}{2} \rho g h_1^2) +
+  p_a(h_2 - h_1)\\
+ = \rho (V - U_2)^2 h_2 + (p_a h_2 + \frac{1}{2} \rho
+  g h_2^2),
+\end{multline*}
+
+which boils down to
+\[
+(V+U_1)^2 h_1 - (V - U_2)^2 h_2 = \frac{1}{2} g (h_2^2 - h_1^2).
+\]
+
+Mass conservation gives $(V + U_1) h_1 = (V - U_2) h_2$, and
+eliminating $V - U_2$ between these equations gives (eventually)
+
+\[
+(V+U_1)^2 = \frac{g (h_1+h_2)h_2}{2 h_1}.
+\]
+
+We can solve this for $V$ and then solve
+\[
+(V-U_2)^2 = \frac{g (h_1+h_2)h_1}{2 h_2}
+\]
+for $U_2$.
+
+Note that if $h_2 > h_1$ then $V - U_2 < \sqrt{g h_2}$ and $V+U_1 >
+\sqrt{g h_1}$ --- the jump travels faster than shallow water waves on
+the river side and overtakes all information of its future arrival.
+
+\backmatter
+
+\begin{thebibliography}{9}
+\bibitem{Acheson} D.J. Acheson, \emph{Elementary Fluid
+    Dynamics}, OUP, 1990.
+  
+  {\sffamily \small This is an excellent book, easy to read and with
+    everything in.  It is also good for Fluids IIB.  Highly
+    recommended.}
+  
+\bibitem{Batchelor} G.K. Batchelor, \emph{An Introduction to Fluid
+    Dynamics}, CUP, 1967.
+  
+  {\sffamily \small The lecturer recommended this, and it is a
+    reasonably good book for Fluids IIB.  Personally I think you'd be
+    wrong in your head to buy it for this course, but YMMV.}
+  
+\bibitem{VanDyke} M. van Dyke, \emph{An Album of Fluid Motion}, The
+  Parabolic Press, 1982.
+  
+  {\sffamily \small Lots of pictures of flows.  An excellent book.  Go
+    out and buy it.  Now.}
+\end{thebibliography}
+
+\section*{Related courses}
+
+In Part IIA there are courses on \emph{Transport Processes} and
+\emph{Theoretical Geophysics}.  The IIB fluids courses are \emph{Fluid
+  Dynamics 2} and \emph{Waves in Fluid and Solid Media}, both of which
+use the material in this course to some extent.
+
+\end{document}

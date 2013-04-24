@@ -1,0 +1,2144 @@
+\documentclass{notes}
+
+\usepackage{varioref}
+
+\newcommand{\cS}{\mathcal{S}}
+\newcommand{\cE}{\mathcal{E}}
+\newcommand{\cB}{\mathcal{B}}
+\newcommand{\cZ}{\mathcal{Z}}
+\newcommand{\cG}{\mathcal{G}}
+\newcommand{\cO}{\mathcal{O}}
+\newcommand{\cL}{\mathcal{L}}
+\newcommand{\ket}[1]{|#1\rangle}
+\newcommand{\bra}[1]{\langle#1|}
+\newcommand{\ave}[1]{\langle#1\rangle}
+\newcommand{\pdf}[3]{\left(\pd{#1}{#2}\right)_{#3}}
+\renewcommand{\k}{\vect{k}}
+
+\begin{document}
+
+\frontmatter
+
+\title{Statistical Physics}
+
+\lecturer{Dr.~A.~J.~Macfarlane}
+\maintainer{Paul Metcalfe}
+\date{Lent 1998} \maketitle
+
+\thispagestyle{empty}
+\noindent\verb$Revision: 2.0 $\hfill\\
+\noindent\verb$Date: 1999/09/17 15:37:41 $\hfill
+
+\vspace{1.5in}
+
+The following people have maintained these notes.
+
+\begin{center}
+\begin{tabular}{ r  l}
+-- date & Paul Metcalfe
+\end{tabular}
+\end{center}
+
+\tableofcontents
+
+\chapter{Introduction}
+
+These notes are based on the course ``Statistical Physics'' given by
+Dr.~A.~J.~Macfarlane in Cambridge in the Lent Term 1998.  These
+typeset notes are totally unconnected with Dr.~Macfarlane.  The
+recommended books for this course are discussed in the bibliography.
+
+\alsoavailable
+\archimcopyright
+
+\mainmatter
+
+\chapter{Quantum Statistical Mechanics}
+
+\section{Introduction to Quantum Statistical Mechanics}
+
+Statistical mechanics deals with macroscopic systems of many particles.
+Consider an isolated system $\cS$ of gas in a vessel whose walls neither
+let heat in or out and is subject to no mechanical action.  No matter
+how it is prepared, it is an experimental fact that $\cS$ reaches a steady
+state (a state of thermodynamic equilibrium) in which a set $\Sigma$
+of (rather few) thermodynamic variables are constant.  $\Sigma$
+includes the pressure $P$, volume $V$, temperature $T$, total energy
+$E$ and entropy $S$.
+
+Any state of $\cS$ (before or after thermodynamic equilibrium is reached)
+contains particles with positions and momenta changing in time.  We cannot
+possibly analyse this in detail --- even if we knew the forces and initial
+conditions, and could solve the resulting system there is no hope that
+we could organise usefully the vast amount of data.
+
+At best, we aim to treat the possible states of motion of $\cS$ by some
+averaging or statistical procedure that allows us to predict values of
+the variables in $\Sigma$ that are constant in states of thermodynamic
+equilibrium of $\cS$.
+
+We use quantum mechanical ideas to approach the subject.  Consider
+
+\begin{itemize}
+\item \emph{microstates} of $\cS$, the stationary quantum states
+$\ket{i}$.
+\item \emph{macrostates}, which correspond to states of thermodynamic
+equilibrium.
+\end{itemize}
+
+The latter are not states in the quantum mechanical sense, but do involve
+the vast numbers of microstates.
+
+The \emph{ergodic hypothesis} (which is provable for some systems) is that
+$\cS$ passes in time through all its possible states compatible with
+its state of thermodynamic equilibrium.  This allows us to replace
+time averages for a single system $\cS$ with averages at a fixed time
+over a suitable ensemble $\cE$ of systems, each identical to $\cS$ in
+its macroscopic properties.  The most probable state of $\cE$ reveals
+which microstates of $\cS$ contribute to its macroscopic states of
+thermodynamic equilibrium and yield excellent approximations to the
+values of its thermodynamic variables.
+
+Let $E$, $N$ be the total energy and total number of particles of $\cS$
+respectively.  One meets three types of ensemble.
+
+\begin{itemize}
+\item \emph{microcanonical} : each member of $\cE$ has the same values
+of $E$ and $N$.
+\item \emph{canonical} : each member of $\cE$ has $N$ particles but
+$E$ is not fixed, although the average total energy is time independent.
+\item \emph{grand} : neither $E$ nor $N$ is fixed, although the averages
+are.
+\end{itemize}
+
+For the latter two, fluctuations about the average values are found to
+be very small and all three types of ensemble give the same thermal
+physics.  This course studies mainly canonical ensembles.  We will do
+systems with identical bosons/fermions via the grand ensemble for
+technical simplicity.
+
+The fact that averaging procedures give reliable estimates of values of
+physical variables and apparently different procedures yield equivalent
+results is due to the effect of the very large number of particles
+involved.  For instance, consider the probability $p_m$ of obtaining
+$N/2 + m$ heads from $N$ coin tosses.
+
+\[
+p_m = 2^{-N} \binom{N}{\tfrac{N}{2} + m}
+\sim \sqrt{\frac{2}{\pi N}} e^{-\frac{2 m^2}{N}},
+\]
+
+using Stirling's formula%
+\footnote{$\log n! \sim n \log n - n + \tfrac{1}{2}
+\log 2 \pi n$}
+for $N \gg m \gg 0$. If $N = 10^{23}$ and $m=10^{17}$ then the
+exponential term $e^{-10^{11}}$ is effectively zero.
+
+\section{Canonical ensemble}
+
+We study a system $\cS$ of $N$ particles in a volume $V$ with $N$ and
+$V$ fixed.  The microstates of $\cS$ are the (complete orthogonal)
+set $\ket{i}$ with energy eigenvalues $E_i$.  We assume the spectrum
+is discrete but with possible degeneracy.
+
+We associate with $\cS$ a \emph{canonical ensemble} $\cE$.  This
+is a very large number $A$ of distinguishable replicas of $\cS$,
+$\cS_1, \dots, \cS_A$.  Suppose that in a possible state
+of $\cE$ there are $a_i$ members of $\cE$ in the microstate $\ket{i}$.
+Then
+
+\begin{equation}\label{eq:canconst}
+\sum_i a_i = A \qquad \text{and} \qquad \sum_i a_i E_i = A E.
+\end{equation}
+
+The average energy of the members of $\cE$ is thus the fixed value $E$.
+
+Given a set $\{ a_i \}$ (a \emph{configuration} of $\cE$) there
+are $W(\vect{a}) = \tfrac{A!}{\prod_i a_i!}$ ways of realising it.
+
+\begin{proof}
+We can distribute $a_1$ systems in the microstate $\ket{1}$ over
+$\cE$ in $\tbinom{A}{a_1}$ ways.  Then we can distribute the $a_2$
+states in $\ket{2}$ in $\tbinom{A-a_1}{a_2}$ ways (and so on).  Thus
+
+\[
+W(\vect{a}) = \binom{A}{a_1} \binom{A-a_1}{a_2} \dots
+= \frac{A!}{\prod_i a_i!}.
+\]
+\end{proof}
+
+We assign equal \emph{a priori} probability to each way of
+realising each possible configuration of $\cE$ and thus
+there is a probability proportional to $W(\vect{a})$ of realising
+the configuration $\{a_i\}$.
+
+We will associate the state of thermodynamic equilibrium of $\cS$
+(for the fixed values $N$, $V$, $E$) with the configuration of
+$\cE$ that is most probable in the presence of the constraints
+\eqref{eq:canconst}.
+
+To compute this suppose $A \gg 0$ such that $a_i \gg 0$
+(negligible probability attaches to configurations where this fails).
+For large $n$, Stirling's formula allows $\log n! \sim n \left( \log n - 1
+\right)$ and so
+
+\[
+\log W \sim A \log A - A - \sum_i a_i \left( \log a_i - 1 \right)
+= A \log A - \sum_i a_i \log a_i.
+\]
+
+We seek to maximise this subject to the constraints \eqref{eq:canconst}.
+We use two Lagrange multipliers $\alpha$ and $\beta$ and solve
+
+\[
+0 = \pd{}{a_j} \left( \log W - \alpha \sum_i a_i - \beta \sum_i
+a_i E_i \right)
+\]
+
+and so $\log a_j + 1 + \alpha + \beta E_j = 0$.  Thus
+
+\begin{equation}\label{eq:ajs}
+a_j = e^{-1 - \alpha - \beta E_j}.
+\end{equation}
+
+We eliminate $\alpha$ via $A = \sum_i a_i = e^{-1 - \alpha} Z$,
+defining the canonical partition function
+
+\begin{equation}\label{eq:canpar}
+Z = \sum_i e^{- \beta E_i} \equiv
+\sum_{E_j} \Omega(E_j) e^{-\beta E_j},
+\end{equation}
+
+where $\Omega(E_j)$ is the degeneracy of the energy level $E_j$.
+
+The fraction of members of $\cE$ in the microstate $\ket{i}$
+in the macrostate of thermodynamic equilibrium is
+
+\begin{equation}\label{eq:boltzman}
+\rho_i = \frac{a_i}{A} = \frac{1}{Z} e^{- \beta E_i}.
+\end{equation}
+
+This is the \emph{Boltzmann distribution}, and may be thought of
+as the probability of finding $\ket{i}$ in the state of thermodynamic
+equilibrium.
+
+We define the average $\ave{X}$ of a physical variable $X$ taking the
+value $X_i$ in the state $\ket{i}$ by
+
+\begin{equation}\label{eq:ave}
+\ave{X} = \sum_i \rho_i X_i.
+\end{equation}
+
+For instance $\ave{E} = \frac{1}{A} \sum_i a_i E_i = E$ (reassuringly).
+
+$Z$ is very important.  It leads directly from quantum mechanical data
+to calculation of the thermodynamic variables for $\cS$ in
+thermodynamic equilibrium.  For instance,
+
+\begin{equation}\label{eq:energy}
+E = - \pd{\log Z}{\beta}.
+\end{equation}
+
+Here, holding $V$ fixed corresponds to keeping all the $E_i$ fixed.
+
+For $A$ large (as in all cases of interest) the most probable state
+is overwhelmingly so.  It gives in effect the average over all possible
+states of the ensemble.  The idea of associating average values with
+actual physical predictions depends on the possible variances being negligible.
+
+We can calculate the variance in the energy in a similar way.  Note that
+$E = - \frac{1}{Z} \pd{Z}{\beta}$ and so
+
+\[
+\pd{E}{\beta} = -\frac{1}{Z} \pd{^2 Z}{\beta^2}
++ \frac{1}{Z^2} \left( \pd{Z}{\beta} \right)^2
+= - \ave{E^2} + \ave{E}^2 = - \left( \Delta E \right)^2.
+\]
+
+For typical large systems $E \propto N$, and as $E$ depends smoothly
+on $\beta$ we expect $\pd{E}{\beta} \propto N$ as well.  Thus
+\[
+\frac{\abs{\Delta E}}{E} \propto \frac{\sqrt{N}}{N} = N^{-\frac{1}{2}},
+\]
+
+which is very small for very large $N$.
+
+\section{Temperature}\label{sec:temp}
+
+Given two systems $\cS_a$ and $\cS_b$ with fixed volumes $V_a$, $V_b$
+and numbers of particles $N_a$, $N_b$ respectively we place them
+in contact to form a composite system $\cS_{ab}$ such that energy
+can pass from one to the other and a state of thermodynamic equilibrium is
+reached.  We make a canonical ensemble $\cE_{ab}$ for $\cS_{ab}$
+by distributing $A$ replicas of $\cS_a$ and $A$ replicas of $\cS_b$
+independently across the $A$ members of $\cE_{ab}$ so that
+each member of $\cE_{ab}$ has a component of type $\cS_{ab}$.
+
+Suppose that $\cS_a$ has microstates $\ket{i}$ of energy $E_{ai}$,
+$\cS_b$ has microstates $\ket{\sigma}$ of energy $E_{b \sigma}$
+and $\cS_{ab}$ has microstates $\ket{i,\sigma}$ of energy
+$E_{ai} + E_{b\sigma}$.%
+\footnote{If the interaction of particles of $\cS_a$ with those
+of $\cS_b$ is negligible, except insofar as necessary to allow a
+state of thermal equilibrium to be reached.}
+
+Suppose the $\ket{i}$ occurs $a_i$ times, $\ket{\sigma}$ occurs
+$b_i$ times and $\ket{i,\sigma}$ occurs $c_{i \sigma}$ times in
+$\cE_{ab}$.  Then we have
+
+\begin{gather}
+\sum_i a_i = A  \qquad \sum_\sigma b_\sigma = A \label{eq:const1} \\
+a_i = \sum_{\sigma} c_{i \sigma} \qquad b_\sigma = \sum_i c_{i \sigma} \qquad
+\sum_{i \sigma} c_{i \sigma} = A \label{eq:const1p} 
+\end{gather}
+
+We demand that the average energy or $\cE_{ab}$ be fixed at
+
+\begin{gather}
+A E = \sum_i a_i E_{a i} + \sum_\sigma b_\sigma E_{b \sigma}
+\label{eq:const2}\\
+A E = \sum_{i \sigma} c_{i \sigma} \left(E_{a i} + E_{b \sigma}\right).
+\label{eq:const2p}
+\end{gather}
+
+Now the configuration $\{ c_{i \sigma}\}$ arises in
+
+\begin{equation}\label{eq:obj}
+W(\vect{c}) \propto \frac{A!}{\prod_{i \sigma} c_{i \sigma}!}
+\end{equation}
+
+ways and the configuration $\{ a_i\} \{b_\sigma\}$ arises in
+
+\begin{equation}\label{eq:objp}
+W(\vect{a}) W(\vect{b}) \propto \frac{A!}{\prod_i a_i!} \frac{A!}{\prod_\sigma
+b_\sigma!}
+\end{equation}
+
+ways.  We can calculate the most probable distribution of $\{ c_{i \sigma}\}$
+by maximising \eqref{eq:obj} subject to \eqref{eq:const1p} and
+\eqref{eq:const2p}.  We get
+
+\[
+c_{i \sigma} = e^{-1 - \alpha_{a b} - \beta \left(E_{a i}
++ E_{b \sigma}\right)} \qquad \rho_{i \sigma} = \frac{c_{i \sigma}}{A}.
+\]
+
+We can also maximise \eqref{eq:objp} subject to \eqref{eq:const1}
+and \eqref{eq:const2} to get
+
+\begin{gather*}
+a_i = e^{-1 - \alpha_a - \beta E_{a i}} \qquad \rho_i = \frac{a_i}{A} \\
+b_\sigma = e^{-1 - \alpha_b - \beta E_{b \sigma}} \qquad \rho_\sigma =
+\frac{b_\sigma}{A}.
+\end{gather*} 
+
+Defining
+
+\[
+Z_{a b}(\beta) = \sum_{i \sigma} e^{-\beta \left( E_{a i}
++ E_{b \sigma} \right)} \qquad
+Z_a(\beta) = \sum_i e^{-\beta E_{a i}} \qquad
+Z_b(\beta) = \sum_\sigma e^{-\beta E_{b \sigma}}
+\]
+
+we see that $Z_{a b}(\beta) = Z_a(\beta) Z_b(\beta)$ and
+$\rho_{i \sigma} = \rho_i \rho_\sigma$.  A common value for $\beta$
+characterises the state of thermal equilibrium of $\cS_{ab}$ and
+it is natural to assume that $\beta$ is some function of temperature
+$T$ and that the average energy (\emph{the} energy) of a system
+is a function of $N$, $V$ and $T$.
+
+We define $T$ by $\beta = \frac{1}{k T}$ where $k$ is a constant.
+
+As this argument applies to any two systems, $k$ should be a universal
+constant (Boltzmann's constant) the same for all systems when
+a universal definition of $T$ is used.  We will define $T$ for a standard
+system (a thermometer) and for other systems by putting them into
+a state of thermal equilibrium with our standard system.
+
+Recall the ideal gas law, $PV = N k T$ for a sample of $N$ molecules.%
+\footnote{This applies to all gases at sufficiently low density.}
+$k$ is the same because equal volumes of all gases at fixed temperature
+and pressure are observed to have the same number of molecules.
+$T$ is in degrees Kelvin.
+
+\section{Towards thermodynamic variables}
+
+Recall that in quantum mechanics, spinless particles in a cube
+of side $L$ have energies $E_\n = \frac{\hbar^2}{2 m L^2}
+\abs{\n}^2$, where $\n \in \mathbb{N}^3$.  Note
+that $E \propto V^{-\frac{2}{3}}$ and we generalise this to
+$E_i = E_i(V)$.  Consider $\cS_{\text{gas}}$ in thermodynamic
+equilibrium in a container of volume $V$ and change $V$ by a small
+amount by slowly moving one of its walls.
+
+\vspace{1in}
+
+The $E_i$ will change according to $E_i \mapsto E_i
++ \pd{E_i}{V} \delta V$ and changes in which the $\rho_i$ do
+not change will be examined first.
+
+The change in energy is supplied by the work done on $\cS$ by a piston
+applied to the right hand wall.  For slow motion the system passes
+through successive positions of thermal equilibrium and then
+the applied force just balances the pressure force $PA$.
+Thus the work done to the system is $- P A \delta l = - P \delta V$.
+$\delta E = \delta W = - P \delta V$.  Now $E = \sum_i \rho_i E_i$
+and so
+\begin{equation}\label{eq:pressure}
+P = - \sum_i \rho_i \pd{E_i}{V} = \frac{1}{\beta} \pd{}{V} \log Z.
+\end{equation}
+
+Consider next changes in which the $\rho_i$ are allowed to vary.
+Then $\delta E = -P\delta V + \sum_i E_i \delta \rho_i$,
+and note that $\sum_i \delta \rho_i = 0$.
+
+Define the entropy
+
+\begin{equation}\label{eq:entdef}
+\begin{split}
+S &= \frac{k}{A} \log W_{\text{max}} \qquad \text{that is, $W$
+at thermal equilibrium} \\
+&= \frac{k}{A} \left( A \log A - \sum_i a_i \log a_i \right) \\
+&= \frac{k}{A} \left( A \log A - \sum_i a_i \log \rho_i
+- \log A \sum_i a_i \right) \\
+&= - k \sum_i \rho_i \log \rho_i \qquad \text{at thermal equilibrium.}
+\end{split}
+\end{equation}
+
+We see that
+
+\begin{align*}
+\delta S &= -k \sum \delta \rho_i\left(\log \rho_i + \rho_i \frac{1}{\rho_i}
+\log \rho_i \right) \\
+&= - k \sum \delta \rho_i \left( - \beta E_i - \log Z + 1 \right) \\
+&= \frac{1}{T} \sum_i E_i \delta \rho_i
+\end{align*}
+
+and thus $\sum_i E_i \delta \rho_i = T \delta S$.  We have defined
+$S$ such that
+
+\begin{equation}\label{eq:firstlaw1}
+\begin{aligned}
+\delta E &= T \delta S - P \delta V
+\text{ or in terms of exact differentials,} \\
+\ud E &= T \ud S - P \ud V.
+\end{aligned}
+\end{equation}
+
+We might regard this as arising from the comparison of ensembles with
+infinitesimally different states of thermal equilibrium.
+\eqref{eq:firstlaw1} states the \emph{First Law of
+  Thermodynamics}\footnote{You can't win...\label{pg:1law}}, written
+in the form
+
+\begin{equation}\label{eq:firstlaw}
+\ud E = \delta Q + \delta W,
+\end{equation}
+
+where $\delta Q$ is the heat supplied \emph{to} $\cS$ and $\delta W$ is the
+work done \emph{on} $\cS$.
+
+\eqref{eq:firstlaw1} also shows that $T = \pd{E}{S}$ and
+$P = -\pd{E}{V}$.
+
+For a gas of spinless particles, $E = \sum_i E_i \rho_i \propto
+V^{-\tfrac{2}{3}}$ and so $P = \tfrac{2}{3} \frac{E}{V}$, giving $PV =
+\tfrac{2}{3} E$.  Combined with the result for a perfect gas, $E =
+\tfrac{3}{2} N k T$ (see later), we have Boyle's law $PV = N k T$.
+
+We want to be able to calculate $S$ from the partition function.  Now,
+at thermal equilibrium,
+
+\begin{align*}
+S &= - k \sum_i \rho_i \log \rho_i \\
+&= -k \sum_i \rho_i \left( - \beta E_i - \log Z \right) \\
+&= \frac{1}{T} E + k \log Z.
+\end{align*}
+
+Define the \emph{free energy} $F = E - TS$, then
+
+\begin{equation}\label{eq:freen}
+F = - \tfrac{1}{\beta} \log Z.
+\end{equation}
+
+Also,
+
+\begin{equation}\label{eq:entpar}
+S = - \frac{1}{T} \pd{\log Z}{\beta} + k \log Z
+= \pd{}{T} \left( k T \log Z \right) = - \pd{F}{T}.
+\end{equation}
+
+We have a very tangible definition of $S$, as proportional
+to $\log W_{\text{max}}$, where $W_{\text{max}}$ is the number of
+microstates of $\cS$ contributing to the state of thermal equilibrium.
+
+Given the partition function \eqref{eq:canpar}, we can calculate
+the thermodynamic variables in a state of thermal equilibrium,
+$P$ (by \eqref{eq:pressure}), $E$ (by \eqref{eq:energy}),
+$F$ (by \eqref{eq:freen}) and $S$ (by \eqref{eq:entpar}).
+
+\section{Towards applications}
+
+\subsection{$N$ particle partition function}
+
+Consider a composite system with Hamiltonian $H = H_1 + H_2$ and $H_1$
+and $H_2$ independent (they commute).  Let $H_1 \ket{a} = E_{1 a}
+\ket{a}$ and $H_2 \ket{\alpha} = E_{2 \alpha} \ket{\alpha}$.  Then
+as $H_1$ and $H_2$ commute, $H \ket{a,\alpha} = E_{a \alpha}
+\ket{a,\alpha}$, where $E_{a \alpha} = E_{1 a} + E_{2 \alpha}$.
+Then the 2 particle partition function is
+\[
+Z = \sum_{a, \alpha} e^{- \beta E_{a \alpha}}
+= \sum_a e^{-\beta E_{1 a}} \sum_{\alpha} e^{-\beta E_{2 \alpha}}
+= Z_1 Z_2.
+\]
+
+Let $Z \equiv Z_N$ describe the sum over states of a gas of $N$ very weakly
+interacting particles.  If these are supposed independent (distinguishable)
+then $Z = z^N$, where $z$ is the ``one particle partition function''.
+This allows easy calculations, but fails for systems of identical
+(indistinguishable) bosons or fermions.  For the latter it
+seems best to use grand ensemble methods.
+
+Later we will consider a gas of diatomic molecules, $H = H_T + H_{\text{rot}}
++ H_{\text{vib}}$, where $H_T$ describes the centre of mass motion,
+$H_{\text{rot}}$ describes rotation about the centre of mass and
+$H_{\text{vib}}$ describes vibration along the axis.  We see
+that the one particle partition function is
+$z = z_T z_{\text{rot}} z_{\text{vib}}$.
+
+\subsection{Extensive and intensive variables}
+
+Extensive variables are proportional to the amount of matter in a system
+at fixed temperature, whereas intensive variables are independent of the
+amount of matter.
+
+In general, $N$, $V$, $S$ and $E$ are extensive and $T$ and $P$ are intensive.
+
+Think initially of a system made up of two independent subsystems.
+Then $V = V_1 + V_2$.  In a state of thermal equilibrium the systems have
+the same $\beta$ (and hence same $T$), and so $T$ is intensive.  In
+a state of equilibrium there is mechanical equilibrium and so the
+systems have the same pressure, and so $P$ is intensive.
+
+As $Z = Z_1 Z_2$ we see that $E = E_1 + E_2$, $S = S_1 + S_2$ and so on.
+A logical extension of this argument gives that $V$, $E$ and $S$ are
+proportional to $N$ and so extensive.  This can fail if volume energies do
+not swamp surface energies or if intermolecular forces are neither weak
+nor short range.
+
+\subsection{Density of states}\label{sec:states}
+
+Consider a spinless particle in a box of side $L$.  Instead of
+using solutions $\psi$ of the Schr\"odinger equation such that
+$\psi = 0$ on the walls we use periodic boundary conditions,
+$\psi(\x + L \vect{i}) = \psi(\x)$ (and so on).  Thus we can
+use $\psi_\k \propto e^{\imath \k \cdot \x}$ with
+$\epsilon = \frac{\hbar^2 k^2}{2 m}$.
+
+The periodicity gives that $\frac{L \k}{2 \pi} \in \Z^3$.  There is
+one such state per unit volume in $n$-space and in the continuum
+limit, there are $\ud^3 n$ states with $\n$ in the range
+$\n \to \n+\vect{dn}$.  There are thus $\ud^3 n$ states
+with $\vect{k}$ in the range $\vect{k} \to \vect{k}+\vect{dk}$ and
+hence $\left(\tfrac{L}{2 \pi} \right)^3 \ud^3 k$ states with
+$\vect{k}$ in the range $\vect{k} \to \vect{k}+\vect{dk}$.
+
+We see that
+
+\begin{align}
+\sum_i &\to \int \left( \frac{L}{2 \pi} \right)^3\, \ud^3 k
+\label{eq:kspace}\\
+&= \frac{V}{(2 \pi)^3} \int 4 \pi k^2\, \ud k \notag \\
+&= \frac{V}{(2 \pi)^3} 4 \pi \int \left( \frac{2 m \epsilon}{\hbar^2}
+\right)^{\frac{1}{2}} \frac{2 m \ud \epsilon}{2 \hbar^2}\notag \\
+&= 2 \pi V \left(\frac{2 m}{h}\right)^{\frac{3}{2}} \int \epsilon^{\frac{1}{2}}
+\, \ud \epsilon \label{eq:espace} \\
+&= \int \ud \epsilon g(\epsilon). \notag
+\end{align}
+
+We insert a factor $g_S = (2 S + 1)$ to cope with massive particles of
+spin $S$, and
+\[
+g(\epsilon) = g_S 2 \pi V \left( \frac{2 m}{h^2} \right)^{\frac{3}{2}}
+\epsilon^{\frac{1}{2}}
+\]
+
+gives the density of states.  We use \eqref{eq:espace}
+in isotropic contexts, but \eqref{eq:kspace} is needed in kinetic theory.
+
+In two dimensions we consider a square of side $L$ and $A = L^2$ enters
+in the r\^ole of $V$.  We find that $g(\epsilon) = \left( \frac{2 m}{h^2}
+\right) g_S 2 \pi A$ is independent of $\epsilon$.
+
+For relativistic particles of rest mass $m$ we have
+$\epsilon = \left( m^2 c^4 + \hbar k^2 c^2 \right)^{\frac{1}{2}}$
+and use \eqref{eq:kspace} to get
+\begin{equation}\label{eq:relespace}
+\int \ud^3 k = \int 4 \pi k^2\, \ud k = \frac{4 \pi}{(\hbar c)^3}
+\int_{mc^2}^\infty \epsilon \ud \epsilon \left( \epsilon^2 - m^2 c^4
+\right)^{\frac{1}{2}}.
+\end{equation}
+
+We also supply a factor $g_S = 2 S + 1$ for a particle of spin $S$ with
+nonzero rest mass.  For photons, $m=0$, $g_S = 2$ and so
+
+\begin{equation}\label{eq:photspace}
+\sum_i \to 2 \frac{V}{(2 \pi)^3} \left( \frac{4 \pi}{\hbar c}\right)^3
+\int_0^\infty \epsilon^2\, \ud \epsilon = \frac{8 \pi V}{c^3}
+\int_0^\infty \nu^2\, \ud \nu.
+\end{equation}
+
+\subsection{Gas of spinless particles}
+
+Consider $N$ spinless particles in a cube of side length $L = V^{\frac{1}{3}}$.
+Then the single particle partition function
+\[
+z = \sum_i e^{-\beta \epsilon_i} \to \int_0^\infty
+\ud \epsilon\, g(\epsilon) e^{-\beta \epsilon},
+\]
+
+where $g(\epsilon) = D V \epsilon^{\frac{1}{2}}$
+and $D = 4 \pi \left(\tfrac{2 m}{h^2}\right)^{\frac{3}{2}}$.
+Setting $y = \beta \epsilon$ we get
+\begin{equation}\label{eq:spin0gas}
+z = D V \left(k T\right)^{\frac{3}{2}}
+\int_0^\infty \ud y\, y^{\frac{1}{2}} e^{-y}
+= V \left( \frac{2 m \pi k T}{h^2} \right)^{\frac{3}{2}}.
+\end{equation}
+
+Now $z = z^N$ and so $\log Z = N \log z$.  Thus
+\[
+E = -N \pd{}{\beta} \left(-\tfrac{3}{2} \log \beta\right)
+= \tfrac{3}{2} N k T.
+\]
+
+This is \emph{the} classical result: there is an energy $\tfrac{1}{2} k T$
+associated with each degree of freedom of each particle.  Combining
+with $PV = \tfrac{2}{3} E$ we get $PV = N k T$.
+
+\subsection{Entropy and the Gibbs paradox}
+
+Using $Z = z^N$, \eqref{eq:spin0gas} and \eqref{eq:entpar} we
+have
+\[
+S = N k \log V + \tfrac{3}{2} N k \log \left( \frac{2 m \pi k T}{h^2} \right)
++ \tfrac{3}{2} Nk,
+\]
+
+which is not extensive, as $V \propto N$.  This is Gibbs' paradox.
+
+If instead we use $Z = \tfrac{z^N}{N!}$, \eqref{eq:spin0gas},
+\eqref{eq:entpar} and Stirling's formula we have
+\[
+S = N k \log \tfrac{V}{N} + \tfrac{3}{2} N k \log \left( \frac{2 m \pi
+    k T}{h^2} \right) + \tfrac{3}{2} N k
+\]
+
+and we see that $S$ is extensive.
+
+Often an additive constant in $S$ does not matter and
+\eqref{eq:spin0gas} gives all thermodynamics otherwise correctly.
+It reflects a normal classical view of how to treat
+indistinguishable particles.  Taking $Z = \tfrac{z^N}{N!}$ cures this
+but has \emph{no} foundation in classical statistical physics.
+
+\section{Harmonic oscillator model}
+
+Model a crystal by placing one atom at each point of some regular lattice
+with $N$ sites.  In 1D, simplify by taking a simple harmonic oscillator
+of frequency $\omega_r$ instead of the $r^{\text{th}}$ atom.
+
+Now $Z_N = \prod_r z(\omega_r)$, and using $E_n = \hbar \omega
+(n + \tfrac{1}{2})$ for the simple harmonic oscillator with frequency
+$\omega$ we get
+\[
+z(\omega) = \frac{e^{-\frac{\beta \hbar \omega}{2}}}{1 - e^{-\beta \hbar
+\omega}}.
+\]
+
+Even if $\omega_r = \omega$ for all $r$, the ``atoms'' are distinguishable
+as there exists one at each lattice site.  This is a one dimensional version
+of the \emph{Einstein solid}.  We find that
+\[
+\frac{E}{N} = - \pd{\log z}{\beta} = \tfrac{1}{2} \hbar \omega
++ \frac{\hbar\omega}{e^{\beta \hbar \omega} - 1}.
+\]
+
+If $\hbar \omega \ll k T$ this gives the classical result
+$\tfrac{E}{N} - \tfrac{1}{2} \hbar \omega = k T$, with energy
+$\tfrac{1}{2} k T$ per degree of freedom per ``atom''.
+
+If $\hbar \omega \gg k T$ then $\beta \hbar \omega \gg 1$ and
+$\tfrac{E}{N} - \tfrac{1}{2} \hbar \omega \approx \hbar \omega
+e^{-\beta \hbar \omega}$, which tends to zero as $T \to 0$.
+
+Quantum statistical mechanics ``knows'' when to count the full
+classical $\tfrac{1}{2} k T$ value per degree of freedom:
+do it only when $T$ is large on some scale set by the problem.
+In this case the critical temperature $T_c = \tfrac{\hbar \omega}{k}$.
+
+\chapter{Thermodynamics}
+
+\section{Introduction}
+
+Consider a volume $V$ of gas with a fixed number $N$ of particles.  The
+state of thermal equilibrium of this gas is characterised by $T$ and $V$.
+
+Our work with quantum statistical mechanics has produced some concepts
+naturally:
+
+\begin{itemize}
+\item $E$: the total energy of the system, which arose as the average
+energy and has negligible fluctuations.
+\item $S$: the entropy.  This has a clear significance as the number
+of microstates contributing to the macrostate of thermal equilibrium.
+\item equations of state: for instance $P V = NkT$.
+\item $\ud E = T \ud S - P \ud V$, which is true for any
+thermodynamic change between two infinitesimally close states of thermodynamic
+equilibrium.
+\end{itemize}
+
+All thermodynamic variables for the sample of gas we are talking about
+can be regarded as a function of two suitably chosen independent variables.
+In the case of the energy, $E$ arises as $E(S,V)$.
+
+We also found that $\ud E = \delta Q + \delta W$, where $\delta Q$
+is the heat supplied \emph{to} the system and $\delta W$ is the work
+done \emph{on} the system.
+
+For finite changes from the initial to the final state conservation of
+energy gives $\Delta E = \Delta Q + \Delta W$.  This is the first law
+of thermodynamics, equivalent to the conservation of energy.
+
+Suppose we change from a state with $E_1(S_1,V_2)$ to $E_2(S_2,V_2)$.
+In general, we expect
+\[
+\Delta W \ge -\int_{V_1}^{V_2} P \ud V
+\]
+because of wasted effort (against friction or in producing convection
+or turbulence).  This gives us
+\[
+\Delta Q \le \int_{S_1}^{S_2} T \ud S.
+\]
+
+These inequalities hold as equalities for \emph{reversible} changes, that
+is changes which are \emph{quasi-static} and non-dissipative.
+
+Quasi-static changes are changes which are done so slowly as to pass
+through states arbitrarily close to a state of thermodynamic
+equilibrium, so that all thermodynamic variables are well-defined
+throughout the change.
+
+Some (obvious) irreversible processes are fast piston movement,
+free expansion of a gas into a vacuum and the mixing of samples of
+different gases.
+
+In induced/allowed changes in real life with $\delta Q = 0$,
+$\delta S > 0$ and so the entropy increases.
+
+\section{Applications of $\ud E = T \ud S - P \ud V$}
+
+\subsection{Integrability conditions}
+
+The internal energy $E$ is seen as $E(S,V)$ within
+\[
+\ud E = T \ud S - P \ud V
+= \left(\pd{E}{S}\right)_V \ud S + \left(\pd{E}{V}\right)_S
+\]
+
+Thus $T = \left(\pd{E}{S}\right)_V$ and $P = - \left(\pd{E}{V}\right)_S$.
+$\ud E$ is an exact differential, so $\pd{^2 E}{S \partial V}
+= \pd{^2 E}{V \partial S}$ and
+\[
+- \left(\pd{P}{S} \right)_V = \left(\pd{T}{V} \right)_S
+\]
+
+This is a \emph{Maxwell relation}.
+
+The free energy $F = E - TS$ is a natural function of $T$ and $V$, as
+\[
+\ud F = \ud E - T \ud S - S \ud T = -S \ud T - P \ud V.
+\]
+
+Thus $S = -\left(\pd{F}{T} \right)_V$ and $P = -\left( \pd{F}{V} \right)_T$.
+This gives the Maxwell relation
+\[
+\left( \pd{S}{V} \right)_T = \left( \pd{P}{T} \right)_V.
+\]
+
+$H = E + P V$ defines the \emph{enthalpy} $H(S,P)$ and 
+$G = E - T S + P V$ defines the Gibbs function $G(T,P)$.
+
+These give four Maxwell relations, but they are interdependent.
+
+$E$, $F$, $H$ and $G$ are all extensive.  If (exceptionally) $G = 0$
+(true for a gas of photons) then $G = N \mu$ and so the chemical potential
+$\mu$ can vanish for arbitrary finite $N$.
+
+We need some rules for shunting partial derivatives around.
+Consider $z = z(x,y)$.  Then
+
+\begin{align*}
+\delta z & = \pdf{z}{x}{y} \delta x + \pdf{z}{y}{x} \delta y \quad \text{and
+hence} \\
+1 & = \pdf{x}{z}{y} \pdf{z}{x}{y} \quad \text{and} \\
+0 &= \pdf{x}{y}{z} \pdf{z}{x}{y} + \pdf{z}{y}{x}. 
+\end{align*}
+
+This can be rewritten in a slightly different form:
+
+\begin{equation}\label{eq:pdshunt}
+\begin{gathered}
+\pdf{x}{z}{y} \pdf{z}{x}{y} = 1 \\
+\pdf{x}{y}{z} \pdf{y}{x}{z} \pdf{x}{z}{y} = -1.
+\end{gathered}
+\end{equation}
+
+When we wrote down $E$, $F$, $H$ and $G$ we wrote them in terms of the
+mathematically natural independent variables in each case.  In practice,
+we would like $E$ as a function of $T$ and $V$.  Recall
+$T \ud S = \ud E + P \ud V$, so that
+
+\begin{align*}
+T \ud S & = \pdf{E}{T}{V} \ud T + \pdf{E}{V}{T} \ud V + P \ud V \qquad
+\text{and so} \\
+T \pdf{S}{T}{V} &= \pdf{E}{T}{V} \qquad \text{and}\\
+T \pdf{S}{V}{T} &= \pdf{E}{V}{T} + P.
+\end{align*}
+
+Also, we know that $\pd{^2 S}{T \partial V} = \pd{^2 S}{V \partial T}$
+and so
+\[
+\pdf{E}{V}{T} = T \pdf{P}{T}{V} - P.
+\]
+
+For a perfect gas, $PV = NkT$ and so $\pdf{E}{V}{T} = 0$.  Thus
+$E$ is a function of $T$ only.
+
+Given the laws of thermodynamics we need two inputs from experiment
+to specify all thermodynamic variables completely.  For instance,
+for a perfect gas we need the equation of state and $E = C T$.
+
+\subsection{Specific heats}
+
+An amount of gas with $N_A$ (Avogadro's number) of molecules is called
+a \emph{mole}.  The ideal gas law tells us that at fixed temperature and
+pressure, a mole of \emph{any} ideal gas occupies the same volume.
+Written in terms of moles, the ideal gas law for $n$ moles of gas is
+
+\begin{equation}\label{eq:idgasmole}
+PV = n N_A k T = n R T.
+\end{equation}
+
+$R$ is called the \emph{gas constant} and is the same for all ideal gases.
+In fact, all gases are essentially ideal at sufficiently low density.
+
+For a sample of $1$ mole of ideal gas we define the \emph{specific heat}
+(or heat capacity per mole) using $\delta Q = T \ud S$ under suitable
+conditions.
+
+Define $C_V = T \pdf{S}{T}{V}$, the \emph{specific heat at
+constant volume} and $C_P = T \pdf{S}{T}{P}$, the \emph{specific heat at
+constant pressure}. Now
+\[
+T \ud S = \ud E + P \ud V = \ud H - V \ud P
+\]
+
+and so
+
+\begin{equation}\label{eq:spheats}
+\begin{gathered}
+C_V = T \pdf{S}{T}{V} = \pdf{E}{T}{V} \\
+C_P = \pdf{H}{T}{P}.
+\end{gathered}
+\end{equation}
+
+For one mole of ideal gas we know that $E = C T$ and so $C = C_V$.
+To find $C_P$ we need to use $P$ and $T$ as the independent variables.
+
+Now
+\begin{multline*}
+\ud S = \pdf{S}{T}{V} \ud T + \pdf{S}{V}{T} \ud V \\
+= \pdf{S}{T}{V} \ud T + \pdf{S}{V}{T} \left( \pdf{V}{T}{P} \ud T
++ \pdf{V}{P}{T} \ud P \right).
+\end{multline*}
+
+Thus $\pdf{S}{T}{P} = \pdf{S}{T}{V} + \pdf{S}{V}{T} \pdf{V}{T}{P}$
+and so
+
+\begin{equation}\label{eq:cpcv}
+C_P = C_V + T \pdf{S}{V}{T} \pdf{V}{T}{P} 
+= C_V + T \pdf{V}{T}{P} \pdf{P}{T}{V}.
+\end{equation}
+
+This allows the calculation of $C_P - C_V$ from the equation of
+state: for an ideal gas $C_P - C_V = R$.  Define the
+ratio of specific heats $\gamma = \tfrac{C_P}{C_V}$.  Note
+that $\gamma = \tfrac{C_V + R}{C_V} > 1$ for an ideal gas.
+
+Statistical mechanics gives $C_V = \tfrac{3}{2} R, \tfrac{5}{2} R,\dots$
+(for monatomic, diatomic (etc) gases).  Thus $\gamma = \tfrac{5}{3},
+\tfrac{7}{5},\dots$.
+
+\subsection{Adiabatic changes}
+
+These are (defined as) changes which are reversible and satisfy
+$\delta Q = 0$.  We refer to $n$ moles of ideal gas using $E = n C_V T$
+and $PV = n R T$.  Now
+\begin{align*}
+0 &= R \ud E + R P \ud V \\
+&= R n C_V \ud T + R P \ud V \\
+&= C_V \left( P \ud V + V \ud P \right) + R P \ud V \\
+&= C_P P \ud V + C_V V \ud P.
+\end{align*}
+
+Thus $0 = \gamma \frac{\ud V}{V} + \frac{\ud P}{P}$ and so
+$P V^\gamma$ is constant on adiabatics.
+
+Note that adiabatics $P V^\gamma$ constant are steeper than isothermals $PV$
+constant.
+
+\subsection{Entropy of $n$ moles of ideal gas}
+
+We start (as usual) from
+\begin{align*}
+T \ud S &= \ud E + P \ud V \\
+&= n C_V \ud T + n R T \frac{\ud V}{V}. \\
+\text{Thus } \ud S &= n C_V \frac{\ud T}{T} + n R \frac{\ud V}{V},
+\end{align*}
+
+and so $S = n C_V \log T + n R \log V + c_1$.  Thermodynamics cannot
+determine the constant $c_1$, and does not care that $S$ is not
+explicitly extensive. $S = n C_V \log P V^\gamma + c'$ and so
+(as expected), $S$ is constant on adiabatics (isentropics).
+
+\subsection{van der Waal's equation}
+
+We get a better agreement with experiment by replacing the perfect gas
+law with
+
+\begin{equation}\label{eq:vdW}
+\left( P + \frac{n^2 A}{V^2} \right) \left(V - n B\right) = n R T,
+\end{equation}
+
+where $A$, $B$ and $R$ are strictly positive constants.
+
+\begin{itemize}
+\item Molecules are not treated as point particles, and as $P \to
+  \infty$ at constant $T$, $V \to n B$, which is the residual volume
+  of all the molecules.
+\item $P + \tfrac{n^2 A}{V^2}$ reduces the real gas pressure by
+  an amount $\tfrac{n^2 A}{V^2}$, due to intermolecular attractive forces.
+  If these are short range then the smaller $V$ is the more important these
+  become.
+\end{itemize}
+
+\subsection{The Joule effect}
+
+
+\vspace{1in}
+
+Consider the apparatus shown, with adiathermal walls and containing
+$n$ moles of gas at volume $V_1$, pressure $P_1$ and temperature
+$T_1$.  Pull back the partition and allow the gas to expand
+(irreversibly) into the total volume $V_2$, and then to reach a state
+of thermal equilibrium specified by $P_2$, $V_2$ and $T_2$.
+
+As $\delta Q = 0$ (adiathermal) and $\delta W = 0$ (no work is done),
+$\ud E = 0$ and so for a perfect gas
+\[
+T_2 = T_1 \quad \text{and} \quad S_2 - S_1 = n R \log \tfrac{V_2}{V_1} > 0
+\text{ for $V_2 > V_1$.}
+\]
+
+For a van der Waal's gas we still have $\ud E = 0$ (which is true in general)
+and so $E$ stays constant.  Now
+
+\begin{align*}
+\pdf{T}{V}{E} &= - \frac{\pdf{E}{V}{T}}{\pdf{E}{T}{V}} \\
+&= \frac{P - T \pdf{P}{T}{V}}{n C_V} \\
+&= - \frac{n^2 A}{V^2} \frac{1}{n C_V} \quad \text{for van der Waal's gas} \\
+&< 0. 
+\end{align*}
+
+We can show that $C_V$ is independent of $V$ for a van der Waal's gas
+and we suppose that $C_V$ is also approximately independent of $T$.  We
+can now integrate this equation to get
+\[
+T_2 - T_1 = \frac{n A}{C_V} \left( \frac{1}{V_2} - \frac{1}{V_1}\right) < 0.
+\]
+
+$T$ decreases because some of the molecular kinetic energy is lost in
+the expansion against attractive intermolecular forces.
+
+\section{Some thermodynamics}
+
+Suppose a sample $\cS$ of $n$ moles of perfect gas is put in thermal contact
+with a heat bath $\cB$ and compressed reversibly from volume $V_1$ to
+volume $V_2$.  If the gas is perfect then $E = E(T) = n C_V T$ and
+so $E$ stays the same.  Now
+
+\[
+\Delta Q + \Delta W = 0 \qquad \Rightarrow\ \Delta Q = -\Delta W
+= \int_{V_1}^{V_2}P \ud V = n R T \log \tfrac{V_2}{V_1}.
+\] 
+
+Thus $\Delta W > 0$ for compression ($V_2 < V_1$) and $\Delta Q < 0$.
+Heat is given out to $\cB$ by $\cS$.  Now $\Delta S = n R \log
+\tfrac{V_2}{V_1}$ and so the entropy of $\cS$ decreases.  However,
+because the isolated universe of $\cS$ and $\cB$ has $\Delta S = 0$
+the entropy of $\cB$ must increase.
+
+\subsection{The second law}
+
+(\emph{Kelvin}) No process can continuously (by going round a cycle)
+extract heat from a heat bath and perform an equal amount of work.
+
+\noindent (\emph{Clausius}) No process can continuously transfer heat from a
+colder to a hotter body.%
+\footnote{You can't break even either... (see footnote on page
+  \pageref{pg:1law})}
+
+
+\vspace{1.5in}
+
+Take a sample $\cS$ of perfect gas around a closed Carnot cycle by means
+of adiabatics and isothermals ($T_2 > T_1$).  On $AB$ the heat bath
+at $T_2$ supplies heat $\Delta Q_2 > 0$ to $\cS$ at temperature $T_2$.
+On $CD$ the heat bath at $T_1$ supplies heat $\Delta Q_1 < 0$ to $\cS$
+at temperature $T_1$.
+
+$E=E(T)$ is unchanged over one complete cycle so that the work done in
+a cycle \emph{by} $\cS$ is $- W = \Delta Q_1 + \Delta Q_2$ by the first
+law (as $\delta Q = 0$ on adiabatics).
+
+This agrees with the Kelvin statement of the second law, $(-\Delta Q_1) > 0$
+of heat is wasted at the low temperature heat bath.  The efficiency
+$\eta$ is defined
+\[
+\eta = \frac{-W}{\Delta Q_2} = 1 + \frac{\Delta Q_1}{\Delta Q_2} < 1.
+\]
+
+On adiabatics $T V^{\gamma-1}$ is constant and so
+\[
+T_2 V_A^{\gamma - 1} = T_1 V_D^{\gamma - 1} \quad \text{and} \quad
+T_2 V_B^{\gamma - 1} = T_1 V_C^{\gamma - 1}.
+\]
+
+Thus $\tfrac{V_A}{V_B} = \tfrac{V_D}{V_C}$.  We know that
+\[
+\Delta Q_2 = n R T_2 \log \tfrac{V_B}{V_A} > 0 \text{ and }
+\Delta Q_1 = n R T_1 \log \tfrac{V_D}{V_C} = - n R T_1 \log \tfrac{V_B}{V_A}.
+\]
+Thus $\eta = \tfrac{T_2 - T_1}{T_2}$, and clearly $0 < \eta < 1$.  This can
+be generalised to other cycles.
+
+\section{Heat flow}
+
+Let $\cS_1$ be a sample of $n_1$ moles of ideal gas at temperature $T_1$
+in a fixed volume $V_1$.  Then $E_1(T_1) = n_1 C_{V_1} T_1 = x_1 T_1$.
+Similarly for $\cS_2$.  Put $\cS_1$ and $\cS_2$ in thermal contact allowing
+no change in $V_1 + V_2$.  Suppose the state of thermal equilibrium is reached
+at a temperature $T$.  Then (by conservation of energy),
+\[
+x_1 (T_1 - T) + x_2 (T_2 - T) = 0
+\]
+and we can solve for $T$.  As for the entropy,
+$\Delta S_{1,2} = x_{1,2} \log \tfrac{T}{T_{1,2}}$ and
+$\Delta S_1 + \Delta S_2 \ge 0$.
+
+\chapter{Grand ensemble methods}
+
+\section{The formalism}\label{sec:granden}
+
+Our approach is a direct extension of the approach we adopted earlier
+for the canonical ensemble.  Given a system $\cS$ of fixed volume we construct
+a grand (canonical) ensemble $\cG$ with a large number $A$ of distinguishable
+replicas of $\cS$ in microstates $\ket{i}$ of $\cS$ with $N_i$ particles and
+energies $E_i$.  Suppose that $a_i$ members of $\cG$ are in the microstate
+$\ket{i}$ so that
+\[
+\sum_i a_i = A \qquad \sum_i a_i E_i = A E \qquad \sum_i a_i N_i = A N. 
+\]
+
+We have thus fixed the average energy and number of particles of members of
+the ensemble.  Each configuration $\{ a_i \}$ of $\cG$ defines a state
+of the ensemble and we assign to each configuration equal \emph{a priori}
+probability.  We associate the state of thermodynamic equilibrium of $\cS$
+with the most probable configuration of $\cG$ in the presence of our
+constraints.  We find this by maximising the same $\log W$ as before to
+get
+\[
+0 = \pd{}{a_i} \left(\log W - \alpha \sum_i a_i - \beta \sum_i a_i E_i
+- \gamma \sum_i a_i N_i \right).
+\]
+
+This gives us that
+
+\[
+a_i = e^{-(1+\alpha)} e^{- \beta (E_i - \mu N_i)},
+\]
+
+where we have defined the \emph{chemical potential} $\mu$ by
+$\beta \mu = - \gamma$.  We now define the grand partition function
+
+\begin{equation}\label{eq:gpf}
+\cZ = \sum_i e^{- \beta ( E_i - \mu N_i  )}.
+\end{equation}
+
+The fraction of members of $\cG$ in the microstate $\ket{i}$ is
+\[
+\rho_i = \frac{a_i}{A} = \frac{e^{-\beta (E_i - \mu N_i)}}{\cZ}.
+\]
+
+The grand ensemble average is
+\[
+\Bar{O} = \sum_i \rho_i O_i
+\]
+
+and $\Bar{E} = E$ and $\Bar{N} = N$ (which is, on the whole, a good thing).
+As before we can use $\cZ$ to calculate thermodynamic variables:
+
+\begin{gather}
+N = \frac{1}{\beta} \pdf{\log \cZ}{\mu}{\beta,V},\label{eq:gpfN}\\
+E - \mu N = - \pdf{\log \cZ}{\beta}{\mu,V}. \label{eq:gpfE}
+\end{gather}
+
+As before, from consideration of changes at constant $\rho_i$ we find that
+$\delta E = -P \delta V$ and
+
+\begin{equation}\label{eq:gpfP}
+P = - \sum_i \rho_i \pd{E_i}{V} = \frac{1}{\beta} \pdf{\log \cZ}{V}{\beta,\mu}.
+\end{equation}
+
+More general changes in which $\delta \rho_i \neq 0$ obey
+\[
+\sum_i \delta \rho_i = 0 \quad \sum_i N_i \delta \rho_i = \delta N
+\quad \delta E = - P \delta V + \sum_i E_i \delta \rho_i.
+\]
+
+Defining the entropy
+\[
+S = - \frac{k}{A} \log W_{\text{max}} = - k \sum_i \rho_i \log \rho_i
+\]
+
+gives that
+
+\begin{align*}
+\delta S &= - k \sum_i \delta \rho_i \log \rho_i - \sum_i \rho_i
+\frac{1}{\rho_i} \delta \rho_i \\
+&= - k \sum_i \delta \rho_i \left(- \beta (E_i - \mu N_i) - \log \cZ \right).
+\end{align*}
+
+This gives the fundamental thermodynamic relation
+
+\begin{equation}
+T \delta S = \delta E + P \delta V - \mu \delta N,
+\end{equation}
+
+yielding the first law $\ud E = \delta Q + \delta W_{\text{mech}}
++ \delta W_{\text{chem}}$, where $\delta W_{\text{chem}} = \mu \delta N$
+is the work done in adding $\delta N$ particles to the system $\cS$.
+The chemical potential is therefore given by
+
+\begin{equation}\label{eq:chempot}
+\mu = \pdf{E}{N}{S,V}.
+\end{equation}
+
+Returning to the entropy $S$ we see that
+\begin{equation}\label{eq:entZ}
+S = k \beta ( E - \mu N ) + k \log \cZ
+\end{equation}
+
+which can be put in the same form as \eqref{eq:entpar}, namely
+
+\begin{equation}\label{eq:gpfS}
+S = \pdf{k T \log \cZ}{T}{\mu,V}.
+\end{equation}
+
+A similar argument to that used to define temperature in \ref{sec:temp}
+gives that two systems placed in thermal and ``diffusive'' contact will
+reach a thermodynamic equilibrium characterised by common values of
+$\beta = \tfrac{1}{kT}$ and $\mu$.
+
+We keep the idea that at fixed $N_A$, $N_B$ energy flows from the
+system with the higher temperature to that with the lower temperature
+until thermodynamic equilibrium is reached.  We add that if the contact
+allows the diffusion of particles then in the state of thermodynamic
+equilibrium with constant $\mu$ there is (on average) no diffusion.
+
+We return to the first law, $\ud E = T \ud S - P \ud V + \mu \ud N$.
+We can view $E$ as a function of $S$, $V$ and $N$, and when (as for
+many large systems), $E$, $S$ and $V$ are extensive we get
+\[
+E(\lambda S, \lambda V, \lambda N) = \lambda E(S,V,N)
+\]
+
+and so
+\begin{align*}
+E &= S\pdf{E}{S}{V,N} + V\pdf{E}{V}{S,N} + N\pdf{E}{N}{S,V}\\
+&= T S - P V + \mu N.
+\end{align*}
+
+We define the \emph{grand potential} $\Omega$ for a state of thermodynamic
+equilibrium by
+\begin{align*}
+\Omega &= E - T S - \mu N \\
+&= E - \mu N - (E - \mu N + k T \log \cZ) \\
+&= - k T \log \cZ.
+\end{align*}
+
+Thus $\cZ = e^{-\beta \Omega}$.  Now $\Omega$ also equals $- PV$ and so
+\begin{equation}\label{eq:gpfstate1}
+PV = k T \log \cZ
+\end{equation}
+allows the calculation of the equation of state from the grand partition
+function.
+
+The state of thermodynamic equilibrium corresponds to the most probable
+state in $\cG$.  Some thermodynamic variables arise from averages
+over microstates weighted by the probability of finding them in the
+state of thermodynamic equilibrium.  The averages are effectively
+averages over all possible states of the ensemble because the macrostate
+of thermodynamic equilibrium dominates overwhelmingly.  They are also very
+sharp (for the same reason).
+
+\section{Systems of non-interacting identical particles}
+
+\subsection{A little quantum mechanics}
+
+We will treat such systems with only one type of particle.  When
+interactions are neglected then the wavefunction of each stationary
+state of the system $\Psi(\x_1,\x_2,\dots)$ is obtained by either
+symmetrization (for bosons) or antisymmetrization (fermions) of the
+product $\phi_1(\x_1)\phi_2(\x_2)\dots$ of one particle wavefunctions.
+
+Consider spin $0$ bosons in a cube of side $L$.  Then the
+one particle wavefunctions are
+\[
+\psi_\n(\x) = \left( \frac{2}{L}\right)^{\frac{3}{2}}
+\sin\tfrac{n_1 \pi x}{L} \sin\tfrac{n_2 \pi x}{L} \sin \tfrac{n_3 \pi z}{L}
+\]
+
+with corresponding energies
+\[
+E_\n = \frac{\hbar^2}{2 m L^2} \abs{\n}^2.
+\]
+
+For identical bosons we cannot use wavefunctions
+$\phi_1(\x_1) \phi_1(\x_2) \phi_2(\x_3)$ which correspond to
+particles $1$ and $2$ in state $1 \equiv \n_1$ and
+particle $3$ in state $2 \equiv \n_2$, but we must
+use instead the symmetrized wavefunction
+\[
+\Psi = \sqrt{\frac{1}{3!}} \left(
+\phi_1(\x_1) \phi_1(\x_2) \phi_2(\x_3)
++ \phi_1(\x_1) \phi_2(\x_2) \phi_1(\x_3)
++ \phi_2(\x_1) \phi_1(\x_2) \phi_1(\x_3)
+\right).
+\]
+
+All we can say about this is that there are two particles in state
+$\ket{1}$ and one particle in state $\ket{2}$. $\Psi$ is fully
+determined by the fact that $\phi_1$ is used twice and $\phi_2$ used
+once.
+
+For spin $\tfrac{1}{2}$ fermions we have
+\[
+\phi(\x) \to \psi_\n(\x) \alpha \text{ or } \psi_\n(\x) \beta,
+\]
+
+where $\alpha$ is ``spin up'' $\uparrow$ and $\beta$ is spin down
+$\downarrow$ with $H$ and $E_\n$ independent of $\alpha$ and $\beta$.
+We can use determinants to build the antisymmetric wavefunctions.
+
+For instance, given $\psi_1(\x,\mu)$ and $\psi_2(\x,\mu)$ (where
+$1 \equiv \n_1$, $2 \equiv \n_2$ and $\mu = \alpha$ or $\beta$)
+we get the antisymmetrized version
+\[
+\Psi(\x_1,\mu_2,\x_2,\mu_2)
+= \sqrt{\frac{1}{2!}}\left|
+\begin{matrix}
+\psi_1(\x_1,\mu_1) & \psi_1(\x_2,\mu_2) \\
+\psi_2(\x_1,\mu_1) & \psi_2(\x_2,\mu_2)
+\end{matrix}
+\right|.
+\]
+
+Similarly for three particles,
+\[
+\Psi = \sqrt{\frac{1}{3!}} \left|
+\begin{matrix}
+\psi_1(\x_1,\mu_1) & \psi_1(\x_2,\mu_2) & \psi_1(\x_3,\mu_3) \\
+\psi_2(\x_1,\mu_1) & \psi_2(\x_2,\mu_2) & \psi_2(\x_3,\mu_3) \\
+\psi_3(\x_1,\mu_1) & \psi_3(\x_2,\mu_2) & \psi_3(\x_3,\mu_3) \\
+\end{matrix}
+\right|.
+\]
+
+$\Psi$ reflects the \emph{Pauli exclusion principle} which forbids
+any two of the $\psi_i$ or any two sets $(\x,\mu)$ from being the same.
+
+Each $\Psi$ is determined fully by the number of times each one
+particle wavefunction is used in the product term that we
+(anti)symmetrize.
+
+\subsection{The partition functions}
+
+Let the one particle wavefunctions of the particles of $\cS$ be
+$\psi_r(\x)$ with energy $\epsilon_r$.  Suppose that in the microstate
+$\ket{i}$, $n_r$ of the particles have wavefunction $\phi_r(\x)$.
+
+Then
+\[
+N_i = \sum_r n_r \qquad \text{and} \qquad E_i = \sum_r \epsilon_r n_r.
+\]
+
+We see that the microstate $\ket{i}$ of $\cS$ is fully determined by
+$i \equiv \{ n_r \}$.  We obtain the full set of microstates of $\cS$
+by letting the $n_r$ vary without restriction over their allowed range
+of values.  (Thus $N_i$ and $E_i$ cannot themselves be restricted ---
+this is why we use the grand ensemble method.)
+
+We can now write down the grand partition function
+
+\begin{align*}
+\cZ & = \sum_i e^{-\beta(E_i - \mu N_i)} \\
+&= \sum_{n_1,n_2,\dots} e^{-\beta\left( n_1 \epsilon_1
++ n_2 \epsilon_2 + \dots - \mu n_1 - \mu n_2 - \dots \right)} \\
+&= \prod_r \sum_{n_r} e^{-\beta n_r (\epsilon_r - \mu)}.
+\end{align*}
+
+For fermions we have that $n_r$ can only be zero or one, so that
+
+\begin{equation}\label{eq:fermigpf}
+\cZ = \prod_r \left( 1 + e^{-\beta(\epsilon_r - \mu)} \right).
+\end{equation}
+
+We use this to find
+\[
+N = \frac{1}{\beta} \pdf{\log \cZ}{\mu}{\beta,V}
+= \sum_r \frac{1}{e^{\beta(\epsilon_r - \mu)} + 1}.
+\]
+
+Now
+
+\begin{align*}
+\Bar{n_r} &= \sum_{n_1,n_2,\dots} \frac{n_r e^{-\beta(\epsilon_r
+- \mu)}}{\cZ} \\
+&= - \frac{1}{\beta} \pdf{\log \cZ}{\epsilon_r}{\beta,\mu,\epsilon_s} \qquad
+s \neq r \\
+&= \frac{1}{e^{\beta(\epsilon_r - \mu)} + 1}.
+\end{align*}
+
+We see that $N = \sum_r \Bar{n}_r$.  $\Bar{n}_r$ is the \emph{average
+  occupation number} of the $r^{\text{th}}$ one particle state at
+thermal equilibrium.  This is the \emph{Fermi-Dirac} distribution.
+
+For bosons, $0 \le n_r < \infty$ and
+\[
+\cZ = \prod_r \frac{1}{1 - e^{-\beta(\epsilon_r - \mu)}}.
+\]
+
+This gives that
+
+\begin{equation}\label{eq:bosestat}
+\Bar{n}_r = \frac{1}{e^{\beta(\epsilon_r - \mu)} - 1}.
+\end{equation}
+
+This is the Bose-Einstein distribution.
+
+If there are $g_r$ one particle states of energy $\epsilon_r$
+we can write the average number of particles with energy
+$\epsilon_r$ as
+\[
+\Bar{n}(\epsilon_r) = \frac{g_r}{e^{\beta(\epsilon_r - \mu)} \mp 1}.
+\]
+
+for $N$ large we pass to the continuum limit,
+\[
+\sum_r \to \int \ud \epsilon g(\epsilon),
+\]
+
+where $g(\epsilon)$ is the density of states factor, $D V
+\epsilon^{\frac{1}{2}}$ as in section \ref{sec:states},
+where $D = 2 \pi \left( \frac{2 m}{h^2} \right)^{\frac{3}{2}} g_S$
+and $g_S = 2 S + 1$ is the spin degeneracy.
+
+The average number of particles with energy in the range
+$\epsilon \to \epsilon + \ud \epsilon$ is
+\[
+n(\epsilon) \ud \epsilon = \frac{g(\epsilon) \ud \epsilon}{e^{\beta
+(\epsilon-\mu)} \mp 1}.
+\]
+
+Thus in the continuum limit, the grand partition function $\cZ$ is
+given by
+\[
+\log \cZ = \mp \int_0^\infty g(\epsilon) \log (1 \mp
+e^{-\beta(\epsilon - \mu)})\, \ud \epsilon.
+\]
+
+We can now use the results of section \ref{sec:granden}
+to find things like $N$ and $E$,
+
+\[
+N = \int_0^\infty \frac{g(\epsilon)\, \ud \epsilon}{e^{\beta(\epsilon
+- \mu)} \mp 1} \qquad
+E = \int_0^\infty \frac{\epsilon g(\epsilon)\, \ud \epsilon}
+{e^{\beta(\epsilon- \mu)} \mp 1}.
+\]
+
+In three dimensions, $g(\epsilon) = D V \epsilon^{\frac{1}{2}}$
+and so (integrating by parts) we see that
+
+\begin{align*}
+\log \cZ &= D V \int_0^\infty \frac{2}{3} \frac{\epsilon^{\frac{3}{2}}}{
+e^{\beta(\epsilon - \mu)} \mp 1} \\
+&= \frac{2}{3} \beta \epsilon.
+\end{align*}
+
+Combining this with \eqref{eq:gpfstate1} we find that
+$P V = \tfrac{2}{3} E$.  The $\tfrac{2}{3}$ comes from the
+$\epsilon^{\frac{1}{2}}$ factor in $g(\epsilon)$.
+
+\subsection{Classical limit}
+
+For a volume $V$ of $N$ particles with energy $E$,
+we use $g(\epsilon) = D V \epsilon^{\frac{1}{2}}$
+and so
+\[
+N = D V \int_0^\infty \frac{\epsilon^{\frac{1}{2}}\, \ud \epsilon}{
+e^{\beta(\epsilon - \mu)} \mp 1} \quad \text{and} \quad
+E = D V \int_0^\infty \frac{\epsilon^{\frac{3}{2}}\, \ud \epsilon}{
+e^{\beta(\epsilon - \mu)} \mp 1}.
+\]
+
+Putting $z = \beta \epsilon$ we find
+$N = D V ( k T)^{\frac{3}{2}} I_{\frac{1}{2}}(-\beta \mu)$ and
+$E = DV (k T)^{\frac{5}{2}} I_{\frac{3}{2}}(-\beta \mu)$,
+with
+\[
+I_n(y) = \int_0^\infty \frac{z^n\, \ud z}{e^{z+y} \mp 1}.
+\]
+
+If $e^{y} \gg 1$ we can neglect the $1$ in the denominator
+and find that $n(\epsilon) \propto e^{-\beta \epsilon} g(\epsilon)$.
+
+We can approximate the integrals (expand the integrand)
+to get
+\[
+E \sim \tfrac{3}{2} N k T \left( 1 \mp \frac{e^{\beta \mu}}{4 \sqrt{2}} +
+\dots \right).
+\]
+
+In the lowest approximation $E = \tfrac{3}{2} N k T$ and
+$N = D V ( k T)^{\frac{3}{2}} \tfrac{\sqrt{\pi}}{2}$.
+
+The condition $e^{-\beta \mu} \gg 1$ is thus
+\[
+\left( \frac{2 m \pi k T}{h^2} \right)^{\frac{3}{2}} \frac{V}{N} \gg 1
+\quad \text{if $g_S = 1$.}
+\]
+
+This \emph{is} a classical limit --- it holds when
+$h$ is very small on a scale defined by $m$ and the
+mean energy per particle $\tfrac{3}{2} k T$.  This condition is
+satisfied at low density $\tfrac{V}{N}$ and at high temperature.
+
+It is true for all real gases except helium at very low temperature
+and very high density.  Most real gases liquefy before quantum mechanical
+effects set in.
+
+It fails to holds for electrons in solids due to the fact that
+their effective mass inside the solid is much less than the free
+electron mass.
+
+We can use our formulae for $E$ and $N$ to get the lowest
+order quantum correction to the equation of state --- recall that
+$P V = \tfrac{2}{3} E$, so
+\[
+P V = N k T \mp \frac{N P}{( k T)^{\frac{3}{2}}} \frac{1}{D \sqrt{8 \pi}}.
+\]
+
+\section{Black body radiation}
+
+Consider a cubic cavity of side $L = V^{\frac{1}{3}}$ inside a perfectly
+black body, the walls of which are maintained at a fixed temperature $T$.
+The atoms of the perfectly black body absorb all photons incident on them
+and independently emit photons such that even in thermodynamic equilibrium
+the number of photons varies significantly.  Thus the total number of
+photons is not conserved and so no constraint can be applied to them.
+Therefore $\mu = 0$.
+
+The number of photons depends on the temperature.  We must consider
+a gas of photons in a volume $V$ at a temperature $T$.  These quanta
+of the electromagnetic field are relativistic bosons of rest mass $0$.
+
+Our previous work applies, setting $\mu = 0$.  Thus
+\[
+\Bar{n}_r = \frac{1}{e^{\beta \epsilon_r} - 1} \quad \text{and} \quad
+E = \sum_r \frac{\epsilon_r}{e^{\beta \epsilon_r} - 1}.
+\]
+
+We pass to the continuum limit using \eqref{eq:photspace} to get
+\[
+N = \frac{8 \pi V}{c^3} \int_0^\infty \frac{\nu^2\, \ud \nu}{
+e^{\beta h \nu} - 1} \quad \text{and} \quad
+E = \frac{8 \pi V}{c^3} \int_0^\infty \frac{h \nu^3\, \ud \nu}{
+e^{\beta h \nu} - 1},
+\]
+
+where $\epsilon = h \nu$.  This is Planck's law.  We expect classical
+behaviour at high $T$ or low $\nu$, where
+$e^{\frac{h \nu}{k T}} - 1 \approx \tfrac{h \nu}{k T}$ and
+\[
+\ud E = \frac{8 \pi V}{c^3} \nu^2\, \ud \nu kT = k T g(\nu)\, \ud V,
+\]
+
+which agrees with the classical result of energy $k T$ per normal mode
+of radiation.  This is the classical equipartition of energy.  Using
+this result, $\diff{E}{\nu} \propto \nu^2$ gives a divergent energy,
+which is called the \emph{ultraviolet catastrophe}.
+
+Using the full formula for the energy we find that
+
+\begin{align*}
+e = \frac{E}{V} &= \frac{8 \pi}{(h c)^3} (k T)^4 \int_0^\infty
+\frac{z^3\, \ud z}{e^z - 1}\\
+&= \sigma T^4.
+\end{align*}
+
+This is \emph{Stefan's law}, and $\sigma = \frac{8 \pi^5 k^4}{15 h^3 c^3}$
+is \emph{Stefan's constant}.  We see that the energy density is a function
+of $T$ only.
+
+Using \eqref{eq:entZ} with $\mu = 0$ we see that
+\[
+S = k \log \cZ + \frac{E}{T}
+\]
+
+and we can evaluate $k \log \cZ = \frac{4 E}{3 T}$.  The entropy
+density $\tfrac{S}{V} = \tfrac{4}{3} \sigma T^3 \to 0$ as $T \to 0$.
+The energy
+\[
+E = V \sigma T^4 = \left( \frac{3 S}{4} \right)^{\frac{4}{3}}
+\frac{1}{(V \sigma)^{\frac{1}{3}}} \propto V^{-\frac{1}{3}} \text{ at
+constant entropy.}
+\]
+
+The pressure $P$ can now be calculated from
+$P = - \pdf{E}{V}{S} = \tfrac{1}{3} \tfrac{E}{V} = \tfrac{1}{3} \sigma T^4$.
+Finally the density of photons, $n = \tfrac{N}{V} \propto T^3$ (see
+example sheet 3).
+
+\section{Degenerate Fermi gas}
+
+This is the extreme quantum limit.  It occurs for
+
+\begin{itemize}
+\item electrons in solids,
+\item electrons in white dwarf stars,
+\item neutrons in neutron stars and
+\item nucleons in nuclear matter.
+\end{itemize}
+
+For $N$ electrons in a volume $V$ at a temperature $T$ we have
+\[
+N = \int_0^\infty g(\epsilon) F(\epsilon)\, \ud \epsilon \quad \text{and}
+\quad
+E = \int_0^\infty g(\epsilon) \epsilon F(\epsilon)\, \ud \epsilon,
+\]
+
+where $g(\epsilon) = D V \sqrt{\epsilon}$, $D = 4 \pi
+\left( \tfrac{2 m}{h^3} \right)^{\frac{3}{2}}$ and
+\[
+F(\epsilon) = \frac{1}{e^{\beta(\epsilon - \mu)} + 1}.
+\]
+
+The range $0 \le e^{-\beta \mu} < \infty$ is allowed without blowup
+of $F$.   The region $e^{- \beta \mu} \gg 1$ is the classical realm
+and we expect that quantum mechanical effects will be most pronounced
+at low temperature, $e^{\beta \mu} \gg 1$.
+
+We assume that $\mu$ is finite and positive and
+$\mu = E_F = k T_F$ is constant at $T=0$.  We further assume
+that $\mu = E_F + \cO(k T)$ for small $T$.  It can be shown that
+$\mu = E_F + \cO(k T)^2$.
+
+Now
+\[
+\lim_{T \to 0} e^{\beta(\epsilon - \mu)} =
+\begin{cases}
+0 & \epsilon < E_F \\
+\infty & \epsilon > E_F,
+\end{cases}
+\]
+
+so that
+
+\[
+\lim_{T \to 0} F(\epsilon) = \begin{cases}
+1 & \epsilon < E_F \\
+0 & \epsilon > E_F.
+\end{cases}
+\]
+
+Thus at $T = 0$ $F(\epsilon) = \theta(\epsilon - E_F)$.  At $T = 0$
+it is energetically most favourable for electrons to fill up the
+one particle energy eigenstates (two electrons at a time, one spin up
+and one spin down) with increasing energy according to the Pauli
+principle, until the Fermi energy is reached.  $E_F$ is the highest
+energy occupied at $T=0$.
+
+We can now perform the integrals for $N$ and $E$ to get
+
+\begin{gather}
+N = D V \tfrac{2}{3} E_F^{\frac{3}{2}}\label{eq:degFermN} \\
+E = D V \tfrac{2}{3} E_F^{\frac{5}{2}} = \tfrac{3}{5} N E_F.
+\end{gather}
+
+We can solve \eqref{eq:degFermN} for $E_F$ to get
+\[
+E_F = \left( \frac{3 N}{2 D V} \right)^{\frac{2}{3}} \propto
+V^{-\frac{2}{3}}.
+\]
+
+The equation of state $P V = \tfrac{2}{3} E$ becomes $P
+V^{\frac{5}{3}} = \text{const}$.  Classical kinetic theory gives $P
+\to 0$ as $T \to 0$.  The Pauli principle requires particles to have
+non-zero momentum and so there is pressure even at $T = 0$.
+
+In fact
+\[
+P = \frac{2}{3} 3^{\frac{2}{3}} \left( \frac{N}{V} \right)^{\frac{5}{3}}
+\frac{h^2}{2 m} \propto m^{-1}
+\]
+and so at $T =0$ the pressure is much bigger for lighter particles.
+
+\subsection{Heat capacity at low temperature}
+
+We have
+
+\begin{align*}
+N &= \int_0^\infty g(\epsilon) F(\epsilon)\, \ud \epsilon \text{ and} \\
+E &= \int_0^\infty \epsilon g(\epsilon) F(\epsilon)\, \ud \epsilon.
+\end{align*}
+
+We want to find $C = \pdf{E}{T}{V}$ (which is proportional to
+the usual $C_V$).  We take $\pd{\phantom{T}}{T}$ of both of the above
+to find
+\[
+C = \int_0^\infty g(\epsilon) \pd{F}{T} (\epsilon - E_F)\, \ud \epsilon.
+\]
+
+At low temperature $\pd{F}{T}$ is very like a delta function and so
+the region $\epsilon \approx E_F$ dominates the integral.
+
+We approximate $g(\epsilon) \approx g(E_F)$ and
+$\mu \approx E_F$.  This gives us
+
+\begin{align*}
+C &\sim \frac{g(E_F)}{k T^2} \int_0^\infty\ud \epsilon (\epsilon - E_F)
+\frac{e^{\beta(\epsilon - E_F)}}{\left(
+e^{\beta(\epsilon - E_F)} + 1 \right)^2} (\epsilon - E_F)^2 \\
+&= g(E_F) k^2 T \int_{-\beta E_F}^\infty \frac{z^2 e^z\, \ud z}{\left(
+e^z + 1\right)^2}. \\
+\intertext{We know that $E_F$ is finite and positive, so that
+$-\beta E_F \to - \infty$ as $T \to 0$.  We therefore approximate
+the lower limit of the integral by $-\infty$.}
+C &\sim g(E_F) k^2 T \int_{-\infty}^\infty \frac{z^2 e^z\, \ud z}{\left(
+e^z + 1\right)^2}.
+\end{align*}
+
+This leaves a convergent integral whose value is $\tfrac{\pi^2}{3}$, so
+that
+\[
+C \sim \frac{\pi^2}{2} N k \frac{T}{T_F},
+\]
+
+where $T_F$ (the \emph{Fermi temperature}) is defined by
+$E_F = k T_F$.  This approximation is expected to be good for
+$T \ll T_F$.
+
+\section{Bose-Einstein condensation}
+
+Recall the result
+\[
+N = D  V \int_0^\infty \frac{\epsilon^{\frac{1}{2}}\, \ud \epsilon}{
+e^{\beta(\epsilon - \mu)} - 1} = D V (k T)^{\frac{3}{2}}
+\int_0^\infty \frac{z^\frac{1}{2}\, \ud z}{e^{z - \beta \mu} - 1}
+= D V (k T)^{\frac{3}{2}} \frac{\sqrt{\pi}}{2} f(-\beta \mu),
+\]
+
+where
+\[
+f(-\beta \mu) = \sum_{n=1}^\infty \frac{e^{n \beta \mu}}{n^{\frac{3}{2}}}.
+\]
+
+$f(-\beta \mu)$ is convergent iff $\beta \mu \le 0$.  Assuming this,
+the Bose-Einstein denominator does not vanish for any point in the
+range of integration.
+
+It is easy to see that $f$ has a maximum value (of $2.612$) at
+$\beta \mu = 0$ and decreases monotonically as $\beta \mu$ decreases
+through negative values from $\beta \mu = 0$.
+
+Now suppose that $\tfrac{N}{V}$ is fixed.  Our equation for $N$ is OK
+as $T$ decreases since $f(-\beta \mu)$ can increase by $\beta \mu$
+getting less negative.  When $\beta \mu$ reaches $0$ problems occur as
+$f$ cannot increase any more.  This will be at $T = T_B$, given by
+\[
+\frac{N}{V} = \Hat{D} ( k T_B )^{\frac{3}{2}} \qquad \Hat{D}
+= \frac{D \sqrt{\pi} f(0)}{2}.
+\]
+
+Our equation for $N$ appears to fail beyond this.  Why?
+
+More care is called for in the passage to the continuum limit.  The
+$\epsilon^{\frac{1}{2}}$ factor in $g(\epsilon)$ assigns $0$ weight to
+the particles in the $\epsilon = 0$ state.  This would be no problem
+for fermions (which have the Pauli principle), but no law stops bosons
+from \emph{condensing} into the $\epsilon = 0$ state if need be.  We
+write $N = N_0 + N_C$, where $N_0$ is the number of particles in the
+$\epsilon = 0$ state and $N_C$ is the number of particles in $\epsilon
+> 0$ states.  Then for $T > T_B$
+\[
+\frac{N}{V} = D \tfrac{\sqrt{\pi}}{2} f(-\beta \mu).
+\]
+
+For $T = T_B$, $\frac{N}{V} = \Hat{D} ( k T_B)^{\frac{3}{2}}$,
+defining $T_B$.  For $T < T_B$ then
+\[
+\frac{N_C}{V} = \Hat{D} ( k T )^{\frac{3}{2}}, \quad \text{giving}
+\quad \frac{N_C}{N} = \left( \frac{T}{T_B} \right)^{\frac{3}{2}}.
+\]
+
+\section{White dwarf stars}
+
+White dwarfs are abnormally faint: they are stars in which the
+hydrogen supply has run out so that they are composed mainly of
+helium.
+
+Typically,
+
+\begin{align*}
+T & \approx T_{\text{sun}} = 10^7 \mathrm{K} \\
+M & \approx M_{\text{sun}}, \text{ and} \\
+\rho & \approx 10^7 \rho_{\text{sun}}.
+\end{align*}
+
+We regard them as being a mass of helium at $T \approx 10^7
+\mathrm{K}$ and under extreme compression.  For $T \approx 10^7 \mathrm{K}$,
+$k T \approx 10^3 \mathrm{eV}$ is much greater than the binding energy
+of electrons to helium, so that thermal collisions completely ionize
+all the atoms, producing an electron gas.
+
+To a good approximation this may be viewed as a Fermi gas in the
+degenerate (negligible $T$) limit.  This may be seen by computing
+$T_F$, the natural temperature scale of the problem (the Fermi
+temperature).  Now
+\[
+k T_F = E_F = \frac{h^2}{2 m} \left( \frac{ 3 N}{8 \pi
+    V}\right)^{\frac{2}{3}} \approx 2 \times 10^6 \mathrm{eV}.
+\]
+
+Since $\tfrac{N}{V}$ is so large $T_F \approx 10^{11} \mathrm{K} \gg
+T$.
+
+The helium nuclei neutralise the charge of the star and produce the
+gravitational attraction which counteracts the extreme zero-point
+pressure of the electron gas (which dominates the zero-point pressure
+from the nuclei).
+
+We can calculate the total energy $E = E_{\text{elec}}(R) +
+E_{\text{grav}}(R)$ and find the radius $R_0$ of the star by
+minimising this.
+
+Treating the electrons relativistically we have
+\[
+\frac{N}{V} = \frac{8 \pi}{\hbar^3 c^3} \int_{mc^2}^{E_F} \epsilon\,
+\ud \epsilon (\epsilon^2 - m^2 c^4)^{\frac{1}{2}}.
+\]
+
+Let $\sqrt{\epsilon^2 - m^2 c^4} = m c^2 x$, so that the integral for
+$\tfrac{N}{V}$ can be done to get
+\[
+\frac{N}{V} = \frac{8 \pi}{\hbar^3 c^3} (mc^2)^3 \frac{x_F^3}{3}.
+\]
+
+The integral for the energy density is
+
+\[
+\frac{E}{V} = \frac{8 \pi}{\hbar^3 c^3} (mc^2)^4 \int_0^{x_F} x^2\,
+\ud x\, \sqrt{1+x^2}
+\]
+
+and so $\tfrac{E}{N} = \tfrac{3}{4} m c^2\left( x_F + \tfrac{1}{x_F}
++ \cO(x_F^{-2})\right)$.  We know that $V \propto R^3$ and so $x_F \propto
+R^{-1}$.  Hence
+\[
+E = \frac{a}{R} + b R - \frac{\gamma}{R},
+\]
+
+where $a$, $b$ and $\gamma$ are positive constants.  This only has a
+minimum if $\gamma \ge a$, which leads to the Chandrasekhar upper
+limit on the mass of a white dwarf.
+
+\chapter{Classical statistical mechanics}
+
+\section{Introduction}
+
+Recall the result $Z = z^N$ for a system of distinguishable
+non-interacting particles.  It can be shown that in the
+classical limit
+\[
+z = \sum_r e^{-\beta \epsilon_r} = \sum_r
+\bra{r} e^{-\beta \Hat H} \ket{r}
+\]
+
+gives
+\begin{equation}\label{eq:smallz}
+z = h^{-3} \int \ud^3 p\, \ud^3 q\, e^{-\beta H(p,q)},
+\end{equation}
+
+where $\Hat{H}(\Hat{p},\Hat{q})$ is the quantum mechanical
+Hamiltonian and $H(p,q)$ is the classical Hamiltonian as
+a function of classical variables $p$ and $q$.
+
+The average for the system of a physical variable $f(\vect{p},
+\vect{q})$ is
+\[
+\ave{f(\vect{p},\vect{q})}
+= \frac{\int \ud^3 p\, \ud^3 q\, f(\vect{p},\vect{q}) e^{-\beta H(p,q)}}
+{\int \ud^3 p\, \ud^3 q\, e^{-\beta H(p,q)}}.
+\]
+
+We can see that $\ave{H(\vect{p},\vect{q})}
+= - \pdf{\log z}{\beta}{V}$ agrees with the result
+\[
+E = - \pdf{\log Z}{\beta}{V} = - N \pdf{\log z}{\beta}{V}.
+\]
+
+Now
+\[
+Z = \int \prod_{i=1}^N \left( \frac{\ud^3 p\, \ud^3 q}{h^3} \right)
+e^{-\beta \sum_{i=1}^N H(p_i,q_i)},
+\]
+
+where $\sum_{i=1}^N H(p_i,q_i)$ is the Hamiltonian of the
+$N$-particle system.
+
+For a monatomic gas with $H = \frac{p^2}{2 m}$ we have
+\[
+z = \frac{V}{h^3} \left(\int \ud p\, e^{-\frac{\beta p^2}{2 m}}
+\right)^3 = \frac{V}{h^3} \left( \frac{2 \pi m}{\beta}
+\right)^{\frac{3}{2}}.
+\]
+
+This result shows that $E = \tfrac{3}{2} N k T$, which is the
+common classical result of energy $\tfrac{1}{2} k T$
+per degree of freedom per particle.
+
+\section{Diatomic gases}
+
+We will study the \emph{rigid dumbbell model} as shown.
+
+\vspace{1in}
+
+We want to write down the partition function $Z = z^N$. To apply
+\eqref{eq:smallz} we need the Hamiltonian $H$.  To find the
+Hamiltonian we first write down the Lagrangian
+\[
+\cL = \tfrac{1}{2} m \Dot{\x}^2 + \tfrac{1}{2} I \left(
+\Dot{\theta}^2 + \sin^2 \theta \Dot{\phi}^2 \right).
+\]
+
+($V \equiv 0$ in this rigid case.)  Note that the Lagrangian
+splits neatly into translational motion of $G$ and rotational
+motion about the centre of mass.
+
+We define the generalised momenta
+$p_\alpha = \pd{\cL}{\Dot{q}_\alpha}$:
+\[
+p_i = m \Dot{x}_i, \quad p_\theta = I \Dot{\theta} \text{ and}\quad
+p_\phi = I \sin^2 \theta \Dot{\phi}.
+\]
+
+Now
+\[
+H = \sum_\alpha \Dot{q}_\alpha p_\alpha - \cL
+= \frac{\vect{p}^2}{2 m} + \frac{p_\theta^2}{2 I}
++ \frac{p_\phi^2}{2 I \sin^2 \theta},
+\]
+
+and
+\[
+z = \frac{1}{h^5} \int \ud^2 p\, \ud^3 q\, \ud p_\phi\, \ud \phi\,
+\ud p_\theta\, \ud \theta\, e^{-\beta H} = z_t z_r,
+\]
+
+where
+\[
+z_t = \frac{1}{h^3} \int \ud^3 p\, \ud^3 q\, e^{-\frac{1}{2} m \beta
+\vect{p}^2} = V \left( \frac{2 m \pi}{\beta h^2} \right)^{\frac{3}{2}}
+\]
+
+and
+\[
+z_r = \frac{1}{h^2} \int \ud p_\phi\, \ud \phi\,
+\ud p_\theta\, \ud \theta\, e^{-\frac{\beta}{2 I} \left( p_\theta^2
++ \frac{p_\phi^2}{\sin^2 \theta} \right)}
+= \frac{8 \pi^2 I k T}{h^2}.
+\]
+
+We evaluate the above integral by first doing the
+$p_\theta$, $p_\phi$ and $\phi$ integrals and then doing the
+$\theta$ integral.
+
+Thus $z = z_t z_r = V \left( \frac{2 m \pi k T}{h^2} \right)^{\frac{3}{2}}
+\frac{8 \pi^2 I k T}{h^2}$. This gives
+$E = \tfrac{5}{2} N k T$.%
+\footnote{Which ought to be expected!}
+
+\section{Paramagnetism}
+
+Each molecule of an $N$ molecule solid acts as a little
+magnet fixed at its own lattice site and free only to rotate
+about it.  Each molecule has a dipole moment $\vect{m}$ and
+gives a contribution $-\vect{m} \cdot \vect{B}$ to the energy
+when in an applied magnetic field $\vect{B} = (0,0,B)$.  Now
+\[
+H = \frac{\vect{p}^2}{2 m} + \frac{p_\theta^2}{2 I}
++ \frac{p_\phi^2}{2 I \sin^2 \theta} - m B \cos \theta
+\]
+
+and so
+\[
+z = \frac{2 \pi I}{h^2 \beta} 2 \pi \frac{2 \sinh y}{y}
+\]
+
+where $y = m \beta B$.  We can calculate the magnetisation of the
+solid:
+\[
+\vect{M} = (0,0,M) = N \ave{M}.
+\]
+
+Only the third component $\ave{m \cos \theta}$ is non-zero:
+\[
+\ave{m \cos \theta} = \beta^{-1} \pdf{\log z}{B}{\beta} = m \left(
+\coth y - y^{-1} \right).
+\]
+
+For small $y$ (high $T$) we thus have Curie's law,
+$M = \tfrac{1}{3} N m y = \tfrac{N m^2 B}{3 k T}$.
+
+\section{Specific heats}
+
+The result $E = \tfrac{5}{2} N k T$ for a diatomic gas is found to be
+accurate at sufficiently high temperatures.  $E$ is found to be
+$\tfrac{3}{2} N k T$ at lower temperatures.  It is as if the
+rotational degrees of freedom are \emph{frozen out}.  This is explained
+by quantum mechanics.
+
+We have $Z = z^N$ and $z = z_r z_t$.  We will look at
+$z_r$, using $H_r = \frac{1}{2 I} \vect{L}^2$ (the quantum mechanical
+angular momentum operator).  Now
+\[
+H_r \ket{l\ m} = \frac{ l (l+1) \hbar^2}{2 I} \ket{l\ m}
+\]
+
+for $m = -l,-l+1,\dots, l-1,l$ for each of $l=0,1,2,\dots$.  Thus
+\begin{equation}\label{eq:freezeout}
+z_r = \sum_{l=0}^\infty (2 l + 1) e^{-\frac{l(l+1) T_r}{T}}
+\end{equation}
+with $T_r = \frac{\hbar^2}{2 I k}$.  $T_r$ is typically about $50
+\mathrm{K}$ and is experimentally accessible.
+
+For $T_r \ll T$ (most gases at normal temperatures) we can turn
+this sum into an integral to get
+\[
+z_r = \frac{T}{T_r} = \left( \frac{8 \pi^2}{h^2} \right) k T
+\]
+
+as before.  For $T_r \gg T$ all of the terms with $l \neq 0$ in
+\eqref{eq:freezeout} are exponentially small and we take only the $l
+=0$ term to get $z_r \approx 1$ --- there is no rotational
+contribution to the energy (or heat capacity).  The contribution to
+the energy from rotational motion is therefore $N k T$ if $T \gg T_r$
+or $0$ if $T \ll T_r$.
+
+For high temperatures, $E$ rises to $\tfrac{7}{2} N k T$ due to
+vibrational motion along the axis of the dumbbell.  There is an extra
+term in the Hamiltonian
+\[
+H_v = \frac{1}{m} P^2 + \frac{m \omega^2 Q^2}{4}
+\]
+
+and an extra factor $z_v$ in the one particle partition function.
+
+\section{Weak interparticle forces}
+
+Consider a classical gas of $N$ molecules with Hamiltonian
+\[
+H = \sum_{r=1}^N \frac{\vect{p}_r^2}{2 m}
++ \sum_{r < s} \phi(R_{rs}),
+\]
+
+where $R_{rs} = \abs{\vect{q}_r - \vect{q}_s}$.  We use
+
+\begin{align*}
+Z &= \int \prod_{r=1}^N \frac{\ud^3 p_r\, \ud^3 q_r}{h^3}
+e^{-\beta H} \\
+&= \left( \frac{2 \pi m k T}{h^2} \right)^{\frac{3 N}{2}} V^N K \\
+&= Z_0 K,
+\end{align*}
+
+where $Z_0 = z_0^N$ and $z_0$ is the partition function for one
+molecule of a spinless gas of $N$ non-interacting molecules and
+\[
+K = V^{-N} \int \prod_r \ud^3 q_r\, e^{-\beta \sum_{r < s} \phi(R_{rs})}.
+\]
+
+We suppose that $\lambda_{rs} = e^{-\beta \phi(R_{rs})} - 1$ is small
+(weak interaction) and we treat our results to lowest non-trivial order.
+
+Then
+\begin{align*}
+K &= V^{-N} \int \prod_r \ud^3 q_r\, \left( 1 + \sum_{r < s}
+  \phi(R_{rs}) \right) \\
+&= 1 + \frac{N(N-1)}{2 V^2} \int \ud^3 q_a\, \ud^3 q_b\, \lambda_{ab}
+  \quad \text{(no summation).}
+\end{align*}
+
+This integral can be evaluated using the change of variables $\x =
+\frac{\vect{q}_a + \vect{q}_b}{2}$ and $\vect{y} = \vect{q}_a -
+\vect{q}_b$, so that
+\[
+\int \ud^3 q_a\, \ud^3 q_b\, \lambda_{ab} =
+V \int \ud^3 y\, \left( e^{-\beta \phi(y)}-1\right)
+\equiv V f(T),
+\]
+
+defining $f(T)$.  Then $K = 1 + \frac{N^2 f(T)}{2 V}$
+(as $N-1 \sim N$) and
+\[
+\log Z = N \log V + \frac{N^2 f(T)}{V} + \text{stuff which does not
+depend on $V$.}
+\]
+
+Using $\beta P = \pdf{\log Z}{V}{\beta}$ we get
+\begin{equation}\label{eq:interstate}
+P V = N k T \left( 1 - \frac{N f(T)}{2 V}\right) \quad \text{with}
+\quad f(T) = \int_0^\infty 4 \pi y^2\, \ud y  \left( e^{-\beta \phi(y)}
+- 1 \right).
+\end{equation}
+
+If we take a specific $\phi$ we can recover the van der Waals'
+equation of state (see page \pageref{eq:vdW}).  
+
+Consider the $\phi$ shown.
+
+\vspace{1.5in}
+
+Then the contribution to $f(T)$ from region 1 where $\phi$ is infinite
+is
+\[
+\int_0^d 4 \pi y^2\, \ud y = -2 b.
+\]
+
+For large $T$ and weak attractive forces the contribution from region
+2 is
+\[
+\int_d^\infty 4 \pi y^2\, \ud y\, \left( - \beta \phi(y) \right) =
+2 \beta a.
+\]
+
+$a$ and $b$ are positive constants.  Now $f(T) = -2 ( b - \beta a)$
+and \eqref{eq:interstate} becomes
+\[
+\left( P + \frac{ N^2 a}{V^2}\right) V = N k T \left( 1 + \frac{ N
+    b}{V} \right).
+\]
+
+For $\tfrac{N b}{V}$ small we can (approximately) take $1 + \tfrac{N
+  b}{V}$ to the left hand side of the equation to get
+\[
+\left( P + \frac{N^2 a}{V^2} \right) \left(V - N b \right) = N k T
+\]
+
+and the correspondence with \eqref{eq:vdW} is completed by
+setting $A = N^2 a$ and $B = N b$.  Note that $B$ \emph{is} the
+volume of all the molecules.
+
+\section{The Maxwell distribution}
+
+Consider a gas with (one particle) Hamiltonian $\frac{\vect{p}^2}{2m}$.
+
+The number of molecules in the region
+$\vect{p} \to \vect{p} + \vect{dp}$ is
+\[
+n(p)\, \ud^3 p = \frac{ N e^{-\beta H}}{\int e^{-\beta H} \ud^3 p}
+= C e^{-\frac{\beta \vect{p}^2}{2 m}}.
+\]
+
+Now
+\[
+N = \int n(p)\, \ud^3 p = m^3 C \int 4 \pi v^2\, \ud v
+e^{-\tfrac{1}{2} \beta m v^2} = N \int f(v)\, \ud v,
+\]
+
+which defines the \emph{Maxwell distribution of speeds},
+\[
+f(v) = \text{const} \times v^2 e^{-\tfrac{1}{2} \beta m v^2}.
+\]
+
+$f(v)$ is the probability of finding a particle with speed in $v \to v
++ \ud v$.  The constant is (of course) chosen to make $\int_0^\infty
+f(v)\, \ud v = 1$.  We can define averages in the obvious way, that is
+\[
+\ave{g(v)} = \int_0^\infty f(v) g(v)\, \ud v.
+\]
+
+\backmatter
+
+\appendix
+
+\chapter{Approximations}
+
+\section*{Stirling's formula}
+
+We derive the approximation for Stirling's formula from the $\Gamma$
+function using Laplace's method.
+
+Recall that
+
+\[
+\Gamma(z) = \int_0^\infty t^{z-1} e^{-t}\, \ud t
+\]
+
+and $\Gamma(n+1) = n!$.  Then
+
+\[
+n! = \int_0^\infty t^n e^{-t}\, \ud t = \int_0^\infty
+e^{n \log t - t}\, \ud t.
+\]
+
+Let $v = \tfrac{t}{n}$, so that
+\[
+n! = n^{n+1} \int_0^\infty e^{n (\log v - v)}\, \ud v. 
+\]
+
+Now for large $n$, $e^{n (\log v - v)} \sim e^{n
+\left(-1 - \frac{(v-1)^2}{2}\right)}$, so
+\[
+n! \sim n^{n+1} e^{-n} \int_{-\infty}^\infty e^{-\frac{n u^2}{2}}\,
+\ud u = \sqrt{2 \pi n} e^{-n} n^n.
+\]
+
+This is Stirling's formula.
+
+\end{document}
+

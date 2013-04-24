@@ -1,0 +1,2756 @@
+\documentclass{notes}
+
+\usepackage{varioref}
+
+\newcommand{\te}[1]{\underline{\underline{#1}}}
+\newcommand{\vk}{\vect{k}}
+\newcommand{\bs}[1]{\boldsymbol{#1}}
+\newcommand{\cO}{\mathcal{O}}
+\newcommand{\cE}{\mathcal{E}}
+\newcommand{\cA}{\mathcal{A}}
+\newcommand{\cL}{\mathcal{L}}
+\renewcommand{\Box}{\square}
+\DeclareMathOperator{\dive}{div}
+\DeclareMathOperator{\curl}{curl}
+\DeclareMathOperator{\grad}{grad}
+
+\begin{document}
+
+\frontmatter
+
+\title{Waves in Fluid and Solid Media}
+
+\lecturer{Prof.~D.~G.~Crighton}
+\maintainer{Paul Metcalfe}
+\date{Lent 1998} \maketitle
+
+\thispagestyle{empty}
+
+\noindent\verb$Revision: 2.2 $\hfill\\
+\noindent\verb$Date: 2002/01/17 15:27:59 $\hfill
+
+\vspace{1.5in}
+
+The following people have maintained these notes.
+
+\begin{center}
+\begin{tabular}{ r  l}
+-- date & Paul Metcalfe
+\end{tabular}
+\end{center}
+
+\tableofcontents
+
+\chapter{Introduction}
+
+These notes are based on the course ``Waves in Fluid and Solid Media''
+given by Prof.~D.~G.~Crighton in Cambridge in the Lent Term 1998.
+These typeset notes are totally unconnected with Prof.~Crighton.  The
+recommended books for this course are discussed in the bibliography.
+
+\alsoavailable
+\archimcopyright
+
+\mainmatter
+
+\chapter{Sound waves}
+
+\section{Equations of motion of a compressible fluid}
+
+Assume the fluid is both homogeneous and non-dissipative.  We will
+denote the pressure, density and fluid velocity at $(\vx,t)$ by
+$p(\vx,t)$, $\rho(\vx,t)$ and $\vu(\vx,t)$ respectively.
+
+The governing equations are derived from conservation of mass,
+conservation of momentum and the laws of thermodynamics.
+
+\subsection{Conservation of mass}
+
+Consider an arbitrary fixed volume $V$ with surface $S$ and outward
+normal $\vn$.  Then
+
+\begin{align*}
+\text{rate of increase of mass in $V$}
+&= \text{mass flux across $S$} \\ &
++ \text{rate of creation of mass within $V$} \\
+\ddt{} \int \rho \ud V & = - \int \rho \vu \cdot \vn\, \ud S
++ \int Q\, \ud V \\
+& = - \int \dive \rho \vu\, \ud V + \int Q\, \ud V.
+\end{align*}
+
+We can make $V$ arbitrarily small to derive the continuity equation
+
+\begin{equation}\label{eq:contin}
+\pddt{\rho} + \dive \rho \vu = Q.
+\end{equation}
+
+\subsection{Conservation of momentum}
+
+We use the same sort of argument to get
+
+\begin{align*}
+\ddt{} \int \rho \vu\, \ud V & = - \int \rho \vu (\vu \cdot \vn)
++ p \cdot \vn\, \ud S + \int Q \vu + \rho \vF\, \ud V \quad
+\text{or in tensor form} \\
+\ddt{} \int \rho u_i\, \ud V &= - \int \rho u_i u_j n_j + p n_i\, \ud S
++ \int Q u_i + \rho F_i\, \ud V \\
+&= - \int \pd{}{x_j} \left( \rho u_i u_j \right) + \pd{p}{x_i}\, \ud V
++ \int Q u_i + \rho F_i\, \ud V.
+\end{align*}
+
+Making $V$ arbitrarily small we get
+
+\begin{equation}\label{eq:consmom}
+\pddt{} \rho u_i + \pd{}{x_j} \rho u_i u_j + \pd{p}{x_i} = Q u_i + \rho F_i
+\end{equation}
+
+and subtracting $u_i \times \eqref{eq:contin}$ from this we derive the
+Euler equation
+
+\begin{equation}\label{eq:euler}
+\rho \DDt{\vu} = - \nabla p + \rho \vF.
+\end{equation}
+
+We now have five quantities ($\rho$, $p$ and $\vu$) to solve for
+and only four equations.  The final equation comes from thermodynamics.
+
+\subsection{Thermodynamics}
+
+A perfect gas with specific volume $V = \rho^{-1}$ satisfies
+\emph{Boyle's law}, $PV = R T$ and if $T$ is constant then this gives us
+the fifth equation.  This is not overly realistic and we need something
+further.
+
+When a system is in thermodynamic equilibrium we have the functions
+of state (for instance $p$, $\rho$ and $T$), any two of which serve to
+define a simple fluid via an equation of state (for instance
+$f(p,\rho,T) = 0$).
+
+\subsubsection*{The first law}
+
+\begin{center}
+\parbox{3in}{ \itshape
+Every thermodynamic system has a function of state $e$, the internal
+energy per unit mass.  $e$ can be changed by either adding heat $Q$
+and/or doing work $W$.  If $e$ is changed, then
+\[
+\ud e = \delta Q + \delta W.
+\]
+}
+\end{center}
+
+$Q$ and $W$ are not functions of state and they depend on how the system
+was changed into its state.
+
+An \emph{adiabatic process} is one in which $\delta Q = 0$.  A reversible
+process is one which is very slow, and (ahem) reversible.
+
+For a perfect gas we find that $e = C_V T$.  We also have an equation 
+for $\delta W$, ${\delta W = - p \ud V}$.
+
+\subsubsection*{The second law}
+
+\begin{center}
+\parbox{3in}{ \itshape
+All thermodynamic systems have a function of state, the entropy
+(per unit mass) $S$ such that $\delta Q = T \ud S$ in any reversible
+process (thus defining $T$).  This can also be stated as
+``$T^{-1}$ is an integrating factor for $\delta Q$''.
+}
+\end{center}
+
+We can solve the equations we have to find
+
+\begin{equation}\label{eq:entropy}
+S = C_V \log \frac{p}{\rho^\gamma} + \text{const},
+\end{equation}
+
+where $\gamma = \frac{R + C_V}{C_V}$ is the specific heat ratio.
+$R + C_V = C_P$, the specific heat at constant pressure, whereas $C_V$
+is the specific heat at constant volume.
+
+In an ideal fluid there is no heat transfer between particles
+(no diffusion of momentum by viscosity, no diffusion of heat by
+thermal conductivity) and so $\delta Q = 0$.  Thus we have the final
+equation we need,
+
+\begin{equation}\label{eq:consent}
+\DDt{S} = 0.
+\end{equation}
+
+Processes with $\DDt{S} = 0$ are called \emph{isentropic} and processes
+with $S$ the same constant for all particles are called \emph{homentropic}.
+
+In summary, for a perfect gas:
+
+\begin{equation}\label{eq:gassum}
+p = \rho R T \quad \rho = C_V T \quad \frac{p}{\rho^\gamma}
+= \text{const} \times \exp \frac{S}{C_V}.
+\end{equation}
+
+If the system is homentropic then
+
+\begin{equation}\label{eq:homent}
+\frac{p}{p_0} = \left(\frac{\rho}{\rho_0}\right)^\gamma \quad
+\text{and} \quad \diff{p}{\rho} = \frac{\gamma p}{\rho}.
+\end{equation}
+
+For a monatomic gas $\gamma = \tfrac{5}{3}$ and for a diatomic
+gas $\gamma = \tfrac{7}{5}$.  Air is approximately diatomic.  To fit
+a curve of this form to water, $\gamma \sim 7$.
+
+\section{Linear acoustic waves}
+
+From $\pddt{} \eqref{eq:contin} + \pd{}{x_i} \eqref{eq:consmom}$
+we get
+
+\begin{equation}\label{eq:fullwave}
+\pd{^2 \rho}{t^2} - \nabla^2 p = \pddt{Q} - \pd{}{x_i}
+\left( \rho F_i + Q u_i \right) + \pd{^2}{x_i x_j}
+\left( \rho u_i u_j \right).
+\end{equation}
+
+This has an exact solution, the rest state $\vu = 0$, $p=p_0$,
+$\rho = \rho_0$, $Q = 0$ and $\vF = 0$.  We make small perturbations
+
+\begin{align*}
+\rho &= \rho_0 + \Tilde{\rho} &
+p &= p_0 + \Tilde{p} &
+\vu &= \Tilde{u} \\
+Q &= \Tilde{Q} &
+\vF &= \Tilde{\vF} \\
+\end{align*}
+with $\abs{\Tilde{\rho}} \ll \abs{\rho_0}$,
+$\abs{\Tilde{p}} \ll \abs{p_0}$, and $\Tilde{\vu}$, $\Tilde{Q}$
+and $\Tilde{\vF}$ all small.
+
+Then to first order, $\rho F_i = \rho_0 F_i$ and
+$Q u_i$ and $\rho u_i u_j$ can be neglected.%
+\footnote{About 6 lectures of a Part III course have just vanished
+  with the casual neglect of $\rho u_i u_j$.  If this is included we
+  get Lighthill's model of aerodynamic noise.}
+The linear approximation to \eqref{eq:fullwave} is
+
+\begin{equation}\label{eq:linwave}
+\pd{^2 \Tilde{\rho}}{t^2}
+- \nabla^2 \Tilde{p} = \pddt{\Tilde{Q}} - \rho_0 \dive \vF.
+\end{equation}
+
+$S$ is uniform, so $p = p(\rho,S_0)$.  Thus
+\[
+p_0 + \Tilde{p} = p_0 + \Tilde{\rho} \diff{p}{\rho} (\rho_0,S_0)
+\]
+
+and hence $\Tilde{p} = c_0^2 \Tilde{\rho}$, with
+$c_0^2 = \diff{p}{\rho} (\rho_0,S_0) = \tfrac{\gamma p_0}{\rho_0}$.
+
+\subsection{The wave equation}
+
+\eqref{eq:linwave} becomes
+
+\begin{equation}\label{eq:waveqn}
+\left( \nabla^2 - \frac{1}{c_0^2} \pd{^2}{t^2} \right) \Tilde{p}
+= - \pddt{\Tilde{Q}} + \rho_0 \dive \vF.
+\end{equation}
+
+The operator $\nabla^2 - \frac{1}{c_0^2} \pd{^2}{t^2}$ is written
+$\Box^2$.
+
+Assuming no $Q$ and $\vF$, the governing equations \eqref{eq:contin}
+and \eqref{eq:euler} linearise to give
+
+\begin{equation}\label{eq:lingov}
+\pddt{\Tilde{\rho}} + \rho_0 \dive \vu = 0 \qquad
+\rho_0 \pddt{\vu} = - \nabla p.
+\end{equation}
+
+We find that $\Box^2 \dive \Tilde{\vu} = 0$ and 
+$\Box^2 \pddt{\vu} = 0$.  Thus $\Box^2 \vu = \bs{\alpha}(\vx)$ 
+and $\dive \bs{\alpha} = 0$.  If the motion starts from rest then
+$\bs{\alpha} \equiv 0$.  We conclude that
+$\Box^2 (\Tilde{p}, \Tilde{\rho}, \Tilde{\vu}) = 0$.
+
+\subsection{Potential}
+
+We solve these equations by a potential method.  Taking the curl
+of \eqref{eq:lingov} we obtain the vorticity equation,
+$\pddt{\bs{\omega}} = 0$.  Thus $\vu = \nabla \phi + \Tilde{\vu}_0(\vx)$,
+and if the motion starts from rest then $\Tilde{\vu}_0 \equiv 0$.
+
+Then \eqref{eq:lingov} gives
+\[
+\Tilde{\rho} = \frac{\Tilde{p}}{c_0^2} = - \frac{\rho_0}{c_0^2}
+\pddt{\phi} + \beta(t).
+\]
+
+By redefining $\phi$ we can take $\beta \equiv 0$ and so $\Box^2 \phi = 0$.
+
+All of $\phi$, $\Tilde{\vu}$, $\Tilde{\rho}$ and $\Tilde{p}$
+satisfy the wave equation with propagation speed
+
+\begin{equation}\label{eq:wavespeed}
+c_0 = \left( \pd{\rho}{p} \right)^{\frac{1}{2}}_{S_0}
+= \left( \frac{\gamma p_0}{\rho_0} \right)^{\frac{1}{2}}.
+\end{equation}
+
+$c_0 \approx 340 ms^{-1}$ in air at sea level and $\approx 1500 ms^{-1}$
+in water.
+
+\subsection{Energy density, energy flux}
+
+We use equations \eqref{eq:lingov} to derive an energy equation,
+
+\begin{equation}\label{eq:energy}
+\pddt{} \left( E_k + E_p \right)  + \dive \vect{I} = 0,
+\end{equation}
+
+where the kinetic energy density $E_k = \tfrac{1}{2} \rho_0
+\abs{\Tilde{u}}^2$, the potential energy density
+$E_p = \tfrac{1}{2} \frac{c_0^2 \Tilde{\rho^2}}{\rho_0}$
+and the energy flux vector (or acoustic intensity)
+$\vect{I} = \Tilde{p} \Tilde{\vu}$.  Integrating \eqref{eq:energy}
+over a fixed volume $V$ we see that the rate of increase of
+energy in $V$ equals the rate of working of pressure forces on $\partial V$.
+
+\subsection{Plane waves}
+
+We seek to solve the wave equation $\Box^2 \phi = 0$.  $\phi
+= f(\vk \cdot \vx - \omega t)$ is a solution for any (sufficiently smooth)
+$f$ if $c_0^2 k^2 = \omega^2$.  This is a dispersion relation, and relates
+the space and time parameters of the solution.
+
+By Fourier's theorem, any $G(\vx,t)$ can be expressed as
+
+\begin{align*}
+G(\vx,t) &= \int \ud^3 k\, \ud \omega\, \Hat{G}(\vk,\omega) e^{-\imath
+( \vk \cdot \vx - \omega t)} \quad \text{where} \\
+\Hat{G}(\vk,\omega) &= \frac{1}{\left(2 \pi\right)^4} \int \ud^3 x\, \ud t\,
+G(\vx,t) e^{\imath( \vk \cdot \vx - \omega t)}.
+\end{align*}
+
+That is, any $G$ can be written as a sum of harmonic plane
+components $e^{-\imath( \vk \cdot \vx - \omega t)}$ and plane wave solutions
+can be added to generate more general solutions.
+
+At any $t$, $\phi$ is constant on planes $\vk \cdot \vx = \text{const}$.
+$\vk$ is called the \emph{propagation vector}.  If we take axes parallel
+to $\vk$ with co-ordinate $X$ then $\phi = f(k X - \omega t)$ with
+$\omega = \pm k c_0$.  Thus
+
+\begin{equation}\label{eq:planewave}
+\phi = f(k X - k c_0 t) + g(k X + k c_0 t).
+\end{equation}
+
+\vspace{1in}
+
+\subsection{Properties of plane waves}
+
+We have
+\[
+\Tilde{\vu} = \nabla \phi = \vk \left( f'(k X - k c_0 t) +
+g'(k X + k c_0 t) \right).
+\]
+
+$\Tilde{\vu}$ is parallel to $\vk$.  These are longitudinal waves of
+compression and rarefaction.  We also have
+\[
+\Tilde{p} = - \rho_0 \phi_t = \rho_0 c_0 k \left(
+f'(k X - k c_0 t) - g'(k X + k c_0 t) \right).
+\]
+
+We see that for a single wave with $\Tilde{\vu} = \Hat{\vk} u$
+we have $\Tilde{p} = \rho_0 c_0 u$ if $g = 0$ and $\Tilde{p}
+= - \rho_0 c_0 u$ if $f=0$.  $\rho_0 c_0$ is called the \emph{specific
+acoustic impedance}.
+
+For a single wave with (for example) $g=0$, $E_k = Ep = \tfrac{1}{2}
+\rho_0 k^2 f'{}^2$.  There is thus \emph{instananeous equipartition
+of energy}.  The energy flux vector is
+\[
+\vect{I} = \left( E_k + E_p \right) c_0 \Hat{\vk}.
+\]
+
+Energy is transported at a speed $c_0$ in direction $\Hat{\vk}$.
+
+\subsubsection*{Plane harmonic waves}
+
+For a plane harmonic wave we have
+\[
+\phi = \left( \Re \text{ or } \Im\right) \left( A
+e^{\imath \left(\vk \cdot \vx - \omega t \right)} \right).
+\]
+
+$A$ is called the \emph{complex amplitude}, $\vk \cdot \vx - \omega t$
+is the \emph{phase}, $\omega$ is the \emph{angular frequency}
+and $\vk$ is the \emph{wavevector} or \emph{wavenumber}.  $k$
+is also called the \emph{wavenumber}.
+
+The wavelength $\lambda = \frac{2 \pi}{k}$ and the period
+is $T = \frac{2 \pi}{\omega}$.  The dispersion relation for
+acoustics is
+\[
+\omega^2 - c_0^2 k^2 = 0.
+\]
+
+\section[Nonlinear acoustics]%
+{Finite amplitude soundwaves (Nonlinear acoustics)}
+
+We want to see what the effect of nonlinearity is on soundwaves.  We
+work in a one dimensional homentropic system.  We have the governing
+equations
+
+\begin{gather}
+\pddt{\rho} + \pd{}{x} \rho u = 0 \label{eq:1dmass} \\
+\pddt{u} + u \pd{u}{x} = - \frac{1}{\rho} \pd{\rho}{x} \label{eq:1deuler} \\
+\pd{p}{x} = c^2(\rho) \pd{\rho}{x} \label{eq:1dpress},
+\end{gather}
+
+where $c^2(\rho) = \diff{p}{\rho}$.
+
+\subsection{Riemann analysis}
+
+We try to arrange \eqref{eq:1dmass} and \eqref{eq:1deuler} in a more
+symmetric form.  We try $\lambda \times \eqref{eq:1dmass}
++ \eqref{eq:1deuler}$ and get
+\[
+\left( \pddt{} + ( u+ \lambda \rho) \pd{}{x}\right) u + \lambda \left(
+\pddt{} + \left( u + \frac{c^2}{\lambda \rho} \right) \pd{}{x}
+\right) \rho = 0.
+\]
+
+Letting $\lambda = \pm \frac{c}{\rho}$ we get
+\[
+\left(\pddt{} + ( u \pm c) \pd{}{x}
+\right) u \pm \frac{c}{\rho} \left( \pddt{} + ( u \pm c) \pd{}{x}
+\right) \rho = 0.
+\]
+
+Defining
+
+\begin{equation}\label{eq:Q}
+Q(\rho) = \int_{\rho_0}^\rho \frac{c(\rho')}{\rho'}\, \ud \rho',
+\end{equation}
+
+which satisfies $Q_t = \frac{c}{\rho}\rho_t$ and $Q_x = \frac{c}{\rho}
+\rho_x$ the governing equations become
+
+\begin{equation}\label{eq:Riemann}
+\left(\pddt{} + \left( u \pm c \right) \pd{}{x} \right)
+\left( u \pm Q \right) = 0.
+\end{equation}
+
+We define the \emph{Riemann invariants}, $R_\pm = u \pm Q$ and make a
+change of co-ordinates $(x,y) \mapsto (\xi,\eta)$, where the curves
+$\xi$ constant are the $C_+$ characteristics defined by $\diff{x}{t} =
+u + c$ and the curves $\eta$ constant are the $C_-$ characteristics
+defined by $\diff{x}{t} = u - c$.  On each member of the $C_+$ family,
+\[
+\diff{R_+}{t} = \pd{R_+}{t} + \pd{R_+}{x} \left.\diff{x}{t}
+\right|_{\xi = \text{const}} = 0 \text{ by \eqref{eq:Riemann}.}
+\]
+
+Thus $R_+$ is constant on each $C_+$, so $R_+ = R_+(\xi)$ only.
+Similarly $R_-$ is constant on each $C_-$ and $R_- = R_-(\eta)$ only.
+We can find $u$ and $Q$ from $R_\pm$, as
+\[
+u = \frac{R_+(\xi) + R_-(\eta)}{2} \qquad
+Q = \frac{R_+(\xi) - R_-(\eta)}{2}.
+\]
+
+Waves carrying constant values of $R_\pm$ propagate along the $C_\pm$
+curves at speed $u \pm c$, that is at speeds $\pm c$ relative to the
+local velocity $u$.
+
+\subsection{Perfect gas}
+
+This has $\tfrac{p}{p_0} = \left( \tfrac{\rho}{\rho_0}
+\right)^\gamma$, and so $c^2 = \tfrac{\gamma p}{\rho}$.  Thus
+$\tfrac{c}{c_0} = \left( \tfrac{\rho}{\rho_0}
+\right)^{\tfrac{\gamma-1}{2}}$.  We can also find $Q$,
+
+\[
+Q = \int_{\rho_0}^\rho \frac{c(\rho')}{\rho'}\, \ud \rho'
+= \left( \frac{2}{\gamma - 1} \right) \left( c - c_0 \right)
+\]
+
+Thus
+\begin{equation}\label{eq:charC}
+R_\pm = u \pm \tfrac{2 (c-c_0)}{\gamma - 1},
+\end{equation}
+if $R_\pm = 0$ when $u = 0$ and $c = c_0$.
+
+\subsection[Cauchy problem]{Cauchy problem --- solution by characteristics}
+
+Suppose $u(x,0) = U(x)$, $\rho = \rho_0$ and $P = P(x)$, or equivalently
+$c = c_0 + C(x)$.  Assume that the initial disturbance has compact
+support, $u=0$ and $C = 0$ for $x < x_B$ and $x > x_F$.  We want
+the solution at $(X,\delta t)$ for $\delta t \ll 1$.
+
+\vspace{1in}
+
+Draw characteristics through $(X,\delta t)$ back to $t=0$.  Approximately,
+$C_+$ is
+
+\begin{align*}
+x &= X + \left[ u(X,\delta t) + c(X,\delta t) \right] (t-\delta t)
++ \cO(\delta t)^2 \\
+&=  X - \left[ U(X) + c_0 + C(x) \right] \delta t + \cO(\delta t)^2.
+\end{align*}
+
+$R_+$ is constant on $C_+$ and so
+
+\begin{align*}
+R_+ &= R_+\left(X - \left\{U + c_0 + C \right\} \delta t \right) +
+\cO(\delta t)^2 \qquad \text{and similarly} \\
+R_- &= R_+\left(X - \left\{U - c_0 - C \right\} \delta t \right) +
+\cO(\delta t)^2.
+\end{align*}
+
+Thus $u$ and $c$ are now known at $(X,\delta t)$ if known at
+$(x,0)$.
+
+\subsubsection*{Numerical recipe}
+
+\begin{enumerate}
+\item At $t=0$ we know $u$ and $c$.
+\item Calculate $R_\pm$ at $t=0$ using \eqref{eq:charC}.
+\item Calculate $R_\pm$ at $t = \delta t$ using above approximation.
+\item Calculate $u$, $c$ at $t = \delta t$ using \eqref{eq:charC}.
+\end{enumerate}
+
+Repeat as necessary.
+
+\subsection{General picture}
+
+\vspace{1.5in}
+
+\begin{itemize}
+\item On characteristics that pass through $x < x_B$ or $x > x_F$ at
+$t=0$, $u=0$, $c=c_0$ and $Q=0$.  Hence for $\xi < \xi_B$ and
+$\xi > \xi_F$, $R_+ = 0$ and for $\eta < \eta_B$ and $\eta > \eta_F$
+$R_- = 0$.  Thus in regions 1,2 and 3, $R_+ = R_- = 0$, $u = 0$,
+$c = c_0$ and $Q = 0$.  This is undisturbed flow and all characteristics are
+straight lines.
+
+\item  In region 4, $R_- = u - Q = 0$ and so $u = Q$.  On $C_+$,
+$R_+ = u + Q$ is constant and so $u$, $\rho$ and $c$ are constant on $C_+$
+curves.  Also, $\diff{x}{t} = u+c$ is constant and so characteristics
+$C_+$ are straight lines.  This corresponds to a right-running simple wave.
+
+A similar analysis applies to region 5, except that we have a left-running
+simple wave and the $C_-$ are straight.
+
+\item Region 6 is the region of compound flow where neither $C_+$
+nor $C_-$ are straight.  At $t=t_c$ this region disintegrates.
+\end{itemize}
+
+\subsection{Simple waves}
+
+A \emph{simple wave} is one where one of $R_\pm$ is uniformly constant.
+WLOG take $R_- = 0$ and so $c = c_0 + \tfrac{1}{2} (\gamma - 1)u$,
+$u = Q$.  Thus $R_+ = 2 u$.  On $C_+$ characteristics
+$\diff{x}{t} = u + c = c_0 + \tfrac{1}{2}(\gamma + 1)u$.  Thus
+$C_+$ are straight lines.
+
+The problem we have to solve equivalent to either
+
+\begin{gather}
+\diff{u}{t} = 0 \text{ on } \diff{x}{t} = c_0 + \tfrac{1}{2} (\gamma + 1) u
+\label{eq:simpl1} \qquad \text{or} \\
+\left( \pddt{} + \left( c_0 + \tfrac{1}{2} (\gamma + 1)u\right)
+\pd{}{x} \right)u = 0. \label{eq:simpl2}
+\end{gather}
+
+We know that $u(x,t) = f(\xi)$ where from initial data, $f(\xi) = u(\xi,0)$.
+
+Hence, from \eqref{eq:simpl1} and imposing $x=\xi$ at $t=0$ we have
+
+\begin{equation}\label{eq:simpsoln}
+x = \left(c_0 + \tfrac{1}{2} (\gamma +1)f(\xi) \right)t + \xi.
+\end{equation}
+
+For given $x$, $t$ we can in principle solve for $\xi$ and then find
+$u = f(\xi,0)$.  $u$ gives $c$ and $\rho$, $c = c_0 + \tfrac{1}{2}(\gamma - 1)
+u$ and
+\[
+\frac{\rho}{\rho_0} = \left(1 + \frac{(\gamma - 1)u}{c_0}
+\right)^{\frac{2}{\gamma-1}}.
+\]
+
+\subsection{Generic form}
+
+Equation \eqref{eq:simpl2} can be written in a more suggestive form.
+Let $X = x-c_0 t$ and introduce the \emph{excess wavespeed}
+$v = \left( \tfrac{\gamma + 1}{2} \right)u = u + c - c_0$.
+Then \eqref{eq:simpl2} becomes
+
+\begin{equation}\label{eq:kinwave}
+\pddt{v} + v \pd{v}{X} = 0.
+\end{equation}
+
+This is a special case of the kinematic wave equation.  \eqref{eq:kinwave}
+has $C_+$ characteristics $X = \xi + v(\xi,0) t$ and so
+\begin{equation}\label{eq:kwsoln}
+v(X,t) = v(\xi,0)= v(X - v(\xi,0)t,0),
+\end{equation}
+
+and $\rho(X,t) = \rho(X - v(\xi,0)t,0)$.  Thus density propagates at
+speed $v$ (in a frame moving with velocity $c_0$).
+
+\vspace{2in}
+
+Each element of the waveform propagates at speed $v$.  Deformation
+is pure distortion and there are no new values of $v$ (or $\rho$).
+
+\subsection{Wave steepening}
+
+We calculate the slope of the wave, $\pd{v}{X}
+= \pd{v(\xi,0)}{\xi} \pd{\xi}{X}$.  From \eqref{eq:kwsoln} we have
+\[
+1 = \pd{\xi}{X} \left( 1 + \pd{v(\xi,0)}{\xi} \right)
+\]
+and so we have $\pd{v}{X} = \frac{v_\xi(\xi,0)}{1 + v_\xi(\xi,0) t}$.
+
+Parts of the profile with $v_\xi(\xi,0) < 0$ and parts of the profile with
+$v_\xi(\xi,0) > 0$ get flatter.  If $v_\xi(\xi,0) < 0$ somewhere then
+a triple-valued waveform will form at some finite time.  This is unphysical.
+The moment at which the slope becomes infinite is referred to as the
+\emph{shock formation time}.
+
+The profile becomes multivalued at the first time that
+$t = - \left( v_\xi(\xi,0) \right)^{-1}$ and so the shock formation
+time is
+\[
+t_s = \min_{\xi} - \frac{1}{v_\xi(\xi,0)}
+= \left( \frac{2}{\gamma+1} \right) \frac{1}{\max_\xi - u_\xi(\xi,0)}.
+\]
+
+If $-u_\xi(\xi,0)$ is maximised at $\xi = \xi_s$ then the position at
+which the shock forms is $X_s = \xi_s + v(\xi_s,0)t_s$ and
+the \emph{position of shock formation} is $x_s = X_s + c_0 t_s$.
+
+\section{Piston problems}
+
+\vspace{1in}
+
+At $t=0$, $u=0$ and $c=c_0$ in $x \ge 0$.  The piston moves with
+$x = X_p(t)$ and $X_p(0) = 0$.
+
+\subsection{Piston moving away from gas}
+
+\vspace{2in}
+
+Assume all characteristics $C_-$ start in $x>0$ at $t=0$.  Then
+$R_-=0$ everywhere and we have simple flow.  The $C_+$ are straight lines.
+
+In region 1, $C_+$ meets $t=0$ in $x > 0$ and so $R_+ = 0$.  Thus
+$u = 0$ and $c=c_0$.
+
+In region 2, $C_+$ meets the piston path at $t=\tau$ and $x=X_p(\tau)$.
+The boundary conditions give $u=\dot{X_p}(\tau)$ at this point. $C_+$
+has the equation
+
+\begin{equation}\label{eq:pist1}
+x - X_p(\tau) = \left( c_0 + \tfrac{1}{2}(\gamma-1)\right)(t - \tau).
+\end{equation}
+
+$\tau$ plays the same r\^ole as $\xi$.  Given $x$, $t$ in region 2
+we can solve \eqref{eq:pist1} (numerically) to find $\tau$.  Then
+$u(x,t) = \dot{X_p}(\tau)$.  We also find
+
+\[
+\rho = \rho_0 \left(1 + \frac{\gamma - 1}{2} \frac{\dot{X_p}(\tau)}{c_0}
+\right)^{\frac{2}{\gamma-1}}
+\]
+
+and hence $\rho = 0$ if $\dot{X}_p = - \frac{2 c_0}{\gamma - 1}$.
+$\tfrac{2 c_0}{\gamma - 1}$ is the maximum speed of the piston for contact
+with the gas to be maintained.  It is the speed of expansion of a gas
+into a vacuum (escape speed).
+
+We also find
+\[
+\frac{c}{c_0} = 1 + \frac{\gamma + 1}{2} \frac{\dot{X_p}(\tau)}{c_0}.
+\]
+
+\subsection{Piston moves into gas}
+
+\vspace{2in}
+
+The equation of the $C_+$ characteristics is,
+\[
+x = X_p(\tau) + \left( c_0 + \frac{\gamma - 1}{2} \dot{X_p}(\tau) \right)
+(t - \tau).
+\]
+
+Characteristics touch when $\pd{x}{\tau} = 0$, that is, when
+\[
+\tfrac{1}{2}\left(\gamma + 1 \right) \ddot{X_p} t
+= \tfrac{1}{2} \left( \gamma + 1 \right) \ddot{X_p} \tau + c_0
++ \tfrac{1}{2} (\gamma - 1) \dot{X_p}.
+\]
+
+If we have uniform acceleration, $X_p(\tau) = \tfrac{1}{2} f \tau^2$ then
+characteristics touch when
+\[
+t=t_0 = \frac{2 ( \gamma f \tau + c_0 )}{(\gamma + 1) f}
+\]
+
+and the minimum overlap time (shock formation time) is
+\[
+t_s = \min_{\tau \ge 0} t_0 = \frac{2 c_0}{(\gamma + 1)f} \qquad \text{at }
+\tau = 0.
+\]
+
+\section{Shock waves}
+
+A triple-valued region is unphysical.  In practice it is prevented
+by mechanisms so far neglected, like dissipation.  When the waveform
+is steep, viscous and heat conduction terms which were small become large.
+
+The simple wave equation \eqref{eq:simpl2} can be modified to
+\begin{equation}\label{eq:viscwave}
+u_t + \left(c_0 + \tfrac{1}{2} (\gamma + 1) u\right) u_x = \nu u_{xx}. 
+\end{equation}
+
+The extra term is proportional to viscosity.  Analytic solutions to this
+equation are known (see Part 3 course).  The triple valued region is avoided by
+a region of rapid change, the thickness of which is proportional to $\nu$.
+
+\vspace{1.5in}
+
+Outside the so-called ``shock'' region we can use the characteristic
+solution of the simple wave equation.  For real problems we cannot find
+exact solutions to \eqref{eq:viscwave} and we try to treat the shock
+as a discontinuity when $\nu$ is small.
+
+\subsection{Rankine-Hugoniot relations}
+
+Assume we have a steady discontinuity separating 2 uniform flows.
+Take co-ordinates moving with the shock.
+
+\vspace{1in}
+
+Apply mass conservation across the shock to get
+
+\begin{equation}\label{eq:rankmass}
+\rho_1 u_1 = \rho_2 u_2.
+\end{equation}
+
+Momentum conservation gives
+
+\begin{equation}\label{eq:rankmom}
+p_1 + \rho_1 u_1^2 = p_2 + \rho_2 u_2^2.
+\end{equation}
+
+Finally, we apply energy conservation to get
+
+\begin{equation}\label{eq:ranken}
+\left( \tfrac{1}{2} \rho_1 u_1^2 + \rho_1 e_1 \right) u_1 + p_1 u_1 =
+\left( \tfrac{1}{2} \rho_2 u_2^2 + \rho_2 e_2 \right) u_2 + p_2 u_2,
+\end{equation}
+
+where $e(\rho,S)$ is the internal energy per unit mass.  \eqref{eq:ranken}
+simplifies using \eqref{eq:rankmass} to give
+
+\begin{equation}\label{eq:ranken2}
+\tfrac{1}{2} u_1^2 + e_1 + \frac{p_1}{\rho_1} =
+\tfrac{1}{2} u_2^2 + e_2 + \frac{p_2}{\rho_2}.
+\end{equation}
+
+These are the \emph{Rankine-Hugoniot relations}.
+
+\subsection{Hugoniot adiabatic}
+
+From \eqref{eq:rankmass} and \eqref{eq:rankmom} we get
+
+\[
+u_1^2 = \frac{p_2 - p_1}{\rho_1} + \frac{\left( \rho_2 u_2 \right)^2}{\rho_1
+\rho_2} = \frac{p_2 - p_1}{\rho_1} + \frac{\rho_1 u_1^2}{\rho_2}.
+\]
+
+Solving this, we get
+\begin{equation}\label{eq:shockU}
+u_1^2 = \frac{\rho_2 (p_2 - p_1)}{\rho_1(\rho_2 - \rho_1)}
+\end{equation}
+
+and so if $p_2 > p_1$, $\rho_2 > \rho_1$.  Similarly if $p_2 < p_1$ then
+$\rho_2 < \rho_1$.
+
+Substituting for $u_1^2$ and $u_2^2$ into \eqref{eq:ranken2} we get
+
+\begin{equation}\label{eq:hugon}
+e_2 - e_1 = \tfrac{1}{2} \left(p_1 +p_2 \right) \left(\frac{1}{\rho_1}
+- \frac{1}{\rho_2} \right).
+\end{equation}
+
+This is the \emph{Hugoniot adiabat(ic)} and relates the thermodynamic
+properties across the shock.
+
+\subsection{Entropy jump}
+
+For a given mass of gas, plot $p$ against $V$ ($=\rho^{-1}$, the
+\emph{specific volume}) at constant $S$.  Assume that $\pd{^2 p}{V^2} >0$,
+which is true for most normal fluids.
+
+\vspace{2in}
+
+Suppose that $\rho_2 > \rho_1$ and $p_2 > p_1$ and so $V_1 > V_2$.  If 
+entropy is constant then $p_1$ and $p_2$ are given by $A$ and $B$.  Writing
+down the first law, $\ud e = T \ud S - p \ud V$ and putting $\ud S =0$
+we see that
+\[
+e_2 - e_1 = - \int_{V_1}^{V_2} p \ud V
+= \text{area under curve $AB$.}
+\]
+
+But $e_2 - e_1$ is the area under the \emph{chord} $AB$
+(using \eqref{eq:hugon}), and so $\ud S \neq 0$ and $A$ and
+$B$ must have different values of $S$.  If additionally
+$\pd{e}{p} > 0$ then \eqref{eq:hugon} can only be satisfied if
+$p_2 > p_1$. Now
+$\pd{e}{p} = T \pd{S}{p} > 0$ and so the entropy at $p_2$ is greater
+than the entropy at $p_1$. As entropy increases with time, $p_2$
+must be the downstream pressure.  For such a fluid shocks are compressive ---
+the downstream $p_2$, $\rho_2$ are greater than the upstream
+$p_1$, $\rho_1$.
+
+Some strange hydrocarbons (for instance Freon-13) have
+$\pd{^2 p}{V^2} < 0$ and have rarefaction shocks, but entropy \emph{always}
+increases downstream.
+
+\subsection{Upstream/downstream speeds}
+
+\vspace{1.5in}
+
+Using $\rho_2 > \rho_1$ and \eqref{eq:shockU} we have
+\begin{align*}
+u_1^2 & = \frac{\rho_2 (p_2 - p_1)}{\rho_1 (\rho_2 - \rho_1)} \\
+& > \frac{p_2 - p_1}{\rho_2 - \rho_1} \\
+& = \text{gradient of $CD$} \\
+& > \text{gradient of tangent at $D$} = c_1^2.
+\end{align*}
+
+Thus the upstream flow is supersonic.  $M_1$, the upstream Mach number,
+is greater than $1$.  It is harder to show that $M_2$ (the downstream
+Mach number) is less than $1$ (see Landau and Lifschitz).
+
+\subsection{Perfect gas}
+
+This has
+
+\begin{equation}\label{eq:pgshock}
+c^2 = \frac{\gamma p}{\rho} \quad
+p = \rho R T \quad e = C_V T = \frac{1}{\gamma - 1} \frac{p}{\rho}.
+\end{equation}
+
+We define the shock strength $\beta = \frac{p_2 - p_1}{p_1}$.  From
+\eqref{eq:hugon} and \eqref{eq:pgshock} we have
+\begin{equation}\label{eq:pgshock2}
+\frac{\rho_2}{\rho_1} = \frac{2 \gamma + (\gamma + 1) \beta}{
+2 \gamma + (\gamma - 1) \beta}.
+\end{equation}
+
+We can also get
+\begin{equation}\label{eq:shockmach}
+\begin{gathered}
+  M_1^2 = \left(\frac{u_1}{c_1}\right)^2 = 1 + \frac{\gamma +1 }{2
+    \gamma} \beta > 1 \\
+  M_2^2 = \left(\frac{u_2}{c_2}\right)^2 = \frac{1}{1 + \beta} \left(
+    1 + \frac{\gamma -1}{2 \gamma} \beta \right) < 1.
+\end{gathered}
+\end{equation}
+
+\subsection{Strong shocks}
+
+In the limit as $\beta \to \infty$
+\[
+\frac{\rho_2}{\rho_1} \nearrow \frac{\gamma + 1}{\gamma - 1}.
+\]
+
+For air, with $\gamma = 1.4$, the maximum compression by a shock is
+by a factor of $6$.  We also find
+\[
+M_1^2 \sim \left(\frac{\gamma + 1}{2 \gamma} \right) \beta \quad \text{and}
+\quad M_2^2 \to \frac{\gamma -1}{2 \gamma}.
+\]
+
+\subsection{Weak shocks}
+
+As $\beta \to 0$, we find
+
+\begin{align*}
+\frac{\rho_2}{\rho_1} &= 1 + \frac{\beta}{\gamma} + \cO(\beta^2) \\
+M_1^2 & = 1+ \left( \frac{\gamma +1}{2 \gamma}\right) \beta
++ \cO(\beta^2) \\
+M_2^2 & = 1 - \left( \frac{\gamma +1}{2 \gamma}\right) \beta
++ \cO(\beta^2).
+\end{align*}
+
+The variations are all $\cO(\beta)$.  However, the variation in the
+entropy, $S=C_V \log \frac{p}{\rho^\gamma}$ is
+\[
+\frac{S_2 - S_1}{C_V} = \log \left(1 + \beta\right)- \gamma
+\log \left( \frac{2 \gamma + (\gamma + 1)\beta}{2 \gamma + (\gamma-1) \beta}
+\right) = \left( \frac{\gamma^2 - 1}{12 \gamma^2}\right) \beta^3
++ \cO(\beta^4).
+\]
+
+This is \emph{much} smaller than the jumps in $e$, $\rho$, $p$, $M$
+(etc.)
+
+\subsection{Moving shocks}
+
+\vspace{1.5in}
+
+$u_1 = v_1 - U$ and $u_2 = v_2 -U$.  If $U > v_2$ then $p_2$, $\rho_2$
+and $u_2$ become the ``upstream'' variables.  We need to take care
+with the square roots in \eqref{eq:shockmach}.
+
+\subsection{Weak shocks in right running simple waves}
+
+In general the entropy is different behind and in front of a shock and we
+thus expect jumps in the Riemann invariants.  However, in weak shocks the
+jumps in $\rho$, $p$ and $u$ are all $\cO(\beta)$ and the jump in
+$S$ is $\cO(\beta^3)$.  It can be shown that if $U > v_2$ (in the notation
+of the last section),
+\[
+\left[ R_- \right]_1^2 = \cO(\beta^3) \text{ also.}
+\]
+
+Thus in weakly nonlinear right running simple waves we can still take
+$S=S_0$ and $R_- \equiv 0$ everywhere, even if shocks are formed.
+
+We work with the excess wavespeed $v = u + c - c_0 = \frac{\gamma+1}{2} u$
+and let $X = x - c_0 t$.  Then (as before) we must solve
+\[
+\pddt{v} + v \pd{v}{X} = 0.
+\]
+
+After the shock forms at $t = t_s$, we want to know where it is located
+on the graph of $v$ against $X$.
+
+\vspace{1.5in}
+
+Mass conservation gives $\int_{-\infty}^\infty \rho\, \ud x$ constant,
+and so the shock cuts off lobes of equal area on the graph of $\rho$.
+However,
+\[
+\frac{\rho}{\rho_0} = \left( \frac{c}{c_0} \right)^{\frac{2}{\gamma-1}}
+= \left( 1 + \frac{\gamma-1}{2} \frac{u}{c_0} \right) =
+1+ \frac{2}{\gamma+1} \frac{v}{c_0} +\cO(\tfrac{v}{c_0})^2.
+\]
+
+If $\tfrac{v}{c_0} \ll 1$, then $\int_{-\infty}^\infty v\, \ud X$ is
+constant, which also gives conservation of momentum and the ``equal areas
+rule'' also applies to the graph of $v$ against $X$.
+
+\subsection{Long time limit}
+
+Suppose $v(X,0)$ is a single pulse of any shape with area $A$.
+
+\vspace{2in}
+
+At large times the wave is approximately triangular, so we try
+$v = Xf(t)$ as a solution, which gives $V \sim \tfrac{X}{t}$ as
+$t \to \infty$.
+
+If the shock is at $X = X_s(t)$ then the area of the triangle
+$A = \tfrac{1}{2} X_s v(X_s)$ and so $X_s = \sqrt{2 A t}$.
+
+Regardless of initial conditions we have the long-time solution
+\[
+v = \begin{cases}
+\frac{X}{t} & 0 < X < X_s(t) \\
+0 & \text{otherwise.}
+\end{cases}
+\]
+
+We can also write down a differential equation governing $X_s(t)$.
+The kinematic wave equation \eqref{eq:kinwave} gives
+\[
+\diff{}{t} \int_{X_1}^{X_2} v\, \ud X
++ \left[ \tfrac{1}{2} v^2 \right]_{X_1}^{X_2} = 0.
+\]
+
+If there is a shock at $X_s(t)$, $X_1 < X_s < X_2$ then
+\begin{multline*}
+\diff{}{t} \left\{ \int_{X_1}^{X_s^-} + \int_{X_s^+}^{X_2}
+v\, \ud X \right\} = 
+\underbrace{\left\{ \int_{X_1}^{X_s^-} + \int_{X_s^+}^{X_2}
+\pddt{v} \, \ud X \right\}}_{\to 0 \text{ if $\pddt{v}$ bounded}} \\
++ \dot{X_s} \left( v(X_s^-) - v(X_s^+) \right).
+\end{multline*}
+
+Let $X_2 \to X_s^+$ and $X_1 \to X_s^-$, so if $v(X_s^+) \neq v(X_s^-)$ we get
+\[
+\dot X_s = \frac{v(X_s^+) + v(X_s^-) }{2}.
+\]
+
+For instance consider a sinusoidal initial wave $v = v_0 \sin k x$.
+
+\vspace{2in}
+
+There are fixed shocks at $x= \pm \tfrac{\pi}{k}, \pm \tfrac{3 \pi}{k},\dots$.
+
+In $-\tfrac{\pi}{k} < X < \tfrac{\pi}{k}$ we have the solution
+$v = \tfrac{X}{t}$, whose odd periodic continuation gives the full solution.
+
+Now $v(X_s^+) = - \tfrac{\pi}{2 k t}$ and $v(X_s^-) = \tfrac{\pi}{2 k t}$
+and so $\dot X_s = 0$ and the \emph{shock jump} $\Delta v = - \tfrac{\pi}{k t}
+\to 0$ as $t \to \infty$.  The whole wave decays to $0$.
+
+\chapter[Elastic waves]{Linear elastic waves in solids}
+
+\renewcommand{\t}{\vect{t}}
+
+\section{The governing equations}
+
+As before we make the \emph{continuum hypothesis}.
+
+\subsection{Stress}
+
+Consider a small (plane) element of surface $\vect{dS} = \vn \ud S$
+within some material.  Assume that the material on the side of $\ud S$
+to which $\vn$ points acts on the material on the other side of $\ud S$
+with a force proportional to $\ud S$ and zero moment.
+
+This force is $\t(\vx,t;\vn) \ud S$, and $\t$ is called the \emph{traction
+vector}.  We write
+
+\begin{equation}\label{eq:stresstens}
+\sigma_{i j} = t_j(\vx,t;\vect{e}_i),
+\end{equation}
+
+where $\vect{e}_i$ is the unit vector in the $i$ direction.  We apply
+conservation of momentum to an arbitrary material volume $V$ to get
+
+\begin{equation}\label{eq:solid:mom}
+\int_V \rho(\vx,t) \left[ \vect{a}(\vx,t) - \vF(\vx,t) \right]\, \ud V
+= \int_S \t(\vx,t;\vn)\, \ud S.
+\end{equation}
+
+Conservation of angular momentum gives
+
+\begin{equation}\label{eq:solid:angmom}
+\int_V \rho(\vx,t) \vx \wedge \left( \vect{a} - \vF \right)\, \ud V
+= \int_S \vx \wedge \t\, \ud S.
+\end{equation}
+
+We apply the momentum balance \eqref{eq:solid:mom} to a
+tetrahedron as drawn.  Suppose that the area of the slant face of the
+tetrahedron is $\epsilon^2$.  Then the area of the face
+perpendicular to $\vect{e}_i$ is $n_i \epsilon^2$.
+
+Now the left hand side of \eqref{eq:solid:mom} is $\cO(\epsilon^3)$
+(if $\vect{a}$ and $\vF$ are bounded) and the right hand side is
+\[
+\epsilon^2 \left(-n_1 \t(\vx,t;\vect{e}_1) - n_2 \t(\vx,t;\vect{e}_2) -n_3
+  \t(\vx,t;\vect{e}_3) + \t(\vx,t;\vn) \right) + \cO(\epsilon^3).
+\]
+
+Since the left hand side and right hand side must balance at leading order
+we have
+
+\begin{equation}\label{eq:solid:traction}
+t_j(\vn) = \sigma_{ij} n_i.
+\end{equation}
+
+The quotient theorem implies that $\sigma_{ij}$ is a tensor (as $\vn$
+is arbitrary).  It is called the \emph{Cauchy stress tensor}.
+\eqref{eq:solid:mom} can now be converted into a differential
+equation:
+
+\begin{equation}\label{eq:solid:cauchy}
+\pd{\sigma_{ij}}{x_i} = \rho (a_j - F_j).
+\end{equation}
+
+We take the $i^{\text{th}}$ component of \eqref{eq:solid:angmom}
+and apply \eqref{eq:solid:traction} and \eqref{eq:solid:cauchy} to get
+
+\begin{align*}
+\int_V \epsilon_{ijk} x_j \pd{\sigma_{lk}}{x_l}\, \ud V
+&= \int_S \epsilon_{ijk} x_j \sigma_{lk} n_l\, \ud S \\
+&= \int_V \epsilon_{ijk} \pd{}{x_l}\left(x_j \sigma_{lk}\right)\, \ud V \\
+&= \int_V \epsilon_{ijk} x_j \pd{\sigma_{lk}}{x_l}\, \ud V
++ \int_V \epsilon_{ilk} \sigma_{lk}\, \ud V.
+\end{align*}
+
+As $V$ is arbitrary, $ \epsilon_{ilk} \sigma_{lk} = 0$ and so
+$\sigma_{ij}$ is a symmetric tensor.
+
+\subsection{Strain}
+
+When a solid is deformed the particle at $\bs \xi$ goes to $\vx$ (say),
+with \emph{displacement} $\vu = \vx - \bs \xi$.  Under a deformation
+two nearby particles suffer a relative displacement
+\[
+\vect{dS} = \vect{dx} - \vect{d\bs\xi} = \vu(\vx + \vect{dx},t)
+- \vu(\vx,t).
+\]
+
+Taking the $i^{\text{th}}$ component,
+$\ud S_i = \pd{u_i}{x_j} \ud x_j + \cO(\vect{dx}^2)$.  If we let
+
+\begin{equation}\label{eq:solid:strain}
+e_{ij} = \frac{1}{2} \left( \pd{u_i}{x_j} + \pd{u_j}{x_i} \right) \qquad
+\text{and} \qquad
+\omega_{ij} = \frac{1}{2} \left( \pd{u_i}{x_j} - \pd{u_j}{x_i} \right),
+\end{equation}
+
+then we can write $\ud S_i = e_{ij}\ud x_j + \omega_{ij} \ud x_j$
+(neglecting higher order terms).
+As $\omega_{ij} = -\tfrac{1}{2} \epsilon_{ijk} \Omega_k$,
+where $\bs \Omega = \nabla \wedge \vu$,
+\[
+\omega_{ij}\ud x_j = \left(\tfrac{1}{2} \bs \Omega \wedge \vect{dx} \right)_i.
+\]
+
+This is what we get from a rigid rotation at rate $\tfrac{1}{2} \bs \Omega$
+and so cannot be connected with local states of stress.  The stress
+must therefore be associated with the symmetric part $e_{ij}$ of the
+local deformation tensor $\pd{u_i}{x_j}$.  The dimensionless
+tensor $e_{ij}$ is called the \emph{Cauchy stress tensor}.
+
+\subsection{The constitutive relation}
+
+For an elastic body we take $\sigma = \sigma(e)$ only (not depending
+on the history of $e$).  For small $e_{ij}$ we can expand this in
+Taylor series to get
+
+\[
+\sigma_{ij} = C_{ijkl} e_{kl}
+\]
+
+for some fourth rank tensor $C_{ijkl}$. A general fourth rank tensor
+has 81 components, but we can use the symmetries
+$\sigma_{ij} = \sigma_{ji}$ and $e_{kl} = e_{lk}$ to get
+\[
+C_{ijkl} = C_{jikl} = C_{ijlk}.
+\]
+
+This reduces the number of independent components to 36 for a general
+anisotropic medium.  We now assume isotropy, which means that
+$C_{ijkl}$ is an isotropic tensor,
+\[
+C_{ijkl} = \lambda \delta_{ij} \delta_{kl}
++ \mu \delta_{ik} \delta_{jl}
++ \nu \delta_{il} \delta_{jk}.
+\]
+
+The symmetries of $C$ mean that $\mu = \nu$, and so
+
+\begin{equation}\label{eq:solid:constit}
+\sigma_{ij} = \lambda \delta_{ij} e_{kk} + 2 \mu e_{ij}
+\end{equation}
+
+$\lambda$ and $\mu$ are the \emph{Lam\'e constants}.
+
+\subsection{Shear and dilatation}
+
+Consider a shear
+
+\vspace{1.5in}
+
+\begin{align*}
+x_1 &= \xi_1 + \delta \xi_2 \\
+x_2 &= \xi_2 \\
+x_3 &= \xi_3.
+\end{align*}
+
+Then $\vu = \vx - \bs \xi = (\delta \xi_2,0,0)$.  $e_{ij}$ is constant,
+with $e_{12} = e_{21} = \tfrac{1}{2} \delta$ and the other $e_{ij}$ are
+zero.  Now $\sigma_{12} = \sigma_{21} = \mu \delta = S$, with
+the other $\sigma_{ij}$ zero.  The angle of the shear, $\gamma$, is
+given by $\tan \gamma = \delta$.  Usually $\gamma \ll 1$ so
+$\gamma \approx \delta$, and
+\[
+\mu \approx \frac{S}{\gamma} = \frac{\text{shear force}}{\text{angle of shear}}
+\]
+
+is the \emph{shear modulus} or \emph{modulus of rigidity}.  When $\mu = 0$
+we have a perfect fluid, but $\mu > 0$ otherwise.
+
+As for dilatation,
+\begin{align*}
+\Delta V &= \int \vn \cdot \vu\, \ud S \\
+&= \int \dive \vu\, \ud V.
+\end{align*}
+
+We call $\dive \vu = e_{kk} = \theta$ the dilatation, which is the
+change in volume per unit volume.
+
+A special state of stress is that of hydrostatic pressure, with
+$\sigma_{ij} = - p \delta_{ij}$ ($p$ is the pressure).  This gives
+$\t(\vn) = - p \vn$ and so
+\[
+p = - \tfrac{1}{3}\sigma_{kk} = - \left( \lambda + \frac{2 \mu}{3} \right)
+e_{kk} = -K \theta.
+\]
+
+$K = \lambda + \tfrac{2}{3} \mu > 0$ is the modulus of compressibility,
+and is the ratio of pressure to the change of volume.
+
+We apply the constitutive relation \eqref{eq:solid:constit} to the
+Cauchy equation \eqref{eq:solid:cauchy} to get
+
+\begin{equation}\label{eq:solid:gov1}
+\rho a_j = \rho F_j + \pd{}{x_j} \left( \lambda \pd{u_k}{x_k} \right)
++ \pd{}{x_i} \left( \mu \left( \pd{u_i}{x_j} + \pd{u_j}{x_i} \right) \right).
+\end{equation}
+
+In linear theory, the acceleration $a_j = \pd{^2 u_j}{t^2}$ and
+$\rho(\vx,t) = \rho(\xi,0)$ (the density in the undeformed state).  We
+take $\lambda$ and $\mu$ independent of position (a \emph{homogeneous} body)
+to get
+
+\begin{equation}\label{eq:solid:gov2}
+\begin{aligned}
+\rho \pd{^2 \vu}{t^2} &= \rho \vF + \left( \lambda + \mu \right) \grad \dive
+\vu + \mu \nabla^2 \vu \\
+&=\rho \vF + \left( \lambda + 2 \mu \right) \grad \dive \vu
+- \mu \curl \curl \vu.
+\end{aligned}
+\end{equation}
+
+\section{Compressional and shear waves}
+
+\newcommand{\vort}{\bs\omega}
+
+Taking the divergence of \eqref{eq:solid:gov2} we get
+
+\begin{equation}\label{eq:solid:compwave}
+\pd{^2 \theta}{t^2} = c_P^2 \nabla^2 \theta,
+\end{equation}
+
+where $\theta = \dive \vu$ and $c_P^2 = \tfrac{\lambda + 2 \mu}{\rho}$.
+
+$c_P$ is the dilatational or compression wave speed.
+
+Taking the curl of \eqref{eq:solid:gov2} we get
+
+\begin{equation}\label{eq:solid:shear}
+\pd{^2 \vort}{t^2} = c_S^2 \nabla^2 \vort,
+\end{equation}
+
+where $\vort = \curl \vu$ and $c_S^2 = \tfrac{\mu}{\rho} < c_P^2$.
+
+For steel, $c_P \approx 6 \times 10^3 ms^{-1}$ and
+$c_S \approx 3 \times 10^3 ms^{-1}$.%
+\footnote{P stands for \emph{primary} - these are the waves which arrive
+first in an earthquake.  S stands for secondary.  Guess when these arrive!}
+
+\subsection{Dilatational and shear potentials}
+
+We can always write $\vu = \nabla \phi + \curl \bs \psi$ with $\dive
+\bs \psi = 0$.
+
+\begin{proof}
+Define $\bs \psi$ by $\nabla^2 \bs\psi = - \curl \vu$, so that
+\[
+\bs \psi = \frac{1}{4 \pi} \int \frac{\curl \vu(\vect y)}{\abs{\vx-\vect y}}
+\, \ud^3 y.
+\]
+
+(This also gives $\dive \bs\psi = 0$.)  Now let $\vect w = \vu - \curl\bs\psi$,
+so that $\curl \vect w = \curl \vu - \left( \grad\dive\bs\psi - \nabla^2 \bs
+\psi\right)$.  Thus $\exists \phi$ such that $\vect w = \nabla \phi$ and
+$\vu = \nabla \phi + \curl\bs\psi$.
+\end{proof}
+
+$\phi$ and $\bs\psi$ are the \emph{elastodynamic potentials}.  We find that
+\eqref{eq:solid:gov2} is satisfied if
+
+\begin{gather}
+\phi_{tt} - c_P^2 \nabla^2 \phi = 0\stepcounter{equation}
+\label{eq:solid:seisphi}\tag{\theequation{}a}\\
+\bs\psi_{tt} - c_S^2 \nabla^2 \bs\psi = 0\tag{\theequation{}b}
+\label{eq:solid:seispsi}.
+\end{gather}
+
+These are the equations of seismology.
+
+\subsection{Plane waves}
+
+The plane wave solution to \eqref{eq:solid:seisphi} is
+\[
+\phi = \phi(t - \tfrac{\Hat\vk\cdot\vx}{c_P}),
+\]
+
+with $\Hat\vk$ a constant vector.  Thus $\vu = - \tfrac{\Hat\vk}{c_P}\phi'$
+and $\vu$ is parallel to $\Hat\vk$ --- these are longitudinal waves.
+
+\eqref{eq:solid:seispsi} also has plane wave solutions,
+\[
+\bs\psi = \bs\psi(t - \tfrac{\Hat\vk\cdot\vx}{c_S}),
+\]
+and in this case $\vu = - \frac{\Hat\vk \wedge \bs\psi'}{c_S}$.  This
+is perpendicular to $\vk$ --- these are transverse waves.
+
+We can also evaluate the stress tensor
+
+\begin{gather*}
+  \sigma_{ij} = \left( \lambda \delta_{ij} + 2 \mu \Hat k_i \Hat k_j
+  \right)
+  \frac{\phi''}{c_P^2} \qquad \text{for P waves} \\
+  \sigma_{ij} = \mu \left( \epsilon_{ilm} \Hat k_l \Hat k_j +
+    \epsilon_{jlm} \Hat k_l \Hat k_i\right) \frac{\psi_m''}{c_S^2}
+  \qquad \text{for S waves.}
+\end{gather*}
+
+The energy flux $\vect I$ is given by $I_i = -\sigma_{ij} \Dot u_j$,
+which equals $\rho c_P \Dot{u}^2 \Hat \vk$ for P waves and
+$\rho c_S \Dot{u}^2 \Hat \vk$ for S waves.
+
+The energy density
+\begin{align*}
+E_k + E_p &= \tfrac{1}{2} \rho \Dot{u}^2 + \tfrac{1}{2} \sigma_{ij} e_{ij}\\
+&= \rho \Dot{u}^2 \qquad \text{for both types of waves separately.}
+\end{align*}
+
+For either type of wave (separately), the energy flux vector
+$\vect I = (E_k + E_p) \vect c$.  Energy propagates at velocity $\vect c$
+in the direction of the waves ($\vk$).
+
+\subsection{Energy equation}
+
+\renewcommand{\v}{\vect{v}}
+
+Consider the rate of change of internal energy (assuming isentropy),
+
+\[
+\ddt{} \int_V \rho \cE \, \ud V = \int_V \rho \vF\cdot \v\, \ud V
++ \int_S \t \cdot \v\, \ud S - \ddt{} \int_V \tfrac{1}{2} \rho
+v^2\, \ud V,
+\]
+
+where $V$ is a material volume.  Hence
+\[
+\ddt{} \int \rho\left( \tfrac{1}{2} v^2 + \cE \right)\, \ud V
+= \int \left( \rho \vF \cdot \v + \pd{}{x_i} \left(\sigma_{ij} v_j\right)
+\right)\, \ud V,
+\]
+
+or
+
+\begin{equation}\label{eq:enbalance}
+\rho \v \cdot \vect{a} + \rho \Dot \cE = \rho \vF \cdot v
++ v_j \pd{\sigma_{ij}}{x_i} + \sigma_{ij} \pd{v_j}{x_i}.
+\end{equation}
+
+The momentum equation thus gives
+
+\begin{equation}\label{eq:enb1}
+\rho \Dot \cE = \sigma_{ij} \pd{v_j}{x_i}.
+\end{equation}
+
+For small displacements and an isotropic material,
+\begin{align*}
+\pddt{} \tfrac{1}{2} \sigma_{ij} e_{ij} &= \tfrac{1}{2} C_{ijkl}
+\left(e_{kl} \Dot{e}_{ij} + \Dot{e}_{kl} e_{ij}\right) \\
+&= C_{ijkl} e_{kl} \Dot{e}_{ij} \\
+&= \tfrac{1}{2} \sigma_{ij} \left( \pd{v_i}{x_j} + \pd{v_j}{x_i}\right) \\
+&= \sigma_{ij} \pd{v_i}{x_j}.
+\end{align*}
+
+Assuming there is no strain energy when undeformed, then
+\begin{equation}\label{eq:strainen}
+\cE = \tfrac{1}{2 \rho} \sigma_{ij} e_{ij}
+\end{equation}
+
+is the strain energy density per unit mass.  Now
+\begin{align*}
+\rho \cE &= \tfrac{1}{2} \left( \lambda e_{kk} e_{jj} + 2 \mu e_{ij} e_{ij}
+\right)\\
+&= \tfrac{1}{2} \left( \lambda + \frac{2 \mu}{3}\right) \left( e_{kk} e_{jj}
+\right) + \mu \left( e_{ij} - \tfrac{1}{3} e_{kk} \delta_{ij}\right)
+\left(e_{ij} - \tfrac{1}{3} e_{ll} \delta_{ij} \right).
+\end{align*}
+
+Hence $\cE$ is positive definite iff $\lambda + \tfrac{2}{3} \mu > 0$
+and $\mu > 0$.  These are the same restrictions as obtained earlier by
+physical reasoning.
+
+The linearised version of \eqref{eq:enbalance} can be written
+\begin{equation}\label{eq:solid:strainen2}
+\pddt{} \left( E_k + E_p \right) + \pd{I_j}{x_j} = \rho \vF \cdot \Dot \vu,
+\end{equation}
+
+where $E_k = \tfrac{1}{2} \rho \Dot{\vu} \cdot \Dot{\vu}$,
+$E_p = \tfrac{1}{2} \sigma_{ij} e_{ij}$ and $I_i = - \sigma_{ij} \Dot{u}_j$.
+
+We can interpret this physically by considering a small disk with surface
+$\vn \ud S$. The rate of working by the material on the $+$ side on the
+material on the $-$ side is
+\[
+\t \cdot \v\, \ud S = n_i \sigma_{ij} \pddt{u_j}\, \ud S,
+\]
+
+and so the flux of energy in direction $\vn$ is $\vect{I} = - \te{\sigma}
+\cdot \pddt{\vu}$.
+
+\subsection{Rayleigh waves}
+
+\vspace{1.5in}
+
+Consider the situation shown, with a disturbed interface at
+$y = \eta(x,z,t)$.  There is no traction at the interface, so
+$\sigma_{ij}n_j = 0$ at $y = \eta(x,y,t)$.  Now
+\[
+\Hat \vn = \frac{(-\eta_x,1,-\eta_z)}{\left( 1+ \eta_x^2 + \eta_z^2
+\right)^{\frac{1}{2}}} \approx (0,1,0) \text{ in linear theory.}
+\]
+
+We also apply the boundary conditions at $y=0$ instead of $y = \eta$.
+We seek a two dimensional solution with $\vu$ in the $(x,y)$ plane.  The
+boundary conditions thus become
+\[
+\sigma_{xy} = \sigma_{yy} = 0 \text{ on } y = 0.
+\]
+
+There are two boundary conditions and so we guess that we need both
+P and S wave solutions.  Try $\phi = f(y) E$ and $\bs \psi
+= g(y) E \Hat{\vect z}$, where $E = e^{\imath(k x-\omega t)}$.  The
+wave equation gives
+\begin{gather*}
+f'' - \left( k^2 - \frac{\omega^2}{c_P^2} \right) f = 0\\
+g'' - \left( k^2 - \frac{\omega^2}{c_S^2} \right) f = 0.
+\end{gather*}
+
+We assume (and check later) that $k > \frac{\omega}{c_S}$, and so
+(imposing boundedness at $y=-\infty$) we get
+\[
+f= A e^{\alpha y} \qquad g = B e^{\beta y},
+\]
+
+where $\alpha = \sqrt{k^2 - \tfrac{\omega^2}{c_P^2}}$ and
+$\beta = \sqrt{k^2 - \tfrac{\omega^2}{c_S^2}}$.
+
+Thus $\vu = (\imath k A e^{\alpha y} + \beta B e^{\beta y},
+\alpha A e^{\alpha y} - \imath k B e^{\beta y},0) E$.  We now impose the
+boundary conditions
+\begin{align*}
+\left.\sigma_{xy}\right|_{y=0}
+&= \mu\left( \pd{u_1}{y} + \pd{u_2}{x} \right) \\
+&= \mu E \left( 2 \imath \alpha A + \left( 2 k^2 -
+\frac{\omega^2}{c_S^2} \right) \right) = 0 \\
+\left.\sigma_{yy}\right|_{y=0}
+&= \lambda \pd{u_1}{x} + \left( \lambda + 2 \mu \right)
+\pd{u_2}{y} \\
+&= \mu E \left( \left(2 k^2 - \frac{\omega^2}{c_S^2} \right) A
+- 2 \imath k \beta B\right) = 0.
+\end{align*}
+
+These are two homogeneous equations for $A$ and $B$, which have non-trivial
+solutions iff
+\begin{equation}\label{eq:Rayldisp1}
+\left( 2 k^2 - \frac{\omega^2}{c_S^2} \right)^2 = 4 k^2 \alpha \beta.
+\end{equation} 
+
+If we define $c_R = \tfrac{\omega}{k}$, the phase velocity of Rayleigh
+waves, then \eqref{eq:Rayldisp1} becomes
+
+\begin{equation}\label{eq:Rayldisp2}
+\left( 2- \frac{c_R^2}{c_S^2} \right)^2 - 4 \left(1 - \frac{c_R^2}{c_P^2}
+\right)^{\frac{1}{2}}
+\left( 1 - \frac{c_R^2}{c_S^2} \right)^{\frac{1}{2}} = 0.
+\end{equation}
+
+Equation \eqref{eq:Rayldisp1} (equivalently \eqref{eq:Rayldisp2}) is the
+is the dispersion relation for Rayleigh waves.  From \eqref{eq:Rayldisp2}
+we see that $c_R$ is the same for all $k$ and Rayleigh waves are
+non-dispersive.
+
+Let $\xi = \tfrac{c_R^2}{c_S^2}$, so the dispersion relation can
+be rewritten
+\[
+f(\xi) = \xi^3 - 8 \left( 3 - 2 \tfrac{c_S^2}{c_P^2}\right) \xi
+- 16 \left(1 - \tfrac{c_S^2}{c_P^2}\right) = 0.
+\] 
+
+Now $f(0) < 0$ and $f(1) > 1$ so there is at least one real root of
+$f$ in $[0,1]$ and $0 < c_R^2 < c_S^2$ (as was assumed earlier).  In fact
+it can be shown that $f$ has precisely one real root.
+
+This Rayleigh wave is non-dispersive and is a \emph{trapped} or
+\emph{surface} wave.  $u_1, u_2 \sim e^{\alpha y}, e^{\beta y}$ and
+so the disturbance is confined to a layer on the surface of thickness
+$y \sim \max \{\alpha^{-1}, \beta^{-1}\}$.
+
+Rayleigh waves are important in seismology.  As they are confined to
+the surface they only fall off like $r^{-\frac{1}{2}}$ rather than the
+$r^{-1}$ of P and S waves.  At large distances from the initial
+disturbance the Rayleigh wave dominates.%
+\footnote{And knocks your house down.  They also have technological
+uses other than mass demolition --- acoustic microscopy.}
+
+\section{Wave reflection and transmission at interfaces}
+
+\vspace{1.5in}
+
+\subsection{Interface conditions}
+
+Let the interface be at $y = \eta(x,z,t)$.  We assume that there is
+no fracture and the two materials remain bonded together, so that
+\[
+\left[ \vu(x,y=\eta,z,t) \right] = 0.
+\]
+
+We assume small displacements, and so this linearises to give
+
+\begin{equation}\label{eq:interface1}
+\left[ \vu(x,0,z,t) \right] = 0.
+\end{equation}
+
+We also have continuity of traction, so that
+$\left[ \sigma_{ij} n_j \right] = 0$ on $y = \eta$, or (linearised)
+
+\begin{equation}\label{eq:interface2}
+\left[ \sigma_{iy} \right] = 0 \text{ at } y = 0.
+\end{equation}
+
+\subsection{S wave polarisation}
+
+Without loss of generality we can take the propagation vector of all waves
+to lie in the $(x,y)$ plane.
+
+The incident P wave has $\vu$ parallel to $\Hat{\vk}_I$, and so
+\[
+\vu_I = A_I \Hat{\vk}_I e^{\imath\left(\vk_I \cdot \vx - \omega t\right)}.
+\]
+
+The incident S wave has $\vu$ perpendicular to $\Hat{\vk}_I$ and so
+\[
+\vu_I = \Hat{\vk}_I \wedge \vect{B}_I e^{\imath\left(\vk_I \cdot \vx
+- \omega t\right)}.
+\]
+
+We resolve $\Hat{\vk}_I \wedge \vect{B}_I$ in a component parallel
+to $\Hat{\vect{z}}$ (a horizontally polarised SH wave) and a
+component parallel to $\Hat{\vect{z}} \wedge \vk_I$ (a vertically polarised
+SV wave).
+
+\subsection{Reflection and refraction of SH waves}
+
+\vspace{1.5in}
+
+The incident SH wave has
+
+\begin{equation}\label{eq:SHinc}
+\vu_I = (0,0,1) e^{\imath\left(\vk_I \cdot \vx - \omega t\right)}
+\qquad \vk_I = \frac{\omega}{c_S} (\sin \theta,\cos \theta,0).
+\end{equation}
+
+The $1$ in the $z$-component of $\vu_I$ is a free choice and the factor
+$\tfrac{\omega}{c_S}$ is fixed by the wave equation.
+
+The reflected SH wave is
+
+\begin{equation}\label{eq:SHref}
+\vu_R = (0,0,R) e^{\imath\left(\vk_R \cdot \vx - \Omega t\right)} \qquad
+\vk_R = \frac{\Omega}{c_S} (\sin \Theta,-\cos \Theta,0).
+\end{equation}
+
+$R$ is called the \emph{reflection coefficient}.
+
+Finally, the transmitted SH wave is
+
+\begin{equation}\label{eq:SHtrans}
+\vu_T = (0,0,T) e^{\imath\left(\vk_T \cdot \vx - \Bar\omega t\right)} \qquad
+\vk_T = \frac{\Bar \omega}{\Bar{c}_S} (\sin \Bar \theta, \cos \Bar \theta,0).
+\end{equation}
+
+$T$ is the \emph{transmission coefficient}.
+
+Now we impose the boundary conditions $\vu_I + \vu_R = \vu_T$
+and $\left(\sigma_{yz}\right)_I + \left(\sigma_{yz}\right)_R
+= \left(\sigma_{yz}\right)_T$.
+
+For these expressions to be the same at all times they must have the
+same time-dependence, and so $\omega = \Omega = \Bar{\omega}$.  They must
+similarly have the same space dependence, and so
+
+\begin{equation}\label{eq:snell}
+\frac{\sin \theta}{c_S} = \frac{\sin \Theta}{c_S}
+ = \frac{\sin \Bar{\theta}}{\Bar{c}_S}.
+\end{equation}
+
+This equation captures both $\theta = \Theta$ (``angle of incidence equals
+angle of reflection'') and \emph{Snell's law}.  Feeding all of this
+back into the boundary conditions finally gives
+\[
+1 + R = T \qquad \text{and} \qquad \frac{\mu}{c_S} (1-R) \cos \theta
+= \frac{T \Bar{\mu}}{\Bar{c}_S} \cos \Bar{\theta}.
+\]
+
+We can solve these by putting
+
+\[
+R = \frac{\Bar{z} - z}{\Bar{z} + z} \qquad T = \frac{2 \Bar{z}}{\Bar{z}+z},
+\]
+
+where $z = \tfrac{c_S}{\mu \cos \theta}$ and $\Bar{z} = \frac{\Bar{c}_S}{
+\Bar{\mu}\cos \Bar{\theta}}$.
+
+We can find the energy flux $\vect{I} = - \te{\sigma} \cdot \Dot{\vu}$,
+and we see that
+\[
+\langle I_z \rangle_I + \langle I_z \rangle_R = \langle I_z \rangle_T,
+\]
+and the incident energy is all either transmitted or reflected.  If
+$\Bar{z} = z$ there is total transmission.
+
+If $\Bar{c}_S < c_S$ then $\sin \Bar{\theta} < \sin \theta$ ($\Bar \theta
+< \theta$).  As $\theta$ increases to $\tfrac{\pi}{2}$ then
+$\Bar{\theta}$ increases to $\Bar{\theta}_{\text{max}} =
+\arcsin \tfrac{\Bar{c}_S}{c_S}$.  No waves propagate into
+$\Bar{\theta} > \Bar{\theta}_{\text{max}}$ --- this is the so-called
+``quiet zone''.
+
+If $\Bar{c}_S > c_S$ then $\Bar{\theta} > \theta$ and $\exists
+\theta_{\text{max}} = \arcsin \tfrac{c_S}{\Bar{c}_S}$ such that the
+transmitted wave just grazes the boundary.  If $\theta >
+\theta_{\text{max}}$ then we need to seek a solution in $y > 0$ of the
+form
+
+\[
+\vu_T = (0,0,T) \exp \left(\imath \tfrac{\omega}{\Bar{c}_S}
+- \beta y - \imath \omega t \right).
+\]
+
+We need $\beta = \tfrac{\omega}{c_S} \left( \sin^2 \theta
+- \tfrac{c_s^2}{\Bar{c}_S^2} \right)^{\frac{1}{2}}$, which
+is real and positive in the region $\theta > \theta_{\text{max}}$.
+$\vu_T$ is an \emph{evanescent} wave confined to $y \lessapprox \beta^{-1}$.
+
+We find that $\langle I_z \rangle_T = 0$ and that $R$ is now a complex
+quantity with modulus 1 and when $\theta > \theta_{\text{max}}$ the
+incident wave is totally internally reflected.
+
+\subsection{Reflection of P waves}
+
+\vspace{1.5in}
+
+This has the boundary condition $\vu = 0$ at $y = 0$.  As before, all
+$\omega$ are the same and $\theta = \Theta$.
+
+The incident P wave is
+
+\[
+\vu_I = (\sin \theta,\cos \theta,0) e^{\imath(\vk_I\cdot\vx - \omega t)}
+\qquad \vk_I = (\sin \theta, \cos \theta,0) \tfrac{\omega}{c_P}.
+\]
+
+The reflected P wave is
+\[
+\vu_R = R (\sin \Theta, - \cos \Theta,0) e^{\imath(\vk_R\cdot\vx - \omega t)}
+\qquad \vk_R = (\sin \Theta, - \cos \Theta,0) \tfrac{\omega}{c_P} 
+\]
+
+The reflected SV wave is
+\[
+\vu_{\Bar{R}} = \Bar{R} (\cos \Bar{\theta}, \sin \Bar{\theta},0)
+e^{\imath(\vk_{\Bar{R}}\cdot\vx - \omega t)}
+\qquad \vk_{\Bar{R}} = (\sin \Bar{\theta}, - \cos \Bar{\theta},0)
+\tfrac{\omega}{c_S}.
+\]
+
+We match phases at $y=0$, so that $\theta = \Theta$
+and
+\[
+\Bar{\theta} = \arcsin \left( \tfrac{c_S}{c_P} \sin \theta \right) < \theta
+\text{ as } \Bar{\theta} < \theta.
+\]
+
+Finally, imposing $\vu = 0$ on $y=0$ we find
+\[
+R = \frac{\cos (\theta + \Bar{\theta})}{\cos (\theta - \Bar{\theta})}
+\quad \text{and} \quad
+\Bar{R} = - \frac{\sin 2 \theta}{\cos (\theta - \Bar{\theta})}.
+\]
+
+Note that $\Bar{R} \neq 0$ usually and so there is usually at least
+partial ``mode conversion'' --- an incident P wave becomes a reflected
+P wave and a reflected SV wave.
+
+If $\theta = 0$ (normal incidence) then $\Bar{R} = 0$ and there is
+no SV mode.  If $\theta + \Bar{\theta} = \tfrac{\pi}{2}$ then
+$R = 0$ --- there is total mode conversion.
+
+\chapter{Dispersive waves}
+
+In any linear continuous system with no explicit dependence on $(x,t)$
+we can look for a solution
+\begin{equation}\label{eq:disp:gensol}
+\phi = \underbrace{e^{\imath k x - \imath \omega t}}_{\text{plane wave
+in $x,t$}}
+\underbrace{f(y,z)}_{\text{shape in $y,z$}}.
+\end{equation}
+
+$\omega$ can be found as $\omega = \omega(k)$, a dispersion relation.
+Usually $\tfrac{\omega}{k} = c_p$ (the phase speed) is not constant.
+Waves of different $k,\omega$ travel at different speeds and so
+disperse.
+
+\section{Geometric dispersion in ducts/tubes}
+
+\vspace{1.5in}
+
+Consider a duct $-\infty < x < \infty$ and hard walls at $0 < y < h$
+and $0 < z < b$.  The wave equation for $\phi$ is
+\[
+\Box^2 \phi = \nabla^2 \phi - \frac{1}{c_0^2} \pd{^2}{t^2} \phi = 0,
+\]
+
+where $c_0$ is the sound speed.  The boundary conditions are
+$\phi_y = 0$ on $y=0$, $y=h$ and $\phi_z = 0$ on $z=0$, $z=b$.
+
+We try a solution of the form \eqref{eq:disp:gensol},
+$\phi = e^{\imath k x - \imath \omega t} f(y,z)$ and so
+\[
+f_{yy} + f_{zz} + \left( \frac{\omega^2}{c_0^2} - k^2 \right) f = 0,
+\]
+
+with $f_y = 0$ on $y=0$, $y=h$ and $f_z = 0$ on $z=0$, $z=b$.  We
+try a solution of the form $f = f_{mn} = A_{mn} \cos \tfrac{m \pi y}{h}
+\cos \tfrac{n \pi z}{b}$.  This satisfies the boundary conditions,
+and satisfies the PDE if
+\[
+\frac{m^2 \pi^2}{h^2} + \frac{n^2 \pi^2}{b^2} = \frac{\omega^2}{c_0^2}
+- k^2.
+\]
+
+We get the dispersion relation
+
+\begin{equation}\label{eq:disp:ductdisp}
+\omega^2 = k^2 c_0^2 + \omega_{mn}^2,
+\end{equation}
+
+where $\omega_{mn}^2 = \left( \frac{m^2 \pi^2}{h^2} + \frac{n^2
+    \pi^2}{b^2}\right) c_0^2$.
+
+There is a set of independent ``modes'' labelled by $(m,n)$.
+The $(m,n)$ mode is dispersive unless $m=n=0$, when
+$\phi = A_{00} e^{\imath k x - \imath \omega t}$.
+
+\subsection{Cut-off frequency}
+
+A mode of given $\omega$ will propagate only if $k$ is real ---
+that is $\omega > \omega_{mn}$.  For given $\omega$ only a finite
+number of modes with $\omega_{mn} < \omega$ can propagate.  The others
+have $k$ imaginary and are decaying evanescent waves.  $\omega_{mn}$
+is the \emph{cut-off frequency} for the mode $(m,n)$.
+
+The plane wave mode $(0,0)$ is always \emph{cut-on} and
+(always) propagates.   If $h$ and $b$ are very small then other modes
+will be cut-off.
+
+\subsection{Phase and group velocity}
+
+The phase velocity $c_p = \pm \left( c_0^2 + \frac{\omega_{mn}^2}{k^2}
+\right)^{\frac{1}{2}}$.  Note that $c_p \ge c_0$ (equality only
+if $m=n=0$), $c_p \to \pm c_0$ as $k \to \infty$ (short waves)
+and $c_p \to \pm \infty$ as $k \to 0$ (long waves).
+
+We define the \emph{group velocity}
+$c_g = \diff{\omega}{k}$.
+
+\subsection{Energy propagation}
+
+Consider a single mode with $\phi = A_{mn} \cos \tfrac{m \pi y}{h}
+\cos \tfrac{n \pi z}{b}$.  It has
+
+\[
+\langle \text{KE} \rangle = \int_0^b \ud z \int_0^h \ud y
+\tfrac{1}{2} \rho_0 \tfrac{1}{2} \Re \left[ \left(\nabla \phi\right) \cdot
+\left(\nabla \phi\right)^\ast\right]
+= \frac{\rho_0 \abs{A_{mn}}^2 b h \omega^2}{16 c_0^2}.
+\]
+
+The time averaged potential energy
+\[
+\langle \text{PE} \rangle = \int_0^b \ud z \int_0^h \ud y
+\tfrac{1}{2} \Re \left( \frac{c_0^2 \rho \rho^\ast}{2 \rho_0}\right)
+= \langle \text{KE} \rangle.
+\]
+
+We can also compute
+\[
+\langle I_x \rangle = \int_0^b\ud z \int_0^h \ud y \tfrac{1}{2}
+\Re \left( p \phi_x^\ast\right)
+= \frac{\omega \rho_0 k \abs{A_{mn}}^2 bh}{8}.
+\]
+
+Define the mean energy propagation velocity
+$U(k)$ for a wave with wavenumber $k$ by
+\[
+\langle I_x \rangle = U(k) \langle \text{KE} + \text{PE} \rangle.
+\]
+
+We see that $U = \tfrac{k c_0^2}{\omega}$, which is the
+same as the group velocity $c_g$.  This is an example of a
+general result  --- ``energy travels at the group velocity''.
+
+\section{The Cauchy problem}
+
+Consider the following PDE%
+\footnote{which models small deflections of an elastic beam},
+
+\[
+\phi_{tt} + \gamma^2 \phi_{xxxx} = 0.
+\]
+
+Suppose that $\phi(x,0) = \phi_0(x)$ and $\phi_t(x,0) = v_0(x)$.
+By Fourier transforming we see that
+\begin{equation}\label{eq:gencauchy}
+\phi(x,t) = \int_{-\infty}^\infty A(k) e^{\imath(k x - \gamma k^2 t)}\,
+\ud k + \int_{-\infty}^\infty B(k) e^{\imath(k x + \gamma k^2 t)}\,
+\ud k,
+\end{equation}
+
+where
+\[
+\phi_0(x) = \int_{-\infty}^\infty (A + B) e^{\imath k x}\, \ud k
+\quad \text{and} \quad
+v_0(x) = - \imath \int_{-\infty}^\infty \gamma k^2 ( A - B ) e^{\imath k x}\,
+\ud k.
+\]
+
+We can find $A$ and $B$ by Fourier transform.  If $v_0 \equiv 0$
+then $A \equiv B$.  We need
+\[
+I(x,t) = \int_{-\infty}^\infty A(k) e^{\imath (k x \pm \gamma k^2 t)}\,
+\ud k.
+\]
+
+\subsection{Exact solution for Gaussian wavepacket}
+
+If
+\[
+\phi_0(x) = e^{- \tfrac{x^2}{\lambda^2} + \imath \alpha x} \quad \text{and}
+\quad v_0 \equiv 0
+\]
+
+we can do all of the calculations exactly.  First
+we find
+\begin{align*}
+A(k) &= \frac{1}{4\pi} \int_{-\infty}^\infty
+e^{- \tfrac{x^2}{\lambda^2} + \imath \alpha x - \imath k x}\, \ud x\\
+&= \frac{\lambda e^{- \frac{\lambda^2(k-\alpha)^2}{4}}}{4 \sqrt{\pi}}.
+\end{align*}
+
+We now use this to find $I(x,t)$ as
+\[
+I(x,t) = \frac{\lambda}{2 \left(\lambda^2 + 4 \imath \gamma t
+\right)^{\frac{1}{2}}} \exp \left\{ \imath \alpha x - \imath \gamma
+\alpha^2 t - \frac{\left( x - 2 \gamma \alpha t\right)^2}{\lambda^2 +
+4 \imath \gamma t} \right\}.
+\]
+
+The total $\phi$ is $I + $ a similar thing from $\omega = - \gamma
+k^2$ (or $t \to - t$).  For large $\lambda$
+
+\[
+I \sim \tfrac{1}{2} \exp \left\{ \imath \alpha (x - c_p t)
+- \frac{\left( x - c_g t\right)^2}{\lambda^2 +
+4 \imath \gamma t} \right\},
+\]
+
+where $c_p = \gamma \alpha$ and $c_g = 2 \gamma \alpha$.  The wavepacket
+as a whole moves at a speed $c_g > c_p$.  Wavecrests and troughs are
+created at the front of the wavepacket and destroyed at the back.
+
+It is sometimes convenient to formalise the separation of
+scales in terms of fast co-ordinates $(x,t)$ (for the details)
+and slow co-ordinates $(X=\tfrac{x}{\lambda},\tau = \tfrac{t}{\lambda})$
+Then
+\[
+I \sim \tfrac{1}{2} \underbrace{e^{\imath \alpha( x - c_p t)}}_{\text{
+fast phase oscillation}}\ \times\
+ \underbrace{ e^{-( X - c_g \tau)^2}}_{\text{slow scale modulation}}.
+\]
+
+\subsection{Modulated wavetrains}
+
+Suppose we have initial data
+\[
+\phi_0(x) = e^{\imath \alpha x} M(\tfrac{x}{\lambda}) \qquad \alpha \lambda
+\gg 1,
+\]
+
+where $e^{\imath \alpha x}$ is a carrier wave with short wavelength
+$2 \pi \alpha^{-1}$ and $M$ is a modulation envelope of a large
+scale $\lambda$.
+
+% script A
+\newcommand{\sA}{\mathcal{A}}
+
+Now
+
+\begin{align*}
+A(k) &= \frac{1}{4 \pi} \int_{-\infty}^\infty M(\tfrac{x}{\lambda})
+e^{- \imath(k-\alpha)}\, \ud x \\
+&= \frac{\lambda}{4 \pi} \int_{-\infty}^\infty M(X)
+e^{- \imath \beta X}\, \ud X\\
+&= \sA(\beta),
+\end{align*}
+
+where $\epsilon = \lambda^{-1}$, $\beta = \tfrac{k - \alpha}{\epsilon}$,
+$X = \epsilon x$ and $\tau = \epsilon t$.  Now
+
+\begin{align*}
+I &= \int_{-\infty}^\infty \sA(\beta) e^{\imath \alpha x
++ \imath \epsilon \beta x - \imath \omega(\alpha + \epsilon \beta)t}
+\epsilon\, \ud \beta. \\
+\intertext{If we Taylor expand $\omega$ about $\epsilon = 0$, we get}
+I &\sim \epsilon e^{\imath \alpha x - \imath \omega(\alpha) t}
+\int_{-\infty}^\infty \sA(\beta) \exp\left( \imath \epsilon \beta(
+x - c_g t)\right)\, \ud \beta \\
+&= \epsilon e^{\imath \alpha (x - c_p t)}
+\int_{-\infty}^\infty \sA(\beta) e^{\imath \beta(X - c_g \tau)}\, \ud \beta\\
+&= \tfrac{1}{2} e^{\imath \alpha (x - c_p t)} M(X - c_g \tau).
+\end{align*}
+
+The complete solution is
+
+\begin{align*}
+\phi = &\tfrac{1}{2} e^{\imath \alpha (x - c_p t)}
+M(X - c_g \tau) \qquad \text{right moving wave} \\
+&+ \tfrac{1}{2} e^{\imath \alpha (x + c_p t)}
+M(X + c_g \tau) \qquad \text{left moving wave.}
+\end{align*}
+
+\subsection{Large time behaviour}
+
+We want to find the long time behaviour of
+\[
+\int_{-\infty}^\infty A(k) e^{\imath (k x - \omega t)}\, \ud k.
+\]
+
+For fixed $x$ we can integrate this by parts to get
+\begin{align*}
+I &= \left[ \frac{A(k)}{-\imath \omega'} \frac{e^{\imath(k x -\omega t)}}{t}
+\right]_{-\infty}^\infty -
+\frac{1}{t}\int_{-\infty}^\infty e^{\imath(k x -\omega t)}
+\diff{}{k} \left( \frac{A(k)}{-\imath \omega'} \right)\, \ud k \\
+&= \cO(t^{-1}) + \frac{1}{t} \int_{-\infty}^\infty B(k)
+e^{\imath(kx - \omega t)}\, \ud x.
+\end{align*}
+
+Therefore $I = \cO(t^{-1})$ unless $\omega' = 0$ for some $k$.  Things
+are more interesting if we consider instead an observer moving at
+speed $V = \tfrac{x}{t}$.  We wish to approximate
+\[
+I = \int_{-\infty}^\infty A(k) e^{\imath t \psi(k)}\, \ud k
+\]
+
+for large $t$, where $\psi(k) = k V - \omega(k)$.  Integration by parts
+gives $I = \cO(t^{-1})$ as before unless $\psi'(\alpha) = 0$ for
+some $\alpha$.  Such points $\alpha$ are called \emph{points of stationary
+phase}.
+
+These points $\alpha$ satisfy $V = c_g(\alpha)$ --- the points of
+stationary phase have group velocity equal to the observer velocity.
+Away from $k=\alpha$ the contributions to $I$ almost cancel
+because $e^{\imath t \psi}$ oscillates very rapidly when $t \to \infty$.
+This cancellation is much reduced when $k = \alpha$.
+
+We approximate $A(k) \approx A(\alpha)$ and
+$\psi(k) \approx \psi(\alpha) + \tfrac{1}{2} (k-\alpha)^2 \psi''(\alpha)$
+(if $\psi''(\alpha) \neq 0$).  Then for each point of
+stationary phase the contribution to $I$ is asymptotically
+
+\[
+A(\alpha) e^{\imath t \psi(\alpha)} \int_{\text{nhd of $\alpha$}}
+e^{\imath t \tfrac{(k-\alpha)^2}{2} \psi''(\alpha)}\, \ud k
+ \sim A(\alpha) e^{\imath t \psi(\alpha)} \int_{-\infty}^\infty
+e^{\imath t \tfrac{(k-\alpha)^2}{2} \psi''(\alpha)}\, \ud k.
+\]
+
+Thus for one point of stationary phase,
+
+\begin{equation}\label{eq:statphase}
+I \sim \left( \frac{2 \pi}{\abs{\psi''(\alpha)} t} \right)^{\frac{1}{2}}
+A(\alpha) e^{\imath t \psi(\alpha) + \imath \sigma \tfrac{\pi}{4}},
+\end{equation}
+
+where $\sigma = 1$ if $\psi''(\alpha) > 0$ and $\sigma = -1$
+if $\psi''(\alpha) < 0$.  To deal with several isolated stationary points
+just add the contributions from each.  If $A(\alpha) = 0$ then
+approximate $A(k)$ as $(k - \alpha) A'(\alpha)$ and similarly for $\psi$.
+
+Thus given $(x,t)$, solve the equation $c_g(\alpha) = \tfrac{x}{t}$ for
+$\alpha$ and then substitute in \eqref{eq:statphase}.
+
+The wavenumbers seen by an observer moving at speed $V$ have the
+same group velocity and amplitude proportional to
+$t^{-\frac{1}{2}}$.  This is consistent with energy conservation.
+
+\vspace{1.5in}
+
+The length of the wavetrain increases like $t$ and so conservation
+of energy implies that the amplitude varies as $t^{-\frac{1}{2}}$.
+
+We also have the \emph{radiation condition}: energy must flow
+away from a source and hence waves will only be found where their
+group velocity is directed away from the source.%
+\footnote{This is not entirely true...}
+
+\subsection{Dispersion in waveguides}
+
+Recall the dispersion relation \eqref{eq:disp:ductdisp} which we
+rewrite here as
+
+\[
+\omega = \pm \left( \omega_0^2 + k^2 c_0^2 \right)^{\frac{1}{2}}
+= \pm \Omega(k),
+\]
+
+where $\omega_0 = \omega_{mn}$ for some $(m,n)$.  The
+phase is $\psi_\pm(k) = k V \mp \Omega(k)$ and we have
+stationary phase at
+\[
+V = \pm \Omega' = \pm \frac{k c_0^2}{(\omega_0^2 + k^2 c_0^2)^{\frac{1}{2}}}.
+\]
+
+For definiteness take $V > 0$.  There are two points of stationary phase
+(one on each branch) at
+\[
+k = \pm k_0 = \pm \frac{\omega_0 V}{c_0 (c_0^2 - V^2)^{\frac{1}{2}}}.
+\]
+
+We see that we need $V < c_0$.  From \eqref{eq:gencauchy}
+(and imposing $A(k) = B(k)$) we have
+
+\begin{align*}
+\phi(x,t) &= \int_{-\infty}^\infty A(k) \left[
+e^{\imath \psi_+ t} + e^{\imath \psi_- t}
+\right]\, \ud k \\
+&\sim \left( \frac{2 \pi \Omega(k_0)^3}{\omega_0^2 c_0^2 t}
+\right)^{\frac{1}{2}} \left[ A(k_0) e^{\imath k_0 x
+- \imath \Omega(k_0) t - \imath \tfrac{\pi}{4}}
++ A(-k_0) e^{-\imath k_0 x
++ \imath \Omega(-k_0) t + \imath \tfrac{\pi}{4} }
+\right].
+\end{align*}
+
+As $\phi$ is real we have $A(-k) = A^\ast(k)$ and we also
+know $\Omega(-k) = \Omega(k)$.  Therefore
+
+\[
+\phi \sim  \left( \frac{2 \pi \Omega(k_0)^3}{\omega_0^2 c_0^2 t}
+\right)^{\frac{1}{2}}
+2 \Re \left\{ A(k_0) e^{\imath k_0 x
+- \imath \Omega(k_0) t - \imath \tfrac{\pi}{4}} \right\}.
+\]
+
+\subsection{Continuity of phase}
+
+We make the $t\to \infty$ assumption explicit by introducing
+a scaling parameter $\lambda$, fast scales $(x,t)$ and
+slow scales $(X = \tfrac{x}{\lambda}, \tau = \tfrac{t}{\lambda})$.
+Then \eqref{eq:statphase} becomes
+\[
+I \sim \frac{1}{\lambda^{\frac{1}{2}}}
+\left( \frac{2 \pi}{\abs{\psi''(\alpha)} \tau} \right)^{\frac{1}{2}}
+A(\alpha) e^{\imath \lambda ( \alpha X - \omega(\alpha) \tau)
+ + \imath \sigma \tfrac{\pi}{4}},
+\]
+
+where $\alpha$ is such that $c_g(\alpha) = \tfrac{X}{\tau}$. We have
+put the equation into the form
+\begin{equation}\label{eq:Ilim}
+I \sim \frac{1}{\lambda^{\frac{1}{2}}} \cA(X,\tau)
+e^{\imath \lambda \theta(X,\tau)},
+\end{equation}
+
+where
+\[
+\cA = \left( \frac{2 \pi}{ \abs{\psi''(\alpha)} \tau} \right)^{\frac{1}{2}}
+A(\alpha) e^{\pm \tfrac{\imath \pi}{4}}
+\]
+
+and the phase function
+\begin{equation}\label{eq:phs}
+\theta(X,\tau) = \alpha X - \omega(\alpha) \tau,
+\end{equation}
+
+where $\alpha$ is determined by $c_g(\alpha) = \tfrac{X}{\tau}$.
+
+Rapid changes are consigned to the phase $\lambda \theta(X,\tau)$ and
+$\cA$, $\alpha$ and $\theta$ are all functions of the slow co-ordinates
+$(X,\tau)$.
+
+Expressions like \eqref{eq:Ilim} arise in many contexts
+(for instance in non-uniform media and nonlinear waves) but then
+it does not have the specific forms for $\cA$ and $\theta$.
+
+In general, when we have expressions like
+\eqref{eq:Ilim} we can define a \emph{local} wavenumber $k$ and frequency
+$\omega$ by
+\begin{equation}
+k = \pd{\lambda \theta}{x} = \pd{\theta}{X} \quad \text{and} \quad
+\omega = -\pd{\lambda \theta}{t} = -\pd{\theta}{\tau}.
+\end{equation}
+
+This agrees for the single wave where $\theta = k X - \omega \tau$ and
+also agrees for \eqref{eq:phs} (as $X - c_g(\alpha) \tau = 0$).
+Since $\theta_{X \tau} = \theta_{\tau X}$ we have
+
+\begin{equation}\label{eq:phasecont}
+\pddt{k} + \pd{\omega}{X} = 0.
+\end{equation}
+
+This is a continuity equation for $k$.  We thus interpret $k$ as
+a wavenumber density and $\omega$ as the flux of wavenumber.
+If $\omega = \Omega(k)$ then \eqref{eq:phasecont} becomes
+
+\[
+\pd{k}{t} + c_g(k) \pd{k}{X} = 0
+\]
+
+and so $k$ satisfies a nonlinear hyperbolic partial differential equation.
+We introduce characteristics defined by $\diff{X}{\tau} = c_g(k)$
+and have dynamics $\diff{k}{\tau} = 0$ on characteristics.
+Thus $k$ is constant on characteristics and the situation is the same as
+nonlinear gas dynamics.
+
+\section{Water waves}
+
+\vspace{1.5in}
+
+Consider an incompressible invisicid fluid, so that $\vu = \nabla \phi$.
+Incompressibility gives the Laplace equation $\nabla^2 \phi = 0$,
+which we want to solve subject to the boundary conditions
+
+\begin{gather}
+\phi_y = 0 \text{ on } y = -h,\label{eq:water:bc1} \\
+\DDt{} \left( y - \eta(x,z,t) \right) = 0 \text{ on } y = \eta \\
+\text{which linearises to }\
+\phi_y = \pddt{\eta} \text{ on } y = 0,\label{eq:water:bc2} \\
+p - p_{\text{atm}} = T \left(\kappa_1 + \kappa_2\right)
+\approx - T \left( \pd{^2 \eta}{x^2} + \pd{^2 \eta}{z^2} \right) \text{ on }
+y = 0 \label{eq:water:bc3}.
+\end{gather}
+
+Bernoulli's equation for the pressure linearises to
+\[
+p - p_{\text{atm}} = - \rho g \eta - \rho \phi_t \text{ on } y = 0.
+\]
+
+We try a solution of the form
+$\phi = f(y) e^{\imath k_1 x + \imath k_3 x - \imath \omega t}$.
+By choice of axes we can take $k_3 = 0$ and $k_1 = 0$.  Laplace's equation
+and \eqref{eq:water:bc1} give
+$f(y) = \cA \cosh k(y+h)$.
+
+For any hope that the equations balance we must have
+$\eta = A e^{\imath k x - \imath \omega t}$ and then \eqref{eq:water:bc2}
+gives
+\[
+A = \frac{\imath k \cA}{\omega} \sinh k h.
+\]
+
+Finally the Bernoulli equation and \eqref{eq:water:bc3} give the
+dispersion relation
+
+\begin{equation}\label{eq:water:disp}
+\omega^2 = g k \left( 1 + \frac{T k^2}{\rho g} \right) \tanh k h.
+\end{equation}
+
+\subsection{Limiting cases}
+
+When there is no surface tension we have \emph{gravity waves}.
+The dispersion relation gives
+\[
+c_g = \frac{\omega}{2 k} \left( 1+ \frac{2 k h}{\sinh 2 k h}\right)
+< \frac{\omega}{k} = c_p.
+\]
+
+Thus new waves are created at the back of the wavepacket and travel to
+the front.
+
+In the limit $kh \ll 1$ we have \emph{shallow water waves}.  The
+dispersion relation is
+\[
+\omega^2 = g k^2 h \left(1 + \beta k^2\right),
+\]
+
+where $\beta = \tfrac{T}{\rho g}$.  The group velocity is
+\[
+c_g = \frac{\omega}{k} \frac{ 1 + 2 \beta k^2}{1 + \beta k^2} > c_p.
+\]
+
+The \emph{long wave} case is when $kh \to 0$, so that
+$\omega^2 = g h k^2 = c_0^2 k^2$ and the waves are non-dispersive.
+
+We get \emph{deep water capillary-gravity waves} when $k h \to \infty$,
+so that the dispersion relation is
+\[
+\omega^2 = gk \left( 1+ \beta k^2 \right).
+\] 
+
+Thus $\omega \sim \sqrt{gk}$ as $k \to 0$ and $\omega \sim \sqrt{g
+  \beta k^3}$ as $k \to \infty$.  The group velocity is
+\[
+c_g = \frac{\omega}{k} \frac{1 + 3 \beta k^2}{2(1+ \beta k^2)}
+\to \begin{cases}
+\frac{1}{2} c_p & k \to 0 \\
+\frac{3}{2} c_p & k \to \infty.
+\end{cases}
+\]
+
+We can draw a graph of $\omega$ against $k$.
+
+\vspace{2in}
+
+Suppose we have an initial disturbance with
+$A(k) = 0$ for $k < k_0$ and $k > k_3$ with
+$k_0 < k_1 < k_2 < k_3$ and $c_g(k_0) > c_g(k_3)$.
+
+\vspace{1.5in}
+
+The changes from $0$ waves to $2$ waves at $x= c_g(k_1)t$, from
+$2$ waves to $1$ wave at $x = c_g(k_3) t$ and from $1$ wave to $0$
+waves at $x = c_g(k_0) t$ are continuous, but the method of stationary
+phase does not apply at any of these points (degeneracies).
+
+\chapter{Ray theory}
+
+This is a generalisation of the WKB method used for ODEs.%
+\footnote{See the Methods of Math. Phys. notes for an introduction to
+  this.}  It applies to slowly varying wavetrains in uniform and
+non-uniform media.  These variations must be slow on the scale of the
+wavelength / period.  We will neglect dissipation, nonlinear effects,
+rapid variations (boundaries, interfaces, focussing points) and
+diffraction.
+
+\section{Ray tracing equations}
+
+We seek slowly varying solutions of the partial differential equation
+\begin{equation}\label{eq:pdoper}
+\cL(\partial_t,\partial_{x_1}, \dots ; \vx,t) \phi = 0,
+\end{equation}
+
+for instance the equation modelling sound in the atmosphere in
+which $\rho_0$ and $c_0$ vary with $z$:
+
+\[
+\cL \Tilde{p} = \pd{^2 \Tilde{p}}{t^2}
+- \rho_0 c_0^2 \pd{}{z} \left( \frac{1}{\rho_0} \pd{\Tilde{p}}{z}\right)
+- c_0^2 \pd{^2 \Tilde{p}}{x^2} - c_0^2 \pd{^2 \Tilde{p}}{z^2} = 0.
+\]
+
+We try a solution of the form
+
+\begin{equation}\label{eq:pdetrial}
+\phi = A(\vx,t;\epsilon) e^{\frac{\imath \theta(\vx,t)}{\epsilon}},
+\end{equation}
+
+where $\epsilon$ is a small parameter.  There is rapid phase fluctuation
+but only slow change in $A$ and $\theta$.  In fact
+\[
+\phi_t = \frac{\imath \theta_t \phi}{\epsilon}
++ \frac{A_t \phi}{A}, \text{ and similarly for $\phi_x$ etc.}
+\]
+
+We substitute in \eqref{eq:pdoper} and extract the leading order terms
+to get a dispersion relation
+\begin{equation}\label{eq:raydisperse}
+\cL(-\imath \omega, \imath k_1, \imath k_2, \imath k_3;\vx,t) = 0,
+\end{equation}
+
+where $\omega = - \frac{\theta_t}{\epsilon}$ and
+$k_\alpha = \frac{\theta_{x_\alpha}}{\epsilon}$.  This gives
+us the local frequency and wavenumber.
+
+Now $\nabla \phi_t = \pddt{}\nabla \phi$ and so
+\begin{equation}\label{eq:raytr1}
+\nabla_\vx \omega = -\pddt{\vk}.
+\end{equation}
+
+We also know that $\pd{k_i}{x_j} = \epsilon^{-1} \pd{}{x_j}
+\pd{\theta}{x_i} = \pd{k_j}{x_i}$ and we can therefore write 
+\eqref{eq:raytr1} as
+\[
+\pddt{k_j} + \pd{\Omega}{k_i} \pd{k_j}{x_i} + \pd{\Omega}{x_j} = 0,
+\]
+
+where the dispersion relation is $\omega = \Omega(\vk;\vx,t)$.  If
+we introduce the group velocity vector $\vect{c}_g = \nabla_\vk \Omega$
+we can write these equatons as
+\[
+\pddt{\vk} + \vect{c}_g \cdot \nabla_\vx \vk = - \nabla_\vx \Omega.
+\]
+
+This has the characteristic form
+
+\begin{equation}\label{eq:raytrace}
+\ddt{\vk} = - \nabla_\vx \Omega \text{ on characteristics }
+\ddt{\vx} = \vect{c}_g.
+\end{equation}
+
+A \emph{ray} is a path along the characteristics $\ddt{\vx} =
+\vect{c}_g$ traversed at the group velocity and \eqref{eq:raytrace}
+are the \emph{ray tracing equations}.
+
+\subsection{Special cases}
+
+In a homogeneous medium $\nabla_\vx \Omega = 0$ and therefore
+$\vk$ is constant on each ray.  If all rays emanate from the same
+uniform medium then $\vk$ is the same constant everywhere.  If (say)
+$\Omega$ is independent of $x_\alpha$ then $k_\alpha$ is constant on
+each ray.
+
+The time-independent case is slightly harder.  In general
+\begin{align*}
+\ddt{\omega} &= \pd{\Omega}{k_j} \ddt{k_j} + \pd{\Omega}{x_j}
+\ddt{x_j} + \pddt{\Omega} \\
+&= \pd{\Omega}{k_j} \left( - \pd{\Omega}{x_j} \right)
++ \pd{\Omega}{x_j} \left( \pd{\Omega}{k_j} \right) + \pddt{\Omega}
+\quad \text{(using the ray tracing equations)} \\
+& = \pddt{\Omega}.
+\end{align*}
+
+If the medium is time-independent then $\Omega$ is constant on rays.
+If both $\pddt{\Omega} = 0$ and $\nabla_\vx \Omega = 0$ then
+$\omega = \Omega(\vk)$, $\vect{c}_g = \vect{c}_g(\vk)$ and $\vk$ is
+constant on rays, which are straight.
+
+\subsection{Hamilton's equations}
+
+The ray tracing equations \eqref{eq:raytrace} can be written
+\[
+\ddt{k_j} = - \pd{\Omega}{x_j} \qquad \ddt{x_j}  = \pd{\Omega}{k_j}.
+\]
+
+These are Hamilton's equations for a Hamiltonian $\Omega$, generalised
+co-ordinates $x_j$ and generalised momenta $k_j$.  Waves travel like
+particles at the group velocity.
+
+From the dispersion relation we get
+
+\[
+\pddt{\theta} + \epsilon \Omega(\epsilon^{-1} \nabla \theta; \vx,t) = 0.
+\]
+
+This is the Hamilton-Jacobi equation with the phase function as the
+action.
+
+\subsection{Wave action}
+
+The energy density $E$ is not usually conserved as waves propagate,
+although the wave action $I = E \omega^{-1}$ is.  In fact
+\[
+\pddt{I} + \dive_\vx \left(\vect{c}_g I\right) = 0.
+\]
+
+This follows from taking the next term of $\cL \phi = 0$, which
+involves the amplitude $A$.  If $\omega$ is constant on rays
+then $E$ is conserved.
+
+\section{Gravity waves approaching a beach}
+
+\vspace{2in}
+
+Consider a sloping beach with shoreline at $x=0$ and a water depth
+$h(x,z)$.  Assume that $h \to \infty$ and
+$\vk = (k_1,k_3) \to k_\infty (\cos \phi_\infty,\sin \phi_\infty)$ as
+$x \to - \infty$.
+
+The dispersion relation for gravity waves is
+$\omega^2 = \Omega^2(\vk;\vx) = g k \tanh k h$.  As $\Omega$ is
+time independent, $\omega$ is constant on rays, and as all
+rays originate from $x = -\infty$, $\omega^2 = g k_\infty$ everywhere.
+
+Thus
+\begin{equation}\label{eq:beach1}
+\tanh kh = \tfrac{k_\infty}{k}
+\end{equation}
+and measuring $k$ is equivalent to measuring $h$.
+
+Wave crests are given by $\theta = \text{const}$ and so
+\[
+\theta_x\, \ud x + \theta_z\,  \ud z = 0 \quad \Rightarrow
+k_1\, \ud x + k_3\, \ud z \quad \Rightarrow \diff{x}{z} = - \frac{k_3}{k_1}.
+\] 
+
+Water waves are an example of \emph{isotropic dispersion}, that is
+$\Omega = \Omega(k;\vx)$.  In such cases $\vect{c}_g = \Hat{\vk}
+\pd{\Omega}{k}$ and the rays are parallel to $\vk$.  The rays are given
+by the equation
+\[
+\diff{x}{z} = \frac{k_1}{k_3}.
+\]
+
+If $h = h(x)$ (independent of $z$) then $\Omega = \Omega(k;x)$ and
+$\ddt{k_3} = 0$.  Therefore $k_3 = k_\infty \sin \phi_\infty$
+everywhere.
+
+As $h \to 0$, $\tanh k h \sim k h$ and so \eqref{eq:beach1} becomes
+$k^2 \sim \tfrac{k_\infty}{h} \to \infty$ as $h \to 0$.  Now $k_3$
+is fixed, so that $k_1 \to \infty$ as $h \to 0$.  We have proved that
+waves hit the beach normal to the shoreline.
+
+\section{Fermat's Principle}
+
+The ray tracing equations are equivalent to the variational principle
+\begin{equation}\label{eq:variwave}
+\delta \int_{t_1}^{t_2} \Phi(\vx,\Dot{\vx}, \vk,t)\, \ud t = 0,
+\end{equation}
+
+where $\Phi = \vk \cdot \Dot{\vx} - \Omega(\vk;\vx,t)$ and $\delta \vx$
+and $\delta \vk$ vary independently with $\delta \vx (t_1) = \delta \vx
+(t_2) = 0$.\footnote{Proof is trivial.}
+
+\subsection{Time independent case}
+
+Suppose that $\pd{\Omega}{t} = 0$ and $\omega = \Omega$ is a uniform
+constant.  We need to use a restricted class of variations $\delta
+\vx$, $\delta \vk$ such that $\Omega(\vk + \delta \vk;\vx + \delta \vx) =
+\Omega(\vk;\vx)$.  Then
+
+\[
+\delta \int_{t_1}^{t_2} \Omega\, \ud t = 0
+\]
+
+automatically and the variational principle \eqref{eq:variwave}
+becomes
+\[
+\delta \int_{t_1}^{t_2}\, \vk \cdot \Dot{\vx}\, \ud t
+= \delta \int_{\vx_1}^{\vx_2}\, \vk \cdot \ud \vx.
+\]
+
+If we further assume isotropy then $\vk$ is parallel to $\nabla_\vk
+\Omega$ and hence on a ray $\vk$ is parallel to $\ud \vx$, so that
+\[
+\int_{\vx_1}^{\vx_2}\, \vk \cdot \ud \vx = \int_{\vx_1}^{\vx_2}\, k\, \ud s
+= \omega \int_{\vx_1}^{\vx_2}\, \frac{\ud s}{c},
+\]
+
+where $\ud s$ is the element of arc length.  Since $\omega$ is a
+constant,
+
+\[
+\delta \int_{\vx_1}^{\vx_2}\, \frac{\ud s}{c} = 0.
+\]
+
+This is the principle of least time --- \emph{Fermat's principle}.
+
+\subsection{Snell's Law}
+
+Suppose that $\Omega = \Omega(\vk;x_3)$ so that
+$k_1$, $k_2$ and $\omega$ are constant on rays.
+
+\vspace{1in}
+
+Then
+\[
+\sin \alpha = \frac{\sqrt{k_1^2 + k_2^2}}{k} =
+\frac{c \sqrt{k_1^2 + k_2^2}}{\omega}
+\]
+
+and so
+\begin{equation}\label{eq:snellray}
+\frac{\sin \alpha}{c} = \frac{\sin \alpha_0}{c_0} = \text{constant.}
+\end{equation}
+
+\subsection{Sound waves in inhomogeneous media}
+
+Consider a ray in the $(x,z)$ plane and suppose that
+$\pd{\Omega}{x} = \pd{\Omega}{y} = 0$, so that
+$\omega = \Omega(k;x) = k c(z)$.  We want to know if there is a ray
+between two points on the same horizontal plane.
+
+\vspace{1.5in}
+
+Either use the condition
+
+\[
+\delta \int_{-a}^a \frac{\ud s}{c} = 0 \quad \Rightarrow \quad
+\diff{z}{x} = \pm \left( \frac{c_0^2}{c(z)^2} - 1
+\right)^{\frac{1}{2}} \text{ by Euler-Lagrange equations,}
+\]
+
+\vspace{1in}
+
+or use Snell's Law:
+
+\[
+\frac{\sin \alpha}{c} = \text{constant} \quad \Rightarrow \quad
+\frac{\ud x}{\left( \ud x^2 + \ud z^2 \right)^{\frac{1}{2}}}
+ = \frac{c(z)}{c_0},
+\]
+
+which gives the same ODE as before.  We take the positive root of our
+ODE and note that initially $c > c_0$.  If $c(z)$ decreases as $z$
+increases then $\diff{z}{x} > 0$ always and the ray can't bend back
+down.  If $c$ increases with $z$ then there exists $z_0$ at which
+$\diff{z}{x} = 0$ and the path curves back down.
+
+For instance we can solve explicitly if $c = c_0 \left( 1+
+  \tfrac{z}{\lambda} \right)$ and we see that the rays are given by
+$(x-x_0)^2 + (z + \lambda)^2 = \lambda^2$. 
+
+\section{Media with flow}
+
+Consider a source of frequency $\omega_s$ moving with a uniform
+velocity $\vect U$ in a medium at rest.  In a frame fixed to the
+fluid, $(\vx,t)$ we suppose the dispersion relation is $\omega_r
+= \Omega(\vk)$.  In a frame $(\vect X,t)$ fixed to the source,
+$\vect X = \vx - \vect U t$ the fluid has velocity $- \vect U$.  Now
+\[
+\left. \pd{}{x_\alpha} \right|_t = \left. \pd{}{X_\alpha} \right|_t
+\quad \text{and} \quad
+\left. \pddt{} \right|_\vx = \left. \pddt{}\right|_{\vect X}
+ - U_j \pd{}{X_j},
+\]
+
+and so $- \imath \omega_r = - \imath \omega_s - \imath \vk \cdot \vect U$,
+which gives $\omega_s = \Omega_r(\vk) - \vk \cdot \vect{U}$.
+
+\subsubsection*{The Doppler effect}
+
+\vspace{1in}
+
+Consider a source emitting sound waves at frequency $\omega_r = c k$.
+Now $\vk \cdot \vect U = k U \cos \theta = \frac{\omega_r}{c} U \cos
+\theta$.  Hence
+\[
+\omega_r = \frac{\omega_s}{1 - \frac{U}{c} \cos \theta},
+\]
+
+and (if $\tfrac{U}{c} < 1$), $\omega_r > \omega_s$ if $\cos \theta >
+0$ (ahead of the source) and $\omega_r < \omega_s$ if $\cos \theta <
+0$ (behind the source).
+
+\subsection{Stationary capillary-gravity waves}
+
+Consider a steady disturbance moving at a velocity $(U,0,0)$
+generating a steady one dimensional wave pattern.  Now
+$\omega_s = \omega_r - k U$, where
+\[
+\omega_r = \pm \left( g k + \frac{T k^3}{\rho} \right)^{\frac{1}{2}}
+\text{ (deep water).}
+\]
+
+Steady waves satisfy $\omega_s = 0$, so that
+\[
+k U = \pm \left( g k + \frac{T k^3}{\rho} \right)^{\frac{1}{2}}.
+\]
+
+For simplicity we take units such that $g = \tfrac{T}{\rho} = 1$, so
+that $k U = \pm \left( k + k^3 \right)^{\frac{1}{2}}$.
+
+\vspace{2in}
+
+If $U < \sqrt{2}$ then there is no solution (barring the trivial one
+at the origin) and no steady waves are possible.  If $U > \sqrt{2}$
+there are solutions: if $k > k_2$ then $c_g > U$ and if $k < k_2$,
+$c_g < U$.  Since the group velocity relative to the flow must be
+positive, short (capillary) waves are only found ahead of the
+disturbance and long (gravity) waves are only found behind it.
+
+\subsection{Ship waves}
+
+We consider two dimensional steady waves in a mean flow.
+The approximations we make are that a ship is a point disturbance, the
+water is deep and there is no surface tension.  Then $\Omega_r =
+\sqrt{g k}$ and we have the condition
+$( \omega_s + \vk \cdot \vect U)^2 = gk$ (for steady waves), giving
+\begin{equation}\label{eq:shipdisp}
+\omega_s = \pm g^{\frac{1}{2}} \left( k_1^2 + k_3^2
+\right)^{\frac{1}{4}} - k_1 U.
+\end{equation}
+
+This is an anisotropic dispersion relation, so that $\vect{c}_g$ is not
+parallel to $\vk$.  We seek a steady wave pattern with $\omega_s = 0$.
+According as $k_1 \gtrless 0$ we need the $\pm$ signs in
+\eqref{eq:shipdisp}, so that
+\[
+k_1 U = \pm g^{\frac{1}{2}} \left( k_1^2 + k_3^2 \right)^{\frac{1}{4}}
+\]
+
+and
+
+\[
+\pd{\omega}{k_1} = - \frac{U (k^2 + k_3^2)}{2 k^2} < 0.
+\]
+
+This means that the waves are behind the ship.  Since $\Omega_t = 0$
+and $\nabla_{\vx} \Omega = 0$ the rays are straight.  Write
+$\diff{z}{x} = \tan \psi$ on such rays.
+
+Now
+\[
+\diff{z}{x} = \frac{\diff{z}{t}}{\diff{x}{t}} = - \frac{k_1 k_3}{k^2 + k_3^2}.
+\]
+
+Writing $\vk = k(\cos \phi, \sin \phi)$ gives
+\begin{equation}\label{eq:shipk}
+k^{\frac{1}{2}} = \pm \frac{g^{\frac{1}{2}}}{U \cos \phi} \qquad
+\text{and} \qquad
+\tan \psi = - \frac{\tan \phi}{1 + 2 \tan^2 \phi}.
+\end{equation}
+
+We need $\abs{\pi - \psi} < \tfrac{\pi}{2}$ in order to have waves
+behind the ship.  We restrict (WLOG) to $-\tfrac{\pi}{2} < \phi <
+\tfrac{\pi}{2}$, and note that there is a maximum value of $\abs{\pi -
+  \psi}$ when $\tan^2 \phi = \tfrac{1}{2}$ and $\tan \psi = -
+\frac{1}{2 \sqrt{2}}$.
+
+Waves are thus confined to a wedge of semi-angle $19
+\tfrac{1}{2}^\circ$.  The phase can be calculated by
+
+\begin{align*}
+\theta &= \int_{\text{any path}} \nabla \theta \cdot \vect{\ud x} \\
+&= \vk \cdot \vx \qquad \text{choosing the path as the ray $\psi =
+  \text{const}$.} \\
+&= k r \cos (\psi - \phi) \\
+&= k r \frac{\cos \psi}{\cos \phi} \left( \frac{1}{1+ 2 \tan^2 \phi} \right).
+\end{align*}
+
+Hence
+\[
+x = r \cos \psi = \frac{ \theta \cos \phi \left( 1+2 \tan^2 \phi \right)}{k}
+\]
+
+and using \eqref{eq:shipk} we obtain a parametric equation for the
+wave crest shape,
+
+\begin{align*}
+x &= \frac{\theta U^2}{g} \cos^3 \phi ( 1+ 2 \tan^2 \phi) \\
+z &= - \frac{\theta U^2}{g} \cos^2 \phi \sin \phi.
+\end{align*}
+
+\section[Internal gravity waves]
+{Internal gravity waves in a stratified incompressible medium}
+
+Consider a fluid medium in which the mean pressure $p_0(z)$ and the
+density $\rho_0(z)$ are in hydrostatic balance, i.e.
+
+\[
+\diff{p_0}{z} = - \rho_0 g
+\]
+
+when there is no motion.  Assume that the vertical lengthscale for
+$\cO(1)$ changes in $\rho_0$ is $L$.  Since the fluid is
+incompressible,
+\[
+\DDt{\rho} = 0 \qquad \text{and} \qquad \nabla \cdot \vu = 0.
+\]
+
+Further, the motion is governed by the momentum equation
+\[
+\rho \DDt{\vu} = - \nabla p - \rho g \Hat{\vect{z}}.
+\]
+
+We linearise the motion about the mean state, $p = p_0 + \Tilde{p}$
+and $\rho = \rho_0 + \Tilde{\rho}$, so that (writing $\vu = (u,v,w)$)
+we have
+
+\begin{align}
+\Tilde{\rho}_t + w \rho_0'(z) &= 0, \label{eq:ig1} \\
+u_x + v_y + w_z &= 0, \label{eq:ig2} \\
+\rho_0 u_t &= - \Tilde{p}_x, \label{eq:ig3} \\
+\rho_0 v_t &= - \Tilde{p}_y, \label{eq:ig4} \\
+\rho_0 w_t &= - \Tilde{p}_z - \Tilde{\rho} g. \label{eq:ig5}
+\end{align}
+
+Equations \eqref{eq:ig1} and \eqref{eq:ig5} give
+\[
+\rho_0 w_{tt} = - \Tilde{p}_{zt} + \rho_0' g w, 
+\]
+
+and equations \eqref{eq:ig2}, \eqref{eq:ig3} and \eqref{eq:ig4} give
+\[
+\rho_0 w_{zt} = \Tilde{p}_{xx} + \Tilde{p}_{yy}.
+\]
+
+Hence
+\[
+\left(\rho_0 w_{zz} + \rho_0' w_z \right)_{tt} -
+\left(\partial^2_x + \partial^2_y \right) \left( \rho_0' g - \rho_0
+  \partial^2_t \right) w = 0,
+\]
+
+or $\cL(\partial_t, \partial_x, \partial_y, \partial_z; z) w = 0$.
+We can make a slowly varying assumption if a plane harmonic wave has a
+relatively short vertical lengthscale: $\tfrac{2 \pi}{k_3} \ll L$
+where $\tfrac{\rho_0}{\rho_0'} = \cO(L)$, giving $\rho_0' w_z \ll
+\rho_0 w_{zz}$.  The leading order dispersion relation is
+\[
+- \omega^2 \left( - \rho_0 k_3^2 \right) + (k_1^2 + k_2^2) (\rho_0' g
+  + \rho_0 \omega^2) = 0,
+\]
+or equivalently
+\begin{equation}\label{eq:igwdisp}
+\omega^2 = \Omega^2(\vk,z) \equiv \frac{N^2(z) (k_1^2 + k_2^2)}{k_1^2 +
+  k_2^2 + k_3^2},
+\end{equation}
+
+where
+\[
+N^2(z) = - \frac{g \rho_0'}{\rho_0} > 0.
+\]
+
+$N$ is the \emph{Brunt-V\"ais\"al\"a frequency}.
+
+Note that
+
+\begin{itemize}
+\item No solutions to \eqref{eq:igwdisp} are possible if $\omega^2 > N^2$.
+\item The group and phase velocities are perpendicular.
+\item $\omega$, $k_1$ and $k_2$ are always constant on rays, and $k_3$
+  is only constant if $N' = 0$, that is $\rho_0 = \Bar{\rho}
+  e^{-z/L}$, where $L = N^{-2}g$ and $\Bar{\rho}$ is a constant.
+\end{itemize}
+
+Consider an experiment where waves are generated by a two-dimensional
+oscillating cylinder ($\omega < N$).  Then if $\vk = k(\cos \phi,0,\sin
+\phi)$, $\cos \theta = \pm \tfrac{\omega}{N}$ and
+\[
+\vect{c}_g = \frac{1}{k} \left( \pm N \sin^2 \phi,0,-\omega \sin \phi\right).
+\]
+
+Assuming that $\vk$ is constant (and hence all rays straight) we see
+that downward propagating waves imply upward propagating energy.
+
+\backmatter
+
+\begin{thebibliography}{9}
+
+\bibitem{Courant} Courant \& Friedrichs, \emph{Supersonic Flow and
+    Shock Waves}, Springer-Verlag, 1976.
+
+  {\sffamily \small This is quite good for the nonlinear waves part of
+  the course.  You might be lucky to find a copy of this --- I found
+  it second hand in Hay-on-Wye and have never seen it anywhere else.}
+
+\bibitem{FluidsNotes} \emph{Fluid Dynamics II}, unpublished, 1997.
+  
+  {\sffamily \small I'm biased. Somebody send me a review.}
+
+\bibitem{Hinch} E.J.~Hinch, \emph{Perturbation Methods}, CUP, 1991.
+  
+  {\sffamily \small Reasonably interesting book on a potentially
+    extremely dull subject.}
+
+\bibitem{MMPnotes} \emph{Methods of Mathematical Physics},
+  unpublished, 1997.
+
+  {\sffamily \small Again, I'm biased.}
+
+\bibitem{VanDyke} M. van Dyke, \emph{An Album of Fluid Motion}, The
+  Parabolic Press, 1982.
+  
+  {\sffamily \small Lots of pictures of flows.  An excellent book.  Go
+    out and buy it.  Now.}
+
+\end{thebibliography}
+
+I only found one book I liked for this course.  There \emph{must} be
+other good ones.  The MMP notes and Fluids notes are useful
+background, as is Hinch.
+
+\end{document}
