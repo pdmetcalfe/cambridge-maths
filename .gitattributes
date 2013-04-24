@@ -1,0 +1,9 @@
+* text=auto
+
+*.tex text
+*.cls text
+*.mp text
+
+*.eps binary
+*.png binary
+*.pdf binary
