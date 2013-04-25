@@ -24,8 +24,7 @@
     \rule{\linewidth}{1mm}
     \@titlepic
     \begin{flushright}
-      These notes are maintained by \@maintainer{}.\\
-      Comments and corrections to \texttt{soc-archim-notes@lists.cam.ac.uk}.
+      These notes are maintained by \@maintainer{}..
     \end{flushright}
   \end{titlepage}}
 
@@ -47,60 +46,9 @@ General Relativity & Dynamical Systems \\
 Combinatorics & Bifurcations in Nonlinear Convection \\
 \end{tabular}
 \end{center}
+}
 
-They may be downloaded from
-\begin{center}
-\texttt{http://www.istari.ucam.org/maths/} \quad or \\
-\texttt{http://www.cam.ac.uk/CambUniv/Societies/archim/notes.htm}
-\end{center}
-or you can email \texttt{soc-archim-notes@lists.cam.ac.uk} to get a
-copy of the sets you require.}
-
-\newcommand{\archimcopyright}{%
-\clearpage
-\thispagestyle{empty}
-\begin{center}
-\large
-Copyright (c) The Archimedeans, Cambridge University.\\
-All rights reserved.
-\end{center}
-
-Redistribution and use of these notes in electronic or printed form,
-with or without modification, are permitted provided that the
-following conditions are met:
-
-\begin{enumerate}
-\item Redistributions of the electronic files must retain the above copyright
-   notice, this list of conditions and the following disclaimer.
-\item Redistributions in printed form must reproduce the above copyright
-   notice, this list of conditions and the following disclaimer.
- \item All materials derived from these notes must display the
-   following acknowledgement:
-
-\begin{center}
-  \parbox{4in}{ This product includes notes developed by The
-    Archimedeans, Cambridge University and their contributors.}
-\end{center}
-
-\item Neither the name of The Archimedeans nor the names of their contributors
-   may be used to endorse or promote products derived from these notes.
-\item Neither these notes nor any derived products may be sold on a
-   for-profit basis, although a fee may be required for the physical act
-   of copying.
-\item You must cause any edited versions to carry prominent notices
-   stating that you edited them and the date of any change.
-\end{enumerate}
-
-THESE NOTES ARE PROVIDED BY THE ARCHIMEDEANS AND CONTRIBUTORS ``AS
-IS'' AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED
-TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A
-PARTICULAR PURPOSE ARE DISCLAIMED.  IN NO EVENT SHALL THE ARCHIMEDEANS
-OR CONTRIBUTORS BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL,
-SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES HOWEVER CAUSED AND ON ANY
-THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT
-(INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
-OF THESE NOTES, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
-\clearpage}
+\newcommand{\archimcopyright}{}
 
 \RequirePackage{amsmath}
 \RequirePackage{amsfonts}
